@@ -21,30 +21,53 @@ export default function Nav() {
   const [onLight, setOnLight] = useState(false);
   const [open, setOpen] = useState(false);
 
+  /**
+   * Nav opacity policy — strict.
+   *
+   * The nav is transparent by default. It can ONLY go opaque when we have
+   * a positive signal that the user has scrolled past the hero. If we
+   * can't get that signal for any reason, the nav stays transparent.
+   *
+   * Positive signals, in order of preference:
+   *   1. Home page: the AnchorReveal section's top edge has reached the
+   *      very top of the viewport (hero fully exited).
+   *   2. Non-home page: no hero element exists, so flip opaque once the
+   *      user has scrolled more than 20px (the page top has moved).
+   *
+   * Everything is re-queried on every scroll event so there's no
+   * dependency on DOM-at-mount timing — if the sentinel shows up later,
+   * the next scroll tick picks it up.
+   */
   useEffect(() => {
-    // Find the AnchorReveal section by its heading id — that's our "hero
-    // has ended" sentinel. We used to walk `hero.nextElementSibling`, but
-    // GSAP's pin-spacer wraps the hero in production timing, making that
-    // reference null. Querying the sentinel directly by id is immune to
-    // whatever GSAP does around it.
-    const sentinel =
-      document.getElementById("anchor-heading")?.closest("section") as HTMLElement | null;
-
     const update = () => {
-      // Hard floor: within 10px of the very top we're unambiguously on the
-      // hero, keep the nav transparent regardless of sentinel geometry.
+      // Hard floor: at or near the top of the page, always transparent.
       if (window.scrollY < 10) {
         setOnLight(false);
         return;
       }
-      if (!sentinel) {
-        // Pages without a hero — flip after a tiny scroll.
+
+      // Is there a hero on this page? If not, we're on a secondary page;
+      // the nav should flip opaque once the user starts scrolling.
+      const hero = document.querySelector('[aria-label="Birchbank Golf — opening sequence"]');
+      if (!hero) {
         setOnLight(window.scrollY > 20);
         return;
       }
-      // Flip opaque only once the sentinel section's top edge has scrolled
-      // past the very top of the viewport (hero fully exited).
-      setOnLight(sentinel.getBoundingClientRect().top <= 0);
+
+      // Home page path. Find the sentinel (AnchorReveal section).
+      const sentinel = document.getElementById("anchor-heading")?.closest("section");
+
+      if (sentinel) {
+        // Ideal: use the sentinel's viewport position as the authoritative
+        // "has the hero exited?" check.
+        setOnLight(sentinel.getBoundingClientRect().top <= 0);
+        return;
+      }
+
+      // Sentinel not in the DOM yet. Keep transparent — we have no
+      // positive signal to flip opaque, and defaulting to transparent
+      // is the safe choice while the hero is still on screen.
+      setOnLight(false);
     };
 
     update();
