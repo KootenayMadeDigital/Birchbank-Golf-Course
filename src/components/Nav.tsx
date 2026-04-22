@@ -18,32 +18,33 @@ const LINKS = [
 ];
 
 export default function Nav() {
-  // When this is true, Nav shows its paper/opaque state. When false, it's
-  // transparent and sits over whatever's behind (the hero on /, other
-  // pages' top content otherwise).
   const [onLight, setOnLight] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Stay transparent while the ball-into-hole hero is in the viewport,
-    // go opaque once the user has scrolled past it. GSAP pins the hero
-    // (position: fixed) which makes IntersectionObserver on the hero
-    // itself unreliable — so instead we watch the first element *after*
-    // the hero and flip when its top edge crosses the nav's bottom.
-    const hero = document.querySelector<HTMLElement>('[aria-label="Birchbank Golf — opening sequence"]');
-    const nextAfterHero = hero?.nextElementSibling as HTMLElement | null;
+    // Find the AnchorReveal section by its heading id — that's our "hero
+    // has ended" sentinel. We used to walk `hero.nextElementSibling`, but
+    // GSAP's pin-spacer wraps the hero in production timing, making that
+    // reference null. Querying the sentinel directly by id is immune to
+    // whatever GSAP does around it.
+    const sentinel =
+      document.getElementById("anchor-heading")?.closest("section") as HTMLElement | null;
 
     const update = () => {
-      if (!nextAfterHero) {
-        // Pages without a hero — flip opaque after a tiny scroll.
+      // Hard floor: within 10px of the very top we're unambiguously on the
+      // hero, keep the nav transparent regardless of sentinel geometry.
+      if (window.scrollY < 10) {
+        setOnLight(false);
+        return;
+      }
+      if (!sentinel) {
+        // Pages without a hero — flip after a tiny scroll.
         setOnLight(window.scrollY > 20);
         return;
       }
-      // Flip only once the user has scrolled fully past the hero image —
-      // i.e. when the next section's top edge reaches the very top of the
-      // viewport. Until that moment, the hero is still the "page header"
-      // and the nav stays transparent over it.
-      setOnLight(nextAfterHero.getBoundingClientRect().top <= 0);
+      // Flip opaque only once the sentinel section's top edge has scrolled
+      // past the very top of the viewport (hero fully exited).
+      setOnLight(sentinel.getBoundingClientRect().top <= 0);
     };
 
     update();
@@ -55,7 +56,6 @@ export default function Nav() {
     };
   }, []);
 
-  // When the mobile menu is open, force paper background regardless of scroll.
   const light = onLight || open;
 
   return (
@@ -67,7 +67,7 @@ export default function Nav() {
           : "bg-transparent",
       )}
     >
-      <div className="container-edge flex items-center justify-between h-16 md:h-20">
+      <div className="container-edge flex items-center justify-between h-20 md:h-24">
         <Link
           href="/"
           aria-label="Birchbank Golf Club — home"
@@ -75,19 +75,19 @@ export default function Nav() {
         >
           <Logo
             variant={light ? "flush" : "plate"}
-            height={light ? 40 : 36}
+            height={light ? 56 : 52}
             priority
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-8">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={clsx(
-                "text-sm hover:text-amber transition-colors",
-                light ? "text-granite" : "text-paper/85",
+                "text-base hover:text-amber transition-colors",
+                light ? "text-granite" : "text-paper",
               )}
             >
               {l.label}
@@ -95,17 +95,17 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-4 md:gap-5">
           <SocialLinks
             variant={light ? "dark" : "light"}
             className="hidden md:flex"
-            size={16}
+            size={20}
           />
           <a
             href="tel:+12506932255"
             className={clsx(
-              "hidden xl:inline text-sm hover:text-amber transition-colors",
-              light ? "text-granite" : "text-paper/85",
+              "hidden xl:inline text-base hover:text-amber transition-colors",
+              light ? "text-granite" : "text-paper",
             )}
           >
             250-693-2255
@@ -117,22 +117,22 @@ export default function Nav() {
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 -mr-2"
           >
-            <span className={clsx("block w-5 h-px mb-1", light ? "bg-granite" : "bg-paper")} />
-            <span className={clsx("block w-5 h-px mb-1", light ? "bg-granite" : "bg-paper")} />
-            <span className={clsx("block w-5 h-px", light ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-6 h-px mb-1.5", light ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-6 h-px mb-1.5", light ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-6 h-px", light ? "bg-granite" : "bg-paper")} />
           </button>
         </div>
       </div>
 
       {open && (
         <div className="lg:hidden bg-paper border-t border-granite/10">
-          <nav className="container-edge py-6 flex flex-col gap-4">
+          <nav className="container-edge py-6 flex flex-col gap-5">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-lg font-display text-granite"
+                className="text-xl font-display text-granite"
               >
                 {l.label}
               </Link>
@@ -142,7 +142,7 @@ export default function Nav() {
               <a href="tel:+12506932255" className="btn-ghost self-start">
                 Call Pro Shop · 250-693-2255
               </a>
-              <SocialLinks variant="dark" className="mt-2" size={20} />
+              <SocialLinks variant="dark" className="mt-2" size={22} />
             </div>
           </nav>
         </div>
