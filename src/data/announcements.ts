@@ -30,6 +30,13 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
     title: "9 am – 7 pm, every day.",
     body: "Tee-time booking, club fittings, lessons with our CPGA Head Pro, and club repairs.",
     cta: { label: "Call 250-693-2255", href: "tel:+12506932255" },
+    // Source: birchbankgolf.com homepage slideshow — the "Pro-shop is open
+    // 9am-7pm 7 days a week" slide. Their own photograph, used in their
+    // current rotation.
+    image: {
+      src: "/announcements/proshop.webp",
+      alt: "The Birchbank Pro Shop",
+    },
   },
   {
     eyebrow: "The Bistro",

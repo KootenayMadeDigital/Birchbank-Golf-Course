@@ -32,7 +32,6 @@ export default function Nav() {
     // the hero and flip when its top edge crosses the nav's bottom.
     const hero = document.querySelector<HTMLElement>('[aria-label="Birchbank Golf — opening sequence"]');
     const nextAfterHero = hero?.nextElementSibling as HTMLElement | null;
-    const NAV_HEIGHT = 80;
 
     const update = () => {
       if (!nextAfterHero) {
@@ -40,7 +39,11 @@ export default function Nav() {
         setOnLight(window.scrollY > 20);
         return;
       }
-      setOnLight(nextAfterHero.getBoundingClientRect().top <= NAV_HEIGHT);
+      // Flip only once the user has scrolled fully past the hero image —
+      // i.e. when the next section's top edge reaches the very top of the
+      // viewport. Until that moment, the hero is still the "page header"
+      // and the nav stays transparent over it.
+      setOnLight(nextAfterHero.getBoundingClientRect().top <= 0);
     };
 
     update();
