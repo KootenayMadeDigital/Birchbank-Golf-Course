@@ -33,6 +33,7 @@ const config: NextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io" },
       { protocol: "https", hostname: "www.birchbankgolf.com" },
       { protocol: "https", hostname: "birchbankgolf.com" },
+      { protocol: "https", hostname: "birchbankgolfcourse.files.wordpress.com" },
     ],
   },
   async redirects() {

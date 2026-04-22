@@ -26,27 +26,28 @@ export default function Home() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* 3. Conditions + Next tee time */}
+      {/* 3. Book + Rates snapshot + Today-at-Birchbank */}
       <section className="py-[var(--spacing-section)]">
         <div className="container-edge grid gap-12 lg:grid-cols-12 items-start">
           <div className="lg:col-span-7">
             <ScrollReveal>
               <p className="eyebrow mb-5">Today at Birchbank</p>
               <h2 className="display-lg font-display mb-6">
-                Book the next tee time.
+                Book a tee time.
               </h2>
               <p className="prose-editorial text-granite/85 max-w-xl">
-                Tee times open online via Chronogolf, or by phone at the Pro Shop. We
-                update conditions before the first tee every morning.
+                Tee times can be reserved online or by phone with the Pro Shop. We open at
+                9 am every day of the season — frost delays and course conditions are
+                posted before the first tee.
               </p>
             </ScrollReveal>
 
             <ScrollReveal stagger className="mt-10 grid sm:grid-cols-2 gap-4">
               <div className="border border-granite/15 bg-paper p-6">
-                <p className="eyebrow mb-3">Next available</p>
-                <p className="font-display text-3xl text-granite">8:24 am</p>
-                <p className="text-sm text-silt mt-1">Walking · two spots</p>
-                <BookButton className="mt-5" label="Take this tee time" />
+                <p className="eyebrow mb-3">18 holes</p>
+                <p className="font-display text-3xl text-granite">$80</p>
+                <p className="text-sm text-silt mt-1">Day rate · walking</p>
+                <BookButton className="mt-5" />
               </div>
               <div className="border border-amber/40 bg-amber/5 p-6">
                 <p className="eyebrow mb-3 text-amber">Twilight</p>
@@ -129,23 +130,45 @@ export default function Home() {
             <ScrollReveal>
               <p className="eyebrow text-paper/60 mb-5">The scorecard</p>
               <p className="display-lg font-display">
-                Par 72.<br />Five sets of tees.
+                Par 72.<br />Five sets of tees.<br />One Columbia River.
               </p>
             </ScrollReveal>
           </div>
           <div className="md:col-span-7">
             <ScrollReveal>
               <p className="prose-editorial text-paper/85">
-                6,788 yards from the Gold tees. 5,345 from the Red. New irrigation with
-                ponds at holes 12 and 15. Pick up a printed scorecard at the Pro Shop
-                when you check in, or view it online.
+                6,788 yards from the Gold, 5,345 from the Red — a tee for every
+                game. Rating 71.5 / slope 121 from the Blue. New irrigation with
+                ponds on holes 12 and 15, restored greens, and the original Roy Stone
+                routing returned in 2018.
               </p>
-              <div className="mt-8 flex flex-wrap gap-4">
+              <ul className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-6 font-mono text-sm">
+                <li>
+                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Gold</p>
+                  <p className="font-display text-xl">6,788 yd</p>
+                </li>
+                <li>
+                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Blue</p>
+                  <p className="font-display text-xl">6,555 yd</p>
+                  <p className="text-paper/60 text-xs mt-0.5">71.5 / 121</p>
+                </li>
+                <li>
+                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">White</p>
+                  <p className="font-display text-xl">5,882 yd</p>
+                  <p className="text-paper/60 text-xs mt-0.5">73.9 / 128</p>
+                </li>
+                <li>
+                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Red</p>
+                  <p className="font-display text-xl">5,345 yd</p>
+                  <p className="text-paper/60 text-xs mt-0.5">70.8 / 119</p>
+                </li>
+              </ul>
+              <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/course/scorecard"
                   className="btn-primary bg-tamarack text-granite hover:bg-paper"
                 >
-                  Scorecard
+                  Full scorecard
                 </Link>
                 <Link
                   href="/course/history"
@@ -236,23 +259,30 @@ export default function Home() {
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge text-center max-w-3xl mx-auto">
           <ScrollReveal>
-            <p className="eyebrow text-paper/60 mb-6">Ready when you are</p>
+            <p className="eyebrow text-paper/60 mb-6">Open April through October</p>
             <h2
-              className="font-display mb-10"
-              style={{ fontSize: "clamp(3rem, 9vw, 7rem)", lineHeight: "0.95", letterSpacing: "-0.02em" }}
+              className="font-display mb-8"
+              style={{ fontSize: "clamp(2.75rem, 8vw, 6rem)", lineHeight: "0.95", letterSpacing: "-0.02em" }}
             >
-              Book a<br />tee time.
+              Walk the 18.<br />Sit on the patio.<br />Watch the river.
             </h2>
-            <div className="flex flex-wrap items-center justify-center gap-5">
+            <p className="prose-editorial text-paper/85 mb-10 max-w-xl mx-auto">
+              An 18-hole public-access course on the Columbia River.
+              Member-owned since 2004. Routed by Roy Stone, 1962.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
               <BookButton />
-              <a href="tel:+12506932255" className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack">
+              <a
+                href="tel:+12506932255"
+                className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+              >
                 Call Pro Shop · 250-693-2255
               </a>
             </div>
-            <p className="mt-10 font-mono text-xs text-paper/60">
-              Pro Shop open 9 am – 7 pm, 7 days · Bistro 12 – 5 pm, 7 days
+            <p className="mt-10 font-mono text-xs text-paper/60 leading-relaxed">
+              Pro Shop 9 am – 7 pm · Bistro 12 – 5 pm · 7 days in season
               <br />
-              April 1 through October 31
+              5500 Highway 22, Genelle BC · 47 reviews · 4.4★ on GolfPass
             </p>
           </ScrollReveal>
         </div>

@@ -20,7 +20,13 @@ export default function HolePreview() {
       <div className="container-edge">
         <div className="mb-16 max-w-3xl">
           <p className="eyebrow mb-5">Hole by hole</p>
-          <h2 className="display-lg font-display">Eighteen holes. Par 72.</h2>
+          <h2 className="display-lg font-display">
+            Three holes that'll tell you what you're in for.
+          </h2>
+          <p className="prose-editorial text-granite/85 mt-6 max-w-xl">
+            Par 72 across 18 holes, from 5,345 yards at the Red tees to 6,788 at the
+            Gold. Here are three worth scouting before your round.
+          </p>
         </div>
 
         <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">

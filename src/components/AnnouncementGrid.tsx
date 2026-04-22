@@ -16,8 +16,8 @@ export default function AnnouncementGrid() {
         <div className="mb-14 flex items-end justify-between gap-6 flex-wrap">
           <div>
             <p className="eyebrow mb-4">What's on</p>
-            <h2 id="announcements-heading" className="display-md font-display text-granite max-w-[18ch]">
-              This week at Birchbank.
+            <h2 id="announcements-heading" className="display-md font-display text-granite max-w-[22ch]">
+              Three things to know before you come up.
             </h2>
           </div>
         </div>

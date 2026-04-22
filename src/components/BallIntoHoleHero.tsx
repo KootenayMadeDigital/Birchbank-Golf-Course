@@ -221,16 +221,18 @@ export default function BallIntoHoleHero() {
           aria-hidden="true"
         />
 
-        <div className="relative h-full container-edge flex flex-col justify-end pb-16 sm:pb-20 md:pb-28">
-          <p className="eyebrow text-paper/80 mb-4 md:mb-5">
+        <div className="relative h-full container-edge flex flex-col justify-end pb-20 sm:pb-24 md:pb-28">
+          <p className="eyebrow text-paper/80 mb-3 md:mb-5 text-[11px] sm:text-xs">
             Genelle, British Columbia · Since 1962
           </p>
-          <h1 className="display-xl text-paper max-w-[18ch]">Birchbank Golf Club.</h1>
-          <p className="prose-editorial text-paper/85 mt-5 md:mt-6 max-w-xl text-base md:text-lg">
+          <h1 className="display-xl text-paper max-w-[14ch] sm:max-w-[18ch]">
+            Birchbank Golf Club.
+          </h1>
+          <p className="prose-editorial text-paper/85 mt-4 md:mt-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-snug sm:leading-normal">
             Set along the banks of the Columbia River. The 18-hole course of the Rossland
             Trail Country Club. Open April 1 through October 31 — 213 days of golf.
           </p>
-          <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-4 md:gap-5">
+          <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-3 md:gap-5">
             <BookButton />
             <a
               href="/course"

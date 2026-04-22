@@ -1,12 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
- * "Live" conditions widget — static numbers for now, animated feel.
- * Timestamp updates once per minute; a small green dot pulses beside it.
- * Once wired to a real feed, swap `useStaticConditions` for a fetcher.
+ * Honest "Today at Birchbank" widget.
+ *
+ * Everything shown here is a provable fact we control:
+ *   • Current date / time (from the visitor's device, updated every minute)
+ *   • Season status — derived from the published April 1 → October 31 window
+ *   • Pro Shop and Bistro hours — from the Contacts page
+ *
+ * No invented green-speed / wind / firmness numbers. When real course-status
+ * data is wired up (frost delays, cart-path-only days, live weather) this
+ * widget's data sources become the place to plug it in.
  */
+
 function useNow() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -17,99 +25,79 @@ function useNow() {
   return now;
 }
 
+function getSeasonStatus(now: Date) {
+  const year = now.getFullYear();
+  const openDate = new Date(`${year}-04-01T00:00:00`);
+  const closeDate = new Date(`${year}-10-31T23:59:59`);
+  const msInDay = 1000 * 60 * 60 * 24;
+
+  if (now < openDate) {
+    const daysUntil = Math.ceil((openDate.getTime() - now.getTime()) / msInDay);
+    return { label: "Opens soon", detail: `${daysUntil} day${daysUntil === 1 ? "" : "s"} until the ${year} season opens` };
+  }
+  if (now > closeDate) {
+    const nextOpen = new Date(`${year + 1}-04-01T00:00:00`);
+    const daysUntil = Math.ceil((nextOpen.getTime() - now.getTime()) / msInDay);
+    return { label: "Closed for the season", detail: `${year + 1} season opens in ${daysUntil} day${daysUntil === 1 ? "" : "s"}` };
+  }
+
+  const daysInto = Math.floor((now.getTime() - openDate.getTime()) / msInDay) + 1;
+  const daysLeft = Math.floor((closeDate.getTime() - now.getTime()) / msInDay);
+  return { label: "Open", detail: `Day ${daysInto} of 213 · ${daysLeft} day${daysLeft === 1 ? "" : "s"} remaining this season` };
+}
+
 export default function ConditionsWidget() {
-  const ref = useRef<HTMLDivElement>(null);
   const now = useNow();
-  const [greens, setGreens] = useState(0);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setGreens(10.2);
-      return;
-    }
-
-    let cleanup: (() => void) | undefined;
-    (async () => {
-      const gsapMod = await import("gsap");
-      const stMod = await import("gsap/ScrollTrigger");
-      const gsap = gsapMod.default || gsapMod.gsap;
-      const ScrollTrigger = stMod.ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
-
-      const obj = { value: 0 };
-      const ctx = gsap.context(() => {
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top 80%",
-          once: true,
-          onEnter: () => {
-            gsap.to(obj, {
-              value: 10.2,
-              duration: 1.6,
-              ease: "power2.out",
-              onUpdate: () => setGreens(Number(obj.value.toFixed(1))),
-            });
-          },
-        });
-      }, el);
-      cleanup = () => ctx.revert();
-    })();
-    return () => cleanup?.();
-  }, []);
-
-  const day = now.toLocaleDateString("en-CA", { weekday: "long" });
+  const season = getSeasonStatus(now);
+  const day = now.toLocaleDateString("en-CA", { weekday: "long", month: "long", day: "numeric" });
   const time = now.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" });
+  const open = season.label === "Open";
 
   return (
     <aside
-      ref={ref}
-      aria-label="Course conditions"
+      aria-label="Today at Birchbank"
       aria-live="polite"
       className="border border-granite/15 bg-paper rounded-sm p-6 md:p-7"
     >
       <div className="flex items-center justify-between mb-5">
-        <p className="eyebrow text-cedar">Conditions</p>
+        <p className="eyebrow text-cedar">Today at Birchbank</p>
         <div className="flex items-center gap-2 font-mono text-xs text-silt">
           <span className="relative inline-flex w-2 h-2">
-            <span className="absolute inset-0 rounded-full bg-cedar animate-pulse-live" />
-            <span className="relative inline-flex rounded-full w-2 h-2 bg-cedar" />
+            {open && <span className="absolute inset-0 rounded-full bg-cedar animate-pulse-live" />}
+            <span className={`relative inline-flex rounded-full w-2 h-2 ${open ? "bg-cedar" : "bg-silt"}`} />
           </span>
-          Live
+          {open ? "Live" : "Closed"}
         </div>
       </div>
 
-      <p className="font-mono text-sm leading-relaxed text-granite">
-        {day}, {time}. Course open.
-      </p>
+      <p className="font-mono text-sm text-silt mb-1">{day}</p>
+      <p className="font-mono text-sm text-silt mb-5">{time}</p>
 
-      <dl className="mt-5 grid grid-cols-2 gap-y-3 gap-x-6 font-mono text-sm">
-        <div>
-          <dt className="text-silt text-xs">Greens speed</dt>
-          <dd className="font-display text-2xl text-granite mt-0.5">
-            {greens.toFixed(1)}
-          </dd>
+      <dl className="grid grid-cols-2 gap-y-5 gap-x-6 font-mono text-sm">
+        <div className="col-span-2">
+          <dt className="text-silt text-xs uppercase tracking-widest mb-1">Season</dt>
+          <dd className="font-display text-2xl text-granite">{season.label}</dd>
+          <dd className="text-silt text-xs mt-1">{season.detail}</dd>
         </div>
+
         <div>
-          <dt className="text-silt text-xs">Fairway firmness</dt>
-          <dd className="font-display text-2xl text-granite mt-0.5">
-            7<span className="text-silt text-base">/10</span>
-          </dd>
+          <dt className="text-silt text-xs uppercase tracking-widest mb-1">Pro Shop</dt>
+          <dd className="font-display text-lg text-granite">9 am – 7 pm</dd>
+          <dd className="text-silt text-xs mt-0.5">7 days</dd>
         </div>
+
         <div>
-          <dt className="text-silt text-xs">Wind</dt>
-          <dd className="font-display text-2xl text-granite mt-0.5">SW 12</dd>
-        </div>
-        <div>
-          <dt className="text-silt text-xs">Frost delay</dt>
-          <dd className="font-display text-2xl text-granite mt-0.5">None</dd>
+          <dt className="text-silt text-xs uppercase tracking-widest mb-1">The Bistro</dt>
+          <dd className="font-display text-lg text-granite">12 – 5 pm</dd>
+          <dd className="text-silt text-xs mt-0.5">7 days · licensed</dd>
         </div>
       </dl>
 
-      <a href="/conditions" className="mt-6 inline-block text-xs text-amber hover:underline font-mono">
-        Full conditions report →
+      <a
+        href="tel:+12506932255"
+        className="mt-6 inline-block text-xs text-amber hover:underline font-mono"
+      >
+        Call for today's conditions · 250-693-2255 →
       </a>
     </aside>
   );

@@ -69,7 +69,7 @@ export default function AnchorReveal() {
           data-reveal
           className="font-display text-granite opacity-0"
           style={{
-            fontSize: "clamp(3rem, 10vw, 9rem)",
+            fontSize: "clamp(2.5rem, 10vw, 9rem)",
             lineHeight: "0.95",
             letterSpacing: "-0.02em",
             willChange: "transform, opacity",
@@ -91,11 +91,11 @@ export default function AnchorReveal() {
 
         <div
           data-reveal
-          className="mt-14 pt-10 border-t border-granite/15 flex flex-wrap gap-x-10 gap-y-3 font-mono text-sm text-silt opacity-0"
+          className="mt-12 md:mt-14 pt-8 md:pt-10 border-t border-granite/15 grid grid-cols-2 md:flex md:flex-wrap gap-x-6 md:gap-x-10 gap-y-3 font-mono text-xs md:text-sm text-silt opacity-0"
           style={{ willChange: "transform, opacity" }}
         >
           <span><span className="text-granite">Par 72</span> · 18 holes</span>
-          <span><span className="text-granite">6,788 yd</span> · from the Gold tees</span>
+          <span><span className="text-granite">6,788 yd</span> · Gold tees</span>
           <span><span className="text-granite">Since 1962</span> · restored 2018</span>
           <span><span className="text-granite">Genelle, BC</span> · on the Columbia</span>
         </div>

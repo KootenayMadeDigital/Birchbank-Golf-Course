@@ -51,4 +51,19 @@ export const FAQ = [
     answer:
       "Yes. As of June 1, 2018, Birchbank was reconfigured to resemble the course as it was originally built.",
   },
+  {
+    question: "What is the dress code?",
+    answer:
+      "Ladies: tailored golf slacks, Capri pants, golf dresses, golf skirts/skorts, or Bermuda-style shorts (mid-thigh or longer). Tops in mock-neck, V-neck, or halter styles with straps at least 4 inches wide. Men: golf slacks or tailored pants, shorts between mid-thigh and the knee, collared shirts or turtleneck/mock necks, caps or visors without offensive logos. Footwear: soft spikes, running shoes, sport sandals, or any soft-soled shoe. Not permitted: tank tops, singlets, spaghetti straps, bare midriffs, sweatpants, basketball shorts, metal-spiked golf shoes, cleats, high heels, work boots, or flip-flops.",
+  },
+  {
+    question: "What is the course rating and slope?",
+    answer:
+      "Par 72. From the Blue tees (6,555 yards): course rating 71.5, slope 121. From the White tees (5,882 yards): course rating 73.9, slope 128. From the Red tees (5,345 yards): course rating 70.8, slope 119. Gold tees measure 6,788 yards; Combo tees 6,240 yards.",
+  },
+  {
+    question: "Where can I enter my score?",
+    answer:
+      "Members and visiting Golf Canada members can post scores at scg.golfcanada.ca. The Pro Shop can help if you're new to the handicap system.",
+  },
 ];

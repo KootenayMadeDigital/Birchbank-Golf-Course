@@ -4,15 +4,21 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Aman-style horizontal drag gallery. Real Bistro/course photos from
- * birchbankgolf.com's media library — unchanged URLs, lazy-loaded via next/image.
+ * Aman-style horizontal drag gallery. Real photographs from
+ * birchbankgolf.com's media library — a mix of on-property course
+ * shots and the Bistro interior. All unoptimized through next/image
+ * and lazy-loaded below the fold.
  */
 const PHOTOS = [
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-43-20-AM.jpg", caption: "The patio, early autumn." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-13-44-AM.jpg", caption: "Mid-morning on the green." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1272.jpg", caption: "The course, September light." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-43-20-AM.jpg", caption: "The Bistro patio." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1570.jpg", caption: "Early morning on the fairway." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-13-44-AM.jpg", caption: "Bistro mid-morning." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1290.jpg", caption: "Fairway toward the river." },
   { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-26-22-AM.jpg", caption: "Opening the Bistro." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1273.jpg", caption: "Walking the 18." },
   { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-51-50-AM.jpg", caption: "The covered patio." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-24-59-AM.jpg", caption: "The view beyond 18." },
+  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_0139.jpg", caption: "Course detail." },
   { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-45-54-AM.jpg", caption: "Friday afternoon." },
 ];
 
@@ -29,7 +35,7 @@ export default function PhotoMarquee() {
   }, []);
 
   return (
-    <section className="py-[var(--spacing-section)]" aria-label="Photographs from the course">
+    <section className="py-[var(--spacing-section)]" aria-label="Photographs from Birchbank">
       <div
         ref={scrollerRef}
         className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6"
@@ -42,14 +48,14 @@ export default function PhotoMarquee() {
           <figure
             key={p.src}
             className="flex-none snap-start first:ml-0 last:mr-[clamp(1.25rem,4vw,2.5rem)]"
-            style={{ width: "min(82vw, 38rem)" }}
+            style={{ width: "min(84vw, 38rem)" }}
           >
             <div className="relative aspect-[4/5] bg-granite/5 overflow-hidden">
               <Image
                 src={p.src}
                 alt={p.caption}
                 fill
-                sizes="(max-width: 768px) 82vw, 38rem"
+                sizes="(max-width: 768px) 84vw, 38rem"
                 className="object-cover"
                 loading={i === 0 ? "eager" : "lazy"}
                 unoptimized
