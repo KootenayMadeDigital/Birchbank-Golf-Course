@@ -25,28 +25,31 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // On the home page we keep the nav fully transparent until the ball-into-
-    // hole hero has scrolled past the top of the viewport. On every other
-    // page there's no hero, so we flip opaque almost immediately.
+    // Stay transparent while the ball-into-hole hero is in the viewport,
+    // go opaque once the user has scrolled past it. GSAP pins the hero
+    // (position: fixed) which makes IntersectionObserver on the hero
+    // itself unreliable — so instead we watch the first element *after*
+    // the hero and flip when its top edge crosses the nav's bottom.
     const hero = document.querySelector<HTMLElement>('[aria-label="Birchbank Golf — opening sequence"]');
+    const nextAfterHero = hero?.nextElementSibling as HTMLElement | null;
+    const NAV_HEIGHT = 80;
 
-    if (!hero) {
-      const onScroll = () => setOnLight(window.scrollY > 20);
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-      return () => window.removeEventListener("scroll", onScroll);
-    }
+    const update = () => {
+      if (!nextAfterHero) {
+        // Pages without a hero — flip opaque after a tiny scroll.
+        setOnLight(window.scrollY > 20);
+        return;
+      }
+      setOnLight(nextAfterHero.getBoundingClientRect().top <= NAV_HEIGHT);
+    };
 
-    // IntersectionObserver with a negative top rootMargin equal to the nav
-    // height — so `isIntersecting` flips to false at the moment the hero's
-    // bottom passes underneath the nav. Works identically for the desktop
-    // 100vh pinned hero and the mobile 300vh sticky-inner hero.
-    const observer = new IntersectionObserver(
-      ([entry]) => setOnLight(!entry.isIntersecting),
-      { threshold: 0, rootMargin: "-80px 0px 0px 0px" },
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   // When the mobile menu is open, force paper background regardless of scroll.
