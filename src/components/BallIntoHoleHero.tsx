@@ -64,12 +64,25 @@ export default function BallIntoHoleHero() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     sizeCanvas();
-    window.addEventListener("resize", sizeCanvas);
-    window.addEventListener("orientationchange", sizeCanvas);
 
     const state = { frame: 0 };
     let ticking = false;
     let gsapCtx: { revert: () => void } | null = null;
+
+    // Horizontal crop bias. The source video has the ball entering from the
+    // left and the hole at ~75% of frame width. A pure center crop on a
+    // portrait viewport would lose the hole off the right edge, so we
+    // right-bias the crop on narrow / portrait viewports while keeping
+    // wide / desktop viewports centered. 0 = left-aligned, 0.5 = center,
+    // 1 = right-aligned.
+    const focalX = () => {
+      const vw = window.innerWidth;
+      const portrait = window.innerHeight > vw;
+      if (vw <= 480) return 0.75;            // phone portrait
+      if (vw <= 768 && portrait) return 0.65; // tablet portrait
+      if (vw <= 1024) return 0.55;            // small laptop / split screen
+      return 0.5;                              // desktop / wide
+    };
 
     const render = (frame: number) => {
       const img = images[Math.floor(frame)];
@@ -80,14 +93,29 @@ export default function BallIntoHoleHero() {
       const ir = img.naturalWidth / img.naturalHeight;
       const cr = cw / ch;
       let dw = cw, dh = ch, dx = 0, dy = 0;
-      if (ir > cr) { dh = ch; dw = ch * ir; dx = (cw - dw) / 2; }
-      else { dw = cw; dh = cw / ir; dy = (ch - dh) / 2; }
+      if (ir > cr) {
+        // Image wider than canvas: scale to match height, crop horizontally.
+        dh = ch;
+        dw = ch * ir;
+        dx = -(dw - cw) * focalX();
+      } else {
+        // Image taller than canvas (very rare here): scale to width, crop vertically.
+        dw = cw;
+        dh = cw / ir;
+        dy = (ch - dh) / 2;
+      }
       ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(img, dx, dy, dw, dh);
     };
 
     images[0].onload = () => render(0);
     if (images[0].complete) render(0);
+
+    // Re-render current frame on resize/rotate so the new focal bias takes effect
+    // without waiting for the next scroll tick.
+    const onResize = () => { sizeCanvas(); render(state.frame); };
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
 
     (async () => {
       const gsapMod = await import("gsap");
@@ -157,8 +185,8 @@ export default function BallIntoHoleHero() {
     })();
 
     return () => {
-      window.removeEventListener("resize", sizeCanvas);
-      window.removeEventListener("orientationchange", sizeCanvas);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
       gsapCtx?.revert();
     };
   }, [reduced, framesAvailable]);
