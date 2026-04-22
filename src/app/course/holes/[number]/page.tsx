@@ -79,8 +79,9 @@ export default async function HolePage({
               <dl className="grid grid-cols-2 gap-y-4 gap-x-6">
                 <dt className="text-silt">Par</dt><dd className="text-right text-silt">—</dd>
                 <dt className="text-silt">Stroke index</dt><dd className="text-right text-silt">—</dd>
-                <dt className="text-silt">Black</dt><dd className="text-right text-silt">—</dd>
+                <dt className="text-silt">Gold</dt><dd className="text-right text-silt">—</dd>
                 <dt className="text-silt">Blue</dt><dd className="text-right text-silt">—</dd>
+                <dt className="text-silt">Combo</dt><dd className="text-right text-silt">—</dd>
                 <dt className="text-silt">White</dt><dd className="text-right text-silt">—</dd>
                 <dt className="text-silt">Red</dt><dd className="text-right text-silt">—</dd>
               </dl>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import BookButton from "./BookButton";
+import SocialLinks from "./SocialLinks";
 
 const LINKS = [
   { href: "/course", label: "Course" },
@@ -26,8 +27,6 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // When at the top of the page, the nav overlays the dark hero → light text.
-  // Once scrolled or mobile menu open, paper background → dark text.
   const onLight = scrolled || open;
 
   return (
@@ -65,15 +64,20 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:gap-4">
+          <SocialLinks
+            variant={onLight ? "dark" : "light"}
+            className="hidden md:flex"
+            size={16}
+          />
           <a
             href="tel:+12506932255"
             className={clsx(
-              "hidden md:inline text-sm hover:text-amber transition-colors",
+              "hidden xl:inline text-sm hover:text-amber transition-colors",
               onLight ? "text-granite" : "text-paper/85",
             )}
           >
-            Pro Shop · 250-693-2255
+            250-693-2255
           </a>
           <BookButton className="hidden md:inline-flex" />
           <button
@@ -107,6 +111,7 @@ export default function Nav() {
               <a href="tel:+12506932255" className="btn-ghost self-start">
                 Call Pro Shop · 250-693-2255
               </a>
+              <SocialLinks variant="dark" className="mt-2" size={20} />
             </div>
           </nav>
         </div>

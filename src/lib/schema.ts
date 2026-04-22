@@ -42,7 +42,7 @@ export function organizationJsonLd() {
       addressCountry: NAP.addressCountry,
     },
     sameAs: [
-      "https://www.facebook.com/birchbankgolfcourse",
+      "https://www.facebook.com/BirchbankGolf",
       "https://www.instagram.com/birchbankgolf",
     ],
   };

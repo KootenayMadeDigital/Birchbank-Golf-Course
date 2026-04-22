@@ -6,10 +6,20 @@ import BookButton from "./BookButton";
 const FRAME_COUNT = 120;
 const FRAME_PATH = (i: number) => `/hero/${String(i + 1).padStart(4, "0")}.webp`;
 
+/**
+ * Scroll-scrubbed image sequence hero — works identically across fine and
+ * coarse pointer devices.
+ *
+ * Layout is driven by CSS (see .hero-wrap / .hero-inner in globals.css):
+ *   • Fine pointer (desktop): wrapper is 100vh + inner absolute → GSAP pins it
+ *   • Coarse pointer (touch):  wrapper is 300vh + inner sticky  → GSAP scrubs
+ *     frames across the 300vh scroll distance without pinning
+ *
+ * Keeping the layout in CSS avoids SSR/client hydration mismatches.
+ */
 export default function BallIntoHoleHero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
   const [reduced, setReduced] = useState(false);
   const [framesAvailable, setFramesAvailable] = useState(true);
 
@@ -22,7 +32,6 @@ export default function BallIntoHoleHero() {
   }, []);
 
   useEffect(() => {
-    // Probe first frame — if 404, render the static fallback gracefully.
     const probe = new Image();
     probe.onload = () => setFramesAvailable(true);
     probe.onerror = () => setFramesAvailable(false);
@@ -39,7 +48,6 @@ export default function BallIntoHoleHero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Preload all frames
     const images: HTMLImageElement[] = [];
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
@@ -47,16 +55,17 @@ export default function BallIntoHoleHero() {
       img.src = FRAME_PATH(i);
       images.push(img);
     }
-    imagesRef.current = images;
 
     const sizeCanvas = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, rect.width * dpr);
+      canvas.height = Math.max(1, rect.height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     sizeCanvas();
     window.addEventListener("resize", sizeCanvas);
+    window.addEventListener("orientationchange", sizeCanvas);
 
     const state = { frame: 0 };
     let ticking = false;
@@ -65,7 +74,9 @@ export default function BallIntoHoleHero() {
     const render = (frame: number) => {
       const img = images[Math.floor(frame)];
       if (!img?.complete || img.naturalWidth === 0) return;
-      const { width: cw, height: ch } = canvas.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
+      const cw = rect.width;
+      const ch = rect.height;
       const ir = img.naturalWidth / img.naturalHeight;
       const cr = cw / ch;
       let dw = cw, dh = ch, dx = 0, dy = 0;
@@ -75,7 +86,6 @@ export default function BallIntoHoleHero() {
       ctx.drawImage(img, dx, dy, dw, dh);
     };
 
-    // First frame as soon as possible
     images[0].onload = () => render(0);
     if (images[0].complete) render(0);
 
@@ -86,11 +96,11 @@ export default function BallIntoHoleHero() {
       const ScrollTrigger = stMod.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
 
-      // Lenis smooth scroll — desktop only
+      const isCoarse = matchMedia("(pointer: coarse)").matches;
+
       type LenisLike = { on: (e: string, cb: () => void) => void; raf: (t: number) => void; destroy: () => void };
       let lenis: LenisLike | null = null;
-      const isTouch = matchMedia("(pointer: coarse)").matches;
-      if (!isTouch) {
+      if (!isCoarse) {
         const { default: Lenis } = await import("lenis");
         const instance = new Lenis({ smoothWheel: true, duration: 1.1 });
         lenis = instance as unknown as LenisLike;
@@ -100,25 +110,45 @@ export default function BallIntoHoleHero() {
       }
 
       gsapCtx = gsap.context(() => {
-        gsap.to(state, {
+        const common = {
           frame: FRAME_COUNT - 1,
           snap: "frame",
           ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "+=1200",
-            scrub: 0.5,
-            pin: !isTouch,
-            anticipatePin: 1,
-          },
           onUpdate: () => {
             if (!ticking) {
               ticking = true;
               requestAnimationFrame(() => { render(state.frame); ticking = false; });
             }
           },
-        });
+        };
+
+        if (isCoarse) {
+          // Touch: 300vh wrapper + sticky inner. Progress 0→1 maps to frames 0→119.
+          gsap.to(state, {
+            ...common,
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.4,
+              invalidateOnRefresh: true,
+            },
+          });
+        } else {
+          // Desktop: 100vh section, pinned, scrubbed across an extra 1200px of scroll.
+          gsap.to(state, {
+            ...common,
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "+=1200",
+              scrub: 0.5,
+              pin: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
       }, hero);
 
       return () => {
@@ -128,6 +158,7 @@ export default function BallIntoHoleHero() {
 
     return () => {
       window.removeEventListener("resize", sizeCanvas);
+      window.removeEventListener("orientationchange", sizeCanvas);
       gsapCtx?.revert();
     };
   }, [reduced, framesAvailable]);
@@ -135,59 +166,64 @@ export default function BallIntoHoleHero() {
   return (
     <section
       ref={heroRef}
-      className="relative w-full h-[100vh] bg-granite overflow-hidden"
+      className="hero-wrap relative w-full bg-granite"
       aria-label="Birchbank Golf — opening sequence"
     >
-      {framesAvailable && !reduced ? (
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full"
-        />
-      ) : (
+      <div className="hero-inner">
+        {framesAvailable && !reduced ? (
+          <canvas
+            ref={canvasRef}
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "linear-gradient(180deg, rgba(43,42,40,0.25), rgba(43,42,40,0.55)), url(/hero/fallback.jpg)",
+              backgroundColor: "#2B2A28",
+            }}
+            aria-hidden="true"
+          />
+        )}
+
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "linear-gradient(180deg, rgba(43,42,40,0.25), rgba(43,42,40,0.55)), url(/hero/fallback.jpg)",
-            backgroundColor: "#2B2A28",
-          }}
+          className="absolute inset-0 bg-gradient-to-b from-granite/10 via-transparent to-granite/70"
           aria-hidden="true"
         />
-      )}
 
-      {/* Scrim for legibility */}
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-granite/10 via-transparent to-granite/60"
-        aria-hidden="true"
-      />
-
-      {/* Text overlay */}
-      <div className="relative h-full container-edge flex flex-col justify-end pb-20 md:pb-28">
-        <p className="eyebrow text-paper/80 mb-5">Genelle, British Columbia · Since 1962</p>
-        <h1 className="display-xl text-paper max-w-[18ch]">
-          Birchbank Golf Club.
-        </h1>
-        <p className="prose-editorial text-paper/85 mt-6 max-w-xl">
-          Set along the banks of the Columbia River. The 18-hole course of the Rossland
-          Trail Country Club. Open April 1 through October 31 — 213 days of golf.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-5">
-          <BookButton />
-          <a href="/course" className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack">
-            Walk the 18 →
-          </a>
+        <div className="relative h-full container-edge flex flex-col justify-end pb-16 sm:pb-20 md:pb-28">
+          <p className="eyebrow text-paper/80 mb-4 md:mb-5">
+            Genelle, British Columbia · Since 1962
+          </p>
+          <h1 className="display-xl text-paper max-w-[18ch]">Birchbank Golf Club.</h1>
+          <p className="prose-editorial text-paper/85 mt-5 md:mt-6 max-w-xl text-base md:text-lg">
+            Set along the banks of the Columbia River. The 18-hole course of the Rossland
+            Trail Country Club. Open April 1 through October 31 — 213 days of golf.
+          </p>
+          <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-4 md:gap-5">
+            <BookButton />
+            <a
+              href="/course"
+              className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+            >
+              Walk the 18 →
+            </a>
+          </div>
         </div>
+
+        <a
+          href="#below-hero"
+          className="absolute bottom-5 right-5 md:bottom-6 md:right-6 z-10 text-paper/70 hover:text-tamarack text-xs font-mono"
+        >
+          Skip intro ↓
+        </a>
       </div>
 
-      {/* Skip-intro affordance */}
-      <a
-        href="#below-hero"
-        className="absolute bottom-6 right-6 z-10 text-paper/70 hover:text-tamarack text-xs font-mono"
-      >
-        Skip intro ↓
-      </a>
-
-      <span id="below-hero" className="sr-only">End of hero</span>
+      <span id="below-hero" className="sr-only">
+        End of hero
+      </span>
     </section>
   );
 }

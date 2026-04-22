@@ -3,12 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import BookButton from "@/components/BookButton";
 import SectionHeading from "@/components/SectionHeading";
-import { SCORECARD_IMAGES, COURSE_FACTS } from "@/data/holes";
+import { HOLE_SUMMARY, SCORECARD_IMAGES, COURSE_FACTS } from "@/data/holes";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "The course",
-  description: "Eighteen holes set along the banks of the Columbia River in Genelle, BC. Back nine and clubhouse designed by Roy Stone, opened 1969. Driving range on site.",
+  description: "Eighteen holes set along the banks of the Columbia River in Genelle, BC. Par 72, 6,788 yards from the Gold tees. Back nine and clubhouse designed by Roy Stone, opened 1969.",
   alternates: { canonical: "/course" },
 };
 
@@ -34,9 +34,11 @@ export default function CoursePage() {
         </h1>
         <p className="prose-editorial max-w-2xl text-granite/85">
           Birchbank is the 18-hole course of the Rossland Trail Country Club, set along
-          the west bank of the Columbia River in Genelle, BC. Construction began in 1962;
-          the first nine holes opened in 1964 and the back nine in 1969, designed by
-          local golf professional Roy Stone. A driving range and Pro Shop are on site.
+          the west bank of the Columbia River in Genelle, BC. Par 72,
+          {" "}{HOLE_SUMMARY.yardageGold.toLocaleString()} yards from the Gold tees.
+          Surrounded by the Selkirk and Monashee mountains. The first nine opened in
+          1964; the back nine and clubhouse opened in 1969, designed by local golf
+          professional Roy Stone. A driving range and Pro Shop are on site.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <BookButton />

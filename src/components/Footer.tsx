@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SocialLinks from "./SocialLinks";
 
 export default function Footer() {
   return (
@@ -29,6 +30,7 @@ export default function Footer() {
           >
             Bistro · 250-693-5451
           </a>
+          <SocialLinks variant="light" className="mt-6" size={20} />
         </div>
 
         <div>
