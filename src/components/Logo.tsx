@@ -2,11 +2,14 @@ import Image from "next/image";
 import clsx from "clsx";
 
 /**
- * The Birchbank Golf Club wordmark/tree logo, sourced from
- * birchbankgolf.com's WordPress media library. It is a JPG with a
- * cream/white background — when we place it over a dark surface (e.g. the
- * transparent nav above the hero), we wrap it in a small paper-colored
- * plate so it reads cleanly.
+ * Birchbank Golf Club wordmark + tree logo. Transparent-background PNG
+ * served from /public/brand/logo.png (Next/Image serves AVIF/WebP variants
+ * automatically to modern browsers).
+ *
+ * Two variants:
+ *   • `flush` — bare logo, used on paper / light backgrounds
+ *   • `plate` — logo wrapped in a small paper-colored plate so the dark
+ *     ink reads over dark backgrounds (the hero, the footer)
  */
 type Props = {
   variant?: "plate" | "flush";
@@ -15,9 +18,9 @@ type Props = {
   className?: string;
 };
 
-const LOGO_SRC = "https://www.birchbankgolf.com/wp-content/uploads/2019/02/birchbank-ratina-logo.jpg";
-const INTRINSIC_W = 1700;
-const INTRINSIC_H = 700;
+const LOGO_SRC = "/brand/logo.png";
+const INTRINSIC_W = 1200;
+const INTRINSIC_H = 506;
 
 export default function Logo({ variant = "flush", height = 40, priority = false, className }: Props) {
   const width = Math.round((height * INTRINSIC_W) / INTRINSIC_H);
@@ -30,17 +33,16 @@ export default function Logo({ variant = "flush", height = 40, priority = false,
       height={height}
       sizes={`${width}px`}
       priority={priority}
-      unoptimized
-      className="block"
+      className="block h-auto w-auto"
+      style={{ height }}
     />
   );
 
   if (variant === "plate") {
-    // Paper-colored padded plate — works on any background, including dark hero.
     return (
       <span
         className={clsx(
-          "inline-flex items-center bg-paper rounded-sm px-2 py-1 shadow-sm",
+          "inline-flex items-center bg-paper rounded-sm px-3 py-1.5 shadow-sm",
           className,
         )}
       >
