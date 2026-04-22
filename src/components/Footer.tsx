@@ -1,12 +1,13 @@
 import Link from "next/link";
 import SocialLinks from "./SocialLinks";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
     <footer className="bg-granite text-paper mt-32">
       <div className="container-edge py-20 grid gap-12 md:grid-cols-4">
         <div>
-          <p className="font-display text-2xl mb-4">Birchbank</p>
+          <Logo variant="plate" height={56} className="mb-6" />
           <p className="text-sm text-paper/75 leading-relaxed">
             5500 Highway 22<br />
             Genelle, BC<br />

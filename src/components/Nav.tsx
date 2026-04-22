@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 import BookButton from "./BookButton";
 import SocialLinks from "./SocialLinks";
+import Logo from "./Logo";
 
 const LINKS = [
   { href: "/course", label: "Course" },
@@ -42,12 +43,17 @@ export default function Nav() {
       <div className="container-edge flex items-center justify-between h-16 md:h-20">
         <Link
           href="/"
-          className={clsx(
-            "flex items-center gap-2 font-display text-xl tracking-tight transition-colors",
-            onLight ? "text-cedar" : "text-paper",
-          )}
+          aria-label="Birchbank Golf Club — home"
+          className="flex items-center gap-2"
         >
-          <span>Birchbank</span>
+          {/* On the transparent-over-hero state we wrap the cream logo in a
+              paper plate so it reads over dark imagery; once scrolled onto
+              the paper nav background, we drop the plate for a cleaner look. */}
+          <Logo
+            variant={onLight ? "flush" : "plate"}
+            height={onLight ? 40 : 36}
+            priority
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
