@@ -12,7 +12,7 @@ const LINKS = [
   { href: "/rates", label: "Rates" },
   { href: "/membership", label: "Memberships" },
   { href: "/bistro", label: "The Bistro" },
-  { href: "/events/book", label: "Book your event" },
+  { href: "/events", label: "Events" },
   { href: "/plan-your-visit", label: "Visit" },
   { href: "/contact", label: "Contacts" },
 ];
@@ -90,11 +90,20 @@ export default function Nav() {
           : "bg-transparent",
       )}
     >
-      <div className="container-edge flex items-center justify-between h-20 md:h-24">
+      {/*
+        Three-column grid layout:
+          col 1 (auto)  logo
+          col 2 (1fr)   nav links, centered within the column
+          col 3 (auto)  social + phone + book CTA
+        `gap-8 xl:gap-12` enforces a minimum breathing zone between the
+        logo and the first nav item so the logo plate can't crowd it at
+        any viewport width.
+      */}
+      <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-8 xl:gap-12 h-20 md:h-24">
         <Link
           href="/"
           aria-label="Birchbank Golf Club — home"
-          className="flex items-center gap-2"
+          className="flex items-center"
         >
           <Logo
             variant={light ? "flush" : "plate"}
@@ -103,13 +112,13 @@ export default function Nav() {
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-9 2xl:gap-11">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={clsx(
-                "text-base hover:text-amber transition-colors",
+                "text-[15px] xl:text-base whitespace-nowrap hover:text-amber transition-colors",
                 light ? "text-granite" : "text-paper",
               )}
             >
@@ -118,7 +127,7 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4 md:gap-5">
+        <div className="flex items-center gap-4 md:gap-5 justify-self-end">
           <SocialLinks
             variant={light ? "dark" : "light"}
             className="hidden md:flex"
@@ -127,7 +136,7 @@ export default function Nav() {
           <a
             href="tel:+12506932255"
             className={clsx(
-              "hidden xl:inline text-base hover:text-amber transition-colors",
+              "hidden 2xl:inline text-base whitespace-nowrap hover:text-amber transition-colors",
               light ? "text-granite" : "text-paper",
             )}
           >
