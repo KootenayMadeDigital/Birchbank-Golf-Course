@@ -20,6 +20,10 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
     title: "2026 season is open.",
     body: "April 1 through October 31 — 213 days of golf on the Columbia.",
     cta: { label: "Book a tee time", href: "/book" },
+    image: {
+      src: "/announcements/season.webp",
+      alt: "A dew-covered white wooden golf tee in morning grass at sunrise",
+    },
   },
   {
     eyebrow: "Pro Shop",
