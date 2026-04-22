@@ -32,11 +32,12 @@ export default function Nav() {
   return (
     <header
       className={clsx(
-        "fixed top-0 inset-x-0 z-40 transition-colors duration-300",
+        "fixed inset-x-0 z-40 transition-colors duration-300",
         onLight
           ? "bg-paper/95 backdrop-blur-sm border-b border-granite/10"
           : "bg-transparent",
       )}
+      style={{ top: "var(--announcement-h, 0px)" }}
     >
       <div className="container-edge flex items-center justify-between h-16 md:h-20">
         <Link

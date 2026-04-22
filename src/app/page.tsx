@@ -3,6 +3,7 @@ import Image from "next/image";
 import BallIntoHoleHero from "@/components/BallIntoHoleHero";
 import BookButton from "@/components/BookButton";
 import AnchorReveal from "@/components/AnchorReveal";
+import AnnouncementGrid from "@/components/AnnouncementGrid";
 import ConditionsWidget from "@/components/ConditionsWidget";
 import HolePreview from "@/components/HolePreview";
 import PhotoMarquee from "@/components/PhotoMarquee";
@@ -17,6 +18,11 @@ export default function Home() {
 
       {/* 2. Anchor — 213 days on the Columbia */}
       <AnchorReveal />
+
+      <div className="container-edge"><div className="rule-hair" /></div>
+
+      {/* 2.5 What's on — the 3-up announcement grid (replaces the old carousel pattern) */}
+      <AnnouncementGrid />
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
