@@ -2,12 +2,9 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import clsx from "clsx";
 import BookButton from "./BookButton";
 
-// Matches the IA on birchbankgolf.com as of April 2026:
-// Home · Course (Events Calendar, Rates, Course Layout & Scorecards, Pro Shop, Club History) ·
-// Memberships · The Bistro · Book Your Event · Menus · More (Enter Score, Public Documents,
-// Retirees Club, More Things To Do) · Contacts · Members Dashboard
 const LINKS = [
   { href: "/course", label: "Course" },
   { href: "/rates", label: "Rates" },
@@ -29,15 +26,28 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // When at the top of the page, the nav overlays the dark hero → light text.
+  // Once scrolled or mobile menu open, paper background → dark text.
+  const onLight = scrolled || open;
+
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-40 transition-colors duration-300 ${
-        scrolled || open ? "bg-paper/95 backdrop-blur-sm border-b border-granite/10" : "bg-transparent"
-      }`}
+      className={clsx(
+        "fixed top-0 inset-x-0 z-40 transition-colors duration-300",
+        onLight
+          ? "bg-paper/95 backdrop-blur-sm border-b border-granite/10"
+          : "bg-transparent",
+      )}
     >
       <div className="container-edge flex items-center justify-between h-16 md:h-20">
-        <Link href="/" className="flex items-center gap-2 font-display text-xl tracking-tight">
-          <span className="text-cedar">Birchbank</span>
+        <Link
+          href="/"
+          className={clsx(
+            "flex items-center gap-2 font-display text-xl tracking-tight transition-colors",
+            onLight ? "text-cedar" : "text-paper",
+          )}
+        >
+          <span>Birchbank</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -45,7 +55,10 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm text-granite hover:text-amber transition-colors"
+              className={clsx(
+                "text-sm hover:text-amber transition-colors",
+                onLight ? "text-granite" : "text-paper/85",
+              )}
             >
               {l.label}
             </Link>
@@ -55,7 +68,10 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <a
             href="tel:+12506932255"
-            className="hidden md:inline text-sm text-granite hover:text-amber transition-colors"
+            className={clsx(
+              "hidden md:inline text-sm hover:text-amber transition-colors",
+              onLight ? "text-granite" : "text-paper/85",
+            )}
           >
             Pro Shop · 250-693-2255
           </a>
@@ -66,9 +82,9 @@ export default function Nav() {
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 -mr-2"
           >
-            <span className="block w-5 h-px bg-granite mb-1" />
-            <span className="block w-5 h-px bg-granite mb-1" />
-            <span className="block w-5 h-px bg-granite" />
+            <span className={clsx("block w-5 h-px mb-1", onLight ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-5 h-px mb-1", onLight ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-5 h-px", onLight ? "bg-granite" : "bg-paper")} />
           </button>
         </div>
       </div>
