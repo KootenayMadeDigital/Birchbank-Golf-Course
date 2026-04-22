@@ -194,7 +194,7 @@ export default function BallIntoHoleHero() {
   return (
     <section
       ref={heroRef}
-      className="hero-wrap relative w-full bg-granite"
+      className="hero-wrap"
       aria-label="Birchbank Golf — opening sequence"
     >
       <div className="hero-inner">

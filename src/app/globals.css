@@ -75,33 +75,38 @@
   .animate-pulse-live {
     animation: pulse-live 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
+}
 
-  /* Hero wrapper: desktop (fine pointer) gets 100vh + absolute inner so GSAP
-     ScrollTrigger can pin it. Touch devices get 300vh + sticky inner so
-     ScrollTrigger can scrub frames via scroll progress without unreliable iOS
-     pinning. Driven by CSS so there's no hydration mismatch between SSR and
-     client. */
+/* Hero wrapper — kept as plain CSS (not inside @layer) so Tailwind 4's
+   layered specificity doesn't swallow it. Desktop / fine pointer gets
+   100vh + an absolutely-positioned inner so GSAP ScrollTrigger can pin it;
+   touch devices get a 300vh wrapper with a sticky inner so frames scrub
+   across scroll distance without relying on unreliable iOS pinning. */
+.hero-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-granite);
+}
+.hero-inner {
+  position: absolute;
+  inset: 0;
+}
+@media (pointer: coarse) {
   .hero-wrap {
-    height: 100vh;
-    overflow: hidden;
+    height: 300vh;
+    overflow: visible;
   }
   .hero-inner {
-    position: absolute;
-    inset: 0;
-  }
-  @media (pointer: coarse) {
-    .hero-wrap {
-      height: 300vh;
-      overflow: visible;
-    }
-    .hero-inner {
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
 }
 
