@@ -1,11 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
 import { GRID_ANNOUNCEMENTS } from "@/data/announcements";
 
 /**
  * 3-up announcement grid — all three cards visible at once, no rotation.
- * Mirrors the information density of the old slideshow without the
- * accessibility and attention-splitting drawbacks of a carousel.
+ * Cards may carry an optional `image` for cards whose message benefits from
+ * a photograph (e.g. the Bistro). We only attach real, attributable images;
+ * typography-only is the default.
  */
 export default function AnnouncementGrid() {
   return (
@@ -29,18 +31,35 @@ export default function AnnouncementGrid() {
               <Wrapper
                 key={a.title}
                 {...props}
-                className="group flex flex-col justify-between border border-granite/12 bg-paper p-8 hover:border-amber transition-colors"
+                className="group flex flex-col overflow-hidden border border-granite/12 bg-paper hover:border-amber transition-colors"
               >
-                <div>
-                  <p className="eyebrow mb-4 text-amber">{a.eyebrow}</p>
-                  <p className="font-display text-granite mb-4" style={{ fontSize: "clamp(1.5rem, 2.2vw, 2rem)", lineHeight: 1.1 }}>
-                    {a.title}
+                {a.image && (
+                  <div className="relative aspect-[4/3] bg-granite/5 overflow-hidden">
+                    <Image
+                      src={a.image.src}
+                      alt={a.image.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      unoptimized
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col justify-between flex-1 p-8">
+                  <div>
+                    <p className="eyebrow mb-4 text-amber">{a.eyebrow}</p>
+                    <p
+                      className="font-display text-granite mb-4"
+                      style={{ fontSize: "clamp(1.5rem, 2.2vw, 2rem)", lineHeight: 1.1 }}
+                    >
+                      {a.title}
+                    </p>
+                    <p className="text-silt text-sm leading-relaxed">{a.body}</p>
+                  </div>
+                  <p className="mt-8 text-sm text-amber group-hover:underline">
+                    {a.cta.label} →
                   </p>
-                  <p className="text-silt text-sm leading-relaxed">{a.body}</p>
                 </div>
-                <p className="mt-8 text-sm text-amber group-hover:underline">
-                  {a.cta.label} →
-                </p>
               </Wrapper>
             );
           })}

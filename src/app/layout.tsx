@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import AnnouncementBar from "@/components/AnnouncementBar";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { organizationJsonLd, golfCourseJsonLd } from "@/lib/schema";
@@ -61,7 +60,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <AnnouncementBar />
         <Nav />
         <main id="main">{children}</main>
         <Footer />

@@ -18,27 +18,48 @@ const LINKS = [
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  // When this is true, Nav shows its paper/opaque state. When false, it's
+  // transparent and sits over whatever's behind (the hero on /, other
+  // pages' top content otherwise).
+  const [onLight, setOnLight] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // On the home page we keep the nav fully transparent until the ball-into-
+    // hole hero has scrolled past the top of the viewport. On every other
+    // page there's no hero, so we flip opaque almost immediately.
+    const hero = document.querySelector<HTMLElement>('[aria-label="Birchbank Golf — opening sequence"]');
+
+    if (!hero) {
+      const onScroll = () => setOnLight(window.scrollY > 20);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
+    // IntersectionObserver with a negative top rootMargin equal to the nav
+    // height — so `isIntersecting` flips to false at the moment the hero's
+    // bottom passes underneath the nav. Works identically for the desktop
+    // 100vh pinned hero and the mobile 300vh sticky-inner hero.
+    const observer = new IntersectionObserver(
+      ([entry]) => setOnLight(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "-80px 0px 0px 0px" },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
-  const onLight = scrolled || open;
+  // When the mobile menu is open, force paper background regardless of scroll.
+  const light = onLight || open;
 
   return (
     <header
       className={clsx(
-        "fixed inset-x-0 z-40 transition-colors duration-300",
-        onLight
+        "fixed top-0 inset-x-0 z-40 transition-colors duration-300",
+        light
           ? "bg-paper/95 backdrop-blur-sm border-b border-granite/10"
           : "bg-transparent",
       )}
-      style={{ top: "var(--announcement-h, 0px)" }}
     >
       <div className="container-edge flex items-center justify-between h-16 md:h-20">
         <Link
@@ -46,12 +67,9 @@ export default function Nav() {
           aria-label="Birchbank Golf Club — home"
           className="flex items-center gap-2"
         >
-          {/* On the transparent-over-hero state we wrap the cream logo in a
-              paper plate so it reads over dark imagery; once scrolled onto
-              the paper nav background, we drop the plate for a cleaner look. */}
           <Logo
-            variant={onLight ? "flush" : "plate"}
-            height={onLight ? 40 : 36}
+            variant={light ? "flush" : "plate"}
+            height={light ? 40 : 36}
             priority
           />
         </Link>
@@ -63,7 +81,7 @@ export default function Nav() {
               href={l.href}
               className={clsx(
                 "text-sm hover:text-amber transition-colors",
-                onLight ? "text-granite" : "text-paper/85",
+                light ? "text-granite" : "text-paper/85",
               )}
             >
               {l.label}
@@ -73,7 +91,7 @@ export default function Nav() {
 
         <div className="flex items-center gap-3 md:gap-4">
           <SocialLinks
-            variant={onLight ? "dark" : "light"}
+            variant={light ? "dark" : "light"}
             className="hidden md:flex"
             size={16}
           />
@@ -81,7 +99,7 @@ export default function Nav() {
             href="tel:+12506932255"
             className={clsx(
               "hidden xl:inline text-sm hover:text-amber transition-colors",
-              onLight ? "text-granite" : "text-paper/85",
+              light ? "text-granite" : "text-paper/85",
             )}
           >
             250-693-2255
@@ -93,9 +111,9 @@ export default function Nav() {
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 -mr-2"
           >
-            <span className={clsx("block w-5 h-px mb-1", onLight ? "bg-granite" : "bg-paper")} />
-            <span className={clsx("block w-5 h-px mb-1", onLight ? "bg-granite" : "bg-paper")} />
-            <span className={clsx("block w-5 h-px", onLight ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-5 h-px mb-1", light ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-5 h-px mb-1", light ? "bg-granite" : "bg-paper")} />
+            <span className={clsx("block w-5 h-px", light ? "bg-granite" : "bg-paper")} />
           </button>
         </div>
       </div>

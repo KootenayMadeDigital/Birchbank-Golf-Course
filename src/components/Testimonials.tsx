@@ -2,9 +2,8 @@ import ScrollReveal from "./ScrollReveal";
 
 /**
  * Real, verbatim reviews aggregated from GolfPass (47 reviews, 4.4★ avg)
- * and Facebook (80+ reviews). Each quote is transcribed exactly; minor
- * trims for length are marked with ellipses. Reviewer handles are GolfPass
- * display names.
+ * and Facebook (22 reviews, 82% recommend). Each quote is transcribed
+ * exactly. Reviewer handles are GolfPass display names.
  *
  * Sources:
  *   https://www.golfpass.com/travel-advisor/courses/26756-birchbank-golf-course
@@ -78,7 +77,7 @@ export default function Testimonials() {
           <div className="max-w-2xl">
             <p className="eyebrow mb-5">From the people who play it</p>
             <h2 id="testimonials-heading" className="display-lg font-display">
-              4.4 stars. 127 reviews. One course.
+              4.4 stars on GolfPass. 82% recommend on Facebook.
             </h2>
           </div>
           <div className="font-mono text-xs text-silt flex gap-x-8 gap-y-2 flex-wrap">
@@ -94,7 +93,7 @@ export default function Testimonials() {
               </a>
             </span>
             <span>
-              <span className="text-granite font-semibold">80+ reviews</span>{" "}
+              <span className="text-granite font-semibold">22 reviews · 82% recommend</span>{" "}
               <a
                 href="https://www.facebook.com/BirchbankGolf"
                 target="_blank"
