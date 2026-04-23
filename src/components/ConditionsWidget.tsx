@@ -1,31 +1,62 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useNow, getSeasonStatus } from "@/lib/season";
+import type { WeatherSnapshot } from "@/lib/weather";
 
 /**
  * Honest "Today at Birchbank" widget.
  *
- * Everything shown here is a provable fact we control:
- *   • Current date / time (from the visitor's device, updated every minute)
- *   • Season status — derived from the published April 1 → October 31 window
- *   • Pro Shop and Bistro hours — from the Contacts page
- *
- * No invented green-speed / wind / firmness numbers. When real course-status
- * data is wired up (frost delays, cart-path-only days, live weather) this
- * widget's data sources become the place to plug it in.
+ * Weather data is sourced from Open-Meteo (Environment Canada's GEM
+ * model), fetched via our own /api/weather route which caches 15 minutes
+ * at the edge. If the upstream fails, we degrade gracefully — the season
+ * + hours block stays visible without fabricating any number.
  *
  * Season utilities (useNow, getSeasonStatus) are shared with AnchorReveal
  * via src/lib/season.ts.
  */
 
+function weatherGlyph(code: number): string {
+  if (code === 0) return "☀";
+  if (code >= 1 && code <= 2) return "⛅";
+  if (code === 3) return "☁";
+  if (code >= 45 && code <= 48) return "≡";
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "☂";
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "❄";
+  if (code >= 95) return "⚡";
+  return "·";
+}
+
 export default function ConditionsWidget() {
   const now = useNow();
-  // Before first client render `now` is null — render neutral placeholder
-  // strings that don't depend on Date-of-now, so SSR and hydration agree.
   const season = now ? getSeasonStatus(now) : { label: "Season", detail: "April 1 – October 31" };
   const day = now ? now.toLocaleDateString("en-CA", { weekday: "long", month: "long", day: "numeric" }) : "";
   const time = now ? now.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }) : "";
   const open = season.label === "Open";
+
+  // Fetch weather client-side from our cached /api/weather route. Re-fetch
+  // every 15 minutes (matching the server cache) so a visitor who parks on
+  // the page sees freshening data as the widget refreshes.
+  const [weather, setWeather] = useState<WeatherSnapshot | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch("/api/weather");
+        if (!res.ok) return;
+        const data = (await res.json()) as WeatherSnapshot;
+        if (!cancelled) setWeather(data);
+      } catch {
+        /* degrade silently — season + hours stay visible */
+      }
+    };
+    load();
+    const id = setInterval(load, 15 * 60 * 1000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
 
   return (
     <aside
@@ -47,10 +78,47 @@ export default function ConditionsWidget() {
       <p className="font-mono text-sm text-silt mb-1">{day || <span>&nbsp;</span>}</p>
       <p className="font-mono text-sm text-silt mb-5">{time || <span>&nbsp;</span>}</p>
 
-      <dl className="grid grid-cols-2 gap-y-5 gap-x-6 font-mono text-sm">
+      {/* Live weather block — only renders once the fetch resolves. Pre-fetch
+          state keeps the season / hours block at a stable height via a
+          min-height placeholder so we don't induce CLS. */}
+      <div className="min-h-[128px] mb-5">
+        {weather ? (
+          <>
+            <div className="flex items-baseline gap-3">
+              <span className="font-display text-5xl text-granite leading-none">
+                {weather.tempC}°
+              </span>
+              <span className="text-silt text-sm">
+                <span className="font-mono text-lg mr-2 text-cedar">{weatherGlyph(weather.conditionCode)}</span>
+                {weather.conditionLabel}
+              </span>
+            </div>
+            <p className="mt-2 font-mono text-xs text-silt">
+              Wind <span className="text-granite">{weather.windKmh} km/h {weather.windCardinal}</span>
+              <span className="mx-2 text-silt/40">·</span>
+              <span className="text-cedar">{weather.clubCall}</span>
+            </p>
+            <p className="mt-1 font-mono text-xs text-silt">
+              Today: <span className="text-granite">{weather.today.lowC}° / {weather.today.highC}°</span>
+              <span className="mx-2 text-silt/40">·</span>
+              <span className="text-granite">{weather.today.precipProbMax}%</span> precip
+            </p>
+            <p className="mt-1 font-mono text-xs text-silt">
+              Tomorrow: <span className="text-granite">{weather.tomorrow.conditionLabel.toLowerCase()},</span>{" "}
+              <span className="text-granite">{weather.tomorrow.lowC}° / {weather.tomorrow.highC}°</span>
+            </p>
+          </>
+        ) : (
+          <div className="h-full flex flex-col justify-center gap-1" aria-hidden="true">
+            <p className="font-mono text-xs text-silt/60">Loading conditions…</p>
+          </div>
+        )}
+      </div>
+
+      <dl className="grid grid-cols-2 gap-y-5 gap-x-6 font-mono text-sm border-t border-granite/10 pt-5">
         <div className="col-span-2">
           <dt className="text-silt text-xs uppercase tracking-widest mb-1">Season</dt>
-          <dd className="font-display text-2xl text-granite">{season.label}</dd>
+          <dd className="font-display text-xl text-granite">{season.label}</dd>
           <dd className="text-silt text-xs mt-1">{season.detail}</dd>
         </div>
 
@@ -71,7 +139,7 @@ export default function ConditionsWidget() {
         href="tel:+12506932255"
         className="mt-6 inline-block text-xs text-amber hover:underline font-mono"
       >
-        Call for today's conditions · 250-693-2255 →
+        Call the Pro Shop · 250-693-2255 →
       </a>
     </aside>
   );
