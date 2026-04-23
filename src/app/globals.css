@@ -77,6 +77,46 @@
   }
 }
 
+/* ScrollReveal — IntersectionObserver-driven fade/rise. Keeps CSS outside
+   any @layer so Tailwind utilities can't override the initial-hidden state
+   via specificity accident. When JS hasn't applied .sr-ready yet, content
+   is fully visible (graceful no-JS fallback). */
+.sr-ready {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 850ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 850ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.sr-ready.sr-stagger {
+  /* Container itself is visible when children are staggered individually. */
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+.sr-ready.sr-stagger > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 850ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 850ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.sr-ready.sr-in {
+  opacity: 1;
+  transform: none;
+}
+.sr-ready.sr-stagger.sr-in > * {
+  opacity: 1;
+  transform: none;
+}
+.sr-ready.sr-no-motion,
+.sr-ready.sr-no-motion > * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
 /*
   Chronogolf v2 widget — let Chronogolf's own stylesheet render the
   panel. We do NOT override its internals; fighting cdn2.chronogolf.com

@@ -12,6 +12,19 @@ type Props = {
   as?: keyof React.JSX.IntrinsicElements;
 };
 
+/**
+ * Scroll-triggered fade/rise wrapper. Uses the native IntersectionObserver
+ * for the reveal trigger and a CSS transition for the animation — no GSAP
+ * dependency, no ScrollTrigger position-recalc edge cases. Content is
+ * never left permanently invisible:
+ *   - reduced-motion: content visible immediately, no animation
+ *   - IntersectionObserver unsupported: content visible immediately
+ *   - 2.5s safety net: if the observer hasn't fired (iframe, offscreen
+ *     edge case), content reveals anyway
+ *
+ * Previously backed by GSAP which had a bug leaving sections invisible
+ * on production (review grid + rates cards most affected).
+ */
 export default function ScrollReveal({
   children,
   stagger = false,
@@ -24,55 +37,55 @@ export default function ScrollReveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.opacity = "1";
-      el.style.transform = "none";
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const noIO = typeof IntersectionObserver === "undefined";
+
+    const reveal = () => {
+      el.classList.add("sr-in");
+      if (stagger) {
+        Array.from(el.children).forEach((c, i) => {
+          (c as HTMLElement).style.transitionDelay = `${delay + i * 120}ms`;
+        });
+      } else {
+        el.style.transitionDelay = `${delay}ms`;
+      }
+    };
+
+    if (reduce || noIO) {
+      el.classList.add("sr-ready", "sr-in", "sr-no-motion");
       return;
     }
 
-    let cleanup: (() => void) | undefined;
+    el.classList.add("sr-ready");
+    if (stagger) el.classList.add("sr-stagger");
 
-    (async () => {
-      const gsapMod = await import("gsap");
-      const stMod = await import("gsap/ScrollTrigger");
-      const gsap = gsapMod.default || gsapMod.gsap;
-      const ScrollTrigger = stMod.ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            reveal();
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.01 },
+    );
+    io.observe(el);
 
-      const targets = stagger ? Array.from(el.children) : el;
-      const ctx = gsap.context(() => {
-        gsap.fromTo(
-          targets,
-          { y: 32, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power2.out",
-            delay: delay / 1000,
-            stagger: stagger ? 0.12 : 0,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          },
-        );
-      }, el);
+    // Safety net: reveal after 2.5s regardless so content is never stuck.
+    const safety = window.setTimeout(reveal, 2500);
 
-      cleanup = () => ctx.revert();
-    })();
-
-    return () => cleanup?.();
+    return () => {
+      io.disconnect();
+      clearTimeout(safety);
+    };
   }, [stagger, delay]);
 
   const Tag = as as React.ElementType;
   return (
-    <Tag
-      ref={ref as React.RefObject<HTMLElement>}
-      className={className}
-      style={{ opacity: 0, willChange: "transform, opacity" }}
-    >
+    <Tag ref={ref as React.RefObject<HTMLElement>} className={className}>
       {children}
     </Tag>
   );
