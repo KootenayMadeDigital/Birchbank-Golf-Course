@@ -304,10 +304,14 @@ export default function Home() {
               Member-owned since 2004. Routed by Roy Stone, 1962.
             </p>
 
-            {/* Drive-times strip (enhancement 8) — one-line destination answer
-                for the Albertan / WA personas. Driving distances are the
-                commonly-cited road-trip windows from each city. */}
-            <p className="mb-10 font-mono text-xs text-paper/65 tracking-wide">
+            {/* Drive-times strip links to /plan-your-visit — the full
+                destination hub with drive routes, border crossings,
+                airports, lodging, and the Kootenay golf trail for
+                multi-day trips. */}
+            <Link
+              href="/plan-your-visit"
+              className="block mb-10 font-mono text-xs text-paper/65 tracking-wide hover:text-paper transition-colors"
+            >
               <span className="text-tamarack">Spokane 3h</span>
               <span className="mx-2 text-paper/30">·</span>
               <span className="text-tamarack">Kelowna 3h</span>
@@ -315,7 +319,8 @@ export default function Home() {
               <span className="text-tamarack">Calgary 7h</span>
               <span className="mx-2 text-paper/30">·</span>
               <span className="text-tamarack">Vancouver 7h</span>
-            </p>
+              <span className="ml-3 text-paper/50">Plan your visit →</span>
+            </Link>
 
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
               <BookButton />

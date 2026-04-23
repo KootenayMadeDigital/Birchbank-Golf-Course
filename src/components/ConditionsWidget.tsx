@@ -60,9 +60,10 @@ export default function ConditionsWidget() {
 
   return (
     <aside
+      id="conditions-widget"
       aria-label="Today at Birchbank"
       aria-live="polite"
-      className="border border-granite/15 bg-paper rounded-sm p-6 md:p-7"
+      className="border border-granite/15 bg-paper rounded-sm p-6 md:p-7 scroll-mt-32"
     >
       <div className="flex items-center justify-between mb-5">
         <p className="eyebrow text-cedar">Today at Birchbank</p>
