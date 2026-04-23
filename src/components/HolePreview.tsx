@@ -61,6 +61,19 @@ export default function HolePreview() {
                       {h.headline}
                     </p>
                     <p className="mt-2 text-silt text-base max-w-xl">{h.body}</p>
+                    {/* Aside — always visible on mobile (since the HCP / yardage
+                        columns are hidden there); on md+ it's tucked under
+                        the fold and rises in on hover as a reveal. */}
+                    <p
+                      className={[
+                        "mt-2 font-mono text-xs text-silt/80 max-w-xl",
+                        "md:opacity-0 md:translate-y-1 md:transition-all md:duration-300",
+                        "md:group-hover:opacity-100 md:group-hover:translate-y-0",
+                        "md:group-focus-within:opacity-100 md:group-focus-within:translate-y-0",
+                      ].join(" ")}
+                    >
+                      {h.aside}
+                    </p>
                   </div>
                   <span className="hidden md:block md:col-span-2 font-mono text-sm text-silt">
                     Par {hole.par} · {hole.yardage.blue} yd
