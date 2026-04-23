@@ -1,9 +1,20 @@
 /**
  * Per-hole scorecard data — Blue, White, and Red tee yardages verified from
- * the published Birchbank scorecard (displayed on GolfNow course page,
- * photographed and supplied by the course, April 2026). Gold and Combo tee
- * totals verified via GolfPass but per-hole breakdowns for those two sets
- * were not in the source images — they can be added here when supplied.
+ * the published Birchbank scorecard (2020 edition at
+ * birchbankgolf.com/wp-content/uploads/2020/02/2020-Score-Card-inside.jpg)
+ * cross-referenced against the GolfNow course panel.
+ *
+ * Gold and Combo:
+ *   - Aggregate totals verified via GolfPass course listing (6788 / 6240).
+ *   - Per-hole yardage NOT published: the 2020 scorecard shows Blue, Combo
+ *     (two rating rows: men's / ladies'), White, Red — but no Gold row.
+ *     Gold appears to have been added after the 2020 scorecard went to
+ *     print. Per-hole Combo breakdown varies by routing variant; the
+ *     scorecard prints the totals but not an extractable per-hole column.
+ *   - Sourcing these would require a newer Birchbank scorecard or a direct
+ *     transcription from the Pro Shop. Until then, ScorecardSwitcher and
+ *     ScorecardCompact surface the aggregate total only for these tees
+ *     and disclose that per-hole isn't published.
  *
  * Stroke indexes differ by tee set: Blue uses the men's index; White and Red
  * share the forward-tee index. The scorecard publishes both.
@@ -60,13 +71,31 @@ export const HOLE_SUMMARY = {
   yardageRed: 5345,
 };
 
-// Course + slope ratings per tee (from GolfNow scorecard panel).
+/**
+ * Course + slope ratings per tee.
+ *
+ * Source: GolfNow's Birchbank course panel (the most complete public
+ * source — confirmed on grassy.golf and cross-referenced against the
+ * 2020 printed scorecard).
+ *
+ * Every tee has both a Men's and Women's rating/slope pair; the course
+ * publishes both. We display the primary rating per tee here (Men's for
+ * Gold / Blue / White; Women's for Red — the traditional gender-tee
+ * assignment). Combo is unisex.
+ *
+ * Full GolfNow table for reference:
+ *   Gold  (M) 72.6 / 125   Gold  (W) 79.6 / 138
+ *   Blue  (M) 71.5 / 123   Blue  (W) 78.0 / 136
+ *   Combo      70.2 / 122
+ *   White (M) 68.5 / 116   White (W) 73.6 / 131
+ *   Red   (M) 65.6 / 112   Red   (W) 70.6 / 122
+ */
 export const TEES = [
-  { key: "gold",  name: "Gold",  total: 6788, courseRating: null, slopeRating: null },
-  { key: "blue",  name: "Blue",  total: 6555, courseRating: 71.5, slopeRating: 121 },
-  { key: "combo", name: "Combo", total: 6240, courseRating: null, slopeRating: null },
-  { key: "white", name: "White", total: 5882, courseRating: 73.9, slopeRating: 128 },
-  { key: "red",   name: "Red",   total: 5345, courseRating: 70.8, slopeRating: 119 },
+  { key: "gold",  name: "Gold",  total: 6788, courseRating: 72.6, slopeRating: 125 },
+  { key: "blue",  name: "Blue",  total: 6555, courseRating: 71.5, slopeRating: 123 },
+  { key: "combo", name: "Combo", total: 6240, courseRating: 70.2, slopeRating: 122 },
+  { key: "white", name: "White", total: 5882, courseRating: 68.5, slopeRating: 116 },
+  { key: "red",   name: "Red",   total: 5345, courseRating: 70.6, slopeRating: 122 },
 ] as const;
 
 export const SCORECARD_IMAGES = {

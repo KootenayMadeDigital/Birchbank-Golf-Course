@@ -53,7 +53,16 @@ export default function Scorecard() {
 
       {/* Printed scorecard reference */}
       <div className="mt-16">
-        <p className="eyebrow mb-6">Printed scorecard reference</p>
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <p className="eyebrow">Printed scorecard reference</p>
+          <a
+            href="/api/scorecard"
+            download="birchbank-scorecard.pdf"
+            className="font-mono text-xs text-amber hover:text-amber-dark underline underline-offset-2"
+          >
+            Download scorecard PDF ↓
+          </a>
+        </div>
         <div className="grid gap-8 md:grid-cols-2">
           <figure>
             <p className="text-xs text-silt font-mono mb-3">Inside</p>
@@ -86,6 +95,13 @@ export default function Scorecard() {
 
       <div className="mt-12 flex flex-wrap gap-4">
         <Link href="/book" className="btn-primary">Book a tee time</Link>
+        <a
+          href="/api/scorecard"
+          download="birchbank-scorecard.pdf"
+          className="btn-ghost"
+        >
+          Download scorecard PDF ↓
+        </a>
         <Link href="/course" className="btn-ghost">Course overview</Link>
       </div>
     </section>

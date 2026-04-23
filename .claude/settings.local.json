@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(NEXT_PUBLIC_SITE_URL=https://birchbank-golf-course.vercel.app NEXT_PUBLIC_CHRONOGOLF_CLUB_ID=0 npx next build)"
+      "Bash(NEXT_PUBLIC_SITE_URL=https://birchbank-golf-course.vercel.app NEXT_PUBLIC_CHRONOGOLF_CLUB_ID=0 npx next build)",
+      "Bash(curl -s http://localhost:3000 -o /tmp/page.html)",
+      "Read(//tmp/**)"
     ]
   }
 }

@@ -237,6 +237,13 @@ export default function CoursePage() {
 
           <div className="mt-12 flex flex-wrap gap-4">
             <Link href="/course/scorecard" className="btn-primary">Full interactive scorecard</Link>
+            <a
+              href="/api/scorecard"
+              download="birchbank-scorecard.pdf"
+              className="btn-ghost"
+            >
+              Download PDF ↓
+            </a>
             <Link href="/course/holes/1" className="btn-ghost">Walk the 18 hole-by-hole →</Link>
           </div>
         </div>
