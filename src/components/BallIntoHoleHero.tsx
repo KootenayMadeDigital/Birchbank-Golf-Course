@@ -111,11 +111,38 @@ export default function BallIntoHoleHero() {
     images[0].onload = () => render(0);
     if (images[0].complete) render(0);
 
-    // Re-render current frame on resize/rotate so the new focal bias takes effect
-    // without waiting for the next scroll tick.
-    const onResize = () => { sizeCanvas(); render(state.frame); };
-    window.addEventListener("resize", onResize);
-    window.addEventListener("orientationchange", onResize);
+    // Hold a ref to ScrollTrigger so the resize handler can refresh it once
+    // GSAP has finished loading. On resize, both the canvas pixel buffer AND
+    // GSAP's pin-spacer math need to be recomputed or you get a ghosted /
+    // duplicated render (the canvas drew to new dimensions but GSAP thinks
+    // the pin is still at the old ones).
+    let scrollTriggerRef: { refresh: () => void } | null = null;
+
+    // Debounce + batch: resize events fire hundreds of times during a drag.
+    // Running sizeCanvas / render on every one leaves the canvas in half-
+    // painted states. Debounce lightly; rAF the settle so we paint once the
+    // layout has actually relaxed.
+    let resizeTimer: number | undefined;
+    let resizeRAF: number | undefined;
+    const handleResize = () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      if (resizeRAF) cancelAnimationFrame(resizeRAF);
+      resizeTimer = window.setTimeout(() => {
+        resizeRAF = requestAnimationFrame(() => {
+          sizeCanvas();
+          render(state.frame);
+          scrollTriggerRef?.refresh();
+        });
+      }, 120);
+    };
+
+    // ResizeObserver catches every dimension change -- not just window resize
+    // but also CSS layout shifts, dvh unit recomputes on mobile chrome UI
+    // expand/collapse, etc.
+    const ro = "ResizeObserver" in window ? new ResizeObserver(handleResize) : null;
+    ro?.observe(canvas);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
 
     (async () => {
       const gsapMod = await import("gsap");
@@ -123,6 +150,7 @@ export default function BallIntoHoleHero() {
       const gsap = gsapMod.default || gsapMod.gsap;
       const ScrollTrigger = stMod.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
+      scrollTriggerRef = ScrollTrigger;
 
       const isCoarse = matchMedia("(pointer: coarse)").matches;
 
@@ -185,8 +213,11 @@ export default function BallIntoHoleHero() {
     })();
 
     return () => {
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("orientationchange", onResize);
+      ro?.disconnect();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      if (resizeRAF) cancelAnimationFrame(resizeRAF);
       gsapCtx?.revert();
     };
   }, [reduced, framesAvailable]);
