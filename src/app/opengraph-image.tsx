@@ -34,10 +34,10 @@ export default async function OG() {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 108, lineHeight: 1.0, letterSpacing: "-0.02em" }}>
-            Birchbank
+            Come for
           </div>
           <div style={{ fontSize: 108, lineHeight: 1.0, letterSpacing: "-0.02em" }}>
-            Golf Club.
+            the drop.
           </div>
         </div>
 

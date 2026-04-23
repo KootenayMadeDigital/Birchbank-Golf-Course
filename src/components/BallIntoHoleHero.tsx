@@ -226,7 +226,7 @@ export default function BallIntoHoleHero() {
             Genelle, British Columbia · Since 1962
           </p>
           <h1 className="display-xl text-paper max-w-[14ch] sm:max-w-[18ch]">
-            Birchbank Golf Club.
+            Come for the drop.
           </h1>
           <p className="prose-editorial text-paper/85 mt-4 md:mt-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-snug sm:leading-normal">
             Set along the banks of the Columbia River. The 18-hole course of the Rossland
