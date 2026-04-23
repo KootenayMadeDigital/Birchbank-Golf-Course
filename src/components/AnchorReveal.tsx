@@ -1,13 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useNow, getSeasonStatus } from "@/lib/season";
 
 /**
  * The emotional anchor after the hero lands — "213 days on the Columbia."
  * Full-viewport cream block with scroll-triggered stagger on each line.
+ *
+ * The fourth chip in the metadata row is live: it reads the visitor's
+ * clock, computes day-of-season, and shows a tamarack pulse dot when the
+ * course is open. Other three chips are static by design — the Aman
+ * discipline of "one thing moves per view."
  */
 export default function AnchorReveal() {
   const ref = useRef<HTMLDivElement>(null);
+  const now = useNow();
+  const season = now ? getSeasonStatus(now) : null;
+  const time = now ? now.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }) : "";
+  const isOpen = season?.label === "Open";
 
   useEffect(() => {
     const el = ref.current;
@@ -96,8 +106,26 @@ export default function AnchorReveal() {
         >
           <span><span className="text-granite">Par 72</span> · 18 holes</span>
           <span><span className="text-granite">6,788 yd</span> · Gold tees</span>
-          <span><span className="text-granite">Since 1962</span> · restored 2018</span>
           <span><span className="text-granite">Genelle, BC</span> · on the Columbia</span>
+          {/* Live chip — only this one animates. Renders a neutral placeholder
+              during SSR/pre-hydration so the layout doesn't shift when the
+              client clock kicks in. */}
+          {season && now ? (
+            <span className="inline-flex items-center gap-2 whitespace-nowrap">
+              {isOpen ? (
+                <span className="relative inline-flex h-2 w-2 shrink-0">
+                  <span className="absolute inset-0 rounded-full bg-tamarack animate-pulse-live" aria-hidden="true" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-tamarack" aria-hidden="true" />
+                </span>
+              ) : null}
+              <span className="text-granite">
+                {isOpen && season.dayOfSeason ? `Day ${season.dayOfSeason} of 213` : season.label}
+              </span>
+              {time ? <span>· {time}</span> : null}
+            </span>
+          ) : (
+            <span><span className="text-granite">Apr 1 – Oct 31</span> · 213-day season</span>
+          )}
         </div>
       </div>
     </section>

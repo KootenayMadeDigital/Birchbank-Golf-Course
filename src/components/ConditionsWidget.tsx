@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useNow, getSeasonStatus } from "@/lib/season";
 
 /**
  * Honest "Today at Birchbank" widget.
@@ -13,42 +13,10 @@ import { useEffect, useState } from "react";
  * No invented green-speed / wind / firmness numbers. When real course-status
  * data is wired up (frost delays, cart-path-only days, live weather) this
  * widget's data sources become the place to plug it in.
+ *
+ * Season utilities (useNow, getSeasonStatus) are shared with AnchorReveal
+ * via src/lib/season.ts.
  */
-
-function useNow() {
-  // Initial state is null so SSR and first client render agree — if we
-  // seed with `new Date()` the server's Date and the hydrating client's
-  // Date differ, which triggers React hydration-mismatch warning #418.
-  const [now, setNow] = useState<Date | null>(null);
-  useEffect(() => {
-    setNow(new Date());
-    const tick = () => setNow(new Date());
-    const id = setInterval(tick, 60_000);
-    return () => clearInterval(id);
-  }, []);
-  return now;
-}
-
-function getSeasonStatus(now: Date) {
-  const year = now.getFullYear();
-  const openDate = new Date(`${year}-04-01T00:00:00`);
-  const closeDate = new Date(`${year}-10-31T23:59:59`);
-  const msInDay = 1000 * 60 * 60 * 24;
-
-  if (now < openDate) {
-    const daysUntil = Math.ceil((openDate.getTime() - now.getTime()) / msInDay);
-    return { label: "Opens soon", detail: `${daysUntil} day${daysUntil === 1 ? "" : "s"} until the ${year} season opens` };
-  }
-  if (now > closeDate) {
-    const nextOpen = new Date(`${year + 1}-04-01T00:00:00`);
-    const daysUntil = Math.ceil((nextOpen.getTime() - now.getTime()) / msInDay);
-    return { label: "Closed for the season", detail: `${year + 1} season opens in ${daysUntil} day${daysUntil === 1 ? "" : "s"}` };
-  }
-
-  const daysInto = Math.floor((now.getTime() - openDate.getTime()) / msInDay) + 1;
-  const daysLeft = Math.floor((closeDate.getTime() - now.getTime()) / msInDay);
-  return { label: "Open", detail: `Day ${daysInto} of 213 · ${daysLeft} day${daysLeft === 1 ? "" : "s"} remaining this season` };
-}
 
 export default function ConditionsWidget() {
   const now = useNow();
