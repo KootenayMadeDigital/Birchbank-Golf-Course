@@ -142,39 +142,94 @@
   line-height: 1.45 !important;
   color: var(--color-granite);
 }
-.chrono-container > a .chrono-panel * {
-  font-size: inherit !important;
-}
 
-/* 4. Panel shell — rounded, elevated, on-brand. */
+/* 4. Panel shell — rounded, elevated, on-brand.
+      No height constraint; let the header dictate the panel height so the
+      72px icon tile + 2px tamarack top rule render without clipping. */
 .chrono-panel {
   box-shadow: 0 20px 50px -12px rgba(43, 42, 40, 0.35) !important;
   border-radius: 4px !important;
   overflow: hidden !important;
-  min-width: 280px !important;
+  min-width: 320px !important;
+  min-height: 74px !important;
+  height: auto !important;
+  display: block !important;
 }
 
-/* 5. Panel header (the visible trigger): cedar bg with tamarack rule */
+/* 5. Panel header: cedar background, tamarack top rule.
+      Actual DOM is: .chrono-panel-header > <a> > [caret, icon, title]
+      — so the flex container is the nested <a>, not the header itself.
+      We use flex `order` to visually arrange them as: icon | title | caret. */
 .chrono-panel-header {
   background: var(--color-cedar) !important;
   border-top: 2px solid var(--color-tamarack) !important;
-  padding: 0.75rem 1rem !important;
-  min-height: 52px !important;
+  min-height: 72px !important;
+  padding: 0 !important;
+}
+.chrono-panel-header > a {
+  display: flex !important;
+  align-items: stretch !important;
+  min-height: 72px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+  background: var(--color-cedar) !important;
+}
+
+/* Icon tile — visually first, 72×72 paper square with a cedar clock glyph. */
+.chrono-panel-header-icon {
+  order: 1 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.75rem !important;
+  justify-content: center !important;
+  width: 72px !important;
+  min-width: 72px !important;
+  height: 72px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--color-paper) !important;
+  border-right: 1px solid rgba(43, 42, 40, 0.08) !important;
+  flex: 0 0 auto !important;
+  /* Inline SVG clock rendered via background (the <span> has no text node
+     and Chronogolf doesn't inject ::before content). Cedar stroke on paper. */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%233C4A35' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><polyline points='12 7 12 12 15.5 14'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 32px 32px !important;
+  background-color: var(--color-paper) !important;
+  font-size: 0 !important;
+  color: transparent !important;
 }
+.chrono-panel-header-icon::before,
+.chrono-panel-header-icon::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Title — visually second, fills remaining space, larger + bolder. */
 .chrono-panel-header-title {
+  order: 2 !important;
   color: var(--color-paper) !important;
-  font-weight: 500 !important;
-  font-size: 15px !important;
-  letter-spacing: 0.01em !important;
-  line-height: 1.3 !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  letter-spacing: -0.005em !important;
+  line-height: 1.2 !important;
+  padding: 0 1rem !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
 }
-.chrono-panel-header-icon,
+
+/* Caret — visually last, right edge. */
 .chrono-panel-header-caret {
-  color: var(--color-tamarack) !important;
-  font-size: 16px !important;
+  order: 3 !important;
+  color: var(--color-paper) !important;
+  font-size: 18px !important;
+  padding: 0 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
 }
 
 
