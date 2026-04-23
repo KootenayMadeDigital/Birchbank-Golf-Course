@@ -216,19 +216,25 @@ export default function BallIntoHoleHero() {
           />
         )}
 
+        {/* Scrim — balanced across the frame so text reads cleanly across the
+            varied bokeh. Slightly darker top (nav legibility), light middle
+            (let the grass show), stronger bottom (protects hero text + CTAs). */}
         <div
-          className="absolute inset-0 bg-gradient-to-b from-granite/10 via-transparent to-granite/70"
+          className="absolute inset-0 bg-gradient-to-b from-granite/35 via-granite/15 to-granite/85"
           aria-hidden="true"
         />
 
-        <div className="relative h-full container-edge flex flex-col justify-end pb-20 sm:pb-24 md:pb-28">
-          <p className="eyebrow text-paper/80 mb-3 md:mb-5 text-[11px] sm:text-xs">
+        <div
+          className="relative h-full container-edge flex flex-col justify-end pb-20 sm:pb-24 md:pb-28"
+          style={{ textShadow: "0 1px 2px rgba(20,20,20,0.35), 0 4px 18px rgba(20,20,20,0.35)" }}
+        >
+          <p className="font-mono uppercase tracking-[0.16em] text-paper/95 mb-3 md:mb-5 text-[11px] sm:text-xs">
             Genelle, British Columbia · Since 1962
           </p>
-          <h1 className="display-xl text-paper max-w-[14ch] sm:max-w-[18ch]">
+          <h1 className="display-xl text-paper max-w-[14ch] sm:max-w-[18ch] font-medium">
             Come for the drop.
           </h1>
-          <p className="prose-editorial text-paper/85 mt-4 md:mt-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-snug sm:leading-normal">
+          <p className="prose-editorial text-paper/95 mt-4 md:mt-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-snug sm:leading-normal">
             Set along the banks of the Columbia River. The 18-hole course of the Rossland
             Trail Country Club. Open April 1 through October 31 — 213 days of golf.
           </p>
