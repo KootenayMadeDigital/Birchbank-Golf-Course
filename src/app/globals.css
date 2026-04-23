@@ -137,36 +137,44 @@
 }
 
 /* 3. Restore text rendering for the panel content nested inside. */
-.chrono-container > a .chrono-panel {
+.chrono-container > a .chrono-container .chrono-panel {
   font-size: 14px !important;
   line-height: 1.45 !important;
   color: var(--color-granite);
 }
 
 /* 4. Panel shell — rounded, elevated, on-brand.
-      No height constraint; let the header dictate the panel height so the
-      72px icon tile + 2px tamarack top rule render without clipping. */
-.chrono-panel {
+      Idle (collapsed): fixed to the header height via overflow:hidden,
+      so branding or any other stray chronogolf nodes don't add visual
+      height below the header.
+      Active (expanded): release overflow so the booking iframe body
+      can render below the header. */
+.chrono-container .chrono-panel {
   box-shadow: 0 20px 50px -12px rgba(43, 42, 40, 0.35) !important;
   border-radius: 4px !important;
   overflow: hidden !important;
   min-width: 320px !important;
   min-height: 74px !important;
-  height: auto !important;
+  height: 74px !important;
   display: block !important;
+}
+.chrono-container .chrono-panel.chrono-panel--active {
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 74px !important;
 }
 
 /* 5. Panel header: cedar background, tamarack top rule.
       Actual DOM is: .chrono-panel-header > <a> > [caret, icon, title]
       — so the flex container is the nested <a>, not the header itself.
       We use flex `order` to visually arrange them as: icon | title | caret. */
-.chrono-panel-header {
+.chrono-container .chrono-panel-header {
   background: var(--color-cedar) !important;
   border-top: 2px solid var(--color-tamarack) !important;
   min-height: 72px !important;
   padding: 0 !important;
 }
-.chrono-panel-header > a {
+.chrono-container .chrono-panel-header > a {
   display: flex !important;
   align-items: center !important;
   min-height: 72px !important;
@@ -179,7 +187,7 @@
 }
 
 /* Icon tile — visually first, 72×72 paper square with a cedar clock glyph. */
-.chrono-panel-header-icon {
+.chrono-container .chrono-panel-header-icon {
   order: 1 !important;
   display: flex !important;
   align-items: center !important;
@@ -202,14 +210,14 @@
   font-size: 0 !important;
   color: transparent !important;
 }
-.chrono-panel-header-icon::before,
-.chrono-panel-header-icon::after {
+.chrono-container .chrono-panel-header-icon::before,
+.chrono-container .chrono-panel-header-icon::after {
   display: none !important;
   content: none !important;
 }
 
 /* Title — visually second, fills remaining space, larger + bolder. */
-.chrono-panel-header-title {
+.chrono-container .chrono-panel-header-title {
   order: 2 !important;
   color: var(--color-paper) !important;
   font-family: var(--font-sans) !important;
@@ -224,7 +232,7 @@
 }
 
 /* Caret — visually last, right edge. */
-.chrono-panel-header-caret {
+.chrono-container .chrono-panel-header-caret {
   order: 3 !important;
   color: var(--color-paper) !important;
   font-size: 18px !important;
@@ -232,6 +240,37 @@
   display: flex !important;
   align-items: center !important;
   flex: 0 0 auto !important;
+}
+
+/* 6. Panel body — the Chronogolf iframe that renders the booking flow
+      when the panel is active. Without explicit dimensions the iframe
+      (which has height="100%") collapses to zero. We give it a fixed
+      viewport-bounded size that matches Chronogolf's own widget sizing. */
+.chrono-container .chrono-panel-body {
+  display: none !important;
+  width: 100% !important;
+  background: var(--color-paper) !important;
+}
+.chrono-container .chrono-panel--active .chrono-panel-body {
+  display: block !important;
+  height: min(620px, calc(100vh - 180px)) !important;
+  width: 380px !important;
+}
+.chrono-container .chrono-panel-body iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  background: var(--color-paper) !important;
+}
+
+/* 7. Hide the "Lightspeed Golf" branding link — we want a clean cedar
+      header only. Chronogolf places this inside the panel between the
+      header and the body, so it pushes panel height past 74px in the
+      idle state and makes the header look bottom-aligned within a
+      taller panel. Hiding it collapses the panel back to header height. */
+.chrono-container .chrono-panel-branding-link {
+  display: none !important;
 }
 
 
