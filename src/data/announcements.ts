@@ -17,8 +17,8 @@ export type GridAnnouncement = {
 export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   {
     eyebrow: "Open now",
-    title: "2026 season is open.",
-    body: "April 1 through October 31 — 213 days of golf on the Columbia.",
+    title: "The season is on.",
+    body: "April 1 through October 31. Frost delays post before the first tee.",
     cta: { label: "Book a tee time", href: "/book" },
     image: {
       src: "/announcements/season.webp",
@@ -27,8 +27,8 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   },
   {
     eyebrow: "Pro Shop",
-    title: "9 am – 7 pm, every day.",
-    body: "Tee-time booking, club fittings, lessons with our CPGA Head Pro, and club repairs.",
+    title: "9 am – 7 pm, seven days.",
+    body: "Booking, fittings, lessons with our CPGA head pro, club repairs. Walk in or call ahead.",
     cta: { label: "Call 250-693-2255", href: "tel:+12506932255" },
     // Source: birchbankgolf.com homepage slideshow — the "Pro-shop is open
     // 9am-7pm 7 days a week" slide. Their own photograph, used in their
@@ -40,8 +40,8 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   },
   {
     eyebrow: "The Bistro",
-    title: "12 pm – 5 pm, every day.",
-    body: "Fully licensed. Full menu, covered patio with a view, event catering available.",
+    title: "Noon to five. Every day.",
+    body: "Fully licensed. Covered patio on the river. Catering for member events, weddings, and tournaments.",
     cta: { label: "See the menus", href: "/bistro" },
     // The real Bistro plate from birchbankgolf.com's own slideshow — their
     // food, photographed on-site. Not generated.

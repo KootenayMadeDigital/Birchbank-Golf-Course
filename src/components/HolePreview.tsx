@@ -8,10 +8,25 @@ import { HOLES } from "@/data/holes";
  *   • Hole 12 — first of two new-irrigation ponds added in 2018
  *   • Hole 15 — second pond; also the walk back along the river
  */
-const HIGHLIGHTS: Array<{ number: number; headline: string; body: string }> = [
-  { number: 6,  headline: "The test.",          body: "Stroke index 1 from the Blue tees. Par 4, 413 yards. The hardest hole on the course." },
-  { number: 12, headline: "First pond.",        body: "Par 4, 398 yards from the Blue. New irrigation system brought water into play here in 2018." },
-  { number: 15, headline: "Second pond.",       body: "Par 4, 388 yards from the Blue. The second water hazard on the back nine." },
+const HIGHLIGHTS: Array<{ number: number; headline: string; body: string; aside: string }> = [
+  {
+    number: 6,
+    headline: "The test.",
+    body: "Stroke index 1 from the Blue. Par 4, 413 yards. The one that decides your card.",
+    aside: "Local wildlife: wild turkeys cross the fairway in the morning.",
+  },
+  {
+    number: 12,
+    headline: "First pond.",
+    body: "Par 4, 398 yards. The first of two new-irrigation ponds added in 2018.",
+    aside: "Club layout: water front-left; the longer carry is worth the line.",
+  },
+  {
+    number: 15,
+    headline: "Second pond.",
+    body: "Par 4, 388 yards. The second pond, then the walk back along the Columbia.",
+    aside: "River view: the best of the back nine looking upstream.",
+  },
 ];
 
 export default function HolePreview() {

@@ -32,12 +32,11 @@ export default function Home() {
             <ScrollReveal>
               <p className="eyebrow mb-5">Today at Birchbank</p>
               <h2 className="display-lg font-display mb-6">
-                Book a tee time.
+                First tee at nine.<br />Every morning of the season.
               </h2>
               <p className="prose-editorial text-granite/85 max-w-xl">
-                Tee times can be reserved online or by phone with the Pro Shop. We open at
-                9 am every day of the season — frost delays and course conditions are
-                posted before the first tee.
+                Book online or call the Pro Shop. Frost delays and course conditions
+                post before the first tee — we don't hide them.
               </p>
             </ScrollReveal>
 
@@ -109,7 +108,7 @@ export default function Home() {
                 original 1969 routing, restored in 2018.
               </p>
               <Link href="/course/history" className="btn-ghost mt-8">
-                Full club history →
+                Read the 1962 story →
               </Link>
             </ScrollReveal>
           </div>
@@ -205,8 +204,8 @@ export default function Home() {
                   Fully licensed. Open daily to the public.
                 </p>
                 <p className="text-silt">
-                  Full menu, covered patio, event catering, beverage cart on course.
-                  Open 12 – 5 pm.
+                  The Canadian burger is the one to order. Covered patio on the river,
+                  beverage cart on the course. Noon to five.
                 </p>
                 <p className="mt-6 text-sm text-amber group-hover:underline">
                   See the menus →
@@ -239,8 +238,8 @@ export default function Home() {
                   Unlimited play, seven days a week.
                 </p>
                 <p className="text-silt">
-                  Seven tiers with transparent pricing. Advance tee time booking and
-                  reciprocal rates included.
+                  From $640 Student to $1,969 Single Full Play. Advance booking,
+                  reciprocal rates at participating clubs, member-only range pass.
                 </p>
                 <p className="mt-6 text-sm text-amber group-hover:underline">
                   See the membership tiers →
