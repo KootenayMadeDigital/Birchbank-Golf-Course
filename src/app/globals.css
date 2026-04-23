@@ -77,6 +77,22 @@
   }
 }
 
+/*
+  Hide the entire Chronogolf v2 widget auto-injection. The widget
+  creates a fixed-position `.chrono-container.chrono-reset` wrapper,
+  clones every `.chrono-bookingbutton` on the page into it, and mounts
+  a persistent panel at the bottom right. We trigger the booking
+  overlay from our own branded CTAs and show our own sticky pill, so
+  the auto-injected UI is redundant. Hiding the container kills the
+  clone + panel in one rule; our in-page buttons (which live outside
+  this container) are unaffected. The modal overlay that opens on
+  click still renders normally since it mounts elsewhere.
+*/
+.chrono-container,
+.chrono-container.chrono-reset {
+  display: none !important;
+}
+
 /* Hero wrapper — kept as plain CSS (not inside @layer) so Tailwind 4's
    layered specificity doesn't swallow it. Desktop / fine pointer gets
    100vh + an absolutely-positioned inner so GSAP ScrollTrigger can pin it;

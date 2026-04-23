@@ -10,9 +10,16 @@ declare global {
 }
 
 /**
- * Dismissible booking pill. Appears bottom-right on desktop and bottom sheet on
- * mobile once the user has scrolled past the hero. Hides itself when dismissed
- * and stays dismissed for the session (sessionStorage).
+ * Premium sticky booking pill. Anchors to the bottom-right of the
+ * viewport (respecting the mobile safe-area inset) once the user has
+ * scrolled past the hero section. Dismissible with × — dismissal
+ * persists for the browser session.
+ *
+ * Visual design:
+ *   • Cedar background with amber accent line above for gravitas
+ *   • Two-line layout: "Ready to book?" eyebrow + CTA row
+ *   • Drop shadow for separation from page content
+ *   • Scales comfortably for touch — 48px+ tap targets
  */
 export default function StickyBookBar() {
   const [visible, setVisible] = useState(false);
@@ -54,30 +61,48 @@ export default function StickyBookBar() {
   return (
     <div
       className={clsx(
-        "fixed z-30 transition-all duration-300",
+        "fixed z-30 transition-all duration-500",
         "bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 md:right-6",
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none",
       )}
       role="complementary"
       aria-label="Quick booking"
     >
-      <div className="flex items-center gap-1 bg-cedar text-paper shadow-lg rounded-full pr-1">
-        <a
-          href="/book"
-          onClick={handleBook}
-          data-chrono-book
-          className="chrono-bookingbutton flex items-center gap-2 py-3 pl-5 pr-2 text-sm font-medium hover:text-tamarack transition-colors min-h-[44px]"
-        >
-          Book a tee time
-          <span aria-hidden>→</span>
-        </a>
-        <button
-          onClick={dismiss}
-          aria-label="Dismiss booking bar"
-          className="w-9 h-9 flex items-center justify-center rounded-full text-paper/70 hover:text-paper hover:bg-paper/10 transition-colors"
-        >
-          ×
-        </button>
+      <div className="relative overflow-hidden rounded-md shadow-2xl ring-1 ring-granite/10">
+        {/* Thin tamarack rule across the top */}
+        <span aria-hidden className="block h-[2px] bg-tamarack" />
+
+        <div className="flex items-stretch bg-cedar text-paper">
+          <a
+            href="/book"
+            onClick={handleBook}
+            data-chrono-book
+            className="chrono-bookingbutton flex items-center gap-3 py-3 pl-5 pr-4 md:py-4 md:pl-6 md:pr-5 min-h-[52px] hover:bg-cedar-dark transition-colors"
+          >
+            <div className="flex flex-col items-start leading-tight">
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-tamarack">
+                Ready to play?
+              </span>
+              <span className="text-[15px] md:text-base font-medium mt-0.5">
+                Book a tee time
+              </span>
+            </div>
+            <span
+              aria-hidden
+              className="text-tamarack text-lg md:text-xl translate-x-0 group-hover:translate-x-1 transition-transform"
+            >
+              →
+            </span>
+          </a>
+
+          <button
+            onClick={dismiss}
+            aria-label="Dismiss booking bar"
+            className="shrink-0 w-10 md:w-11 flex items-center justify-center text-paper/60 hover:text-paper hover:bg-paper/10 transition-colors border-l border-paper/15 text-lg"
+          >
+            ×
+          </button>
+        </div>
       </div>
     </div>
   );
