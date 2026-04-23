@@ -64,9 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
 
-        {/* Chronogolf widget — lazy-loaded */}
+        {/* Chronogolf (Lightspeed Golf) booking widget — lazy-loaded.
+            Birchbank's public numeric club ID is 738; the widget requires
+            a valid clubId or it silently no-ops on click. Locale matches
+            their live site (en-US). Theme color = our brand cedar. */}
         <Script id="chronogolf-settings" strategy="lazyOnload">
-          {`window.chronogolfSettings = { "clubId": ${process.env.NEXT_PUBLIC_CHRONOGOLF_CLUB_ID || "null"}, "locale": "en-CA" };
+          {`window.chronogolfSettings = { "clubId": ${process.env.NEXT_PUBLIC_CHRONOGOLF_CLUB_ID || "738"}, "locale": "en-US" };
             window.chronogolfTheme = { "color": "#3C4A35" };`}
         </Script>
         <Script
