@@ -78,36 +78,103 @@
 }
 
 /*
-  Chronogolf v2 widget branding. The widget auto-injects a persistent
-  booking panel at the bottom-right that expands into a full booking
-  flow (dates, player count, tee-time deals) — the same UX the current
-  birchbankgolf.com site uses. We let it render natively and lightly
-  brand it to match the Birchbank palette.
+  Chronogolf v2 widget — integration + branding.
 
-  Classes referenced: `.chrono-container`, `.chrono-panel`,
-  `.chrono-panel-header`, `.chrono-panel-header-title`. These are all
-  in the main document (not in an iframe) so we can style them.
+  The widget clones every `.chrono-bookingbutton` element on the page
+  into a fixed-position `.chrono-container.chrono-reset` wrapper, then
+  attaches a `.chrono-panel` booking trigger as a child of that clone.
+  Because the clone inherits our `.btn-primary` styling, you get a
+  redundant "Book a tee time →" button rendered on top of the panel,
+  which gets cut off at the viewport edge.
+
+  Fix: strip every visual attribute from the cloned `<a>` so only its
+  `.chrono-panel` child renders. Then brand the panel to match.
+
+  Classes: `.chrono-container`, `.chrono-panel`, `.chrono-panel-header`,
+  `.chrono-panel-header-title`. All live in the main document (not in
+  an iframe) so we can style them freely.
 */
+
+/* 1. Position the widget container fixed at the bottom-right with
+      comfortable breathing room. Chronogolf's default CSS does NOT set
+      position:fixed on .chrono-container — it relies on the trigger
+      element's own positioning. Since we've neutralized the cloned `<a>`,
+      we have to pin the container ourselves. */
 .chrono-container {
+  position: fixed !important;
+  bottom: 1.25rem !important;
+  right: 1.25rem !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
   font-family: var(--font-sans) !important;
+  z-index: 30 !important;
 }
+
+/* 2. Neutralize the cloned `<a>` so ONLY the child .chrono-panel is
+      visible. Keep the `<a>` clickable (pointer-events intact) so
+      Chronogolf's own event handlers fire. */
+.chrono-container > a.chrono-bookingbutton--show {
+  display: block !important;
+  position: relative !important;
+  background: transparent !important;
+  color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-decoration: none !important;
+  transition: none !important;
+}
+
+/* The `→` arrow span my BookButton adds — hide it on the clone. */
+.chrono-container > a.chrono-bookingbutton--show > span[aria-hidden="true"] {
+  display: none !important;
+}
+
+/* 3. Restore text rendering for the panel content nested inside. */
+.chrono-container > a .chrono-panel {
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  color: var(--color-granite);
+}
+.chrono-container > a .chrono-panel * {
+  font-size: inherit !important;
+}
+
+/* 4. Panel shell — rounded, elevated, on-brand. */
 .chrono-panel {
   box-shadow: 0 20px 50px -12px rgba(43, 42, 40, 0.35) !important;
   border-radius: 4px !important;
   overflow: hidden !important;
+  min-width: 280px !important;
 }
+
+/* 5. Panel header (the visible trigger): cedar bg with tamarack rule */
 .chrono-panel-header {
   background: var(--color-cedar) !important;
   border-top: 2px solid var(--color-tamarack) !important;
+  padding: 0.75rem 1rem !important;
+  min-height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
 }
 .chrono-panel-header-title {
   color: var(--color-paper) !important;
   font-weight: 500 !important;
+  font-size: 15px !important;
   letter-spacing: 0.01em !important;
+  line-height: 1.3 !important;
 }
 .chrono-panel-header-icon,
 .chrono-panel-header-caret {
   color: var(--color-tamarack) !important;
+  font-size: 16px !important;
 }
 
 
