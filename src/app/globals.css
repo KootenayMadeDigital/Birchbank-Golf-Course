@@ -168,12 +168,14 @@
 }
 .chrono-panel-header > a {
   display: flex !important;
-  align-items: stretch !important;
+  align-items: center !important;
   min-height: 72px !important;
+  height: 72px !important;
   padding: 0 !important;
   margin: 0 !important;
   text-decoration: none !important;
   background: var(--color-cedar) !important;
+  line-height: 1 !important;
 }
 
 /* Icon tile — visually first, 72×72 paper square with a cedar clock glyph. */
