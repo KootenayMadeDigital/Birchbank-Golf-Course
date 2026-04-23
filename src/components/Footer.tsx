@@ -43,6 +43,8 @@ export default function Footer() {
             <li><Link href="/pro-shop" className="hover:text-tamarack">Pro Shop</Link></li>
             <li><Link href="/course/history" className="hover:text-tamarack">Club history</Link></li>
             <li><Link href="/events" className="hover:text-tamarack">Events calendar</Link></li>
+            <li><Link href="/lessons" className="hover:text-tamarack">Lessons</Link></li>
+            <li><Link href="/dress-code" className="hover:text-tamarack">Dress code</Link></li>
           </ul>
         </div>
 

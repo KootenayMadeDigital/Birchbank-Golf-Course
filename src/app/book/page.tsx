@@ -86,6 +86,13 @@ export default async function BookPage() {
             <a href="tel:+12506932255" className="underline hover:text-amber">call 250-693-2255</a>
             {" "}and we'll do it on the phone.
           </p>
+          <p className="mt-5 font-mono text-xs text-silt">
+            First time? <Link href="/dress-code" className="text-amber underline hover:text-amber-dark">Check the dress code</Link>
+            {" · "}
+            <Link href="/plan-your-visit" className="text-amber underline hover:text-amber-dark">Plan your visit</Link>
+            {" · "}
+            <Link href="/rates" className="text-amber underline hover:text-amber-dark">See all rates</Link>
+          </p>
         </div>
       </section>
 

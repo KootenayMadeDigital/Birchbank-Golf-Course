@@ -45,7 +45,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "What is the dress code?",
     answer:
-      "Ladies: tailored golf slacks, Capri pants, golf dresses, golf skirts/skorts, or Bermuda-style shorts (mid-thigh or longer). Tops in mock-neck, V-neck, or halter styles with straps at least 4 inches wide. Men: golf slacks or tailored pants, shorts between mid-thigh and the knee, collared shirts or turtleneck/mock necks, caps or visors without offensive logos. Footwear: soft spikes, running shoes, sport sandals, or any soft-soled shoe. Not permitted: tank tops, singlets, spaghetti straps, bare midriffs, sweatpants, basketball shorts, metal-spiked golf shoes, cleats, high heels, work boots, or flip-flops.",
+      "Short version: golf-appropriate apparel, collared shirts or mock necks, shorts at least mid-thigh, soft-soled shoes (no metal spikes). Full published code — ladies, men, and footwear — is on the dedicated dress code page: /dress-code.",
   },
   {
     category: "fees",
