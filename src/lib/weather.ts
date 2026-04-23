@@ -166,3 +166,138 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
     return null;
   }
 }
+
+export type ForecastDay = {
+  date: string;
+  dayLabel: string;
+  highC: number;
+  lowC: number;
+  precipProbMax: number;
+  windMaxKmh: number;
+  conditionCode: number;
+  conditionLabel: string;
+  clubCall: string;
+  sunrise: string;
+  sunset: string;
+  daylightHours: number;
+};
+
+export type HourlyPoint = {
+  time: string;
+  hourLabel: string;
+  tempC: number;
+  precipProb: number;
+  windKmh: number;
+  conditionCode: number;
+};
+
+export type ForecastSnapshot = {
+  now: {
+    tempC: number;
+    windKmh: number;
+    windCardinal: string;
+    conditionCode: number;
+    conditionLabel: string;
+    clubCall: string;
+  };
+  hourly: HourlyPoint[];
+  daily: ForecastDay[];
+  fetchedAt: string;
+};
+
+/**
+ * Fetch an extended 7-day + hourly forecast for the /conditions dashboard.
+ *
+ * Returns:
+ *   - Current conditions (same shape as the home widget)
+ *   - Next 24 hours of hourly data (temp, precip%, wind, condition code)
+ *   - Next 7 days of daily outlook (high, low, precip%, wind, sunrise/sunset)
+ *
+ * Uses the same /v1/forecast endpoint with different hourly/daily params
+ * so we keep to a single upstream request per page render.
+ */
+export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null> {
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.searchParams.set("latitude", String(BIRCHBANK_LAT));
+  url.searchParams.set("longitude", String(BIRCHBANK_LON));
+  url.searchParams.set(
+    "current",
+    "temperature_2m,wind_speed_10m,wind_direction_10m,weather_code",
+  );
+  url.searchParams.set(
+    "hourly",
+    "temperature_2m,precipitation_probability,wind_speed_10m,weather_code",
+  );
+  url.searchParams.set(
+    "daily",
+    "temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,weather_code,sunrise,sunset,daylight_duration",
+  );
+  url.searchParams.set("models", "gem_seamless");
+  url.searchParams.set("timezone", "America/Vancouver");
+  url.searchParams.set("forecast_days", "7");
+  url.searchParams.set("wind_speed_unit", "kmh");
+
+  try {
+    const res = await fetch(url.toString(), { next: { revalidate: 900 } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const c = data.current;
+    const h = data.hourly;
+    const d = data.daily;
+    if (!c || !h || !d) return null;
+
+    // Build next 24 hours starting from the current hour.
+    const nowIso = c.time; // e.g. "2026-04-23T14:00"
+    const nowIdx = h.time.findIndex((t: string) => t >= nowIso);
+    const startIdx = nowIdx < 0 ? 0 : nowIdx;
+    const endIdx = Math.min(startIdx + 24, h.time.length);
+    const hourly: HourlyPoint[] = [];
+    for (let i = startIdx; i < endIdx; i++) {
+      const t = new Date(h.time[i]);
+      hourly.push({
+        time: h.time[i],
+        hourLabel: t.toLocaleTimeString("en-CA", { hour: "numeric", hour12: true }).replace(/\s?[AP]M/i, (m) => m.toLowerCase().trim()),
+        tempC: Math.round(h.temperature_2m[i]),
+        precipProb: h.precipitation_probability?.[i] ?? 0,
+        windKmh: Math.round(h.wind_speed_10m[i]),
+        conditionCode: h.weather_code[i],
+      });
+    }
+
+    const daily: ForecastDay[] = [];
+    for (let i = 0; i < d.time.length; i++) {
+      const dt = new Date(d.time[i] + "T12:00");
+      const windMax = Math.round(d.wind_speed_10m_max[i]);
+      daily.push({
+        date: d.time[i],
+        dayLabel: i === 0 ? "Today" : i === 1 ? "Tomorrow" : dt.toLocaleDateString("en-CA", { weekday: "long" }),
+        highC: Math.round(d.temperature_2m_max[i]),
+        lowC: Math.round(d.temperature_2m_min[i]),
+        precipProbMax: d.precipitation_probability_max?.[i] ?? 0,
+        windMaxKmh: windMax,
+        conditionCode: d.weather_code[i],
+        conditionLabel: WEATHER_CODE_MAP[d.weather_code[i]] ?? "Conditions unclear",
+        clubCall: clubCall(windMax),
+        sunrise: new Date(d.sunrise[i]).toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }),
+        sunset: new Date(d.sunset[i]).toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }),
+        daylightHours: Math.round((d.daylight_duration[i] / 3600) * 10) / 10,
+      });
+    }
+
+    return {
+      now: {
+        tempC: Math.round(c.temperature_2m),
+        windKmh: Math.round(c.wind_speed_10m),
+        windCardinal: cardinalFromBearing(c.wind_direction_10m),
+        conditionCode: c.weather_code,
+        conditionLabel: WEATHER_CODE_MAP[c.weather_code] ?? "Conditions unclear",
+        clubCall: clubCall(Math.round(c.wind_speed_10m)),
+      },
+      hourly,
+      daily,
+      fetchedAt: new Date().toISOString(),
+    };
+  } catch {
+    return null;
+  }
+}
