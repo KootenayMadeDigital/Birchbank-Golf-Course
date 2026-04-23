@@ -122,6 +122,38 @@ export default function Home() {
       {/* 6. Photo marquee */}
       <PhotoMarquee />
 
+      {/* 6.5 October gold — single full-bleed cinematic moment with one
+           blueprint-voice line. No CTA, no link-out. Pure editorial beat
+           that pulls the shoulder-season visitor. */}
+      <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden bg-granite">
+        <Image
+          src="https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1290.jpg"
+          alt="Late-season light across a Birchbank fairway toward the Columbia River"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          unoptimized
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-granite/30 via-granite/10 to-granite/80"
+        />
+        <div className="relative h-full container-edge flex flex-col justify-end pb-16 md:pb-24">
+          <ScrollReveal>
+            <p className="font-mono text-xs md:text-sm uppercase tracking-[0.18em] text-tamarack mb-5">
+              October 6 – 20 · tamarack turn
+            </p>
+            <p
+              className="font-display text-paper max-w-3xl"
+              style={{ fontSize: "clamp(1.75rem, 4.5vw, 3.75rem)", lineHeight: "1.1", letterSpacing: "-0.01em" }}
+            >
+              For about three weeks each October,<br className="hidden md:inline" />
+              the larches along the river go gold.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 7. Course + scorecard — cedar block, polished */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
