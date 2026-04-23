@@ -299,10 +299,24 @@ export default function Home() {
             >
               Walk the 18.<br />Sit on the patio.<br />Watch the river.
             </h2>
-            <p className="prose-editorial text-paper/85 mb-10 max-w-xl mx-auto">
+            <p className="prose-editorial text-paper/85 mb-8 max-w-xl mx-auto">
               An 18-hole public-access course on the Columbia River.
               Member-owned since 2004. Routed by Roy Stone, 1962.
             </p>
+
+            {/* Drive-times strip (enhancement 8) — one-line destination answer
+                for the Albertan / WA personas. Driving distances are the
+                commonly-cited road-trip windows from each city. */}
+            <p className="mb-10 font-mono text-xs text-paper/65 tracking-wide">
+              <span className="text-tamarack">Spokane 3h</span>
+              <span className="mx-2 text-paper/30">·</span>
+              <span className="text-tamarack">Kelowna 3h</span>
+              <span className="mx-2 text-paper/30">·</span>
+              <span className="text-tamarack">Calgary 7h</span>
+              <span className="mx-2 text-paper/30">·</span>
+              <span className="text-tamarack">Vancouver 7h</span>
+            </p>
+
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
               <BookButton />
               <a
@@ -312,10 +326,39 @@ export default function Home() {
                 Call Pro Shop · 250-693-2255
               </a>
             </div>
-            <p className="mt-10 font-mono text-xs text-paper/60 leading-relaxed">
+
+            {/* Trust stack (enhancement 7) — three chips, every number
+                traceable to a file in src/data/ or the Testimonials component.
+                No fabricated stats. */}
+            <div className="mt-12 grid sm:grid-cols-3 gap-3 md:gap-5 max-w-2xl mx-auto">
+              <a
+                href="https://www.golfpass.com/travel-advisor/courses/26756-birchbank-golf-course"
+                target="_blank"
+                rel="noopener"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+              >
+                <span className="block text-tamarack mb-0.5">47 reviews · 4.4★</span>
+                <span className="block text-paper/60">on GolfPass ↗</span>
+              </a>
+              <a
+                href="https://www.facebook.com/BirchbankGolf"
+                target="_blank"
+                rel="noopener"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+              >
+                <span className="block text-tamarack mb-0.5">22 reviews · 82% recommend</span>
+                <span className="block text-paper/60">on Facebook ↗</span>
+              </a>
+              <div className="font-mono text-xs text-paper/75 border border-paper/15 rounded-sm px-4 py-3">
+                <span className="block text-tamarack mb-0.5">Routed 1962 · restored 2018</span>
+                <span className="block text-paper/60">Roy Stone routing, back</span>
+              </div>
+            </div>
+
+            <p className="mt-10 font-mono text-xs text-paper/50 leading-relaxed">
               Pro Shop 9 am – 7 pm · Bistro 12 – 5 pm · 7 days in season
               <br />
-              5500 Highway 22, Genelle BC · 47 reviews · 4.4★ on GolfPass
+              5500 Highway 22, Genelle BC
             </p>
           </ScrollReveal>
         </div>
