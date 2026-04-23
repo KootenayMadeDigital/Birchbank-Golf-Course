@@ -9,6 +9,7 @@ import HolePreview from "@/components/HolePreview";
 import PhotoMarquee from "@/components/PhotoMarquee";
 import Testimonials from "@/components/Testimonials";
 import ScrollReveal from "@/components/ScrollReveal";
+import ScorecardCompact from "@/components/ScorecardCompact";
 
 export default function Home() {
   return (
@@ -135,32 +136,16 @@ export default function Home() {
           <div className="md:col-span-7">
             <ScrollReveal>
               <p className="prose-editorial text-paper/85">
-                6,788 yards from the Gold, 5,345 from the Red — a tee for every
-                game. Rating 71.5 / slope 121 from the Blue. New irrigation with
-                ponds on holes 12 and 15, restored greens, and the original Roy Stone
-                routing returned in 2018.
+                Five sets of tees, 5,345 yards from the Red to 6,788 from the Gold.
+                New irrigation with ponds on holes 12 and 15, restored greens, the
+                original Roy Stone routing returned in 2018.
               </p>
-              <ul className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-6 font-mono text-sm">
-                <li>
-                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Gold</p>
-                  <p className="font-display text-xl">6,788 yd</p>
-                </li>
-                <li>
-                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Blue</p>
-                  <p className="font-display text-xl">6,555 yd</p>
-                  <p className="text-paper/60 text-xs mt-0.5">71.5 / 121</p>
-                </li>
-                <li>
-                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">White</p>
-                  <p className="font-display text-xl">5,882 yd</p>
-                  <p className="text-paper/60 text-xs mt-0.5">73.9 / 128</p>
-                </li>
-                <li>
-                  <p className="text-paper/60 text-xs uppercase tracking-widest mb-1">Red</p>
-                  <p className="font-display text-xl">5,345 yd</p>
-                  <p className="text-paper/60 text-xs mt-0.5">70.8 / 119</p>
-                </li>
-              </ul>
+              <div className="mt-8">
+                <p className="text-paper/60 text-xs font-mono uppercase tracking-widest mb-4">
+                  Pick a tee
+                </p>
+                <ScorecardCompact />
+              </div>
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/course/scorecard"
