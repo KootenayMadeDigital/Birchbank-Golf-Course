@@ -142,7 +142,13 @@ export default function Nav() {
           >
             250-693-2255
           </a>
-          <BookButton className="hidden md:inline-flex" />
+          <Link
+            href="/login"
+            className="hidden md:inline-flex btn-primary whitespace-nowrap"
+          >
+            Members Dashboard
+            <span aria-hidden>→</span>
+          </Link>
           <button
             aria-label="Menu"
             aria-expanded={open}
