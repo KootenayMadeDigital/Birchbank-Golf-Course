@@ -51,11 +51,13 @@ export default function Footer() {
         <div>
           <p className="eyebrow text-paper/60 mb-4">Visit</p>
           <ul className="space-y-2 text-sm">
+            <li><Link href="/plan-your-visit" className="hover:text-tamarack">Plan your visit</Link></li>
+            <li><Link href="/stay-and-play" className="hover:text-tamarack">Stay &amp; play</Link></li>
+            <li><Link href="/usa-visitors" className="hover:text-tamarack">For US visitors</Link></li>
             <li><Link href="/bistro" className="hover:text-tamarack">The Bistro</Link></li>
-            <li><Link href="/bistro/menus" className="hover:text-tamarack">Menus</Link></li>
             <li><Link href="/events/book" className="hover:text-tamarack">Book your event</Link></li>
+            <li><Link href="/events/corporate" className="hover:text-tamarack">Corporate events</Link></li>
             <li><Link href="/membership" className="hover:text-tamarack">Memberships</Link></li>
-            <li><Link href="/plan-your-visit" className="hover:text-tamarack">More things to do</Link></li>
           </ul>
         </div>
 
