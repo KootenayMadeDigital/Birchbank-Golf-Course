@@ -42,7 +42,7 @@ export default function Logo({ variant = "flush", height = 40, priority = false,
     return (
       <span
         className={clsx(
-          "inline-flex items-center bg-paper rounded-sm px-3 py-1.5 shadow-sm",
+          "inline-flex items-center bg-paper rounded-sm px-4 py-2 shadow-sm",
           className,
         )}
       >

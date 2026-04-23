@@ -27,7 +27,11 @@ export default function BookButton({ className, label = "Book a tee time", varia
       href="/book"
       onClick={handleClick}
       data-chrono-book
-      className={clsx(variant === "primary" ? "btn-primary" : "btn-ghost", "chrono-bookingbutton", className)}
+      className={clsx(
+        variant === "primary" ? "btn-primary" : "btn-ghost",
+        "chrono-bookingbutton whitespace-nowrap",
+        className,
+      )}
     >
       {label}
       <span aria-hidden>→</span>

@@ -99,7 +99,7 @@ export default function Nav() {
         logo and the first nav item so the logo plate can't crowd it at
         any viewport width.
       */}
-      <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-8 xl:gap-12 h-20 md:h-24">
+      <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-10 h-24 md:h-28 lg:h-32">
         <Link
           href="/"
           aria-label="Birchbank Golf Club — home"
@@ -107,7 +107,7 @@ export default function Nav() {
         >
           <Logo
             variant={light ? "flush" : "plate"}
-            height={light ? 56 : 52}
+            height={light ? 80 : 76}
             priority
           />
         </Link>
