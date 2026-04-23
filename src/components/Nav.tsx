@@ -7,14 +7,67 @@ import BookButton from "./BookButton";
 import SocialLinks from "./SocialLinks";
 import Logo from "./Logo";
 
-const LINKS = [
-  { href: "/course", label: "Course" },
+type NavChild = { href: string; label: string };
+type NavItem = { href: string; label: string; children?: NavChild[] };
+
+/**
+ * Top navigation — audience-grouped with dropdowns.
+ *
+ * Seven top-level items, each a valid landing page. Four of them
+ * (Course / Memberships / Events / Visit) have a dropdown that
+ * surfaces every important subpage so no part of the site is
+ * more than two clicks from the home page.
+ *
+ * Desktop dropdowns: opened on hover OR on focus-within (keyboard).
+ * Mobile menu: all children expanded flat so there's no nested-
+ * dropdown tap awkwardness.
+ */
+const NAV: NavItem[] = [
+  {
+    href: "/course",
+    label: "Course",
+    children: [
+      { href: "/course", label: "Overview" },
+      { href: "/course/scorecard", label: "Full scorecard" },
+      { href: "/course/holes/1", label: "Hole by hole" },
+      { href: "/course/history", label: "Club history" },
+      { href: "/conditions", label: "Today's conditions" },
+      { href: "/pro-shop", label: "Pro Shop" },
+      { href: "/lessons", label: "Lessons" },
+    ],
+  },
   { href: "/rates", label: "Rates" },
-  { href: "/membership", label: "Memberships" },
+  {
+    href: "/membership",
+    label: "Memberships",
+    children: [
+      { href: "/membership", label: "Membership tiers" },
+      { href: "/membership/retirees-club", label: "Retirees Club" },
+      { href: "/login", label: "Members Dashboard" },
+    ],
+  },
   { href: "/bistro", label: "The Bistro" },
-  { href: "/events", label: "Events" },
-  { href: "/plan-your-visit", label: "Visit" },
-  { href: "/contact", label: "Contacts" },
+  {
+    href: "/events",
+    label: "Events",
+    children: [
+      { href: "/events", label: "All events" },
+      { href: "/events/book", label: "Book your event" },
+      { href: "/events/corporate", label: "Corporate events" },
+    ],
+  },
+  {
+    href: "/plan-your-visit",
+    label: "Visit",
+    children: [
+      { href: "/plan-your-visit", label: "Plan your visit" },
+      { href: "/stay-and-play", label: "Stay & play" },
+      { href: "/usa-visitors", label: "For US visitors" },
+      { href: "/dress-code", label: "Dress code" },
+      { href: "/faq", label: "FAQ" },
+    ],
+  },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -22,51 +75,48 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   /**
-   * Nav opacity policy — strict.
+   * Nav opacity policy.
    *
-   * The nav is transparent by default. It can ONLY go opaque when we have
-   * a positive signal that the user has scrolled past the hero. If we
-   * can't get that signal for any reason, the nav stays transparent.
+   * Two rule sets depending on whether the current page has a dark hero
+   * backdrop that the nav needs to sit on top of:
    *
-   * Positive signals, in order of preference:
-   *   1. Home page: the AnchorReveal section's top edge has reached the
-   *      very top of the viewport (hero fully exited).
-   *   2. Non-home page: no hero element exists, so flip opaque once the
-   *      user has scrolled more than 20px (the page top has moved).
+   *   1. Home page (has [aria-label="Birchbank Golf — opening sequence"]):
+   *      - Transparent at the very top (nav text = paper, reads on the
+   *        dark cinematic hero)
+   *      - Flips opaque once the AnchorReveal section crosses the viewport
+   *        top (hero fully exited)
    *
-   * Everything is re-queried on every scroll event so there's no
-   * dependency on DOM-at-mount timing — if the sentinel shows up later,
-   * the next scroll tick picks it up.
+   *   2. Subpage (no hero element on page): always opaque from the start.
+   *      These pages have a paper (cream) background and transparent-mode
+   *      would render paper text on paper bg -- invisible. Opaque-by-
+   *      default makes every nav item immediately visible.
    */
   useEffect(() => {
     const update = () => {
-      // Hard floor: at or near the top of the page, always transparent.
+      const hero = document.querySelector('[aria-label="Birchbank Golf — opening sequence"]');
+
+      // Subpage: always opaque. No dark hero backdrop means we can't
+      // run transparent without making text invisible.
+      if (!hero) {
+        setOnLight(true);
+        return;
+      }
+
+      // Home page — hard floor at top, transparent over the hero.
       if (window.scrollY < 10) {
         setOnLight(false);
         return;
       }
 
-      // Is there a hero on this page? If not, we're on a secondary page;
-      // the nav should flip opaque once the user starts scrolling.
-      const hero = document.querySelector('[aria-label="Birchbank Golf — opening sequence"]');
-      if (!hero) {
-        setOnLight(window.scrollY > 20);
-        return;
-      }
-
-      // Home page path. Find the sentinel (AnchorReveal section).
+      // Home page — flip opaque once the anchor-reveal section crosses the top.
       const sentinel = document.getElementById("anchor-heading")?.closest("section");
-
       if (sentinel) {
-        // Ideal: use the sentinel's viewport position as the authoritative
-        // "has the hero exited?" check.
         setOnLight(sentinel.getBoundingClientRect().top <= 0);
         return;
       }
 
-      // Sentinel not in the DOM yet. Keep transparent — we have no
-      // positive signal to flip opaque, and defaulting to transparent
-      // is the safe choice while the hero is still on screen.
+      // Fallback (sentinel not mounted yet): keep transparent so the hero
+      // stays clean while the page finishes laying out.
       setOnLight(false);
     };
 
@@ -90,21 +140,8 @@ export default function Nav() {
           : "bg-transparent",
       )}
     >
-      {/*
-        Three-column grid layout:
-          col 1 (auto)  logo
-          col 2 (1fr)   nav links, centered within the column
-          col 3 (auto)  social + phone + book CTA
-        `gap-8 xl:gap-12` enforces a minimum breathing zone between the
-        logo and the first nav item so the logo plate can't crowd it at
-        any viewport width.
-      */}
       <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-10 h-20 md:h-24 lg:h-28 xl:h-32 2xl:h-36">
-        <Link
-          href="/"
-          aria-label="Birchbank Golf Club — home"
-          className="flex items-center"
-        >
+        <Link href="/" aria-label="Birchbank Golf Club — home" className="flex items-center">
           <Logo
             variant={light ? "flush" : "plate"}
             className="h-12 md:h-14 lg:h-16 xl:h-20 2xl:h-24"
@@ -112,19 +149,62 @@ export default function Nav() {
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-9 2xl:gap-11">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={clsx(
-                "text-[15px] xl:text-base whitespace-nowrap hover:text-amber transition-colors",
-                light ? "text-granite" : "text-paper",
-              )}
-            >
-              {l.label}
-            </Link>
-          ))}
+        {/* Desktop nav — dropdowns open on hover / focus-within */}
+        <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-8 2xl:gap-10">
+          {NAV.map((item) =>
+            item.children ? (
+              <div key={item.href} className="relative group">
+                <Link
+                  href={item.href}
+                  className={clsx(
+                    "inline-flex items-center gap-1 text-[15px] xl:text-base whitespace-nowrap hover:text-amber transition-colors py-2",
+                    light ? "text-granite" : "text-paper",
+                  )}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className="text-[0.7em] transition-transform group-hover:rotate-180 group-focus-within:rotate-180 opacity-70"
+                  >
+                    ▾
+                  </span>
+                </Link>
+                {/* Dropdown panel */}
+                <div
+                  className={clsx(
+                    "invisible opacity-0 pointer-events-none",
+                    "group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto",
+                    "group-focus-within:visible group-focus-within:opacity-100 group-focus-within:pointer-events-auto",
+                    "absolute top-full left-1/2 -translate-x-1/2 pt-2",
+                    "transition-opacity duration-150",
+                  )}
+                >
+                  <div className="min-w-[240px] bg-paper border border-granite/15 shadow-xl rounded-sm py-2">
+                    {item.children.map((c) => (
+                      <Link
+                        key={c.href}
+                        href={c.href}
+                        className="block px-5 py-2.5 text-sm text-granite hover:bg-cedar/5 hover:text-amber whitespace-nowrap transition-colors"
+                      >
+                        {c.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={clsx(
+                  "text-[15px] xl:text-base whitespace-nowrap hover:text-amber transition-colors py-2",
+                  light ? "text-granite" : "text-paper",
+                )}
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-4 md:gap-5 justify-self-end">
@@ -162,21 +242,47 @@ export default function Nav() {
         </div>
       </div>
 
+      {/* Mobile menu — flat expanded layout, no nested tapping */}
       {open && (
-        <div className="lg:hidden bg-paper border-t border-granite/10">
+        <div className="lg:hidden bg-paper border-t border-granite/10 max-h-[calc(100vh-5rem)] overflow-y-auto">
           <nav className="container-edge py-6 flex flex-col gap-5">
-            {LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="text-xl font-display text-granite"
-              >
-                {l.label}
-              </Link>
+            {NAV.map((item) => (
+              <div key={item.href} className="border-b border-granite/10 pb-4">
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="block text-xl font-display text-granite py-1"
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <ul className="mt-2 ml-1 space-y-1">
+                    {item.children
+                      .filter((c) => c.href !== item.href)
+                      .map((c) => (
+                        <li key={c.href}>
+                          <Link
+                            href={c.href}
+                            onClick={() => setOpen(false)}
+                            className="block text-sm text-silt hover:text-amber py-1.5"
+                          >
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                )}
+              </div>
             ))}
-            <div className="pt-4 flex flex-col gap-3">
+            <div className="pt-2 flex flex-col gap-3">
               <BookButton />
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="btn-ghost self-start"
+              >
+                Members Dashboard →
+              </Link>
               <a href="tel:+12506932255" className="btn-ghost self-start">
                 Call Pro Shop · 250-693-2255
               </a>
