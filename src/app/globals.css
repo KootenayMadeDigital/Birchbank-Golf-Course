@@ -78,20 +78,38 @@
 }
 
 /*
-  Hide the entire Chronogolf v2 widget auto-injection. The widget
-  creates a fixed-position `.chrono-container.chrono-reset` wrapper,
-  clones every `.chrono-bookingbutton` on the page into it, and mounts
-  a persistent panel at the bottom right. We trigger the booking
-  overlay from our own branded CTAs and show our own sticky pill, so
-  the auto-injected UI is redundant. Hiding the container kills the
-  clone + panel in one rule; our in-page buttons (which live outside
-  this container) are unaffected. The modal overlay that opens on
-  click still renders normally since it mounts elsewhere.
+  Chronogolf v2 widget branding. The widget auto-injects a persistent
+  booking panel at the bottom-right that expands into a full booking
+  flow (dates, player count, tee-time deals) — the same UX the current
+  birchbankgolf.com site uses. We let it render natively and lightly
+  brand it to match the Birchbank palette.
+
+  Classes referenced: `.chrono-container`, `.chrono-panel`,
+  `.chrono-panel-header`, `.chrono-panel-header-title`. These are all
+  in the main document (not in an iframe) so we can style them.
 */
-.chrono-container,
-.chrono-container.chrono-reset {
-  display: none !important;
+.chrono-container {
+  font-family: var(--font-sans) !important;
 }
+.chrono-panel {
+  box-shadow: 0 20px 50px -12px rgba(43, 42, 40, 0.35) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+.chrono-panel-header {
+  background: var(--color-cedar) !important;
+  border-top: 2px solid var(--color-tamarack) !important;
+}
+.chrono-panel-header-title {
+  color: var(--color-paper) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+.chrono-panel-header-icon,
+.chrono-panel-header-caret {
+  color: var(--color-tamarack) !important;
+}
+
 
 /* Hero wrapper — kept as plain CSS (not inside @layer) so Tailwind 4's
    layered specificity doesn't swallow it. Desktop / fine pointer gets

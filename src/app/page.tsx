@@ -8,7 +8,6 @@ import ConditionsWidget from "@/components/ConditionsWidget";
 import HolePreview from "@/components/HolePreview";
 import PhotoMarquee from "@/components/PhotoMarquee";
 import Testimonials from "@/components/Testimonials";
-import StickyBookBar from "@/components/StickyBookBar";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
@@ -288,7 +287,6 @@ export default function Home() {
         </div>
       </section>
 
-      <StickyBookBar />
     </>
   );
 }
