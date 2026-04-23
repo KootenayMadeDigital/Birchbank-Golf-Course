@@ -77,7 +77,7 @@ export default function StickyBookBar() {
             href="/book"
             onClick={handleBook}
             data-chrono-book
-            className="chrono-bookingbutton flex items-center gap-3 py-3 pl-5 pr-4 md:py-4 md:pl-6 md:pr-5 min-h-[52px] hover:bg-cedar-dark transition-colors"
+            className="flex items-center gap-3 py-3 pl-5 pr-4 md:py-4 md:pl-6 md:pr-5 min-h-[52px] hover:bg-cedar-dark transition-colors"
           >
             <div className="flex flex-col items-start leading-tight">
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-tamarack">

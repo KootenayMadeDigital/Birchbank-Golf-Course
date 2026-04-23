@@ -64,6 +64,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
 
+        {/* Chronogolf source trigger — the widget clones whichever element
+            has .chrono-bookingbutton and uses that tag as the wrapper for
+            the fixed-position panel. Birchbank's live site uses a <div>,
+            which flows block-level children (the panel) correctly; using
+            an <a> as we did before distorted the panel's layout. This node
+            is positioned off-screen but remains in layout so Chronogolf's
+            script can find and clone it. */}
+        <div className="chrono-bookingbutton" aria-hidden="true">
+          Book a Tee-Time
+        </div>
+
         {/* Chronogolf (Lightspeed Golf) booking widget — lazy-loaded.
             Birchbank's public numeric club ID is 738; the widget requires
             a valid clubId or it silently no-ops on click. Locale matches

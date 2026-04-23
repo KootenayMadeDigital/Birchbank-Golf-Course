@@ -29,7 +29,7 @@ export default function BookButton({ className, label = "Book a tee time", varia
       data-chrono-book
       className={clsx(
         variant === "primary" ? "btn-primary" : "btn-ghost",
-        "chrono-bookingbutton whitespace-nowrap",
+        "whitespace-nowrap",
         className,
       )}
     >

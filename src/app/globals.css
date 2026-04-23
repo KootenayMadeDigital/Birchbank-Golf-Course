@@ -78,28 +78,15 @@
 }
 
 /*
-  Chronogolf v2 widget — integration + branding.
-
-  The widget clones every `.chrono-bookingbutton` element on the page
-  into a fixed-position `.chrono-container.chrono-reset` wrapper, then
-  attaches a `.chrono-panel` booking trigger as a child of that clone.
-  Because the clone inherits our `.btn-primary` styling, you get a
-  redundant "Book a tee time →" button rendered on top of the panel,
-  which gets cut off at the viewport edge.
-
-  Fix: strip every visual attribute from the cloned `<a>` so only its
-  `.chrono-panel` child renders. Then brand the panel to match.
-
-  Classes: `.chrono-container`, `.chrono-panel`, `.chrono-panel-header`,
-  `.chrono-panel-header-title`. All live in the main document (not in
-  an iframe) so we can style them freely.
+  Chronogolf v2 widget — let Chronogolf's own stylesheet render the
+  panel. We do NOT override its internals; fighting cdn2.chronogolf.com
+  for specificity was the wrong path. The source trigger in layout.tsx
+  is a <div> (matching birchbankgolf.com's live embed) so the cloned
+  wrapper flows block-level children correctly. The one thing we DO
+  have to do: pin the container to the bottom-right corner, because
+  Chronogolf's stylesheet leaves .chrono-container as position:static
+  and relies on host-site CSS to place it.
 */
-
-/* 1. Position the widget container fixed at the bottom-right with
-      comfortable breathing room. Chronogolf's default CSS does NOT set
-      position:fixed on .chrono-container — it relies on the trigger
-      element's own positioning. Since we've neutralized the cloned `<a>`,
-      we have to pin the container ourselves. */
 .chrono-container {
   position: fixed !important;
   bottom: 1.25rem !important;
@@ -107,171 +94,56 @@
   left: auto !important;
   top: auto !important;
   width: auto !important;
-  font-family: var(--font-sans) !important;
+  height: auto !important;
   z-index: 30 !important;
 }
 
-/* 2. Neutralize the cloned `<a>` so ONLY the child .chrono-panel is
-      visible. Keep the `<a>` clickable (pointer-events intact) so
-      Chronogolf's own event handlers fire. */
-.chrono-container > a.chrono-bookingbutton--show {
-  display: block !important;
-  position: relative !important;
-  background: transparent !important;
-  color: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  min-height: 0 !important;
+/* The cloned wrapper — Chronogolf's own CSS starts it at
+   `transform: translateY(3000px) !important` (hidden off-screen) and
+   expects their JS to remove that offset. On our embed the JS path
+   that clears it doesn't fire, so the widget stays hidden. Force it
+   back to the viewport here. Also hide the source trigger text
+   ("Book a Tee-Time") that sits beside the panel in the clone. */
+.chrono-container > .chrono-bookingbutton--show {
+  transform: translateY(0) !important;
   font-size: 0 !important;
+  color: transparent !important;
   line-height: 0 !important;
-  text-decoration: none !important;
-  transition: none !important;
 }
-
-/* The `→` arrow span my BookButton adds — hide it on the clone. */
-.chrono-container > a.chrono-bookingbutton--show > span[aria-hidden="true"] {
-  display: none !important;
-}
-
-/* 3. Restore text rendering for the panel content nested inside. */
-.chrono-container > a .chrono-container .chrono-panel {
+.chrono-container > .chrono-bookingbutton--show > .chrono-panel {
   font-size: 14px !important;
   line-height: 1.45 !important;
-  color: var(--color-granite);
+  color: #2B2A28 !important;
 }
 
-/* 4. Panel shell — rounded, elevated, on-brand.
-      Idle (collapsed): fixed to the header height via overflow:hidden,
-      so branding or any other stray chronogolf nodes don't add visual
-      height below the header.
-      Active (expanded): release overflow so the booking iframe body
-      can render below the header. */
-.chrono-container .chrono-panel {
-  box-shadow: 0 20px 50px -12px rgba(43, 42, 40, 0.35) !important;
-  border-radius: 4px !important;
-  overflow: hidden !important;
-  min-width: 320px !important;
-  min-height: 74px !important;
-  height: 74px !important;
-  display: block !important;
-}
-.chrono-container .chrono-panel.chrono-panel--active {
-  overflow: visible !important;
-  height: auto !important;
-  min-height: 74px !important;
-}
-
-/* 5. Panel header: cedar background, tamarack top rule.
-      Actual DOM is: .chrono-panel-header > <a> > [caret, icon, title]
-      — so the flex container is the nested <a>, not the header itself.
-      We use flex `order` to visually arrange them as: icon | title | caret. */
-.chrono-container .chrono-panel-header {
-  background: var(--color-cedar) !important;
-  border-top: 2px solid var(--color-tamarack) !important;
-  min-height: 72px !important;
-  padding: 0 !important;
-}
-.chrono-container .chrono-panel-header > a {
-  display: flex !important;
-  align-items: center !important;
-  min-height: 72px !important;
-  height: 72px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  text-decoration: none !important;
-  background: var(--color-cedar) !important;
-  line-height: 1 !important;
-}
-
-/* Icon tile — visually first, 72×72 paper square with a cedar clock glyph. */
-.chrono-container .chrono-panel-header-icon {
-  order: 1 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 72px !important;
-  min-width: 72px !important;
-  height: 72px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: var(--color-paper) !important;
-  border-right: 1px solid rgba(43, 42, 40, 0.08) !important;
-  flex: 0 0 auto !important;
-  /* Inline SVG clock rendered via background (the <span> has no text node
-     and Chronogolf doesn't inject ::before content). Cedar stroke on paper. */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%233C4A35' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><polyline points='12 7 12 12 15.5 14'/></svg>") !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: 32px 32px !important;
-  background-color: var(--color-paper) !important;
-  font-size: 0 !important;
-  color: transparent !important;
-}
-.chrono-container .chrono-panel-header-icon::before,
-.chrono-container .chrono-panel-header-icon::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* Title — visually second, fills remaining space, larger + bolder. */
-.chrono-container .chrono-panel-header-title {
-  order: 2 !important;
-  color: var(--color-paper) !important;
-  font-family: var(--font-sans) !important;
-  font-weight: 600 !important;
-  font-size: 18px !important;
-  letter-spacing: -0.005em !important;
-  line-height: 1.2 !important;
-  padding: 0 1rem !important;
-  flex: 1 1 auto !important;
-  display: flex !important;
-  align-items: center !important;
-}
-
-/* Caret — visually last, right edge. */
-.chrono-container .chrono-panel-header-caret {
-  order: 3 !important;
-  color: var(--color-paper) !important;
-  font-size: 18px !important;
-  padding: 0 1.25rem !important;
-  display: flex !important;
-  align-items: center !important;
-  flex: 0 0 auto !important;
-}
-
-/* 6. Panel body — the Chronogolf iframe that renders the booking flow
-      when the panel is active. Without explicit dimensions the iframe
-      (which has height="100%") collapses to zero. We give it a fixed
-      viewport-bounded size that matches Chronogolf's own widget sizing. */
-.chrono-container .chrono-panel-body {
-  display: none !important;
-  width: 100% !important;
-  background: var(--color-paper) !important;
+/* The booking iframe body — Chronogolf leaves this unsized, so its
+   100%-height iframe collapses to 0. Give it a large, viewport-aware
+   size and position it ABOVE the header when active, since the widget
+   is pinned to the bottom of the viewport. */
+.chrono-container > .chrono-bookingbutton--show > .chrono-panel {
+  position: relative !important;
 }
 .chrono-container .chrono-panel--active .chrono-panel-body {
-  display: block !important;
-  height: min(620px, calc(100vh - 180px)) !important;
-  width: 380px !important;
+  position: absolute !important;
+  top: auto !important;
+  bottom: 100% !important;
+  left: auto !important;
+  right: 0 !important;
+  width: min(440px, calc(100vw - 2.5rem)) !important;
+  height: min(720px, calc(100vh - 120px)) !important;
+  background: #F5F2EA !important;
+  box-shadow: 0 -12px 40px -10px rgba(43, 42, 40, 0.3) !important;
+  border-radius: 4px 4px 0 0 !important;
+  overflow: hidden !important;
 }
 .chrono-container .chrono-panel-body iframe {
-  display: block !important;
   width: 100% !important;
   height: 100% !important;
   border: 0 !important;
-  background: var(--color-paper) !important;
+  display: block !important;
+  background: #F5F2EA !important;
 }
 
-/* 7. Hide the "Lightspeed Golf" branding link — we want a clean cedar
-      header only. Chronogolf places this inside the panel between the
-      header and the body, so it pushes panel height past 74px in the
-      idle state and makes the header look bottom-aligned within a
-      taller panel. Hiding it collapses the panel back to header height. */
-.chrono-container .chrono-panel-branding-link {
-  display: none !important;
-}
 
 
 /* Hero wrapper — kept as plain CSS (not inside @layer) so Tailwind 4's
