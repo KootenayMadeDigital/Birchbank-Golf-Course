@@ -16,8 +16,12 @@ import { useEffect, useState } from "react";
  */
 
 function useNow() {
-  const [now, setNow] = useState(() => new Date());
+  // Initial state is null so SSR and first client render agree — if we
+  // seed with `new Date()` the server's Date and the hydrating client's
+  // Date differ, which triggers React hydration-mismatch warning #418.
+  const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    setNow(new Date());
     const tick = () => setNow(new Date());
     const id = setInterval(tick, 60_000);
     return () => clearInterval(id);
@@ -48,9 +52,11 @@ function getSeasonStatus(now: Date) {
 
 export default function ConditionsWidget() {
   const now = useNow();
-  const season = getSeasonStatus(now);
-  const day = now.toLocaleDateString("en-CA", { weekday: "long", month: "long", day: "numeric" });
-  const time = now.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" });
+  // Before first client render `now` is null — render neutral placeholder
+  // strings that don't depend on Date-of-now, so SSR and hydration agree.
+  const season = now ? getSeasonStatus(now) : { label: "Season", detail: "April 1 – October 31" };
+  const day = now ? now.toLocaleDateString("en-CA", { weekday: "long", month: "long", day: "numeric" }) : "";
+  const time = now ? now.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }) : "";
   const open = season.label === "Open";
 
   return (
@@ -70,8 +76,8 @@ export default function ConditionsWidget() {
         </div>
       </div>
 
-      <p className="font-mono text-sm text-silt mb-1">{day}</p>
-      <p className="font-mono text-sm text-silt mb-5">{time}</p>
+      <p className="font-mono text-sm text-silt mb-1">{day || <span>&nbsp;</span>}</p>
+      <p className="font-mono text-sm text-silt mb-5">{time || <span>&nbsp;</span>}</p>
 
       <dl className="grid grid-cols-2 gap-y-5 gap-x-6 font-mono text-sm">
         <div className="col-span-2">

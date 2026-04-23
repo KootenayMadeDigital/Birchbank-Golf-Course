@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-granite text-paper mt-32">
       <div className="container-edge py-20 grid gap-12 md:grid-cols-4">
         <div>
-          <Logo variant="plate" height={56} className="mb-6" />
+          <Logo variant="plate" className="h-14 md:h-16 mb-6" />
           <p className="text-sm text-paper/75 leading-relaxed">
             5500 Highway 22<br />
             Genelle, BC<br />

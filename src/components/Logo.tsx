@@ -2,18 +2,22 @@ import Image from "next/image";
 import clsx from "clsx";
 
 /**
- * Birchbank Golf Club wordmark + tree logo. Transparent-background PNG
- * served from /public/brand/logo.png (Next/Image serves AVIF/WebP variants
- * automatically to modern browsers).
+ * Birchbank Golf Club wordmark + tree logo (transparent-background PNG
+ * at /public/brand/logo.png, 1200×506).
  *
- * Two variants:
+ * The logo's height is controlled by whichever Tailwind `h-*` class the
+ * caller passes in `className`. The image fills that height and keeps
+ * its aspect ratio. This lets Nav scale the logo responsively with
+ * breakpoint classes instead of a fixed pixel prop, so the logo grows
+ * smoothly from phones up through ultra-wide monitors.
+ *
+ * Variants:
  *   • `flush` — bare logo, used on paper / light backgrounds
  *   • `plate` — logo wrapped in a small paper-colored plate so the dark
- *     ink reads over dark backgrounds (the hero, the footer)
+ *     ink reads over dark surfaces (hero, footer)
  */
 type Props = {
   variant?: "plate" | "flush";
-  height?: number;
   priority?: boolean;
   className?: string;
 };
@@ -22,19 +26,16 @@ const LOGO_SRC = "/brand/logo.png";
 const INTRINSIC_W = 1200;
 const INTRINSIC_H = 506;
 
-export default function Logo({ variant = "flush", height = 40, priority = false, className }: Props) {
-  const width = Math.round((height * INTRINSIC_W) / INTRINSIC_H);
-
+export default function Logo({ variant = "flush", priority = false, className }: Props) {
   const img = (
     <Image
       src={LOGO_SRC}
       alt="Birchbank Golf Club"
-      width={width}
-      height={height}
-      sizes={`${width}px`}
+      width={INTRINSIC_W}
+      height={INTRINSIC_H}
+      sizes="(min-width: 1536px) 260px, (min-width: 1024px) 220px, 180px"
       priority={priority}
-      className="block h-auto w-auto"
-      style={{ height }}
+      className="block h-full w-auto"
     />
   );
 
@@ -42,7 +43,7 @@ export default function Logo({ variant = "flush", height = 40, priority = false,
     return (
       <span
         className={clsx(
-          "inline-flex items-center bg-paper rounded-sm px-4 py-2 shadow-sm",
+          "inline-flex items-center bg-paper rounded-sm px-3 md:px-4 py-1.5 md:py-2 shadow-sm",
           className,
         )}
       >
