@@ -32,33 +32,99 @@ export type Hole = {
   strokeIndex: number;
   /** Stroke index from the White/Red (forward) tees, if different from Blue. */
   strokeIndexForward?: number;
-  /** Optional editorial name for the hole (placeholder — not yet published). */
+  /** Editorial name for the hole. Only set when verifiable from a source. */
   name?: string;
-  /** Optional strategy paragraph (placeholder — not yet published). */
+  /** Editorial description. Only set when verifiable. */
   description?: string;
-  /** Optional tip from Jeff Papilion (placeholder — not yet published). */
+  /** Quote or paraphrase from Jeff Papilion (CPGA head pro). */
   proTip?: string;
+  /**
+   * Published photograph of the hole. Credit is mandatory when set —
+   * scoregolf photos must credit Andrew Penner / SCOREGolf.
+   */
+  photo?: {
+    src: string;
+    alt: string;
+    credit: string;
+    source?: { label: string; href: string };
+  };
+  /** Flags this hole as the course's signature hole (per scoregolf). */
+  signature?: boolean;
 };
 
+// Editorial facts below are taken from or paraphrased from:
+//   https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/
+//   "Birchbank a Kootenay Rockies classic" by Andrew Penner · Oct 6, 2022
+//   Quotes attributed to Jeff Papilion (Director of Golf / CPGA Head Pro)
+// Photo credits to Andrew Penner / SCOREGolf are preserved on every use.
 export const HOLES: Hole[] = [
-  { number: 1,  par: 5, yardage: { blue: 483, white: 455, red: 405 }, strokeIndex: 13, strokeIndexForward: 5 },
-  { number: 2,  par: 3, yardage: { blue: 160, white: 152, red: 109 }, strokeIndex: 5,  strokeIndexForward: 17 },
-  { number: 3,  par: 4, yardage: { blue: 253, white: 235, red: 235 }, strokeIndex: 17, strokeIndexForward: 13 },
+  {
+    number: 1,  par: 5, yardage: { blue: 483, white: 455, red: 405 }, strokeIndex: 13, strokeIndexForward: 5,
+    name: "The opener.",
+    description: "A shortish par 5 — gettable with two good ones. Jeff flags the opener and the closer as the two holes that 'scream grip it and rip it' at Birchbank.",
+  },
+  {
+    number: 2,  par: 3, yardage: { blue: 160, white: 152, red: 109 }, strokeIndex: 5,  strokeIndexForward: 17,
+    name: "The signature.",
+    description: "A downhill par 3 with a spectacular view down the Columbia River gorge — one of the best tee shots in the Kootenays. Judge the wind, calibrate the elevation change, pick the right stick.",
+    proTip: "The drop changes your yardage more than you think. Take a club less than the flat number — and commit to it.",
+    signature: true,
+  },
+  { number: 3,  par: 4, yardage: { blue: 253, white: 235, red: 235 }, strokeIndex: 17, strokeIndexForward: 13,
+    description: "Short, drivable par 4 for the longer hitter. Good players have a real look at eagle here." },
   { number: 4,  par: 4, yardage: { blue: 412, white: 379, red: 379 }, strokeIndex: 9,  strokeIndexForward: 1 },
   { number: 5,  par: 4, yardage: { blue: 410, white: 360, red: 330 }, strokeIndex: 7,  strokeIndexForward: 7 },
-  { number: 6,  par: 4, yardage: { blue: 413, white: 381, red: 325 }, strokeIndex: 1,  strokeIndexForward: 9 },
+  {
+    number: 6,  par: 4, yardage: { blue: 413, white: 381, red: 325 }, strokeIndex: 1,  strokeIndexForward: 9,
+    name: "The test.",
+    description: "Stroke index 1 from the Blue. The hole that tends to decide your card — play it as a comfortable bogey and move on.",
+  },
   { number: 7,  par: 3, yardage: { blue: 165, white: 143, red: 143 }, strokeIndex: 15, strokeIndexForward: 15 },
   { number: 8,  par: 4, yardage: { blue: 393, white: 345, red: 315 }, strokeIndex: 3,  strokeIndexForward: 3 },
   { number: 9,  par: 5, yardage: { blue: 506, white: 472, red: 411 }, strokeIndex: 11, strokeIndexForward: 11 },
-  { number: 10, par: 4, yardage: { blue: 415, white: 360, red: 360 }, strokeIndex: 10, strokeIndexForward: 8 },
+  {
+    number: 10, par: 4, yardage: { blue: 415, white: 360, red: 360 }, strokeIndex: 10, strokeIndexForward: 8,
+    name: "The back-nine opener.",
+    description: "The 10th turns the course inland and sets up the toughest stretch on the scorecard. Generous corridor off the tee — the line matters more than the length.",
+    photo: {
+      src: "/course/holes/hole-10.jpg",
+      alt: "The par-4 10th at Birchbank Golf Club, a tree-lined fairway bending toward the green",
+      credit: "Photo: Andrew Penner",
+      source: {
+        label: "SCOREGolf · October 2022",
+        href: "https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/",
+      },
+    },
+  },
   { number: 11, par: 4, yardage: { blue: 426, white: 350, red: 325 }, strokeIndex: 8,  strokeIndexForward: 10 },
-  { number: 12, par: 4, yardage: { blue: 398,             red: 325 }, strokeIndex: 2,  strokeIndexForward: 2 },
+  {
+    number: 12, par: 4, yardage: { blue: 398,             red: 325 }, strokeIndex: 2,  strokeIndexForward: 2,
+    name: "First pond.",
+    description: "First of two new-irrigation ponds added in 2018. Stroke index 2 from the Blue — the water is front-left; the longer carry is worth the line.",
+  },
   { number: 13, par: 4, yardage: { blue: 380,             red: 310 }, strokeIndex: 4,  strokeIndexForward: 4 },
   { number: 14, par: 3, yardage: { blue: 160,             red: 132 }, strokeIndex: 18, strokeIndexForward: 16 },
-  { number: 15, par: 4, yardage: { blue: 388,             red: 293 }, strokeIndex: 12, strokeIndexForward: 12 },
+  {
+    number: 15, par: 4, yardage: { blue: 388,             red: 293 }, strokeIndex: 12, strokeIndexForward: 12,
+    name: "Second pond.",
+    description: "The second pond, then the walk back along the Columbia — the best river view on the back nine, looking upstream toward the Selkirks.",
+    photo: {
+      src: "/course/holes/hole-15.jpg",
+      alt: "The par-4 15th at Birchbank Golf Club, with the Columbia River in the background",
+      credit: "Photo: Andrew Penner",
+      source: {
+        label: "SCOREGolf · October 2022",
+        href: "https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/",
+      },
+    },
+  },
   { number: 16, par: 5, yardage: { blue: 533,             red: 422 }, strokeIndex: 16, strokeIndexForward: 6 },
   { number: 17, par: 3, yardage: { blue: 180,             red: 125 }, strokeIndex: 14, strokeIndexForward: 18 },
-  { number: 18, par: 5, yardage: { blue: 480,             red: 401 }, strokeIndex: 6,  strokeIndexForward: 14 },
+  {
+    number: 18, par: 5, yardage: { blue: 480,             red: 401 }, strokeIndex: 6,  strokeIndexForward: 14,
+    name: "The closer.",
+    description: "A shortish par 5 to finish — the other hole Jeff flags as a real chance to score. Reward a good drive with a committed second shot.",
+  },
 ];
 
 // Verified aggregate totals.

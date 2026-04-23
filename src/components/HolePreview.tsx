@@ -3,12 +3,27 @@ import { HOLES } from "@/data/holes";
 
 /**
  * Editorial-row hole preview for the home page. Spotlights three holes
- * that are interesting on verifiable grounds:
+ * on verifiable grounds:
+ *   • Hole 2  — signature hole (downhill par 3, Columbia River gorge view —
+ *     per SCOREGolf feature by Andrew Penner, Oct 2022)
  *   • Hole 6  — stroke index 1 (hardest hole on the course)
- *   • Hole 12 — first of two new-irrigation ponds added in 2018
- *   • Hole 15 — second pond; also the walk back along the river
+ *   • Hole 15 — second pond + Columbia River view; published photo by
+ *     Andrew Penner (SCOREGolf)
  */
-const HIGHLIGHTS: Array<{ number: number; headline: string; body: string; aside: string }> = [
+const HIGHLIGHTS: Array<{
+  number: number;
+  headline: string;
+  body: string;
+  aside: string;
+  badge?: string;
+}> = [
+  {
+    number: 2,
+    headline: "The signature.",
+    body: "Downhill par 3 with a spectacular view down the Columbia River gorge. One of the best tee shots in the Kootenays.",
+    aside: "Pro tip: the drop changes your yardage more than you think — take one club less, and commit to it.",
+    badge: "Signature",
+  },
   {
     number: 6,
     headline: "The test.",
@@ -16,16 +31,10 @@ const HIGHLIGHTS: Array<{ number: number; headline: string; body: string; aside:
     aside: "Local wildlife: wild turkeys cross the fairway in the morning.",
   },
   {
-    number: 12,
-    headline: "First pond.",
-    body: "Par 4, 398 yards. The first of two new-irrigation ponds added in 2018.",
-    aside: "Club layout: water front-left; the longer carry is worth the line.",
-  },
-  {
     number: 15,
-    headline: "Second pond.",
-    body: "Par 4, 388 yards. The second pond, then the walk back along the Columbia.",
-    aside: "River view: the best of the back nine looking upstream.",
+    headline: "The river view.",
+    body: "Par 4, 388 yards. The second pond, then the walk back along the Columbia, looking upstream toward the Selkirks.",
+    aside: "Photo on the hole page by Andrew Penner · SCOREGolf, 2022.",
   },
 ];
 
@@ -57,9 +66,16 @@ export default function HolePreview() {
                     {String(h.number).padStart(2, "0")}
                   </span>
                   <div className="col-span-10 md:col-span-7">
-                    <p className="font-display text-2xl md:text-3xl text-granite group-hover:text-amber transition-colors">
-                      {h.headline}
-                    </p>
+                    <div className="flex items-baseline gap-3 flex-wrap">
+                      <p className="font-display text-2xl md:text-3xl text-granite group-hover:text-amber transition-colors">
+                        {h.headline}
+                      </p>
+                      {h.badge && (
+                        <span className="inline-flex items-center px-2 py-0.5 bg-tamarack text-paper text-[10px] font-mono uppercase tracking-widest rounded-sm">
+                          {h.badge}
+                        </span>
+                      )}
+                    </div>
                     <p className="mt-2 text-silt text-base max-w-xl">{h.body}</p>
                     {/* Aside — always visible on mobile (since the HCP / yardage
                         columns are hidden there); on md+ it's tucked under

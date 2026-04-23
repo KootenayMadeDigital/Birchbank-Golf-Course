@@ -71,16 +71,80 @@ export default async function HolePage({
           <Link href="/course" className="hover:text-amber">Course</Link>
           <span className="mx-2 text-silt">/</span>
           Hole {hole.number}
+          {hole.signature && (
+            <span className="ml-3 inline-flex items-center px-2 py-0.5 bg-tamarack text-paper text-[10px] font-mono uppercase tracking-widest rounded-sm">
+              Signature
+            </span>
+          )}
         </p>
         <h1 className="display-xl mb-4">
-          Hole {hole.number}
-          <span className="text-silt font-display text-3xl md:text-4xl ml-4">
-            · Par {hole.par}
-          </span>
+          {hole.name ? (
+            <>
+              {hole.name}
+              <span className="block text-silt font-display text-2xl md:text-3xl mt-3">
+                Hole {hole.number} · Par {hole.par}
+              </span>
+            </>
+          ) : (
+            <>
+              Hole {hole.number}
+              <span className="text-silt font-display text-3xl md:text-4xl ml-4">
+                · Par {hole.par}
+              </span>
+            </>
+          )}
         </h1>
 
-        {specialNote && (
+        {hole.description && (
+          <p className="prose-editorial text-granite/85 mt-6 mb-4 max-w-2xl">{hole.description}</p>
+        )}
+        {specialNote && !hole.description && (
           <p className="prose-editorial text-granite/85 mt-2 mb-8 max-w-2xl">{specialNote}</p>
+        )}
+
+        {/* Featured photograph — only appears when hole has verified photo
+            with proper credit. scoregolf-sourced photos credit Andrew Penner. */}
+        {hole.photo && (
+          <figure className="mt-8 mb-10 max-w-4xl">
+            <div className="relative aspect-[16/9] bg-granite/5 overflow-hidden">
+              <Image
+                src={hole.photo.src}
+                alt={hole.photo.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 896px"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              {hole.photo.credit}
+              {hole.photo.source && (
+                <>
+                  {" · "}
+                  <a
+                    href={hole.photo.source.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline hover:text-amber"
+                  >
+                    {hole.photo.source.label} ↗
+                  </a>
+                </>
+              )}
+            </figcaption>
+          </figure>
+        )}
+
+        {/* Jeff's pro tip — only when we have a verified quote/paraphrase. */}
+        {hole.proTip && (
+          <div className="mt-6 mb-8 max-w-2xl border-l-2 border-tamarack pl-5">
+            <p className="font-mono text-xs uppercase tracking-widest text-tamarack mb-2">
+              From the head pro
+            </p>
+            <p className="prose-editorial text-granite/90 italic">"{hole.proTip}"</p>
+            <p className="mt-3 font-mono text-xs text-silt">
+              Jeff Papilion · Director of Golf, CPGA
+            </p>
+          </div>
         )}
 
         <div className="grid gap-10 md:grid-cols-12 mt-8">
