@@ -1,12 +1,28 @@
 import type { Metadata } from "next";
-import { FAQ } from "@/data/faq";
+import Link from "next/link";
+import BookButton from "@/components/BookButton";
+import { FAQ, FAQ_CATEGORIES } from "@/data/faq";
 import { faqJsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Common questions about playing, visiting, and booking at Birchbank Golf.",
+  description:
+    "Everything visitors ask about Birchbank Golf Course — season, hours, booking, dress code, course design, rates, equipment, and the Retirees Club.",
   alternates: { canonical: "/faq" },
 };
+
+/**
+ * FAQ page rebuilt as a proper answer hub:
+ *   - Grouped by category (visiting / course / fees / community)
+ *   - Native <details>/<summary> for accordion behavior (no JS)
+ *   - Schema.org FAQPage JSON-LD so Google can surface answers directly
+ *   - Jump-nav chips at the top for self-service triage
+ *   - Final "still have a question?" block pushing to contact + booking
+ *
+ * Every answer in src/data/faq.ts is verified from birchbankgolf.com or
+ * the course's published information. The FAQPage schema is a material
+ * SEO asset per the blueprint's local-SEO plan.
+ */
 
 export default function FAQPage() {
   return (
@@ -16,18 +32,145 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQ)) }}
       />
 
-      <section className="pt-40 pb-[var(--spacing-section)] container-edge max-w-3xl">
-        <p className="eyebrow mb-6">FAQ</p>
-        <h1 className="display-xl max-w-[16ch] mb-14">Things people ask us.</h1>
+      {/* Hero + jump nav */}
+      <section className="pt-32 md:pt-40 pb-16 bg-paper">
+        <div className="container-edge">
+          <p className="eyebrow mb-6">FAQ</p>
+          <h1
+            className="font-display text-granite max-w-[18ch] mb-8"
+            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+          >
+            Things people ask us.
+          </h1>
+          <p className="prose-editorial text-granite/85 max-w-2xl mb-10">
+            Hours, dress code, cart rates, the dress code, the 1962 story, and why the 7th
+            gets prettier in October. If we haven't answered your question below, call the
+            Pro Shop. Someone picks up.
+          </p>
 
-        <dl className="divide-y divide-granite/15 border-t border-b border-granite/15">
-          {FAQ.map((f) => (
-            <div key={f.question} className="py-8">
-              <dt className="font-display text-2xl mb-4">{f.question}</dt>
-              <dd className="prose-editorial text-granite/85 text-base">{f.answer}</dd>
+          <nav aria-label="FAQ categories" className="flex flex-wrap gap-2">
+            {FAQ_CATEGORIES.map((c) => (
+              <a
+                key={c.key}
+                href={`#${c.key}`}
+                className="inline-flex items-center px-4 py-2 border border-granite/20 hover:border-amber hover:text-amber transition-colors font-mono text-xs uppercase tracking-widest rounded-sm"
+              >
+                {c.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </section>
+
+      <div className="container-edge"><div className="rule-hair" /></div>
+
+      {/* Category sections */}
+      {FAQ_CATEGORIES.map((category) => {
+        const items = FAQ.filter((f) => f.category === category.key);
+        if (items.length === 0) return null;
+        return (
+          <section
+            key={category.key}
+            id={category.key}
+            className="py-[var(--spacing-section)] bg-paper scroll-mt-32"
+            aria-labelledby={`${category.key}-heading`}
+          >
+            <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
+              <div className="md:col-span-4 md:sticky md:top-32 self-start">
+                <p className="eyebrow mb-5">{category.label}</p>
+                <h2
+                  id={`${category.key}-heading`}
+                  className="display-md font-display mb-4"
+                >
+                  {category.key === "visiting" && "When, where, how."}
+                  {category.key === "course"   && "The course itself."}
+                  {category.key === "fees"     && "Dollars and equipment."}
+                  {category.key === "community" && "The regulars."}
+                </h2>
+                <p className="text-silt text-sm">{category.blurb}</p>
+              </div>
+
+              <div className="md:col-span-8">
+                <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">
+                  {items.map((f) => (
+                    <li key={f.question}>
+                      <details className="group py-6">
+                        <summary className="flex items-baseline justify-between cursor-pointer list-none gap-6">
+                          <span className="font-display text-xl md:text-2xl text-granite group-hover:text-amber transition-colors">
+                            {f.question}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="font-mono text-amber text-lg shrink-0 transition-transform group-open:rotate-45"
+                          >
+                            +
+                          </span>
+                        </summary>
+                        <div className="prose-editorial text-granite/85 text-base mt-4 max-w-2xl">
+                          {f.answer}
+                        </div>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          ))}
-        </dl>
+          </section>
+        );
+      })}
+
+      {/* Still have a question? */}
+      <section className="py-[var(--spacing-section)] bg-cedar text-paper">
+        <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
+          <div className="md:col-span-7">
+            <p className="eyebrow text-tamarack mb-5">Still have a question?</p>
+            <h2
+              className="font-display mb-5"
+              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Call us. Somebody picks up.
+            </h2>
+            <p className="prose-editorial text-paper/85 max-w-xl">
+              The Pro Shop is open 9 AM – 7 PM, seven days a week during the season. The
+              Bistro line picks up 12 – 5 PM. Slow season (November – March), leave a
+              voicemail — the office returns calls within a business day.
+            </p>
+          </div>
+          <div className="md:col-span-5 md:text-right">
+            <div className="flex flex-wrap md:justify-end gap-4">
+              <a href="tel:+12506932255" className="btn-primary bg-tamarack text-granite hover:bg-paper">
+                Call 250-693-2255
+              </a>
+              <Link
+                href="/contact"
+                className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+              >
+                Contact form
+              </Link>
+            </div>
+            <p className="font-mono text-xs text-paper/60 mt-6">
+              Bistro · 250-693-5451<br />
+              5500 Highway 22, Genelle BC
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge text-center max-w-2xl mx-auto">
+          <p className="eyebrow mb-5">Answered enough</p>
+          <p
+            className="font-display text-granite mb-8"
+            style={{ fontSize: "clamp(1.75rem, 4.5vw, 3rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
+          >
+            Go ahead and book.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <BookButton />
+            <Link href="/rates" className="btn-ghost">See rates →</Link>
+          </div>
+        </div>
       </section>
     </>
   );
