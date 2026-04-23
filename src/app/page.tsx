@@ -197,6 +197,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 7.5 Mid-page booking rail. WA/Albertan personas don't want to
+           scroll 8 sections between booking prompts. One tight line +
+           BookButton. No fake scarcity -- the time-of-day framing is
+           verifiable against the Pro Shop's 9 am - 7 pm schedule. */}
+      <section className="bg-paper border-y border-granite/10">
+        <div className="container-edge py-6 md:py-7 flex flex-wrap items-center justify-between gap-4">
+          <p className="text-granite font-display text-lg md:text-xl">
+            The Pro Shop is open until 7 PM today.
+          </p>
+          <div className="flex items-center gap-4">
+            <a href="tel:+12506932255" className="text-silt hover:text-amber text-sm hidden md:inline">
+              250-693-2255
+            </a>
+            <BookButton label="Book a tee time" />
+          </div>
+        </div>
+      </section>
+
       {/* 8. Bistro + Memberships */}
       <section className="py-[var(--spacing-section)]">
         <div className="container-edge grid gap-8 md:grid-cols-2">
