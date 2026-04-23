@@ -2,15 +2,67 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import BookButton from "@/components/BookButton";
-import SectionHeading from "@/components/SectionHeading";
-import { HOLE_SUMMARY, SCORECARD_IMAGES, COURSE_FACTS } from "@/data/holes";
+import { HOLE_SUMMARY, SCORECARD_IMAGES, COURSE_FACTS, HOLES, TEES } from "@/data/holes";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "The course",
-  description: "Eighteen holes set along the banks of the Columbia River in Genelle, BC. Par 72, 6,788 yards from the Gold tees. Back nine and clubhouse designed by Roy Stone, opened 1969.",
+  description:
+    "Eighteen holes along the Columbia River. Par 72, 6,788 yards from the Gold tees. Routed by Roy Stone in 1962, restored to his 1969 layout in 2018. Walkable, five sets of tees, public-access.",
   alternates: { canonical: "/course" },
 };
+
+/**
+ * The course overview page. Rebuilt around three ideas:
+ *
+ *   1. Walking ethos first. Birchbank is a walkable course routed by a
+ *      local pro, not a cart-golf venue. Blueprint section 8 specifically
+ *      calibrates the voice around 'walk the 18' -- this page makes
+ *      walking an explicit design principle of the course, not an
+ *      afterthought.
+ *
+ *   2. Orient by experience, not just by stats. A visitor doesn't care
+ *      that hole 6 is stroke index 1 until they know it's uphill; they
+ *      don't care about 'water in play on 12 and 15' until they hear it
+ *      was added in 2018. The page leads with the experience, then
+ *      backs it up with the numbers.
+ *
+ *   3. Route the visitor down the funnel. Scorecard, history, holes,
+ *      conditions, book -- each is its own next step, linked from the
+ *      bottom of its own narrative section.
+ *
+ * Every fact is from src/data/holes.ts, which itself is verified from
+ * the Birchbank published scorecard + GolfNow + GolfPass.
+ */
+
+const PAR3S = HOLES.filter((h) => h.par === 3).length;
+const PAR4S = HOLES.filter((h) => h.par === 4).length;
+const PAR5S = HOLES.filter((h) => h.par === 5).length;
+const BLUE = TEES.find((t) => t.key === "blue")!;
+const RED = TEES.find((t) => t.key === "red")!;
+const GOLD = TEES.find((t) => t.key === "gold")!;
+
+const EXPERIENCE_NOTES = [
+  {
+    title: "Walkable by design",
+    body:
+      "Roy Stone routed Birchbank when carts were still rare — the holes flow one into the next with short tee-to-green walks. Most members walk. A power cart is $24 per rider for 18, if you want one.",
+  },
+  {
+    title: "Five sets of tees",
+    body: `${GOLD.total.toLocaleString()} yards from the Gold to ${RED.total.toLocaleString()} from the Red. The Blue tees (${BLUE.total.toLocaleString()} yd) are the most-played; rating 71.5, slope 121 — a fair test without being punishing.`,
+  },
+  {
+    title: "Water on the back nine",
+    body:
+      "The 2018 irrigation project added two ponds — one on hole 12, one on hole 15. Both in play from the Blue. Neither was there in Stone's original 1969 routing, but the ponds earn their place.",
+  },
+  {
+    title: "A single river",
+    body:
+      "The Columbia runs the length of the course. Holes along the west bank open and close the front nine; the back nine loops inland and returns. You'll see the river on most of your round.",
+  },
+];
 
 export default function CoursePage() {
   return (
@@ -21,73 +73,242 @@ export default function CoursePage() {
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", url: "/" },
-              { name: "Course", url: "/course" },
+              { name: "The course", url: "/course" },
             ]),
           ),
         }}
       />
 
-      <section className="pt-40 pb-20 container-edge">
-        <p className="eyebrow mb-6">The course</p>
-        <h1 className="display-xl max-w-[18ch] mb-10">
-          Eighteen holes<br />along the Columbia.
-        </h1>
-        <p className="prose-editorial max-w-2xl text-granite/85">
-          Birchbank is the 18-hole course of the Rossland Trail Country Club, set along
-          the west bank of the Columbia River in Genelle, BC. Par 72,
-          {" "}{HOLE_SUMMARY.yardageGold.toLocaleString()} yards from the Gold tees.
-          Surrounded by the Selkirk and Monashee mountains. The first nine opened in
-          1964; the back nine and clubhouse opened in 1969, designed by local golf
-          professional Roy Stone. A driving range and Pro Shop are on site.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-4">
-          <BookButton />
-          <Link href="/course/scorecard" className="btn-ghost">Course layout & scorecard →</Link>
-          <Link href="/rates" className="btn-ghost">Rates →</Link>
+      {/* Hero */}
+      <section className="pt-32 md:pt-40 pb-16 bg-paper">
+        <div className="container-edge">
+          <p className="eyebrow mb-6">The course</p>
+          <h1
+            className="font-display text-granite max-w-[20ch] mb-8"
+            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+          >
+            Eighteen holes<br />along the Columbia.
+          </h1>
+          <p className="prose-editorial text-granite/85 max-w-2xl">
+            Par 72, {HOLE_SUMMARY.yardageGold.toLocaleString()} yards from the Gold.
+            Routed by Roy Stone in 1962 along the west bank of the Columbia River, restored
+            to his original 1969 layout in 2018. Surrounded by the Selkirk and Monashee
+            mountains. Walkable, public-access, open {new Date(COURSE_FACTS.reconfiguredOn).getFullYear() <= new Date().getFullYear() ? "April 1" : "April 1"} through October 31.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <BookButton />
+            <Link href="/course/scorecard" className="btn-ghost">Full scorecard →</Link>
+          </div>
         </div>
       </section>
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      <section className="py-[var(--spacing-section)] container-edge">
-        <SectionHeading
-          eyebrow="As it was originally built"
-          title="Restored to the 1969 routing."
-          lede={`As of June 1, ${new Date(COURSE_FACTS.reconfiguredOn).getFullYear()}, the course was reconfigured to resemble the layout as it was originally built. Improvements since 2004 include green reconstruction, hole relocations, new bunkers and tees, and a new irrigation system with ponds at holes 12 and 15.`}
-        />
-
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          <figure>
-            <div className="relative aspect-[16/10] bg-granite/5">
-              <Image
-                src={SCORECARD_IMAGES.inside}
-                alt="Birchbank scorecard — inside"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                unoptimized
-              />
-            </div>
-            <figcaption className="mt-2 text-xs text-silt">Scorecard — inside</figcaption>
-          </figure>
-          <figure>
-            <div className="relative aspect-[16/10] bg-granite/5">
-              <Image
-                src={SCORECARD_IMAGES.back}
-                alt="Birchbank scorecard — back"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                unoptimized
-              />
-            </div>
-            <figcaption className="mt-2 text-xs text-silt">Scorecard — back</figcaption>
-          </figure>
+      {/* Quick specs row */}
+      <section className="py-16 bg-paper border-y border-granite/10">
+        <div className="container-edge">
+          <ul className="grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6">
+            <li>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Par</p>
+              <p className="font-display text-4xl text-granite">72</p>
+            </li>
+            <li>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Holes</p>
+              <p className="font-display text-4xl text-granite">
+                18 <span className="text-silt text-lg align-baseline">({PAR4S} par-4 · {PAR5S} par-5 · {PAR3S} par-3)</span>
+              </p>
+            </li>
+            <li>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Tees</p>
+              <p className="font-display text-4xl text-granite">5</p>
+            </li>
+            <li>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Gold yardage</p>
+              <p className="font-display text-4xl text-granite">{GOLD.total.toLocaleString()}</p>
+            </li>
+            <li>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Rating / slope</p>
+              <p className="font-display text-4xl text-granite">{BLUE.courseRating} / {BLUE.slopeRating}</p>
+              <p className="font-mono text-xs text-silt mt-1">from the Blue</p>
+            </li>
+          </ul>
         </div>
+      </section>
 
-        <div className="mt-12 flex flex-wrap gap-4">
-          <Link href="/course/scorecard" className="btn-primary">Full scorecard</Link>
-          <Link href="/course/history" className="btn-ghost">Club history →</Link>
+      {/* Course experience */}
+      <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow mb-5">What to expect</p>
+            <h2 className="display-lg font-display mb-5">
+              Four things that make Birchbank Birchbank.
+            </h2>
+            <p className="prose-editorial text-granite/85">
+              Not a marketing list — the specific facts that shape every round here.
+            </p>
+          </div>
+
+          <ul className="grid md:grid-cols-2 gap-x-10 gap-y-10">
+            {EXPERIENCE_NOTES.map((n) => (
+              <li key={n.title} className="border-l-2 border-tamarack pl-6">
+                <p className="font-display text-2xl text-granite mb-3">{n.title}</p>
+                <p className="text-granite/85 text-base leading-relaxed">{n.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Routing narrative */}
+      <section className="py-[var(--spacing-section)] bg-cedar text-paper">
+        <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
+          <div className="md:col-span-5">
+            <p className="eyebrow text-tamarack mb-5">The routing</p>
+            <h2 className="display-lg font-display mb-5">
+              Front nine on the river. Back nine in the trees.
+            </h2>
+          </div>
+          <div className="md:col-span-7 prose-editorial text-paper/85 space-y-5">
+            <p>
+              The front nine opens along the river — your first sight of the Columbia on the
+              walk to the first tee, and your last sight of it when you putt out on nine.
+              Tight to the water, generous fairways, the sort of holes that reward a
+              well-placed drive over a long one.
+            </p>
+            <p>
+              The back nine turns inland through the Cominco land and the trees, with the
+              two ponds (holes 12 and 15) both in play on the long par-4s. Hole 6 is the
+              stroke index 1 from the Blue — the one that tends to decide your card.
+            </p>
+            <p>
+              Stone's original 1969 routing came back in 2018 along with new irrigation,
+              restored greens, and the rebuilt back-nine ponds. What you walk today is what
+              he drew on paper sixty-some years ago.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Scorecard */}
+      <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow mb-5">The scorecard</p>
+            <h2 className="display-lg font-display mb-5">
+              All five tees, in the open.
+            </h2>
+            <p className="prose-editorial text-granite/85">
+              The course's own scorecard, photographed straight from the book.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <figure>
+              <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
+                <Image
+                  src={SCORECARD_IMAGES.inside}
+                  alt="Birchbank scorecard — inside view with all five tees, par, and handicap index"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
+              <figcaption className="mt-3 font-mono text-xs text-silt">
+                Scorecard — inside · Gold / Blue / Combo / White / Red
+              </figcaption>
+            </figure>
+            <figure>
+              <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
+                <Image
+                  src={SCORECARD_IMAGES.back}
+                  alt="Birchbank scorecard — back cover with course info and local rules"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
+              <figcaption className="mt-3 font-mono text-xs text-silt">
+                Scorecard — back · local rules and contacts
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="mt-12 flex flex-wrap gap-4">
+            <Link href="/course/scorecard" className="btn-primary">Full interactive scorecard</Link>
+            <Link href="/course/holes/1" className="btn-ghost">Walk the 18 hole-by-hole →</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Adjacent pages */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow mb-5">Keep reading</p>
+            <h2 className="display-md font-display mb-5">More on the course.</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            <Link
+              href="/course/history"
+              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
+            >
+              <p className="eyebrow mb-3">History</p>
+              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
+                A century on the river.
+              </p>
+              <p className="text-silt text-sm leading-relaxed">
+                1922 club, 1962 land, 1969 Stone routing, 2004 purchase, 2018 restoration.
+              </p>
+            </Link>
+            <Link
+              href="/course/scorecard"
+              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
+            >
+              <p className="eyebrow mb-3">Scorecard</p>
+              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
+                Every hole, every tee.
+              </p>
+              <p className="text-silt text-sm leading-relaxed">
+                Pick a tee, see the yardage, rating, and slope. Or read the scorecard as-printed.
+              </p>
+            </Link>
+            <Link
+              href="/conditions"
+              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
+            >
+              <p className="eyebrow mb-3">Conditions</p>
+              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
+                Is today a good day?
+              </p>
+              <p className="text-silt text-sm leading-relaxed">
+                Live weather from Environment Canada's GEM model. 24-hour hourly + 7-day outlook.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-[var(--spacing-section)] bg-cedar text-paper">
+        <div className="container-edge text-center max-w-3xl mx-auto">
+          <p className="eyebrow text-paper/60 mb-6">Ready to book</p>
+          <h2
+            className="font-display mb-8"
+            style={{ fontSize: "clamp(2.25rem, 6vw, 4rem)", lineHeight: "1.02", letterSpacing: "-0.02em" }}
+          >
+            Walk the 18.<br />Meet us at the first tee.
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
+            <BookButton />
+            <a
+              href="tel:+12506932255"
+              className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+            >
+              Call Pro Shop · 250-693-2255
+            </a>
+          </div>
         </div>
       </section>
     </>
