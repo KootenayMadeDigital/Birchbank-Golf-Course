@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import BookButton from "./BookButton";
+import Link from "next/link";
 
 const FRAME_COUNT = 120;
 const FRAME_PATH = (i: number) => `/hero/${String(i + 1).padStart(4, "0")}.webp`;
@@ -271,24 +271,28 @@ export default function BallIntoHoleHero() {
           </p>
           <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-4 md:gap-6">
             {/* Tier 1 — signature invitation (hero CTA).
-                Gilt-edged cedar artifact, not a standard button. */}
-            <a
+                Gilt-edged cedar artifact, not a standard button.
+                Do NOT add .chrono-bookingbutton here: the Chronogolf
+                script clones that class and the cloned anchor hides
+                our styled one. The bottom-right widget already owns
+                the Chronogolf trigger role; this link navigates to
+                /book where the inline widget is embedded. */}
+            <Link
               href="/book"
-              data-chrono-book
-              className="header-cta header-cta-primary chrono-bookingbutton whitespace-nowrap"
+              className="header-cta header-cta-primary whitespace-nowrap"
             >
               Book a tee time
               <span aria-hidden className="text-tamarack">→</span>
-            </a>
+            </Link>
             {/* Tier 2 — editorial secondary.
                 Gambetta serif with a hairline underline; inherits
                 currentColor so it reads correctly on the dark hero. */}
-            <a
+            <Link
               href="/course"
               className="header-cta header-cta-editorial text-paper"
             >
               Walk the 18
-            </a>
+            </Link>
           </div>
         </div>
 
