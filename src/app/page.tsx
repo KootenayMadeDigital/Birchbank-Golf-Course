@@ -128,12 +128,11 @@ export default function Home() {
            that pulls the shoulder-season visitor. */}
       <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden bg-granite">
         <Image
-          src="https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1290.jpg"
-          alt="Late-season light across a Birchbank fairway toward the Columbia River"
+          src="/course/october-gold.webp"
+          alt="Larches turning gold above the Columbia River at Birchbank in mid-October"
           fill
           sizes="100vw"
           className="object-cover"
-          unoptimized
         />
         <div
           aria-hidden
