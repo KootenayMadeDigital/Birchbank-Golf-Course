@@ -254,18 +254,14 @@ export default function Home() {
               href="/membership"
               className="group block border border-granite/12 overflow-hidden hover:border-amber transition-colors"
             >
-              <div className="relative aspect-[5/3] bg-cedar overflow-hidden flex items-center justify-center">
-                <div className="text-center p-8">
-                  <p className="font-mono text-xs tracking-widest uppercase text-tamarack mb-4">
-                    Seven membership tiers
-                  </p>
-                  <p className="font-display text-paper" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>
-                    From $640
-                  </p>
-                  <p className="font-mono text-xs text-paper/60 mt-3">
-                    Student · Intermediate · Family · Couple · Single · New Member · Full Play
-                  </p>
-                </div>
+              <div className="relative aspect-[5/3] bg-cedar overflow-hidden">
+                <Image
+                  src="/membership/hero.webp"
+                  alt="Birchbank Golf Club, seven membership tiers from $640, a red pin on a lit fairway at sunrise"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                />
               </div>
               <div className="p-8 md:p-10">
                 <p className="eyebrow mb-3">Memberships</p>

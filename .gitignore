@@ -15,3 +15,6 @@ public/announcements/*.jpg
 public/announcements/*.jpeg
 
 
+
+# Scratch folder for image conversions, do not commit
+tmp-img/
