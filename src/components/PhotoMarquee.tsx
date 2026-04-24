@@ -4,22 +4,20 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Aman-style horizontal drag gallery. Real photographs from
- * birchbankgolf.com's media library, a mix of on-property course
- * shots and the Bistro interior. All unoptimized through next/image
- * and lazy-loaded below the fold.
+ * Aman-style horizontal drag gallery. Locally-served photographs,
+ * optimized through next/image and lazy-loaded below the fold.
  */
 const PHOTOS = [
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1272.jpg", caption: "The course, September light." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-43-20-AM.jpg", caption: "The Bistro patio." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1570.jpg", caption: "Early morning on the fairway." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-13-44-AM.jpg", caption: "Bistro mid-morning." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1290.jpg", caption: "Fairway toward the river." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-26-22-AM.jpg", caption: "Opening the Bistro." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_1273.jpg", caption: "Walking the 18." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-51-50-AM.jpg", caption: "The covered patio." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2019/09/IMG_0139.jpg", caption: "Course detail." },
-  { src: "https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-10-45-54-AM.jpg", caption: "Friday afternoon." },
+  { src: "/marquee/01.webp", caption: "The course, September light." },
+  { src: "/marquee/02.webp", caption: "The Bistro patio." },
+  { src: "/marquee/03.webp", caption: "Early morning on the fairway." },
+  { src: "/marquee/04.webp", caption: "Bistro mid-morning." },
+  { src: "/marquee/05.webp", caption: "Fairway toward the river." },
+  { src: "/marquee/06.webp", caption: "Opening the Bistro." },
+  { src: "/marquee/07.webp", caption: "Walking the 18." },
+  { src: "/marquee/08.webp", caption: "The covered patio." },
+  { src: "/marquee/09.webp", caption: "Course detail." },
+  { src: "/marquee/10.webp", caption: "Friday afternoon." },
 ];
 
 export default function PhotoMarquee() {
@@ -58,7 +56,6 @@ export default function PhotoMarquee() {
                 sizes="(max-width: 768px) 84vw, 38rem"
                 className="object-cover"
                 loading={i === 0 ? "eager" : "lazy"}
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
