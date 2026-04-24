@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
+import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 export const metadata: Metadata = {
   title: "Plan your visit",
@@ -326,6 +327,16 @@ export default function PlanYourVisit() {
               Call Pro Shop · 250-693-2255
             </a>
           </div>
+
+          {/* Tripadvisor chip, destination-visitor audience. */}
+          <a
+            href={REVIEW_PLATFORMS.tripadvisor.readUrl}
+            target="_blank"
+            rel="noopener"
+            className="mt-10 inline-block font-mono text-xs tracking-wide text-paper/70 hover:text-tamarack border-b border-paper/25 hover:border-tamarack pb-1 transition-colors"
+          >
+            Read what visitors say on Tripadvisor ↗
+          </a>
         </div>
       </section>
     </>

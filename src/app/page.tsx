@@ -10,6 +10,7 @@ import PhotoMarquee from "@/components/PhotoMarquee";
 import Testimonials from "@/components/Testimonials";
 import ScrollReveal from "@/components/ScrollReveal";
 import ScorecardCompact from "@/components/ScorecardCompact";
+import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 export default function Home() {
   return (
@@ -225,12 +226,11 @@ export default function Home() {
             >
               <div className="relative aspect-[5/3] bg-granite/5 overflow-hidden">
                 <Image
-                  src="https://www.birchbankgolf.com/wp-content/uploads/2021/01/Photo-Sep-09-9-43-20-AM.jpg"
-                  alt="The Bistro patio"
+                  src="/bistro/patio.webp"
+                  alt="The covered Bistro patio at Birchbank, overlooking the first green with Monashee foothills beyond"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                  unoptimized
                 />
               </div>
               <div className="p-8 md:p-10">
@@ -332,12 +332,14 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Trust stack (enhancement 7), three chips, every number
-                traceable to a file in src/data/ or the Testimonials component.
-                No fabricated stats. */}
-            <div className="mt-12 grid sm:grid-cols-3 gap-3 md:gap-5 max-w-2xl mx-auto">
+            {/* Trust stack (enhancement 7), four chips. Three independent
+                review platforms (GolfPass, Facebook, Tripadvisor) plus the
+                heritage chip. Aggregation effect: multiple platforms agreeing
+                reads stronger than any single rating. Every number traceable
+                to src/data/ or the Testimonials component, no fabricated stats. */}
+            <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto">
               <a
-                href="https://www.golfpass.com/travel-advisor/courses/26756-birchbank-golf-course"
+                href={REVIEW_PLATFORMS.golfpass.readUrl}
                 target="_blank"
                 rel="noopener"
                 className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
@@ -346,13 +348,22 @@ export default function Home() {
                 <span className="block text-paper/60">on GolfPass ↗</span>
               </a>
               <a
-                href="https://www.facebook.com/BirchbankGolf"
+                href={REVIEW_PLATFORMS.facebook.readUrl}
                 target="_blank"
                 rel="noopener"
                 className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
               >
                 <span className="block text-tamarack mb-0.5">22 reviews · 82% recommend</span>
                 <span className="block text-paper/60">on Facebook ↗</span>
+              </a>
+              <a
+                href={REVIEW_PLATFORMS.tripadvisor.readUrl}
+                target="_blank"
+                rel="noopener"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+              >
+                <span className="block text-tamarack mb-0.5">Listed · new this year</span>
+                <span className="block text-paper/60">on Tripadvisor ↗</span>
               </a>
               <div className="font-mono text-xs text-paper/75 border border-paper/15 rounded-sm px-4 py-3">
                 <span className="block text-tamarack mb-0.5">Routed 1962 · restored 2018</span>

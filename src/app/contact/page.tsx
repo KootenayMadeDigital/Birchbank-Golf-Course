@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 export const metadata: Metadata = {
   title: "Contacts",
@@ -125,6 +126,43 @@ export default function Contact() {
             </div>
             <button type="submit" className="btn-primary">Send</button>
           </form>
+        </div>
+      </div>
+
+      {/* Post-round review prompt, review-generation play.
+          Asking after the round, from the audience that already reached
+          the contact page, is where reviews actually come from. */}
+      <div className="mt-20 border-t border-granite/15 pt-10 max-w-3xl">
+        <p className="eyebrow mb-3">How was the round?</p>
+        <p className="prose-editorial text-granite/85 mb-5">
+          A quick note on Tripadvisor or GolfPass helps the next visitor find us,
+          and it tells us what to keep doing.
+        </p>
+        <div className="flex flex-wrap gap-x-6 gap-y-3 font-mono text-sm">
+          <a
+            href={REVIEW_PLATFORMS.tripadvisor.writeUrl}
+            target="_blank"
+            rel="noopener"
+            className="text-amber hover:text-amber-dark underline underline-offset-2"
+          >
+            Leave a Tripadvisor review ↗
+          </a>
+          <a
+            href={REVIEW_PLATFORMS.golfpass.readUrl}
+            target="_blank"
+            rel="noopener"
+            className="text-granite hover:text-amber underline underline-offset-2"
+          >
+            Review on GolfPass ↗
+          </a>
+          <a
+            href={REVIEW_PLATFORMS.facebook.readUrl}
+            target="_blank"
+            rel="noopener"
+            className="text-granite hover:text-amber underline underline-offset-2"
+          >
+            Review on Facebook ↗
+          </a>
         </div>
       </div>
     </section>

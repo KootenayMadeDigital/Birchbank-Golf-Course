@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 export const metadata: Metadata = {
   title: "The Bistro",
@@ -126,6 +127,34 @@ export default function Bistro() {
               className="btn-primary bg-tamarack text-granite hover:bg-paper"
             >
               Call the Bistro · 250-693-5451
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Post-visit review prompt. Quiet, one line. */}
+      <section className="py-16 bg-paper border-t border-granite/10">
+        <div className="container-edge text-center max-w-2xl mx-auto">
+          <p className="eyebrow mb-4">Ate something you liked?</p>
+          <p className="prose-editorial text-granite/85 mb-5">
+            Tell the next visitor about it.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 font-mono text-sm">
+            <a
+              href={REVIEW_PLATFORMS.tripadvisor.writeUrl}
+              target="_blank"
+              rel="noopener"
+              className="text-amber hover:text-amber-dark underline underline-offset-2"
+            >
+              Leave a Tripadvisor review ↗
+            </a>
+            <a
+              href={REVIEW_PLATFORMS.facebook.readUrl}
+              target="_blank"
+              rel="noopener"
+              className="text-granite hover:text-amber underline underline-offset-2"
+            >
+              Review on Facebook ↗
             </a>
           </div>
         </div>

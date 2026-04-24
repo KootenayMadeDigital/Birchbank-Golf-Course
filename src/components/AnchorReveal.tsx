@@ -67,7 +67,7 @@ export default function AnchorReveal() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100vh] flex items-center py-[var(--spacing-section)]"
+      className="relative py-[var(--spacing-section)]"
       aria-labelledby="anchor-heading"
     >
       <div className="container-edge w-full">
