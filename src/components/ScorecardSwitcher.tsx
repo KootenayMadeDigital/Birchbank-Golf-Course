@@ -64,7 +64,7 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
         </div>
       )}
 
-      {/* Per-hole table renders for every tee — all 18 yardages now
+      {/* Per-hole table renders for every tee, all 18 yardages now
           published per the official Birchbank scorecard. */}
       {hasPerHoleData(tee) ? (
         <ScorecardTable tee={tee} />

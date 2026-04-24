@@ -13,7 +13,7 @@ import { HOLES } from "@/data/holes";
  *
  * Hover (desktop only): a small preview card fades up showing the
  * hole's name (or "Par X" if unnamed), Blue yardage, and badge if
- * applicable. Pure CSS via `group-hover` — no client JS needed.
+ * applicable. Pure CSS via `group-hover`, no client JS needed.
  *
  * Mobile / touch: preview is suppressed; the existing dot + number
  * + par caption remains the navigation affordance.
@@ -95,7 +95,7 @@ function HalfStrip({
               {h.par}
             </span>
 
-            {/* Hover preview — desktop only via the .round-dot rule. */}
+            {/* Hover preview, desktop only via the .round-dot rule. */}
             <span className="round-dot__preview" aria-hidden>
               <span className="round-dot__preview-num">
                 {String(h.number).padStart(2, "0")}

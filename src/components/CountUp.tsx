@@ -37,7 +37,7 @@ export default function CountUp({
     if (from === to) return;
     // cubic-bezier(0.65, 0, 0.35, 1) approximation via a bezier-like ease
     const ease = (t: number) => {
-      // Smoothstep — close to the editorial curve, cheaper than a true cubic-bezier.
+      // Smoothstep, close to the editorial curve, cheaper than a true cubic-bezier.
       return t * t * (3 - 2 * t);
     };
     const tick = (now: number) => {

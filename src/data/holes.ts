@@ -3,11 +3,11 @@
  * directly from the official Birchbank printed scorecard (the source-of-
  * truth photograph the Pro Shop provided). This scorecard publishes:
  *
- *   • BLUE  M-71.5/121   — total 6584
- *   • COMBO M-70.0/120   — total 6277  (men's combo)
- *   • WHITE M-68.1/115   — total 5941
- *   • COMBO W-72.3/124   — total 5620  (women's combo)
- *   • RED   W-70.8/119   — total 5330
+ *   • BLUE  M-71.5/121, total 6584
+ *   • COMBO M-70.0/120, total 6277  (men's combo)
+ *   • WHITE M-68.1/115, total 5941
+ *   • COMBO W-72.3/124, total 5620  (women's combo)
+ *   • RED   W-70.8/119, total 5330
  *
  * Gold tees are NOT on this scorecard and have been removed. If/when a
  * Birchbank-published Gold layout exists, restore.

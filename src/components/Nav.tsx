@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import BookButton from "./BookButton";
@@ -71,7 +72,11 @@ const NAV: NavItem[] = [
 ];
 
 export default function Nav() {
-  const [onLight, setOnLight] = useState(false);
+  const pathname = usePathname();
+  // Default to opaque so subpages (the majority of routes) render with
+  // a clearly defined nav from the very first paint, before any client
+  // effect runs. Only the home page flips this back to transparent.
+  const [onLight, setOnLight] = useState(true);
   const [open, setOpen] = useState(false);
 
   /**
@@ -90,6 +95,10 @@ export default function Nav() {
    *      These pages have a paper (cream) background and transparent-mode
    *      would render paper text on paper bg -- invisible. Opaque-by-
    *      default makes every nav item immediately visible.
+   *
+   * Re-evaluated on every pathname change because the Nav stays mounted
+   * across SPA navigation, without re-running on route change, the nav
+   * could land on /course/history with the previous /’s transparent state.
    */
   useEffect(() => {
     const update = () => {
@@ -127,7 +136,7 @@ export default function Nav() {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, []);
+  }, [pathname]);
 
   const light = onLight || open;
 

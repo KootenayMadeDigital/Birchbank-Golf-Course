@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  *
  * Voice rules (per blueprint § 8 cliché audit): no "pristine",
  * "majestic", "soul of the game", etc. Specificity over superlatives.
- * Names, dates, dollars, yardages — and direct quotes from primary
+ * Names, dates, dollars, yardages, and direct quotes from primary
  * sources are used verbatim, including 1928 newspaper language.
  */
 
@@ -41,7 +41,7 @@ const CHAPTERS: Chapter[] = [
         <p>
           The Rossland Trail Country Club was organized on April 22, 1922 with
           S.G. Blaylock as its first president. The first course was on Floyd
-          Ranch &mdash; the Water Hole &mdash; just above Warfield, on land
+          Ranch, the Water Hole, just above Warfield, on land
           loaned by the Consolidated Mining &amp; Smelting Company at $1 a year.
         </p>
         <p>
@@ -66,7 +66,7 @@ const CHAPTERS: Chapter[] = [
         </p>
         <p>
           The clubhouse and course opened together on May 5, 1928. The
-          building has been in active use since &mdash; in 2010 it was
+          building has been in active use since, in 2010 it was
           formally recognized as a heritage place by the City of Rossland; the
           Canadian Register of Historic Places added it in January 2024 with
           the simple line that it is, today, the oldest remaining golf
@@ -81,7 +81,7 @@ const CHAPTERS: Chapter[] = [
     },
   },
   {
-    numeral: "1937—1979",
+    numeral: "1937-1979",
     eyebrow: "Chapter III · The Stones",
     headline: "Two brothers from Sardis built the West Kootenay golf scene.",
     body: (
@@ -114,7 +114,7 @@ const CHAPTERS: Chapter[] = [
     },
   },
   {
-    numeral: "1962—69",
+    numeral: "1962-69",
     eyebrow: "Chapter IV · Down to the river",
     headline: "Roy designs the back nine and a clubhouse.",
     body: (
@@ -135,7 +135,7 @@ const CHAPTERS: Chapter[] = [
     ),
     pull: {
       quote:
-        "April 30, 1969 — Reg Stone Appreciation Night. Thirty years.",
+        "April 30, 1969, Reg Stone Appreciation Night. Thirty years.",
       cite: "Birchbank back-nine grand opening",
     },
   },
@@ -148,14 +148,14 @@ const CHAPTERS: Chapter[] = [
         <p>
           For more than four decades the property had belonged to Cominco. In
           2004 the Rossland-Trail Country Club purchased the Birchbank
-          property outright &mdash; the first time the course was owned by
+          property outright, the first time the course was owned by
           its members.
         </p>
       </>
     ),
   },
   {
-    numeral: "2006 — 2018",
+    numeral: "2006-2018",
     eyebrow: "Chapter VI · Stone&rsquo;s routing, restored",
     headline:
       "Rossland closes. Birchbank returns to the way Roy built it.",
@@ -195,7 +195,7 @@ const TIMELINE: Array<[string, string]> = [
   ["April 30, 1969", "Roy Stone's back nine + clubhouse open. The night is dedicated to Reg Stone."],
   ["1978", "Roy Stone retires after 29 years as pro/greenskeeper."],
   ["1979", "Reg Stone retires from the City of Trail."],
-  ["2004", "RTCC purchases Birchbank from Cominco — the first member-owned chapter."],
+  ["2004", "RTCC purchases Birchbank from Cominco, the first member-owned chapter."],
   ["2006", "Cominco sells the Rossland land; the original nine-hole course closes."],
   ["June 1, 2018", "Birchbank reconfigured to resemble Roy Stone's original 1969 routing."],
   ["2024", "1928 Rossland clubhouse formally listed on Canadian Register of Historic Places."],
@@ -318,7 +318,7 @@ export default function HistoryPage() {
         </section>
       ))}
 
-      {/* CTA bridge — heritage to today */}
+      {/* CTA bridge, heritage to today */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge max-w-3xl">
           <p className="eyebrow text-paper/60 mb-5">Today</p>

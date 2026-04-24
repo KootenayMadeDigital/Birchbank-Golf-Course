@@ -4,9 +4,9 @@ import { HOLES } from "@/data/holes";
 /**
  * Editorial-row hole preview for the home page. Spotlights three holes
  * on verifiable grounds:
- *   • Hole 2 , signature hole (downhill par 3, Columbia River gorge view , 
+ *   • Hole 2, signature hole (downhill par 3, Columbia River gorge view , 
  *     per SCOREGolf feature by Andrew Penner, Oct 2022)
- *   • Hole 6 , stroke index 1 (hardest hole on the course)
+ *   • Hole 6, stroke index 1 (hardest hole on the course)
  *   • Hole 15, second pond + Columbia River view; published photo by
  *     Andrew Penner (SCOREGolf)
  */

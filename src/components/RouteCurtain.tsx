@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
  * Quiet paper fade between routes.
  *
  * On every route change a paper-tinted overlay fades up then back out
- * over ~360ms. No motion beyond opacity — just enough to soften the
+ * over ~360ms. No motion beyond opacity, just enough to soften the
  * snap of an instant page swap, nothing dramatic.
  *
  * The first render is skipped so the fade doesn't play on initial load.

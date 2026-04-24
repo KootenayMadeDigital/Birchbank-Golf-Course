@@ -89,7 +89,7 @@
   }
 }
 
-/* Header — letter-spacing tightens slightly when the header transitions
+/* Header, letter-spacing tightens slightly when the header transitions
    from over-hero (transparent) to opaque (scrolled past). Imperceptible
    per item, palpable as an overall posture shift. The transition lives
    on the nav text; the header itself already has its own color/blur
@@ -103,7 +103,7 @@
   letter-spacing: -0.005em;
 }
 
-/* Hole photo ken-burns — a slow 12s scale loop on the credited Andrew
+/* Hole photo ken-burns, a slow 12s scale loop on the credited Andrew
    Penner photos. Pauses on hover so a viewer can pin a frame. Halts
    under prefers-reduced-motion. Honors the photography by giving it
    cinematic breath; only present on the 2 holes that have it (holes
@@ -124,7 +124,7 @@
   .hole-photo__img { animation: none !important; }
 }
 
-/* RoundProgress dot hover preview — pure CSS popover that fades up on
+/* RoundProgress dot hover preview, pure CSS popover that fades up on
    desktop hover. Suppressed on touch (pointer: coarse) so tap-to-navigate
    stays the primary interaction on mobile without an intermediate state. */
 .round-dot__preview {
@@ -189,7 +189,7 @@
   .round-dot__preview { transition: none !important; }
 }
 
-/* ConditionsWidget glow — pulses a soft tamarack inner glow when fresh
+/* ConditionsWidget glow, pulses a soft tamarack inner glow when fresh
    weather data lands (every 15 min). One-shot via [data-glow="true"]
    toggled by the React component. */
 .conditions-widget {
@@ -204,7 +204,7 @@
 }
 
 /* Route fade. A paper-tinted overlay quickly fades up then back out on
-   every route change. Opacity-only — no motion. Just enough to soften
+   every route change. Opacity-only, no motion. Just enough to soften
    the snap of an instant page swap. */
 .route-fade {
   position: fixed;
@@ -536,7 +536,7 @@
   }
   .prose-editorial p + p { margin-top: 1.1em; }
 
-  /* Editorial link — opt-in via .link-editorial class. A tamarack stroke
+  /* Editorial link, opt-in via .link-editorial class. A tamarack stroke
      draws in from the left on hover and retracts to the right on leave.
      Text color stays as inherited; only the line moves. The transform-
      origin flip (right → left → right) is what makes the leave-side feel
