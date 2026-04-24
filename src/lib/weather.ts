@@ -58,6 +58,8 @@ export type WeatherSnapshot = {
   conditionCode: number;
   conditionLabel: string;
   clubCall: string;
+  /** 1 if the snapshot timestamp is daytime, 0 otherwise. */
+  isDay: 0 | 1;
   today: {
     highC: number;
     lowC: number;
@@ -115,7 +117,7 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
   url.searchParams.set("longitude", String(BIRCHBANK_LON));
   url.searchParams.set(
     "current",
-    "temperature_2m,wind_speed_10m,wind_direction_10m,precipitation,weather_code",
+    "temperature_2m,wind_speed_10m,wind_direction_10m,precipitation,weather_code,is_day",
   );
   url.searchParams.set(
     "daily",
@@ -152,6 +154,7 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
       conditionCode,
       conditionLabel: WEATHER_CODE_MAP[conditionCode] ?? "Conditions unclear",
       clubCall: clubCall(windKmh),
+      isDay: (current.is_day ?? 1) as 0 | 1,
       today: {
         highC: Math.round(daily.temperature_2m_max[0]),
         lowC: Math.round(daily.temperature_2m_min[0]),
@@ -196,6 +199,8 @@ export type HourlyPoint = {
   precipProb: number;
   windKmh: number;
   conditionCode: number;
+  /** 1 if the hour is daytime (between sunrise and sunset), 0 otherwise. */
+  isDay: 0 | 1;
 };
 
 export type ForecastSnapshot = {
@@ -207,6 +212,7 @@ export type ForecastSnapshot = {
     conditionCode: number;
     conditionLabel: string;
     clubCall: string;
+    isDay: 0 | 1;
   };
   hourly: HourlyPoint[];
   daily: ForecastDay[];
@@ -230,11 +236,11 @@ export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null>
   url.searchParams.set("longitude", String(BIRCHBANK_LON));
   url.searchParams.set(
     "current",
-    "temperature_2m,wind_speed_10m,wind_direction_10m,weather_code",
+    "temperature_2m,wind_speed_10m,wind_direction_10m,weather_code,is_day",
   );
   url.searchParams.set(
     "hourly",
-    "temperature_2m,precipitation_probability,wind_speed_10m,weather_code",
+    "temperature_2m,precipitation_probability,wind_speed_10m,weather_code,is_day",
   );
   url.searchParams.set(
     "daily",
@@ -267,6 +273,7 @@ export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null>
         hourLabel: t.toLocaleTimeString("en-CA", { hour: "numeric", hour12: true }).replace(/\s?[AP]M/i, (m) => m.toLowerCase().trim()),
         tempC: Math.round(h.temperature_2m[i]),
         precipProb: h.precipitation_probability?.[i] ?? 0,
+        isDay: (h.is_day?.[i] ?? 1) as 0 | 1,
         windKmh: Math.round(h.wind_speed_10m[i]),
         conditionCode: h.weather_code[i],
       });
@@ -301,6 +308,7 @@ export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null>
         conditionCode: c.weather_code,
         conditionLabel: WEATHER_CODE_MAP[c.weather_code] ?? "Conditions unclear",
         clubCall: clubCall(Math.round(c.wind_speed_10m)),
+        isDay: (c.is_day ?? 1) as 0 | 1,
       },
       hourly,
       daily,

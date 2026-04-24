@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function GlobalError({
   error,
   reset,
@@ -7,6 +9,22 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Aggressive self-heal: when the global error boundary fires, almost
+  // always the cause is a stale RSC payload from a previous Vercel
+  // deploy that the visitor's open tab is still trying to fetch. A
+  // single auto-reload pulls fresh HTML and the page works. Bounded by
+  // a per-path sessionStorage flag so a genuinely persistent error is
+  // not trapped in a reload loop, the second visit shows the actual
+  // "frost delay" message and the user can call.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const path = window.location.pathname;
+    const key = `gerr-reload:${path}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    window.setTimeout(() => window.location.reload(), 50);
+  }, []);
+
   return (
     <html lang="en-CA">
       <body

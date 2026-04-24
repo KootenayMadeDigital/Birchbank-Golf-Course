@@ -28,15 +28,6 @@ const securityHeaders = [
 
 const config: NextConfig = {
   reactStrictMode: true,
-  // Shorter client-router cache lifetimes so a fresh deploy is picked
-  // up faster on the next click instead of serving stale RSC payloads
-  // from the previous build (which manifests as intermittent SPA 404s).
-  experimental: {
-    staleTimes: {
-      dynamic: 30,
-      static: 180,
-    },
-  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

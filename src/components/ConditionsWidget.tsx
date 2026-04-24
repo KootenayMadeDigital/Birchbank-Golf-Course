@@ -16,12 +16,14 @@ import type { WeatherSnapshot } from "@/lib/weather";
  * via src/lib/season.ts.
  */
 
-// Colored emoji glyphs (with variation selector U+FE0F where needed) so
-// the OS renders them in native color rather than monochrome text.
-function weatherGlyph(code: number): string {
-  if (code === 0) return "☀\uFE0F";
-  if (code === 1) return "🌤\uFE0F";
-  if (code === 2) return "⛅\uFE0F";
+// Colored emoji glyphs. The isDay flag swaps clear / mostly-clear /
+// partly-cloudy day icons for nighttime counterparts so 11 PM doesn't
+// render as a sun.
+function weatherGlyph(code: number, isDay: 0 | 1 = 1): string {
+  const day = isDay === 1;
+  if (code === 0) return day ? "☀\uFE0F" : "🌙\uFE0F";
+  if (code === 1) return day ? "🌤\uFE0F" : "🌙\uFE0F";
+  if (code === 2) return day ? "⛅\uFE0F" : "☁\uFE0F";
   if (code === 3) return "☁\uFE0F";
   if (code >= 45 && code <= 48) return "🌫\uFE0F";
   if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";
@@ -126,7 +128,7 @@ export default function ConditionsWidget() {
                 {weather.tempC}°
               </span>
               <span className="text-silt text-sm">
-                <span className="font-mono text-lg mr-2 text-cedar">{weatherGlyph(weather.conditionCode)}</span>
+                <span className="font-mono text-lg mr-2 text-cedar">{weatherGlyph(weather.conditionCode, weather.isDay)}</span>
                 {weather.conditionLabel}
               </span>
             </div>

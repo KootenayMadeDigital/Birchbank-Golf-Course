@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import WindCompass from "@/components/WindCompass";
-import DayArc from "@/components/DayArc";
 import HourChart from "@/components/HourChart";
 import { fetchBirchbankForecast, findBestWindow, findBestDay } from "@/lib/weather";
 
@@ -31,17 +30,20 @@ export const revalidate = 900;
  */
 
 // Colored emoji glyphs (with variation selector U+FE0F where needed) so
-// the OS renders them in native color rather than monochrome text.
-function weatherGlyph(code: number): string {
-  if (code === 0) return "☀\uFE0F";                                                 // clear sky
-  if (code === 1) return "🌤\uFE0F";                                               // mostly clear
-  if (code === 2) return "⛅\uFE0F";                                                // partly cloudy
-  if (code === 3) return "☁\uFE0F";                                                // overcast
-  if (code >= 45 && code <= 48) return "🌫\uFE0F";                                 // fog
-  if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";                // light drizzle / showers
+// the OS renders them in native color rather than monochrome text. The
+// isDay flag swaps clear / mostly-clear / partly-cloudy day icons for
+// their nighttime counterparts so 11 PM doesn't render as a sun.
+function weatherGlyph(code: number, isDay: 0 | 1 = 1): string {
+  const day = isDay === 1;
+  if (code === 0) return day ? "☀\uFE0F" : "🌙\uFE0F";                            // clear
+  if (code === 1) return day ? "🌤\uFE0F" : "🌙\uFE0F";                          // mostly clear
+  if (code === 2) return day ? "⛅\uFE0F" : "☁\uFE0F";                           // partly cloudy
+  if (code === 3) return "☁\uFE0F";                                              // overcast (same day/night)
+  if (code >= 45 && code <= 48) return "🌫\uFE0F";                               // fog
+  if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";              // light drizzle / showers
   if ((code >= 61 && code <= 67) || (code >= 81 && code <= 82)) return "🌧\uFE0F"; // rain
   if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "🌨\uFE0F"; // snow
-  if (code >= 95) return "⛈\uFE0F";                                                // thunderstorm
+  if (code >= 95) return "⛈\uFE0F";                                              // thunderstorm
   return "·";
 }
 
@@ -116,7 +118,7 @@ export default async function Conditions() {
                   className="font-mono text-cedar leading-none"
                   style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
                 >
-                  {weatherGlyph(forecast.now.conditionCode)}
+                  {weatherGlyph(forecast.now.conditionCode, forecast.now.isDay)}
                 </span>
               </div>
               <p className="mt-4 font-display text-2xl md:text-3xl text-granite leading-snug">
@@ -161,13 +163,13 @@ export default async function Conditions() {
             </aside>
           </div>
 
-          {/* Day arc, sunrise to sunset */}
-          <div className="mt-14 max-w-md">
-            <p className="eyebrow mb-4">Daylight</p>
-            <DayArc sunrise={today.sunrise} sunset={today.sunset} />
-            <p className="mt-2 font-mono text-xs text-silt">
-              {today.daylightHours} hours of daylight today
-            </p>
+          {/* Daylight, simple inline strip (the SVG arc was visually
+              awkward at this column width and got cut off). */}
+          <div className="mt-12 flex flex-wrap items-baseline gap-x-8 gap-y-2 font-mono text-xs uppercase tracking-widest text-silt">
+            <span className="text-tamarack">Daylight</span>
+            <span><span className="text-granite">↑ {today.sunrise}</span> sunrise</span>
+            <span><span className="text-granite">↓ {today.sunset}</span> sunset</span>
+            <span><span className="text-granite">{today.daylightHours} h</span> of light today</span>
           </div>
         </div>
       </section>
@@ -242,7 +244,7 @@ export default async function Conditions() {
                       aria-hidden
                       className="font-mono text-2xl text-cedar mt-2 leading-none"
                     >
-                      {weatherGlyph(h.conditionCode)}
+                      {weatherGlyph(h.conditionCode, h.isDay)}
                     </p>
                     <p className="font-display text-xl text-granite mt-2">
                       {h.tempC}°
