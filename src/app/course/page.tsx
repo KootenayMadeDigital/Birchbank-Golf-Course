@@ -40,7 +40,6 @@ const PAR4S = HOLES.filter((h) => h.par === 4).length;
 const PAR5S = HOLES.filter((h) => h.par === 5).length;
 const BLUE = TEES.find((t) => t.key === "blue")!;
 const RED = TEES.find((t) => t.key === "red")!;
-const GOLD = TEES.find((t) => t.key === "gold")!;
 
 const EXPERIENCE_NOTES = [
   {
@@ -49,8 +48,8 @@ const EXPERIENCE_NOTES = [
       "Roy Stone routed Birchbank when carts were still rare, the holes flow one into the next with short tee-to-green walks. Most members walk. A power cart is $24 per rider for 18, if you want one.",
   },
   {
-    title: "Five sets of tees",
-    body: `${GOLD.total.toLocaleString()} yards from the Gold to ${RED.total.toLocaleString()} from the Red. The Blue tees (${BLUE.total.toLocaleString()} yd) are the most-played; rating 71.5, slope 121, a fair test without being punishing.`,
+    title: "Four sets of tees",
+    body: `${BLUE.total.toLocaleString()} yards from the Blue down to ${RED.total.toLocaleString()} from the Red. The Blue tees are the most-played; rating ${BLUE.courseRating}, slope ${BLUE.slopeRating}, a fair test without being punishing.`,
   },
   {
     title: "Water on the back nine",
@@ -120,11 +119,11 @@ export default function CoursePage() {
             </li>
             <li>
               <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Tees</p>
-              <p className="font-display text-4xl text-granite">5</p>
+              <p className="font-display text-4xl text-granite">4</p>
             </li>
             <li>
-              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Gold yardage</p>
-              <p className="font-display text-4xl text-granite">{GOLD.total.toLocaleString()}</p>
+              <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Blue yardage</p>
+              <p className="font-display text-4xl text-granite">{BLUE.total.toLocaleString()}</p>
             </li>
             <li>
               <p className="font-mono text-xs text-silt uppercase tracking-widest mb-2">Rating / slope</p>

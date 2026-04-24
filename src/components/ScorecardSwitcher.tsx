@@ -26,27 +26,22 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
     <div>
       <div className="flex flex-wrap items-center gap-2 mb-6">
         <p className="eyebrow mr-4">Tee</p>
-        {TEES.map((t) => {
-          // Every tee is selectable. Tees without published per-hole data
-          // (currently Gold and Combo, see holes.ts) render a summary-only
-          // panel instead of a per-hole table. No grey-out, no fabrication.
-          return (
-            <button
-              key={t.key}
-              onClick={() => setTee(t.key)}
-              aria-pressed={tee === t.key}
-              className={clsx(
-                "px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-colors rounded-sm",
-                tee === t.key
-                  ? "bg-cedar text-paper border-cedar"
-                  : "border-granite/20 text-granite hover:border-amber hover:text-amber",
-              )}
-            >
-              {t.name}
-              {t.total && <span className="ml-2 text-silt normal-case">· {t.total.toLocaleString()} yd</span>}
-            </button>
-          );
-        })}
+        {TEES.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setTee(t.key)}
+            aria-pressed={tee === t.key}
+            className={clsx(
+              "px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-colors rounded-sm",
+              tee === t.key
+                ? "bg-cedar text-paper border-cedar"
+                : "border-granite/20 text-granite hover:border-amber hover:text-amber",
+            )}
+          >
+            {t.name}
+            {t.total && <span className="ml-2 text-silt normal-case">· {t.total.toLocaleString()} yd</span>}
+          </button>
+        ))}
       </div>
 
       {activeTeeInfo.courseRating && (
@@ -59,12 +54,18 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
             <span className="text-silt">Slope</span>{" "}
             <span className="font-display text-lg text-granite">{activeTeeInfo.slopeRating}</span>
           </span>
+          {tee === "combo" && "totalWomen" in activeTeeInfo && activeTeeInfo.totalWomen && (
+            <span className="text-silt">
+              Women's combo · {activeTeeInfo.totalWomen.toLocaleString()} yd · rating{" "}
+              <span className="text-granite">{activeTeeInfo.courseRatingWomen}</span> / slope{" "}
+              <span className="text-granite">{activeTeeInfo.slopeRatingWomen}</span>
+            </span>
+          )}
         </div>
       )}
 
-      {/* Per-hole table only for tees where HOLES has every hole's yardage.
-          Currently Blue / White / Red satisfy that; Gold / Combo don't , 
-          those tees show the summary panel with the honest caveat. */}
+      {/* Per-hole table renders for every tee — all 18 yardages now
+          published per the official Birchbank scorecard. */}
       {hasPerHoleData(tee) ? (
         <ScorecardTable tee={tee} />
       ) : (
@@ -73,20 +74,6 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
           <p className="font-display text-5xl text-granite mb-2">
             {activeTeeInfo.total?.toLocaleString()}{" "}
             <span className="text-silt text-2xl align-baseline ml-1">yd</span>
-          </p>
-          <p className="text-sm text-granite/85 leading-relaxed max-w-xl mb-4">
-            Aggregate yardage, course rating, and slope are verified via GolfNow's
-            Birchbank course panel.
-            {activeTeeInfo.name === "Gold" && (
-              <> Gold is the back-most tee set and was added after the 2020 printed
-              scorecard was produced, per-hole breakdown isn't published publicly yet.
-              Ask the Pro Shop for a Gold-set pin sheet when you check in.</>
-            )}
-            {activeTeeInfo.name === "Combo" && (
-              <> Combo plays a mixed-yardage routing (some Blue holes, some White) , 
-              Birchbank prints the aggregate but not an extractable per-hole column.
-              Pick up a printed card at the counter.</>
-            )}
           </p>
           <p className="text-xs text-silt font-mono">
             Ask at the Pro Shop for current pin sheets · 250-693-2255

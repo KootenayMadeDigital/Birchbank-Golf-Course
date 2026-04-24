@@ -8,9 +8,9 @@ type TeeKey = typeof TEES[number]["key"];
 /**
  * Compact interactive tee selector for the home-page scorecard cedar block.
  *
- * Replaces the static four-tee yardage grid with a tap-to-select pill row:
- * the visitor picks Gold / Blue / Combo / White / Red and sees the matching
- * yardage + course rating / slope update live in a single large readout.
+ * Replaces the static yardage grid with a tap-to-select pill row: the
+ * visitor picks Blue / Combo / White / Red and sees the matching yardage
+ * + course rating / slope update live in a single large readout.
  *
  * Not to be confused with the full-table `ScorecardSwitcher` used on the
  * dedicated /course/scorecard page. This one is a summary only, no per-hole

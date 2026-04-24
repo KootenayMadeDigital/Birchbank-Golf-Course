@@ -23,7 +23,7 @@ import CountUp from "./CountUp";
 export default function HoleTeeSwitcher({ hole }: { hole: Hole }) {
   // Default to the most-played tee that has a yardage for this hole.
   const initial: TeeKey = useMemo(() => {
-    const preferred: TeeKey[] = ["blue", "white", "red", "gold", "combo"];
+    const preferred: TeeKey[] = ["blue", "combo", "white", "red"];
     return preferred.find((t) => typeof hole.yardage[t] === "number") ?? "blue";
   }, [hole]);
 
