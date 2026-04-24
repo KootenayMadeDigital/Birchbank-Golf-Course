@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 const CROSSINGS = [
   {
-    name: "Paterson / Laurier",
+    name: "Paterson / Frontier",
     highway: "BC-22 ↔ US-395",
     hours: "Typically 8 AM – 11 PM Pacific",
     bestFor: "Spokane, Kettle Falls, and the upper Okanogan — shortest route to Birchbank.",
@@ -38,9 +38,9 @@ const CROSSINGS = [
   },
   {
     name: "Waneta / Boundary",
-    highway: "BC-22A ↔ Northport Rd",
+    highway: "BC-22A ↔ Boundary Rd",
     hours: "Typically 8 AM – midnight Pacific",
-    bestFor: "Direct Northport route — second-fastest if Paterson has a line.",
+    bestFor: "Second-closest crossing — a direct alternate if Paterson has a line.",
     time: "~15 minutes from the crossing to the first tee.",
   },
   {

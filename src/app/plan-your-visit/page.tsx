@@ -27,7 +27,7 @@ const DRIVE_ROUTES = [
     city: "Spokane, WA",
     distance: "250 km",
     time: "~3 hours",
-    route: "I-395 N → US-395 N → Paterson / Laurier border → BC-22 N",
+    route: "I-395 N → US-395 N → Paterson / Frontier border → BC-22 N",
     note: "Shortest + most popular route for WA golfers. Paterson border is smaller and faster than Eastport.",
     flag: "🇺🇸",
   },
@@ -86,13 +86,13 @@ const AIRPORTS = [
 
 const BORDER_CROSSINGS = [
   {
-    name: "Paterson, BC ↔ Laurier, WA",
+    name: "Paterson, BC ↔ Frontier, WA",
     highway: "BC-22 / US-395",
     hours: "Typically 8 AM – 11 PM Pacific",
     note: "Smallest, quickest crossing in our region. Closest to Birchbank — 30 minutes to first tee after clearing customs.",
   },
   {
-    name: "Waneta, BC ↔ Northport, WA",
+    name: "Waneta, BC ↔ Boundary, WA",
     highway: "BC-22A (Waneta Rd)",
     hours: "Typically 8 AM – midnight Pacific",
     note: "Second-closest. Good alternate if Paterson has a line.",

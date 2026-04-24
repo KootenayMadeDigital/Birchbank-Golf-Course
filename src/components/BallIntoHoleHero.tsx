@@ -269,13 +269,25 @@ export default function BallIntoHoleHero() {
             Set along the banks of the Columbia River. The 18-hole course of the Rossland
             Trail Country Club. Open April 1 through October 31 — 213 days of golf.
           </p>
-          <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-3 md:gap-5">
-            <BookButton />
+          <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-4 md:gap-6">
+            {/* Tier 1 — signature invitation (hero CTA).
+                Gilt-edged cedar artifact, not a standard button. */}
+            <a
+              href="/book"
+              data-chrono-book
+              className="header-cta header-cta-primary chrono-bookingbutton whitespace-nowrap"
+            >
+              Book a tee time
+              <span aria-hidden className="text-tamarack">→</span>
+            </a>
+            {/* Tier 2 — editorial secondary.
+                Gambetta serif with a hairline underline; inherits
+                currentColor so it reads correctly on the dark hero. */}
             <a
               href="/course"
-              className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+              className="header-cta header-cta-editorial text-paper"
             >
-              Walk the 18 →
+              Walk the 18
             </a>
           </div>
         </div>

@@ -207,50 +207,31 @@ export default function Nav() {
           )}
         </nav>
 
-        <div className="flex items-center gap-3 md:gap-4 xl:gap-5 justify-self-end">
+        <div className="flex items-center gap-4 md:gap-5 justify-self-end">
           <SocialLinks
             variant={light ? "dark" : "light"}
             className="hidden md:flex"
-            size={18}
+            size={20}
           />
-
-          {/* Three-tiered CTA system — each intentionally distinct.
-              Responsive stacking:
-                xl+ : all three visible (Walk the 18 · Member Portal · Book a tee time)
-                lg  : Member Portal · Book a tee time
-                md  : Book a tee time only
-                <md : hamburger menu (mobile sheet carries all three)
-           */}
-
-          {/* Tier 2 · editorial — Walk the 18 */}
-          <Link
-            href="/course"
+          <a
+            href="tel:+12506932255"
             className={clsx(
-              "header-cta header-cta-editorial hidden xl:inline-flex",
+              "hidden 2xl:inline text-base whitespace-nowrap hover:text-amber transition-colors",
               light ? "text-granite" : "text-paper",
             )}
           >
-            Walk the 18
-          </Link>
+            250-693-2255
+          </a>
 
-          {/* Tier 3 · keyline — Member Portal (the side door) */}
+          {/* Member Portal — keyline tier 3 treatment (the quiet side door). */}
           <Link
             href="/login"
             className={clsx(
-              "header-cta header-cta-keyline hidden lg:inline-flex",
+              "header-cta header-cta-keyline hidden md:inline-flex",
               light ? "text-granite" : "text-paper",
             )}
           >
             Member Portal
-          </Link>
-
-          {/* Tier 1 · signature — Book a tee time */}
-          <Link
-            href="/book"
-            className="header-cta header-cta-primary hidden md:inline-flex"
-          >
-            Book a tee time
-            <span aria-hidden className="text-tamarack">→</span>
           </Link>
 
           <button
@@ -298,22 +279,8 @@ export default function Nav() {
                 )}
               </div>
             ))}
-            <div className="pt-4 flex flex-col gap-4 items-start">
-              <Link
-                href="/book"
-                onClick={() => setOpen(false)}
-                className="header-cta header-cta-primary"
-              >
-                Book a tee time
-                <span aria-hidden className="text-tamarack">→</span>
-              </Link>
-              <Link
-                href="/course"
-                onClick={() => setOpen(false)}
-                className="header-cta header-cta-editorial text-granite"
-              >
-                Walk the 18
-              </Link>
+            <div className="pt-4 flex flex-col gap-3 items-start">
+              <BookButton />
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
