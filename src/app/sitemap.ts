@@ -26,7 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/conditions",
     "/faq",
     "/contact",
-    "/members",
   ].map((path) => ({
     url: `${SITE}${path}`,
     lastModified,
