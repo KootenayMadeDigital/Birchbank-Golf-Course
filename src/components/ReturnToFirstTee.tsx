@@ -23,7 +23,6 @@ export default function ReturnToFirstTee() {
         <a
           href="#main"
           onClick={handleClick}
-          data-cursor-target
           className="link-editorial inline-flex items-center gap-2 text-paper/80 hover:text-paper text-sm md:text-base font-mono uppercase tracking-[0.18em]"
         >
           <span aria-hidden>↑</span>

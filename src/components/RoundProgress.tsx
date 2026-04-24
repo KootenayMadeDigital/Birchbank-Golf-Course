@@ -68,7 +68,6 @@ function HalfStrip({
             key={h.number}
             href={`/course/holes/${h.number}`}
             aria-label={`Hole ${h.number}, par ${h.par}${state === "current" ? " (current)" : ""}`}
-            data-cursor-target
             className={[
               "round-dot group relative block w-7 md:w-8 text-center transition-colors",
               state === "current"

@@ -5,7 +5,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RouteCurtain from "@/components/RouteCurtain";
-import Cursor from "@/components/Cursor";
 import { organizationJsonLd, golfCourseJsonLd } from "@/lib/schema";
 import "./globals.css";
 
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <RouteCurtain />
-        <Cursor />
 
         {/* Chronogolf source trigger, the widget clones whichever element
             has .chrono-bookingbutton and uses that tag as the wrapper for

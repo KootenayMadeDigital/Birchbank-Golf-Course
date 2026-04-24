@@ -203,38 +203,6 @@
   .conditions-widget { transition: none !important; }
 }
 
-/* Cursor. Additive ink layer — a small granite dot follows the pointer,
-   and over interactive elements a tamarack-stroked ring expands around
-   it. Pointer-events disabled so the underlying click target still
-   receives input. transform-only updates keep this on the compositor. */
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 90;
-  will-change: transform, opacity;
-}
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-granite);
-  opacity: 0;
-  transition: opacity 180ms ease-out;
-  mix-blend-mode: multiply;
-}
-.cursor-ring {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid transparent;
-  background: transparent;
-  opacity: 0;
-  transition: opacity 220ms ease-out, border-color 220ms ease-out;
-}
-
 /* Route fade. A paper-tinted overlay quickly fades up then back out on
    every route change. Opacity-only — no motion. Just enough to soften
    the snap of an instant page swap. */
