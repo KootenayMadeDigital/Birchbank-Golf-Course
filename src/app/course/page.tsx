@@ -89,7 +89,7 @@ export default function CoursePage() {
             Eighteen holes<br />along the Columbia.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Par 72, {HOLE_SUMMARY.yardageGold.toLocaleString()} yards from the Gold.
+            Par 72, {HOLE_SUMMARY.yardageBlue.toLocaleString()} yards from the Blue.
             Routed by Roy Stone in 1962 along the west bank of the Columbia River, restored
             to his original 1969 layout in 2018. Surrounded by the Selkirk and Monashee
             mountains. Walkable, public-access, open {new Date(COURSE_FACTS.reconfiguredOn).getFullYear() <= new Date().getFullYear() ? "April 1" : "April 1"} through October 31.
