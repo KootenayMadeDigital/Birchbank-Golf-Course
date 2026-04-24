@@ -66,6 +66,29 @@ const NEARBY_LODGING = [
   },
 ];
 
+const AFTER_THE_ROUND = [
+  {
+    name: "The Colander",
+    area: "Trail",
+    note: "Trail's iconic family-style Italian — the kind of dinner you drive for. Open for dinner; get the fish.",
+  },
+  {
+    name: "Rossland Beer Company",
+    area: "Rossland",
+    note: "Craft brewery and tap room. Pair it with a walk around Rossland's restored downtown.",
+  },
+  {
+    name: "Element Food + Drink",
+    area: "Castlegar",
+    note: "Locally-sourced plates, an actual wine list. The closest 'nice dinner' option to Birchbank.",
+  },
+  {
+    name: "The Flying Steamshovel",
+    area: "Rossland",
+    note: "Historic Rossland pub, good burgers, local on tap. Open late.",
+  },
+];
+
 const LOCAL_RESOURCES = [
   {
     name: "Tourism Rossland",
@@ -228,6 +251,32 @@ export default function StayAndPlay() {
                 >
                   Hotel site ↗
                 </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* After the round — where to eat dinner once the Bistro closes. */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <div className="mb-10 max-w-2xl">
+            <p className="eyebrow mb-5">After the round</p>
+            <h2 className="display-md font-display mb-5">
+              The Bistro closes at 5. Dinner is 15 minutes away.
+            </h2>
+            <p className="prose-editorial text-granite/85">
+              The Birchbank Bistro runs 12–5 every day. When it closes, the Kootenay dining
+              scene takes over — four spots we'd send family to.
+            </p>
+          </div>
+
+          <ul className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {AFTER_THE_ROUND.map((r) => (
+              <li key={r.name} className="border border-granite/15 p-5 md:p-6">
+                <p className="font-display text-lg text-granite">{r.name}</p>
+                <p className="font-mono text-xs text-silt mt-1">{r.area}</p>
+                <p className="text-silt text-sm mt-3 leading-relaxed">{r.note}</p>
               </li>
             ))}
           </ul>
