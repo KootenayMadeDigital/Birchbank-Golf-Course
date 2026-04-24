@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { HOLES, SCORECARD_IMAGES, TEES } from "@/data/holes";
+import { HOLES, TEES } from "@/data/holes";
 import BookButton from "@/components/BookButton";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
@@ -210,17 +210,24 @@ export default async function HolePage({
         </div>
       </section>
 
-      <section className="pb-[var(--spacing-section)] container-edge">
-        <p className="eyebrow mb-4">Scorecard reference</p>
-        <div className="relative aspect-[16/7] bg-granite/5">
-          <Image
-            src={SCORECARD_IMAGES.inside}
-            alt="Scorecard — inside"
-            fill
-            sizes="100vw"
-            className="object-contain"
-            unoptimized
-          />
+      {/* Compact scorecard-reference strip — just a link row to the full
+          interactive scorecard + the downloadable PDF. No embedded image:
+          visitors don't need to stare at a scorecard the size of their
+          screen on a page about one hole; the full card lives on the
+          dedicated /course/scorecard page and the PDF is one click away. */}
+      <section className="pb-10 container-edge">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-b border-granite/15 py-5 font-mono text-xs md:text-sm text-silt">
+          <span className="eyebrow">Scorecard</span>
+          <Link href="/course/scorecard" className="text-granite hover:text-amber underline underline-offset-2">
+            Full interactive scorecard →
+          </Link>
+          <a
+            href="/api/scorecard"
+            download="birchbank-scorecard.pdf"
+            className="text-granite hover:text-amber underline underline-offset-2"
+          >
+            Download scorecard PDF ↓
+          </a>
         </div>
       </section>
 
