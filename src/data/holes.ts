@@ -50,6 +50,25 @@ export type Hole = {
   };
   /** Flags this hole as the course's signature hole (per scoregolf). */
   signature?: boolean;
+  /**
+   * Simplified SVG path of the hole shape, used as a tamarack watermark
+   * behind the giant numeral on the hole page. Drawn live as the visitor
+   * scrolls past via <HoleShape>. Optional — holes without a shapePath
+   * simply skip the watermark.
+   *
+   * Authoring rules:
+   *   • 0..100 viewBox in both axes (the component scales to fit).
+   *   • Trace ONLY from publicly visible satellite imagery of Birchbank
+   *     (Google Maps / Bing Maps satellite layer at 49.2°N -117.75°W).
+   *     Do NOT invent or stylize a shape. What's there is what's drawn:
+   *     fairway centerline, dogleg if any, water hazard if any, green
+   *     silhouette.
+   *   • Tee ≈ start of path (M command). Green ≈ a small arc or short
+   *     curve at the end. Keep paths to a few command segments — these
+   *     are watermarks, not blueprints.
+   *   • User reviews each path before it ships.
+   */
+  shapePath?: string;
 };
 
 // Editorial facts below are taken from or paraphrased from:

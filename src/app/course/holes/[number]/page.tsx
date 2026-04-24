@@ -6,6 +6,7 @@ import { HOLES } from "@/data/holes";
 import BookButton from "@/components/BookButton";
 import HoleTeeSwitcher from "@/components/HoleTeeSwitcher";
 import RoundProgress from "@/components/RoundProgress";
+import HoleShape from "@/components/HoleShape";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
 export function generateStaticParams() {
@@ -89,10 +90,11 @@ export default async function HolePage({
           </nav>
 
           <div className="grid gap-6 md:gap-10 md:grid-cols-12 items-start">
-            {/* Huge hole number */}
-            <div className="md:col-span-4 lg:col-span-3">
+            {/* Huge hole number, with optional SVG shape watermark behind */}
+            <div className="md:col-span-4 lg:col-span-3 relative">
+              {hole.shapePath && <HoleShape path={hole.shapePath} />}
               <p
-                className="font-display text-granite leading-[0.85] tabular-nums"
+                className="font-display text-granite leading-[0.85] tabular-nums relative"
                 style={{
                   fontSize: "clamp(7rem, 22vw, 16rem)",
                   letterSpacing: "-0.04em",
