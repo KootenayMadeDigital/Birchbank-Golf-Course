@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Members Dashboard",
-  description: "Log in to the Members Dashboard, enter scores for handicap, and access club documents.",
+  title: "Members Portal",
+  description: "Log in to the Members Portal, enter scores for handicap, and access club documents.",
   alternates: { canonical: "/members" },
 };
 
 export default function Members() {
   return (
     <section className="pt-40 pb-[var(--spacing-section)] container-edge max-w-3xl">
-      <p className="eyebrow mb-6">Members Dashboard</p>
+      <p className="eyebrow mb-6">Members Portal</p>
       <h1 className="display-xl max-w-[18ch] mb-10">Tools for members.</h1>
 
       <ul className="space-y-6">
@@ -25,7 +25,7 @@ export default function Members() {
             rel="noopener"
             className="btn-primary"
           >
-            Members Dashboard ↗
+            Members Portal ↗
           </a>
         </li>
 

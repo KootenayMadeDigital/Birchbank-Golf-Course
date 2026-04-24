@@ -43,7 +43,7 @@ const NAV: NavItem[] = [
     children: [
       { href: "/membership", label: "Membership tiers" },
       { href: "/membership/retirees-club", label: "Retirees Club" },
-      { href: "/login", label: "Members Dashboard" },
+      { href: "/login", label: "Members Portal" },
     ],
   },
   { href: "/bistro", label: "The Bistro" },
@@ -226,7 +226,7 @@ export default function Nav() {
             href="/login"
             className="hidden md:inline-flex btn-primary whitespace-nowrap"
           >
-            Members Dashboard
+            Members Portal
             <span aria-hidden>→</span>
           </Link>
           <button
@@ -281,7 +281,7 @@ export default function Nav() {
                 onClick={() => setOpen(false)}
                 className="btn-ghost self-start"
               >
-                Members Dashboard →
+                Members Portal →
               </Link>
               <a href="tel:+12506932255" className="btn-ghost self-start">
                 Call Pro Shop · 250-693-2255
