@@ -133,8 +133,9 @@ export default function Nav() {
 
   return (
     <header
+      data-tight={light ? "true" : "false"}
       className={clsx(
-        "fixed top-0 inset-x-0 z-40 transition-colors duration-300",
+        "site-header fixed top-0 inset-x-0 z-40 transition-colors duration-300",
         light
           ? "bg-paper/95 backdrop-blur-sm border-b border-granite/10"
           : "bg-transparent",

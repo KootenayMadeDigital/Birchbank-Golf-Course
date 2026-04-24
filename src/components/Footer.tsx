@@ -1,10 +1,12 @@
 import Link from "next/link";
 import SocialLinks from "./SocialLinks";
 import Logo from "./Logo";
+import ReturnToFirstTee from "./ReturnToFirstTee";
 
 export default function Footer() {
   return (
     <footer className="bg-granite text-paper mt-32">
+      <ReturnToFirstTee />
       <div className="container-edge py-20 grid gap-12 md:grid-cols-4">
         <div>
           <Logo variant="plate" className="h-14 md:h-16 mb-6" />

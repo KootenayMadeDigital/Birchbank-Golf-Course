@@ -6,6 +6,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RouteCurtain from "@/components/RouteCurtain";
 import Cursor from "@/components/Cursor";
+import StatusBar from "@/components/StatusBar";
 import { organizationJsonLd, golfCourseJsonLd } from "@/lib/schema";
 import "./globals.css";
 
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Nav />
+        <StatusBar />
         <main id="main">{children}</main>
         <Footer />
         <RouteCurtain />

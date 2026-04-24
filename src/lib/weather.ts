@@ -71,6 +71,9 @@ export type WeatherSnapshot = {
     conditionCode: number;
     conditionLabel: string;
   };
+  /** Today's sunrise / sunset, as wall-clock times in America/Vancouver. */
+  sunrise: string;
+  sunset: string;
   fetchedAt: string;
 };
 
@@ -116,7 +119,7 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
   );
   url.searchParams.set(
     "daily",
-    "temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,weather_code",
+    "temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,weather_code,sunrise,sunset",
   );
   url.searchParams.set("models", "gem_seamless");
   url.searchParams.set("timezone", "America/Vancouver");
@@ -133,6 +136,8 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
     const current = data.current;
     const daily = data.daily;
     if (!current || !daily) return null;
+    const sunFmt = (iso: string) =>
+      new Date(iso).toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" });
 
     const windKmh = Math.round(current.wind_speed_10m);
     const windBearing = current.wind_direction_10m;
@@ -160,6 +165,8 @@ export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {
         conditionCode: daily.weather_code[1],
         conditionLabel: WEATHER_CODE_MAP[daily.weather_code[1]] ?? "Conditions unclear",
       },
+      sunrise: sunFmt(daily.sunrise[0]),
+      sunset: sunFmt(daily.sunset[0]),
       fetchedAt: new Date().toISOString(),
     };
   } catch {

@@ -38,14 +38,24 @@ export default function ConditionsWidget() {
   // every 15 minutes (matching the server cache) so a visitor who parks on
   // the page sees freshening data as the widget refreshes.
   const [weather, setWeather] = useState<WeatherSnapshot | null>(null);
+  // When fresh data arrives (after the first load), pulse a soft tamarack
+  // inner glow to acknowledge the update. Cleared after the animation.
+  const [glow, setGlow] = useState(false);
   useEffect(() => {
     let cancelled = false;
+    let isFirst = true;
     const load = async () => {
       try {
         const res = await fetch("/api/weather");
         if (!res.ok) return;
         const data = (await res.json()) as WeatherSnapshot;
-        if (!cancelled) setWeather(data);
+        if (cancelled) return;
+        setWeather(data);
+        if (!isFirst) {
+          setGlow(true);
+          setTimeout(() => setGlow(false), 3800);
+        }
+        isFirst = false;
       } catch {
         /* degrade silently, season + hours stay visible */
       }
@@ -58,20 +68,42 @@ export default function ConditionsWidget() {
     };
   }, []);
 
+  // "Updated N minutes ago" caption derived from the snapshot's fetchedAt.
+  // Re-renders every 30s so the displayed age stays current.
+  const [tickNow, setTickNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setTickNow(Date.now()), 30 * 1000);
+    return () => clearInterval(id);
+  }, []);
+  const updatedLabel = (() => {
+    if (!weather?.fetchedAt) return null;
+    const ageSec = Math.max(0, Math.floor((tickNow - new Date(weather.fetchedAt).getTime()) / 1000));
+    if (ageSec < 45) return "Updated just now";
+    const minutes = Math.round(ageSec / 60);
+    if (minutes < 60) return `Updated ${minutes} min ago`;
+    const hours = Math.round(minutes / 60);
+    return `Updated ${hours} h ago`;
+  })();
+
   return (
     <aside
       id="conditions-widget"
-      aria-label="Today at Birchbank"
+      aria-label="Live at Birchbank"
       aria-live="polite"
-      className="border border-granite/15 bg-paper rounded-sm p-6 md:p-7 scroll-mt-32"
+      data-glow={glow ? "true" : "false"}
+      className="conditions-widget border border-granite/15 bg-paper rounded-sm p-6 md:p-7 scroll-mt-32 relative"
     >
       <div className="flex items-center justify-between mb-5">
-        <p className="eyebrow text-cedar">Today at Birchbank</p>
+        <p className="eyebrow text-cedar">Live at Birchbank</p>
         <div className="flex items-center gap-2 font-mono text-xs text-silt">
-          <span className="relative inline-flex w-2 h-2">
-            {open && <span className="absolute inset-0 rounded-full bg-cedar animate-pulse-live" />}
-            <span className={`relative inline-flex rounded-full w-2 h-2 ${open ? "bg-cedar" : "bg-silt"}`} />
-          </span>
+          {open ? (
+            <span className="relative inline-flex w-2 h-2">
+              <span className="absolute inset-0 rounded-full bg-cedar animate-pulse-live" />
+              <span className="relative inline-flex rounded-full w-2 h-2 bg-cedar" />
+            </span>
+          ) : (
+            <span className="relative inline-flex rounded-full w-2 h-2 bg-silt" />
+          )}
           {open ? "Live" : "Closed"}
         </div>
       </div>
@@ -142,6 +174,11 @@ export default function ConditionsWidget() {
       >
         Call the Pro Shop · 250-693-2255 →
       </a>
+      {updatedLabel && (
+        <p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-silt/70">
+          {updatedLabel}
+        </p>
+      )}
     </aside>
   );
 }
