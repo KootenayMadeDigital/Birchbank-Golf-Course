@@ -319,63 +319,25 @@
   transition: opacity 220ms ease-out, border-color 220ms ease-out;
 }
 
-/* RouteCurtain. A single paper-colored sheet passes vertically through
-   the viewport on each route change. The transform-only animation stays
-   on the compositor; the wordmark rides with the sheet so the brand
-   briefly stamps the transition. */
-.route-curtain {
+/* Route fade. A paper-tinted overlay quickly fades up then back out on
+   every route change. Opacity-only — no motion. Just enough to soften
+   the snap of an instant page swap. */
+.route-fade {
   position: fixed;
   inset: 0;
   z-index: 100;
   background: var(--color-paper);
   pointer-events: none;
-  transform: translateY(-100%);
-  animation: route-curtain-pass 700ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.route-curtain__mark {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
   opacity: 0;
-  animation: route-curtain-mark 700ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: route-fade-pass 380ms ease-in-out forwards;
 }
-.route-curtain__wordmark {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  color: var(--color-granite);
-}
-.route-curtain__rule {
-  display: block;
-  width: 3rem;
-  height: 1px;
-  background: var(--color-tamarack);
-}
-@keyframes route-curtain-pass {
-  0%   { transform: translateY(-100%); }
-  50%  { transform: translateY(0%); }
-  100% { transform: translateY(100%); }
-}
-@keyframes route-curtain-mark {
+@keyframes route-fade-pass {
   0%   { opacity: 0; }
-  40%  { opacity: 1; }
-  60%  { opacity: 1; }
+  45%  { opacity: 0.85; }
   100% { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-curtain {
-    transform: none !important;
-    animation: route-curtain-flash 150ms ease-out forwards !important;
-  }
-  .route-curtain__mark { animation: none !important; opacity: 0 !important; }
-  @keyframes route-curtain-flash {
-    0%   { opacity: 0; }
-    50%  { opacity: 1; }
-    100% { opacity: 0; }
-  }
+  .route-fade { animation: none !important; opacity: 0 !important; }
 }
 
 /* ScrollReveal. IntersectionObserver-driven fade/rise. Keeps CSS outside

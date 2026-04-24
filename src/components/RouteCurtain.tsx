@@ -4,19 +4,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Paper-curtain page transition.
+ * Quiet paper fade between routes.
  *
- * Each route change passes a single paper-colored sheet vertically across
- * the viewport (enters from above, fully covers at midpoint, exits below)
- * over 700ms. A small mono "Birchbank" wordmark + tamarack rule travels
- * with the sheet so the brand briefly stamps the transition.
+ * On every route change a paper-tinted overlay fades up then back out
+ * over ~360ms. No motion beyond opacity — just enough to soften the
+ * snap of an instant page swap, nothing dramatic.
  *
- * Mounted once at the layout root. Listens to Next.js `usePathname()`.
- * The first render is skipped so the curtain doesn't play on initial load.
- *
- * Reduced motion: the sheet does not animate; a 150ms paper flash is shown
- * via opacity so the transition still acknowledges the change without
- * sustained motion.
+ * The first render is skipped so the fade doesn't play on initial load.
+ * Reduced motion: no overlay at all (browser default snap).
  */
 export default function RouteCurtain() {
   const pathname = usePathname();
@@ -29,9 +24,13 @@ export default function RouteCurtain() {
       firstRender.current = false;
       return;
     }
+    if (typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     setActive(true);
     if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setActive(false), 720);
+    timer.current = setTimeout(() => setActive(false), 380);
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };
@@ -39,12 +38,5 @@ export default function RouteCurtain() {
 
   if (!active) return null;
 
-  return (
-    <div aria-hidden className="route-curtain">
-      <div className="route-curtain__mark">
-        <span className="route-curtain__wordmark">BIRCHBANK</span>
-        <span className="route-curtain__rule" />
-      </div>
-    </div>
-  );
+  return <div aria-hidden className="route-fade" />;
 }
