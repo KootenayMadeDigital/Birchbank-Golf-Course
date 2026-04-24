@@ -1,51 +1,54 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
-import { fetchBirchbankForecast } from "@/lib/weather";
+import WindCompass from "@/components/WindCompass";
+import DayArc from "@/components/DayArc";
+import HourChart from "@/components/HourChart";
+import { fetchBirchbankForecast, findBestWindow, findBestDay } from "@/lib/weather";
 
 export const metadata: Metadata = {
   title: "Conditions",
   description:
-    "Live weather, 24-hour forecast, and seven-day outlook for Birchbank Golf Course in Genelle, BC. Powered by Environment Canada's GEM model via Open-Meteo.",
+    "Live weather, 24-hour outlook, and 7-day forecast for Birchbank Golf Course in Genelle, BC. Best-window and best-day picks for booking your round.",
   alternates: { canonical: "/conditions" },
 };
 
-// Revalidate the whole page every 15 minutes, matches the upstream
-// weather fetch cache so the page and the underlying data agree.
 export const revalidate = 900;
 
 /**
- * The dedicated conditions dashboard.
+ * Conditions dashboard.
  *
- * Home-page ConditionsWidget is a compact "is it a good day to book?"
- * card. This page is the deep version for the obsessive: 24-hour chart,
- * 7-day outlook, golfer-specific commentary ("A three-club day. Hold
- * onto your hat."), and a frank note about what is NOT live (frost
- * delays, cart-path-only calls, those still come from the Pro Shop).
+ * The deep version of the home-page conditions widget. Built around
+ * three quick decisions a golfer actually makes:
  *
- * Data source: Open-Meteo with Environment Canada's GEM model, same
- * pipeline as the home widget. Fetched server-side and revalidated every
- * 15 minutes.
+ *   1. Should I play right now? (hero)
+ *   2. When today is the best window? (24h chart + best-window band)
+ *   3. Which day this week is best? (7-day with a pinned best-day card)
+ *
+ * Frost delays, cart-path-only calls, green-speed readings, and
+ * fairway firmness still come from the Pro Shop, those are judgment
+ * calls, not data we'd fake on this page.
  */
 
+// Colored emoji glyphs (with variation selector U+FE0F where needed) so
+// the OS renders them in native color rather than monochrome text.
 function weatherGlyph(code: number): string {
-  if (code === 0) return "☀";
-  if (code >= 1 && code <= 2) return "⛅";
-  if (code === 3) return "☁";
-  if (code >= 45 && code <= 48) return "≡";
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "☂";
-  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "❄";
-  if (code >= 95) return "⚡";
+  if (code === 0) return "☀\uFE0F";                                                 // clear sky
+  if (code === 1) return "🌤\uFE0F";                                               // mostly clear
+  if (code === 2) return "⛅\uFE0F";                                                // partly cloudy
+  if (code === 3) return "☁\uFE0F";                                                // overcast
+  if (code >= 45 && code <= 48) return "🌫\uFE0F";                                 // fog
+  if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";                // light drizzle / showers
+  if ((code >= 61 && code <= 67) || (code >= 81 && code <= 82)) return "🌧\uFE0F"; // rain
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "🌨\uFE0F"; // snow
+  if (code >= 95) return "⛈\uFE0F";                                                // thunderstorm
   return "·";
 }
 
-// A one-line human take on whether it's a good golf day. Concrete and
-// honest, no hype, no "you'll love it." Derived from precip prob and
-// wind max.
 function golfDayCall(precip: number, windMax: number, highC: number): string {
   if (precip >= 60) return "Rain likely. Bring layers or reschedule.";
   if (precip >= 30) return "Showers possible. Check back before you leave.";
-  if (windMax >= 35) return "Serious wind. Playable, but pick your clubs carefully.";
+  if (windMax >= 35) return "Serious wind. Playable, pick your clubs carefully.";
   if (highC < 8) return "Cold. Layer up; the ball won't travel.";
   if (highC >= 28 && windMax < 10) return "Hot and still. Bring water and a twilight tee time.";
   if (windMax < 15 && precip < 15 && highC >= 14) return "Excellent day to be out here.";
@@ -54,199 +57,417 @@ function golfDayCall(precip: number, windMax: number, highC: number): string {
 
 export default async function Conditions() {
   const forecast = await fetchBirchbankForecast();
+  const bestWindow = forecast ? findBestWindow(forecast.hourly) : null;
+  const bestDay = forecast ? findBestDay(forecast.daily) : null;
+
+  if (!forecast) {
+    return (
+      <section className="pt-40 py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge max-w-2xl">
+          <p className="eyebrow text-amber mb-3">Weather upstream unavailable</p>
+          <h1 className="display-md font-display mb-5">Conditions feed paused.</h1>
+          <p className="prose-editorial text-granite/85">
+            The weather service is temporarily unreachable. For today's
+            conditions and frost-delay status, call the Pro Shop at{" "}
+            <a href="tel:+12506932255" className="link-editorial text-tamarack">
+              250-693-2255
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const today = forecast.daily[0];
+  const todayCall = golfDayCall(today.precipProbMax, today.windMaxKmh, today.highC);
 
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-12 bg-paper">
+      {/* HERO, the big read */}
+      <section className="pt-32 md:pt-40 pb-16 bg-paper">
         <div className="container-edge">
-          <p className="eyebrow mb-6">Conditions</p>
-          <h1
-            className="font-display text-granite max-w-[20ch] mb-6"
-            style={{ fontSize: "clamp(2.25rem, 6.5vw, 4.5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Live weather.<br />Seven-day outlook.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Data from Environment Canada's GEM model via Open-Meteo, updated every 15
-            minutes. Frost delays, cart-path-only calls, and same-day tee-sheet status still
-            come from the Pro Shop, call ahead on questionable mornings.
+          <p className="eyebrow text-cedar mb-6">
+            Live at Birchbank · Genelle, BC
           </p>
+          <h1
+            className="font-display text-granite max-w-[24ch] mb-12"
+            style={{
+              fontSize: "clamp(2.25rem, 6vw, 4.75rem)",
+              lineHeight: "1.02",
+              letterSpacing: "-0.018em",
+            }}
+          >
+            Should you play today?
+          </h1>
+
+          <div className="grid gap-12 md:gap-14 md:grid-cols-12 items-start">
+            {/* Temp + condition */}
+            <div className="md:col-span-5">
+              <div className="flex items-baseline gap-5">
+                <span
+                  className="font-display text-granite leading-none tabular-nums"
+                  style={{ fontSize: "clamp(5rem, 14vw, 10rem)" }}
+                >
+                  {forecast.now.tempC}°
+                </span>
+                <span
+                  aria-hidden
+                  className="font-mono text-cedar leading-none"
+                  style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
+                >
+                  {weatherGlyph(forecast.now.conditionCode)}
+                </span>
+              </div>
+              <p className="mt-4 font-display text-2xl md:text-3xl text-granite leading-snug">
+                {forecast.now.conditionLabel}.
+              </p>
+              <p className="mt-2 font-mono text-sm text-silt">
+                Today {today.lowC}° / {today.highC}° · precip {today.precipProbMax}%
+              </p>
+            </div>
+
+            {/* Wind compass */}
+            <div className="md:col-span-3">
+              <p className="eyebrow mb-4">Wind</p>
+              <WindCompass
+                bearing={forecast.now.windBearing}
+                kmh={forecast.now.windKmh}
+                cardinal={forecast.now.windCardinal}
+                size={132}
+              />
+              <p className="mt-3 font-mono text-xs text-cedar uppercase tracking-widest">
+                {forecast.now.clubCall}
+              </p>
+            </div>
+
+            {/* Today's call */}
+            <aside className="md:col-span-4 border-l-2 border-tamarack pl-6 md:pl-7">
+              <p className="eyebrow text-tamarack mb-3">Today's call</p>
+              <p
+                className="font-display text-granite leading-snug"
+                style={{ fontSize: "clamp(1.5rem, 2.2vw + 0.5rem, 2rem)" }}
+              >
+                {todayCall}
+              </p>
+              {bestWindow && (
+                <p className="mt-5 font-mono text-xs text-silt uppercase tracking-widest">
+                  Best window today
+                  <span className="block text-granite font-display text-base normal-case tracking-normal mt-1">
+                    {bestWindow.startLabel} to {bestWindow.endLabel}
+                  </span>
+                </p>
+              )}
+            </aside>
+          </div>
+
+          {/* Day arc, sunrise to sunset */}
+          <div className="mt-14 max-w-md">
+            <p className="eyebrow mb-4">Daylight</p>
+            <DayArc sunrise={today.sunrise} sunset={today.sunset} />
+            <p className="mt-2 font-mono text-xs text-silt">
+              {today.daylightHours} hours of daylight today
+            </p>
+          </div>
         </div>
       </section>
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Current conditions + today's call */}
-      {forecast ? (
-        <>
-          <section className="py-[var(--spacing-section)] bg-paper">
-            <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
-              <div className="md:col-span-7">
-                <p className="eyebrow mb-5">Right now</p>
-                <div className="flex items-baseline gap-5 mb-4">
-                  <span className="font-display text-7xl md:text-8xl text-granite leading-none">
-                    {forecast.now.tempC}°
-                  </span>
-                  <span className="text-granite text-xl">
-                    <span className="font-mono text-3xl mr-2 text-cedar">{weatherGlyph(forecast.now.conditionCode)}</span>
-                    {forecast.now.conditionLabel}
-                  </span>
-                </div>
-                <p className="font-mono text-sm text-silt mb-2">
-                  Wind <span className="text-granite">{forecast.now.windKmh} km/h {forecast.now.windCardinal}</span>
-                  <span className="mx-3 text-silt/40">·</span>
-                  <span className="text-cedar">{forecast.now.clubCall}</span>
+      {/* 24-HOUR OUTLOOK, chart + cards */}
+      <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge">
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
+            <div>
+              <p className="eyebrow text-cedar mb-3">Next 24 hours</p>
+              <h2 className="display-md font-display max-w-[20ch]">
+                When the wind sits down today.
+              </h2>
+            </div>
+            {bestWindow && (
+              <div className="border border-tamarack/50 bg-tamarack/5 px-5 py-4 rounded-sm">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-tamarack mb-1">
+                  Best 3 hours
                 </p>
-                <p className="font-mono text-xs text-silt">
-                  Today's high {forecast.daily[0].highC}° · low {forecast.daily[0].lowC}° · precip {forecast.daily[0].precipProbMax}%
+                <p className="font-display text-xl text-granite leading-tight">
+                  {bestWindow.startLabel} to {bestWindow.endLabel}
                 </p>
               </div>
+            )}
+          </div>
 
-              <aside className="md:col-span-5 border-l-2 border-tamarack pl-6">
-                <p className="eyebrow mb-3">Today's call</p>
-                <p className="font-display text-2xl text-granite leading-snug">
-                  {golfDayCall(forecast.daily[0].precipProbMax, forecast.daily[0].windMaxKmh, forecast.daily[0].highC)}
-                </p>
-                <p className="font-mono text-xs text-silt mt-5">
-                  Sunrise {forecast.daily[0].sunrise}
-                  <span className="mx-2 text-silt/40">·</span>
-                  Sunset {forecast.daily[0].sunset}
-                  <span className="mx-2 text-silt/40">·</span>
-                  {forecast.daily[0].daylightHours}h of daylight
-                </p>
-              </aside>
+          {/* SVG chart */}
+          <div className="border border-granite/15 bg-paper p-4 md:p-6 mb-8">
+            <HourChart hourly={forecast.hourly} bestWindow={bestWindow} />
+            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-widest text-silt">
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-block w-3 h-[2px] bg-tamarack" />
+                Temperature
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-block w-3 h-2 bg-cedar/30 rounded-sm" />
+                Precipitation %
+              </span>
+              {bestWindow && (
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 border border-tamarack/60 bg-tamarack/10" />
+                  Best window
+                </span>
+              )}
             </div>
-          </section>
+          </div>
 
-          {/* 24-hour strip */}
-          <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
-            <div className="container-edge">
-              <p className="eyebrow mb-5">Next 24 hours</p>
-              <h2 className="display-md font-display mb-8">Hourly outlook.</h2>
-
-              <div className="overflow-x-auto -mx-4 px-4 pb-2">
-                <ul className="flex gap-3 min-w-max">
-                  {forecast.hourly.map((h) => (
-                    <li
-                      key={h.time}
-                      className="w-[88px] shrink-0 border border-granite/15 p-3 text-center"
+          {/* Hour cards (kept for at-a-glance scanning, best-window highlighted) */}
+          <div className="overflow-x-auto -mx-4 px-4 pb-2">
+            <ul className="flex gap-3 min-w-max">
+              {forecast.hourly.map((h, i) => {
+                const inBest =
+                  bestWindow &&
+                  i >= bestWindow.startIdx &&
+                  i < bestWindow.endIdx;
+                return (
+                  <li
+                    key={h.time}
+                    className={
+                      "w-[88px] shrink-0 p-3 text-center border " +
+                      (inBest
+                        ? "border-tamarack/60 bg-tamarack/5"
+                        : "border-granite/15 bg-paper")
+                    }
+                  >
+                    <p className="font-mono text-[10px] text-silt uppercase">
+                      {h.hourLabel}
+                    </p>
+                    <p
+                      aria-hidden
+                      className="font-mono text-2xl text-cedar mt-2 leading-none"
                     >
-                      <p className="font-mono text-[10px] text-silt uppercase">{h.hourLabel}</p>
-                      <p className="font-mono text-2xl text-cedar mt-2 leading-none">{weatherGlyph(h.conditionCode)}</p>
-                      <p className="font-display text-xl text-granite mt-2">{h.tempC}°</p>
-                      <p className="font-mono text-[10px] text-silt mt-2">
-                        {h.precipProb}% · {h.windKmh} km/h
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <p className="font-mono text-xs text-silt mt-4">
-                Scroll sideways for the full 24 hours.
-              </p>
-            </div>
-          </section>
-
-          {/* 7-day outlook */}
-          <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
-            <div className="container-edge">
-              <p className="eyebrow mb-5">Seven days out</p>
-              <h2 className="display-md font-display mb-8">Plan your week.</h2>
-
-              <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">
-                {forecast.daily.map((d) => (
-                  <li key={d.date} className="grid grid-cols-12 gap-3 md:gap-5 py-5 items-center">
-                    <span className="col-span-3 md:col-span-2 font-display text-lg md:text-xl text-granite">
-                      {d.dayLabel}
-                    </span>
-                    <span className="col-span-1 font-mono text-2xl md:text-3xl text-cedar leading-none text-center">
-                      {weatherGlyph(d.conditionCode)}
-                    </span>
-                    <span className="col-span-5 md:col-span-4 font-mono text-xs md:text-sm text-silt">
-                      {d.conditionLabel}
-                    </span>
-                    <span className="col-span-3 md:col-span-2 font-display text-base md:text-lg text-granite text-right md:text-left">
-                      {d.highC}° <span className="text-silt text-sm">/ {d.lowC}°</span>
-                    </span>
-                    <span className="hidden md:block md:col-span-2 font-mono text-xs text-silt">
-                      {d.precipProbMax}% precip
-                    </span>
-                    <span className="hidden md:block md:col-span-1 font-mono text-xs text-silt text-right">
-                      {d.windMaxKmh} km/h
-                    </span>
+                      {weatherGlyph(h.conditionCode)}
+                    </p>
+                    <p className="font-display text-xl text-granite mt-2">
+                      {h.tempC}°
+                    </p>
+                    <p className="font-mono text-[10px] text-silt mt-2">
+                      {h.precipProb}% · {h.windKmh}
+                    </p>
                   </li>
-                ))}
-              </ul>
+                );
+              })}
+            </ul>
+          </div>
+          <p className="font-mono text-xs text-silt mt-4">
+            Scroll sideways for the full 24 hours.
+          </p>
+        </div>
+      </section>
+
+      {/* 7-DAY OUTLOOK */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <p className="eyebrow text-cedar mb-3">Next seven days</p>
+          <h2 className="display-md font-display mb-10">
+            Plan the week.
+          </h2>
+
+          {/* Best day callout */}
+          {bestDay && (
+            <div className="border border-tamarack/50 bg-tamarack/5 p-6 md:p-7 mb-8 grid gap-5 md:grid-cols-12 items-center">
+              <div className="md:col-span-4">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-tamarack mb-2">
+                  Best day this week
+                </p>
+                <p className="font-display text-3xl md:text-4xl text-granite">
+                  {forecast.daily[bestDay.index].dayLabel}
+                </p>
+              </div>
+              <div className="md:col-span-5">
+                <p className="font-display text-xl text-granite leading-snug">
+                  {forecast.daily[bestDay.index].conditionLabel} ·{" "}
+                  {forecast.daily[bestDay.index].highC}° /{" "}
+                  {forecast.daily[bestDay.index].lowC}°
+                </p>
+                <p className="font-mono text-xs text-silt uppercase tracking-widest mt-2">
+                  {bestDay.reason}
+                </p>
+              </div>
+              <div className="md:col-span-3 md:text-right">
+                <BookButton />
+              </div>
             </div>
-          </section>
-        </>
-      ) : (
-        <section className="py-[var(--spacing-section)] bg-paper">
-          <div className="container-edge border border-granite/15 p-8 max-w-2xl">
-            <p className="eyebrow text-amber mb-3">Upstream weather feed unavailable</p>
-            <p className="prose-editorial text-granite/85">
-              The weather service is temporarily unreachable. For today's conditions and the
-              course's own frost-delay status, call the Pro Shop at{" "}
-              <a href="tel:+12506932255" className="underline hover:text-amber">250-693-2255</a>.
+          )}
+
+          <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">
+            {forecast.daily.map((d, i) => {
+              const isBest = bestDay && bestDay.index === i;
+              return (
+                <li
+                  key={d.date}
+                  className={
+                    "grid grid-cols-12 gap-3 md:gap-5 py-5 items-center " +
+                    (isBest ? "bg-tamarack/[0.04]" : "")
+                  }
+                >
+                  <span className="col-span-3 md:col-span-2 font-display text-lg md:text-xl text-granite">
+                    {d.dayLabel}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="col-span-1 font-mono text-2xl md:text-3xl text-cedar leading-none text-center"
+                  >
+                    {weatherGlyph(d.conditionCode)}
+                  </span>
+                  <span className="col-span-5 md:col-span-3 font-mono text-xs md:text-sm text-silt">
+                    {d.conditionLabel}
+                  </span>
+                  <span className="col-span-3 md:col-span-2 font-display text-base md:text-lg text-granite text-right md:text-left">
+                    {d.highC}°{" "}
+                    <span className="text-silt text-sm">/ {d.lowC}°</span>
+                  </span>
+                  <span className="hidden md:flex md:col-span-2 items-center gap-2 font-mono text-xs text-silt">
+                    <PrecipBar pct={d.precipProbMax} />
+                    {d.precipProbMax}%
+                  </span>
+                  <span className="hidden md:flex md:col-span-2 items-center gap-2 font-mono text-xs text-silt justify-end">
+                    <WindBar kmh={d.windMaxKmh} />
+                    {d.windMaxKmh} km/h
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+
+      {/* WIND MATTERS, mini guide to the club call */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
+          <div className="md:col-span-5">
+            <p className="eyebrow text-cedar mb-3">How we read the wind</p>
+            <h2 className="display-md font-display max-w-[20ch] leading-tight">
+              Every 10 km/h costs you about a club.
+            </h2>
+            <p className="prose-editorial text-granite/85 mt-5 max-w-md">
+              Pro-shop folklore, not meteorology. We surface a one-line
+              call so you know what to bring before you check in.
             </p>
           </div>
-        </section>
-      )}
+          <ul className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 font-mono text-sm">
+            {[
+              ["Under 5 km/h", "Calm."],
+              ["5 to 14 km/h", "A one-club day."],
+              ["15 to 24 km/h", "A two-club day."],
+              ["25 to 34 km/h", "A three-club day."],
+              ["35+ km/h", "A four-club day. Hold onto your hat."],
+            ].map(([range, call]) => (
+              <li key={range} className="flex flex-col gap-1">
+                <span className="text-silt text-xs uppercase tracking-widest">
+                  {range}
+                </span>
+                <span className="font-display text-lg text-granite normal-case tracking-normal">
+                  {call}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-      {/* What we don't measure, honesty block */}
+      {/* WHAT'S LIVE, WHAT'S NOT, honesty block */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="eyebrow text-tamarack mb-5">What's live, what's not</p>
             <h2
-              className="font-display mb-5"
-              style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
+              className="font-display"
+              style={{
+                fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)",
+                lineHeight: "1.05",
+                letterSpacing: "-0.01em",
+              }}
             >
-              We're honest about our data.
+              Honest about our data.
             </h2>
           </div>
-          <div className="md:col-span-7 space-y-6">
+          <div className="md:col-span-7 space-y-7">
             <div className="border-l-2 border-tamarack pl-5">
-              <p className="font-display text-lg text-paper mb-1">Live via Open-Meteo (GEM)</p>
+              <p className="font-display text-lg text-paper mb-1">
+                Live via Open-Meteo (Environment Canada GEM)
+              </p>
               <p className="text-paper/80 text-sm leading-relaxed">
-                Temperature, wind speed and direction, precipitation, hourly and daily forecasts
-                out to seven days. Updated every 15 minutes.
+                Temperature, wind speed and direction, precipitation, hourly
+                and daily forecasts out to seven days. Updated every 15
+                minutes.
               </p>
             </div>
             <div className="border-l-2 border-tamarack pl-5">
-              <p className="font-display text-lg text-paper mb-1">Call the Pro Shop</p>
-              <p className="text-paper/80 text-sm leading-relaxed">
-                Frost-delay status, cart-path-only calls, green-speed readings, fairway
-                firmness, these are judgment calls from the superintendent and the Pro
-                Shop, not things we'd fake with an invented number on this page.
-                <a href="tel:+12506932255" className="block mt-2 text-tamarack underline hover:text-paper">
-                  250-693-2255 · 9 am – 7 pm, 7 days
-                </a>
+              <p className="font-display text-lg text-paper mb-1">
+                From the Pro Shop
               </p>
+              <p className="text-paper/80 text-sm leading-relaxed">
+                Frost-delay status, cart-path-only calls, green-speed
+                readings, fairway firmness. Judgment calls from the
+                superintendent and Pro Shop staff, not numbers we'd invent
+                on this page.
+              </p>
+              <a
+                href="tel:+12506932255"
+                className="block mt-2 text-tamarack underline hover:text-paper text-sm"
+              >
+                250-693-2255 · 9 am to 7 pm, 7 days
+              </a>
             </div>
             <div className="border-l-2 border-tamarack pl-5">
-              <p className="font-display text-lg text-paper mb-1">Historical / averages</p>
+              <p className="font-display text-lg text-paper mb-1">
+                Season averages
+              </p>
               <p className="text-paper/80 text-sm leading-relaxed">
-                Peak Kootenay golf weather runs June 15 – September 15. Shoulder seasons play
-                firmer and cooler. Average opening day: April 1; average closing: October 31.
+                Peak Kootenay golf weather runs June 15 to September 15.
+                Shoulder seasons play firmer and cooler. Average opening:
+                April 1; average closing: October 31.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* FINAL CTA */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge text-center max-w-3xl mx-auto">
-          <p className="eyebrow mb-6">Weather's fine, go play</p>
+          <p className="eyebrow mb-6">Conditions look good. Go play.</p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <BookButton />
             <Link href="/rates" className="btn-ghost">Rates</Link>
-            <Link href="/plan-your-visit" className="btn-ghost">Plan your visit →</Link>
+            <Link href="/plan-your-visit" className="btn-ghost">
+              Plan your visit →
+            </Link>
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+function PrecipBar({ pct }: { pct: number }) {
+  const w = Math.max(0, Math.min(100, pct));
+  return (
+    <span className="inline-block w-12 h-1.5 bg-granite/15 relative" aria-hidden>
+      <span
+        className="absolute inset-y-0 left-0 bg-cedar/60"
+        style={{ width: `${w}%` }}
+      />
+    </span>
+  );
+}
+
+function WindBar({ kmh }: { kmh: number }) {
+  // Scale: 40 km/h fills the bar
+  const w = Math.max(0, Math.min(100, (kmh / 40) * 100));
+  return (
+    <span className="inline-block w-12 h-1.5 bg-granite/15 relative" aria-hidden>
+      <span
+        className="absolute inset-y-0 left-0 bg-tamarack"
+        style={{ width: `${w}%` }}
+      />
+    </span>
   );
 }

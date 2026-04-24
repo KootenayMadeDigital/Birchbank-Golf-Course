@@ -202,6 +202,7 @@ export type ForecastSnapshot = {
   now: {
     tempC: number;
     windKmh: number;
+    windBearing: number;
     windCardinal: string;
     conditionCode: number;
     conditionLabel: string;
@@ -295,6 +296,7 @@ export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null>
       now: {
         tempC: Math.round(c.temperature_2m),
         windKmh: Math.round(c.wind_speed_10m),
+        windBearing: Math.round(c.wind_direction_10m),
         windCardinal: cardinalFromBearing(c.wind_direction_10m),
         conditionCode: c.weather_code,
         conditionLabel: WEATHER_CODE_MAP[c.weather_code] ?? "Conditions unclear",
@@ -307,4 +309,86 @@ export async function fetchBirchbankForecast(): Promise<ForecastSnapshot | null>
   } catch {
     return null;
   }
+}
+
+/**
+ * Find the best 3-hour playing window in the next 12 daytime hours.
+ * Scoring: lower precip + manageable wind + comfortable temperature wins.
+ * Returns null if nothing in the upcoming hourly stretch reads "good."
+ */
+export function findBestWindow(hourly: HourlyPoint[]): {
+  startIdx: number;
+  endIdx: number;
+  startLabel: string;
+  endLabel: string;
+} | null {
+  const windowSize = 3;
+  const horizon = Math.min(hourly.length, 14);
+  if (horizon < windowSize) return null;
+
+  let bestScore = Infinity;
+  let bestStart = -1;
+  for (let i = 0; i + windowSize <= horizon; i++) {
+    let score = 0;
+    for (let j = 0; j < windowSize; j++) {
+      const h = hourly[i + j];
+      // Penalize heavy precip
+      score += (h.precipProb ?? 0) * 1.4;
+      // Penalize strong wind
+      score += Math.max(0, h.windKmh - 12) * 1.6;
+      // Penalize uncomfortable temps (sweet spot 14–24°C)
+      if (h.tempC < 8) score += (8 - h.tempC) * 4;
+      else if (h.tempC < 14) score += (14 - h.tempC) * 2;
+      else if (h.tempC > 28) score += (h.tempC - 28) * 3;
+    }
+    if (score < bestScore) {
+      bestScore = score;
+      bestStart = i;
+    }
+  }
+  if (bestStart < 0) return null;
+  return {
+    startIdx: bestStart,
+    endIdx: bestStart + windowSize,
+    startLabel: hourly[bestStart].hourLabel,
+    endLabel: hourly[bestStart + windowSize - 1].hourLabel,
+  };
+}
+
+/**
+ * Pick the single best day in the 7-day outlook for a round of golf.
+ * Same scoring approach as findBestWindow, applied to daily aggregates.
+ */
+export function findBestDay(daily: ForecastDay[]): {
+  index: number;
+  reason: string;
+} | null {
+  if (daily.length === 0) return null;
+  let bestIdx = 0;
+  let bestScore = Infinity;
+  for (let i = 0; i < daily.length; i++) {
+    const d = daily[i];
+    let score = 0;
+    score += (d.precipProbMax ?? 0) * 1.4;
+    score += Math.max(0, d.windMaxKmh - 14) * 1.6;
+    if (d.highC < 10) score += (10 - d.highC) * 4;
+    else if (d.highC < 16) score += (16 - d.highC) * 2;
+    else if (d.highC > 28) score += (d.highC - 28) * 3;
+    if (score < bestScore) {
+      bestScore = score;
+      bestIdx = i;
+    }
+  }
+  const d = daily[bestIdx];
+  const bits: string[] = [];
+  if ((d.precipProbMax ?? 0) <= 15) bits.push("dry");
+  else if ((d.precipProbMax ?? 0) <= 35) bits.push("mostly dry");
+  if (d.windMaxKmh < 12) bits.push("calm");
+  else if (d.windMaxKmh < 22) bits.push("light wind");
+  if (d.highC >= 16 && d.highC <= 26) bits.push("comfortable temps");
+  else if (d.highC > 26) bits.push("warm");
+  return {
+    index: bestIdx,
+    reason: bits.length ? bits.join(", ") : "the best day on offer",
+  };
 }
