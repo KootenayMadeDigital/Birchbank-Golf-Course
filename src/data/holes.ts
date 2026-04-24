@@ -76,11 +76,19 @@ export type Hole = {
 //   "Birchbank a Kootenay Rockies classic" by Andrew Penner · Oct 6, 2022
 //   Quotes attributed to Jeff Papilion (Director of Golf / CPGA Head Pro)
 // Photo credits to Andrew Penner / SCOREGolf are preserved on every use.
+//
+// shapePath traced from the published Birchbank course-layout map at
+// /public/scorecard/back.jpg (also the back of the printed scorecard).
+// Each path uses a 0..100 viewBox; tee at top of box, green at bottom,
+// a small terminal arc for the green silhouette. Holes with ponds /
+// streams include a separate sub-path for the water feature. These are
+// simplifications of the published map, not pixel-perfect tracings.
 export const HOLES: Hole[] = [
   {
     number: 1,  par: 5, yardage: { blue: 483, white: 455, red: 405 }, strokeIndex: 13, strokeIndexForward: 5,
     name: "The opener.",
     description: "A shortish par 5, gettable with two good ones. Jeff flags the opener and the closer as the two holes that 'scream grip it and rip it' at Birchbank.",
+    shapePath: "M 50 8 Q 52 35 50 60 T 54 90 a 3 3 0 1 0 0.1 0",
   },
   {
     number: 2,  par: 3, yardage: { blue: 160, white: 152, red: 109 }, strokeIndex: 5,  strokeIndexForward: 17,
@@ -88,33 +96,43 @@ export const HOLES: Hole[] = [
     description: "A downhill par 3 with a spectacular view down the Columbia River gorge, one of the best tee shots in the Kootenays. Judge the wind, calibrate the elevation change, pick the right stick.",
     proTip: "The drop changes your yardage more than you think. Take a club less than the flat number, and commit to it.",
     signature: true,
+    shapePath: "M 50 32 L 50 65 a 5 5 0 1 0 0.1 0",
   },
   { number: 3,  par: 4, yardage: { blue: 253, white: 235, red: 235 }, strokeIndex: 17, strokeIndexForward: 13,
-    description: "Short, drivable par 4 for the longer hitter. Good players have a real look at eagle here." },
+    description: "Short, drivable par 4 for the longer hitter. Good players have a real look at eagle here.",
+    shapePath: "M 50 28 L 50 72 a 4 4 0 1 0 0.1 0",
+  },
   { number: 4,  par: 4, yardage: { blue: 412, white: 379, red: 379 }, strokeIndex: 9,  strokeIndexForward: 1,
     description: "Par 4, 412 yards from the Blue. Stroke index 1 from the forward tees, the hardest hole for shorter hitters.",
+    shapePath: "M 50 12 L 50 86 a 3 3 0 1 0 0.1 0",
   },
   { number: 5,  par: 4, yardage: { blue: 410, white: 360, red: 330 }, strokeIndex: 7,  strokeIndexForward: 7,
     description: "Par 4, 410 yards. Stroke index 7, middle of the difficulty pack on the front nine.",
+    shapePath: "M 47 12 Q 52 50 50 86 a 3 3 0 1 0 0.1 0",
   },
   {
     number: 6,  par: 4, yardage: { blue: 413, white: 381, red: 325 }, strokeIndex: 1,  strokeIndexForward: 9,
     name: "The test.",
     description: "Stroke index 1 from the Blue. The hole that tends to decide your card, play it as a comfortable bogey and move on.",
+    shapePath: "M 47 10 C 52 35 48 65 52 88 a 3 3 0 1 0 0.1 0",
   },
   { number: 7,  par: 3, yardage: { blue: 165, white: 143, red: 143 }, strokeIndex: 15, strokeIndexForward: 15,
     description: "The longest par 3 on the front nine, 165 yards from the Blue. Stroke index 15; more room than it looks.",
+    shapePath: "M 50 30 L 50 70 a 4 4 0 1 0 0.1 0",
   },
   { number: 8,  par: 4, yardage: { blue: 393, white: 345, red: 315 }, strokeIndex: 3,  strokeIndexForward: 3,
     description: "Par 4, 393 yards. Stroke index 3, the third-hardest hole on the card for every tee set.",
+    shapePath: "M 50 15 L 52 84 a 3 3 0 1 0 0.1 0",
   },
   { number: 9,  par: 5, yardage: { blue: 506, white: 472, red: 411 }, strokeIndex: 11, strokeIndexForward: 11,
     description: "The longest par 5 on the front nine, 506 yards from the Blue. Closes the loop back to the clubhouse before you turn for the back.",
+    shapePath: "M 32 10 Q 50 35 58 60 T 66 90 a 3 3 0 1 0 0.1 0",
   },
   {
     number: 10, par: 4, yardage: { blue: 415, white: 360, red: 360 }, strokeIndex: 10, strokeIndexForward: 8,
     name: "The back-nine opener.",
     description: "The 10th turns the course inland and sets up the toughest stretch on the scorecard. Generous corridor off the tee, the line matters more than the length.",
+    shapePath: "M 50 10 L 50 88 a 3 3 0 1 0 0.1 0",
     photo: {
       src: "/course/holes/hole-10.jpg",
       alt: "The par-4 10th at Birchbank Golf Club, a tree-lined fairway bending toward the green",
@@ -127,22 +145,27 @@ export const HOLES: Hole[] = [
   },
   { number: 11, par: 4, yardage: { blue: 426, white: 350, red: 325 }, strokeIndex: 8,  strokeIndexForward: 10,
     description: "The longest par 4 on the card, 426 yards from the Blue. Stroke index 8; a three-shot hole for most players.",
+    shapePath: "M 50 8 L 50 90 a 3 3 0 1 0 0.1 0",
   },
   {
     number: 12, par: 4, yardage: { blue: 398,             red: 325 }, strokeIndex: 2,  strokeIndexForward: 2,
     name: "First pond.",
     description: "First of two new-irrigation ponds added in 2018. Stroke index 2 from the Blue, the water is front-left; the longer carry is worth the line.",
+    shapePath: "M 52 10 Q 50 35 54 60 T 56 90 a 3 3 0 1 0 0.1 0 M 28 32 a 6 8 0 1 1 0 16",
   },
   { number: 13, par: 4, yardage: { blue: 380,             red: 310 }, strokeIndex: 4,  strokeIndexForward: 4,
     description: "Par 4, 380 yards. Stroke index 4, one of the back nine's trickier holes.",
+    shapePath: "M 50 14 L 50 84 a 3 3 0 1 0 0.1 0",
   },
   { number: 14, par: 3, yardage: { blue: 160,             red: 132 }, strokeIndex: 18, strokeIndexForward: 16,
     description: "Par 3, 160 yards. Stroke index 18, the easiest hole on the card. The only real breather on the back nine.",
+    shapePath: "M 50 32 L 50 68 a 4 4 0 1 0 0.1 0",
   },
   {
     number: 15, par: 4, yardage: { blue: 388,             red: 293 }, strokeIndex: 12, strokeIndexForward: 12,
     name: "Second pond.",
     description: "The second pond, then the walk back along the Columbia, the best river view on the back nine, looking upstream toward the Selkirks.",
+    shapePath: "M 52 10 Q 50 35 54 60 T 50 90 a 3 3 0 1 0 0.1 0 M 30 38 a 5 7 0 1 1 0 14",
     photo: {
       src: "/course/holes/hole-15.jpg",
       alt: "The par-4 15th at Birchbank Golf Club, with the Columbia River in the background",
@@ -155,14 +178,17 @@ export const HOLES: Hole[] = [
   },
   { number: 16, par: 5, yardage: { blue: 533,             red: 422 }, strokeIndex: 16, strokeIndexForward: 6,
     description: "The longest hole on the course, 533 yards, par 5 from the Blue. Stroke index 16; long but not penal.",
+    shapePath: "M 50 6 Q 52 35 50 60 T 52 92 a 3 3 0 1 0 0.1 0 M 24 52 Q 50 48 76 52",
   },
   { number: 17, par: 3, yardage: { blue: 180,             red: 125 }, strokeIndex: 14, strokeIndexForward: 18,
     description: "The longest par 3 on the course, 180 yards from the Blue. The penultimate hole; steady from here.",
+    shapePath: "M 50 28 L 50 72 a 4 4 0 1 0 0.1 0",
   },
   {
     number: 18, par: 5, yardage: { blue: 480,             red: 401 }, strokeIndex: 6,  strokeIndexForward: 14,
     name: "The closer.",
     description: "A shortish par 5 to finish, the other hole Jeff flags as a real chance to score. Reward a good drive with a committed second shot.",
+    shapePath: "M 50 8 Q 52 35 50 60 T 52 92 a 3 3 0 1 0 0.1 0",
   },
 ];
 
