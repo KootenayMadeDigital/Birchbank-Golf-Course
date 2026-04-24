@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { TEES, type Hole, type TeeKey } from "@/data/holes";
+import CountUp from "./CountUp";
 
 /**
  * Per-hole interactive tee selector.
@@ -77,13 +78,10 @@ export default function HoleTeeSwitcher({ hole }: { hole: Hole }) {
           <p className="font-mono text-[11px] uppercase tracking-widest text-silt mb-1">
             Yardage
           </p>
-          <p
-            key={`yd-${selected}`}
-            className="font-display text-5xl md:text-6xl text-granite motion-safe:animate-[fadeIn_180ms_ease-out]"
-          >
+          <p className="font-display text-5xl md:text-6xl text-granite">
             {typeof yards === "number" ? (
               <>
-                {yards}
+                <CountUp value={yards} duration={750} />
                 <span className="text-silt text-2xl md:text-3xl align-baseline ml-2">yd</span>
               </>
             ) : (

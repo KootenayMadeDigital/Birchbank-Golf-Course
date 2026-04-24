@@ -11,8 +11,12 @@ import { HOLES } from "@/data/holes";
  * (1..current-1) read in granite, upcoming holes (current+1..18) in
  * silt so the eye reads a clear direction of travel.
  *
- * No JS. No scroll anchors. Just a server-rendered nav strip that
- * feels like a paper scorecard margin.
+ * Hover (desktop only): a small preview card fades up showing the
+ * hole's name (or "Par X" if unnamed), Blue yardage, and badge if
+ * applicable. Pure CSS via `group-hover` — no client JS needed.
+ *
+ * Mobile / touch: preview is suppressed; the existing dot + number
+ * + par caption remains the navigation affordance.
  */
 export default function RoundProgress({ current }: { current: number }) {
   const front = HOLES.slice(0, 9);
@@ -53,13 +57,20 @@ function HalfStrip({
       {holes.map((h) => {
         const state =
           h.number === current ? "current" : h.number < current ? "done" : "ahead";
+        const badge =
+          h.signature ? "Signature"
+          : h.strokeIndex === 1 ? "HCP 1"
+          : (h.number === 12 || h.number === 15) ? "Pond"
+          : null;
+        const headline = h.name ?? `Par ${h.par}`;
         return (
           <Link
             key={h.number}
             href={`/course/holes/${h.number}`}
             aria-label={`Hole ${h.number}, par ${h.par}${state === "current" ? " (current)" : ""}`}
+            data-cursor-target
             className={[
-              "group block w-7 md:w-8 text-center transition-colors",
+              "round-dot group relative block w-7 md:w-8 text-center transition-colors",
               state === "current"
                 ? "text-tamarack"
                 : state === "done"
@@ -83,6 +94,19 @@ function HalfStrip({
             </span>
             <span className="block font-mono text-[9px] text-silt mt-0.5 tabular-nums">
               {h.par}
+            </span>
+
+            {/* Hover preview — desktop only via the .round-dot rule. */}
+            <span className="round-dot__preview" aria-hidden>
+              <span className="round-dot__preview-num">
+                {String(h.number).padStart(2, "0")}
+              </span>
+              <span className="round-dot__preview-name">{headline}</span>
+              <span className="round-dot__preview-meta">
+                Par {h.par}
+                {h.yardage.blue != null && <> · {h.yardage.blue} yd</>}
+                {badge && <> · {badge}</>}
+              </span>
             </span>
           </Link>
         );

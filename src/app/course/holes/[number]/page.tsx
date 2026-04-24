@@ -161,13 +161,13 @@ export default async function HolePage({
         <section className="pb-12 bg-paper">
           <div className="container-edge">
             <figure>
-              <div className="relative aspect-[16/9] md:aspect-[21/9] bg-granite/5 overflow-hidden">
+              <div className="hole-photo group relative aspect-[16/9] md:aspect-[21/9] bg-granite/5 overflow-hidden">
                 <Image
                   src={hole.photo.src}
                   alt={hole.photo.alt}
                   fill
                   sizes="(max-width: 1536px) 100vw, 1536px"
-                  className="object-cover"
+                  className="object-cover hole-photo__img"
                   priority
                 />
               </div>
