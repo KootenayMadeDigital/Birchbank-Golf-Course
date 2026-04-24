@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import BookButton from "@/components/BookButton";
 
 export const metadata: Metadata = {
@@ -12,20 +13,19 @@ export const metadata: Metadata = {
 /**
  * Team page. All names, roles, phone numbers, and email addresses are
  * verbatim from birchbankgolf.com/contacts. We do NOT invent bios,
- * backstories, or personal details -- short role descriptions are
+ * backstories, or personal details, short role descriptions are
  * derived from the duties of the published role title alone.
  *
- * Blueprint calls this out as the place for portraits (Jeff +
- * greenskeeper + bartender). Photos aren't in the scraped archive
- * yet, so this page is portrait-ready but portrait-less -- when the
- * course provides real portrait photography, drop them into /public/
- * team/ and swap the placeholder below.
+ * Portraits land at /public/team/ as the course provides them. Jeff's
+ * photograph is in place; Mike and Brenda still use the initials
+ * placeholder until their portraits are taken.
  */
 
 type Contact = { label: string; value: string; href: string };
 type Person = {
   name: string;
   role: string;
+  photo?: { src: string; alt: string };
   tenure?: string;
   brief: string;
   contacts: Contact[];
@@ -35,12 +35,17 @@ const TEAM: Person[] = [
   {
     name: "Jeff Papilion",
     role: "Director of Golf · CPGA Head Professional",
+    photo: {
+      src: "/team/jeff-papilion.webp",
+      alt: "Jeff Papilion, Director of Golf and Head Professional at Birchbank, in front of a framed display of historic golf champions",
+    },
     brief:
       "Runs the Pro Shop, teaches the lessons, manages the tee sheet, and picks up the phone when you call about a 7 AM frost delay. Certified by the Canadian Professional Golfers' Association.",
     contacts: [
-      { label: "Office",   value: "250-693-2366",            href: "tel:+12506932366" },
-      { label: "Pro Shop", value: "250-693-2255",            href: "tel:+12506932255" },
-      { label: "Email",    value: "office@birchbankgolf.com",href: "mailto:office@birchbankgolf.com" },
+      { label: "Pro Shop", value: "250-693-2255",              href: "tel:+12506932255" },
+      { label: "Office",   value: "250-693-2366",              href: "tel:+12506932366" },
+      { label: "Pro Shop email", value: "proshop@birchbankgolf.com", href: "mailto:proshop@birchbankgolf.com" },
+      { label: "Office email",   value: "office@birchbankgolf.com",  href: "mailto:office@birchbankgolf.com" },
     ],
   },
   {
@@ -93,16 +98,28 @@ export default function Team() {
           <ul className="space-y-16">
             {TEAM.map((p) => (
               <li key={p.name} className="grid gap-8 md:grid-cols-12 items-start border-t border-granite/15 pt-10">
-                {/* Portrait placeholder, swap with real photograph when available. */}
+                {/* Portrait, real photograph when present, initials placeholder otherwise. */}
                 <div className="md:col-span-4">
-                  <div className="aspect-[4/5] bg-cedar/5 border border-granite/10 flex flex-col items-center justify-center p-8">
-                    <p className="font-display text-7xl text-cedar leading-none">
-                      {p.name.split(" ").map((n) => n[0]).join("")}
-                    </p>
-                    <p className="font-mono text-xs text-silt mt-4 text-center">
-                      Portrait coming, photograph the team in spring.
-                    </p>
-                  </div>
+                  {p.photo ? (
+                    <div className="relative aspect-[4/5] overflow-hidden bg-granite/5">
+                      <Image
+                        src={p.photo.src}
+                        alt={p.photo.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-[4/5] bg-cedar/5 border border-granite/10 flex flex-col items-center justify-center p-8">
+                      <p className="font-display text-7xl text-cedar leading-none">
+                        {p.name.split(" ").map((n) => n[0]).join("")}
+                      </p>
+                      <p className="font-mono text-xs text-silt mt-4 text-center">
+                        Portrait coming, photograph the team in spring.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="md:col-span-8">

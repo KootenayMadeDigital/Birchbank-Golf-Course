@@ -157,10 +157,10 @@ export default function Lessons() {
 
               <div className="flex flex-wrap gap-3 mb-6">
                 <a href="tel:+12506932255" className="btn-primary">
-                  Call to book · 250-693-2255
+                  Call the Pro Shop · 250-693-2255
                 </a>
-                <a href="mailto:office@birchbankgolf.com" className="btn-ghost">
-                  Email Jeff
+                <a href="mailto:proshop@birchbankgolf.com" className="btn-ghost">
+                  Email the Pro Shop
                 </a>
               </div>
 
@@ -170,16 +170,19 @@ export default function Lessons() {
             </div>
 
             <figure className="md:col-span-6 md:order-2 order-1">
-              <div className="relative aspect-[4/5] md:aspect-[5/6] bg-granite/5 overflow-hidden">
+              <div className="relative aspect-square bg-granite/5 overflow-hidden">
                 <Image
-                  src="/pro-shop/interior.webp"
-                  alt="Inside the Birchbank Pro Shop, where lessons are booked and the demo clubs live"
+                  src="/team/jeff-papilion.webp"
+                  alt="Jeff Papilion, Director of Golf and Head Professional at Birchbank, in front of a framed display of historic golf champions"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                   className="object-cover"
                 />
               </div>
+              <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-silt">
+                Jeff Papilion, CPGA · Director of Golf
+              </figcaption>
             </figure>
           </div>
         </div>
@@ -400,6 +403,60 @@ export default function Lessons() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* CONTACT, full set: both phones + both emails */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="eyebrow text-cedar mb-3">Reach Jeff</p>
+            <h2 className="display-md font-display leading-tight">
+              Two phones, two emails, one Director.
+            </h2>
+            <p className="prose-editorial text-granite/85 mt-5 max-w-md">
+              The Pro Shop line is fastest during business hours; the
+              office line works for everything else.
+            </p>
+          </div>
+          <div className="md:col-span-7 grid sm:grid-cols-2 gap-5 md:gap-6">
+            <div className="border border-granite/15 p-6">
+              <p className="eyebrow text-tamarack mb-3">Pro Shop</p>
+              <p className="font-display text-lg text-granite mb-2">
+                Bookings &amp; lessons
+              </p>
+              <ul className="space-y-2 font-mono text-sm">
+                <li>
+                  <a href="tel:+12506932255" className="text-granite hover:text-amber underline underline-offset-4">
+                    250-693-2255
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:proshop@birchbankgolf.com" className="text-granite hover:text-amber underline underline-offset-4 break-all">
+                    proshop@birchbankgolf.com
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="border border-granite/15 p-6">
+              <p className="eyebrow text-tamarack mb-3">Office</p>
+              <p className="font-display text-lg text-granite mb-2">
+                General &amp; admin
+              </p>
+              <ul className="space-y-2 font-mono text-sm">
+                <li>
+                  <a href="tel:+12506932366" className="text-granite hover:text-amber underline underline-offset-4">
+                    250-693-2366
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:office@birchbankgolf.com" className="text-granite hover:text-amber underline underline-offset-4 break-all">
+                    office@birchbankgolf.com
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
