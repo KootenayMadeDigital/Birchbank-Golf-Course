@@ -332,12 +332,11 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Trust stack (enhancement 7), four chips. Three independent
-                review platforms (GolfPass, Facebook, Tripadvisor) plus the
-                heritage chip. Aggregation effect: multiple platforms agreeing
-                reads stronger than any single rating. Every number traceable
-                to src/data/ or the Testimonials component, no fabricated stats. */}
-            <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto">
+            {/* Trust stack (enhancement 7), three independent review platforms.
+                Aggregation effect: multiple platforms agreeing reads stronger
+                than any single rating. Every number traceable to src/data/ or
+                the Testimonials component, no fabricated stats. */}
+            <div className="mt-12 grid sm:grid-cols-3 gap-3 md:gap-4 max-w-2xl mx-auto">
               <a
                 href={REVIEW_PLATFORMS.golfpass.readUrl}
                 target="_blank"
@@ -365,10 +364,6 @@ export default function Home() {
                 <span className="block text-tamarack mb-0.5">Listed · new this year</span>
                 <span className="block text-paper/60">on Tripadvisor ↗</span>
               </a>
-              <div className="font-mono text-xs text-paper/75 border border-paper/15 rounded-sm px-4 py-3">
-                <span className="block text-tamarack mb-0.5">Routed 1962 · restored 2018</span>
-                <span className="block text-paper/60">Roy Stone routing, back</span>
-              </div>
             </div>
 
             <p className="mt-10 font-mono text-xs text-paper/50 leading-relaxed">
