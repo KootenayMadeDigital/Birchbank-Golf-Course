@@ -39,7 +39,7 @@ export default function Bistro() {
           are available.
         </p>
         <div className="mt-8 font-mono text-sm text-silt space-y-1">
-          <p>Open daily · 12:00 pm – 5:00 pm</p>
+          <p>Open daily · 10:00 am – 6:00 pm</p>
           <p>
             <a href="tel:+12506935451" className="underline hover:text-amber">250-693-5451</a>
             <span className="mx-3">·</span>

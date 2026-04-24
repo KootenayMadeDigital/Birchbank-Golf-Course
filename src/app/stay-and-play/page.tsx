@@ -266,7 +266,7 @@ export default function StayAndPlay() {
               The Bistro closes at 5. Dinner is 15 minutes away.
             </h2>
             <p className="prose-editorial text-granite/85">
-              The Birchbank Bistro runs 12–5 every day. When it closes, the Kootenay dining
+              The Birchbank Bistro runs 10 to 6 every day. When it closes, the Kootenay dining
               scene takes over, four spots we'd send family to.
             </p>
           </div>

@@ -239,7 +239,7 @@ export default function Home() {
                 </p>
                 <p className="text-silt">
                   The Canadian burger is the one to order. Covered patio on the river,
-                  beverage cart on the course. Noon to five.
+                  beverage cart on the course. Ten to six.
                 </p>
                 <p className="mt-6 text-sm text-amber group-hover:underline">
                   See the menus →
@@ -362,7 +362,7 @@ export default function Home() {
             </div>
 
             <p className="mt-10 font-mono text-xs text-paper/50 leading-relaxed">
-              Pro Shop 8 am to dusk · Bistro 12 – 5 pm · 7 days in season
+              Pro Shop 8 am to dusk · Bistro 10 am – 6 pm · 7 days in season
               <br />
               5500 Highway 22, Genelle BC
             </p>

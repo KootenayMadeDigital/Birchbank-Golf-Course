@@ -132,7 +132,7 @@ export default function FAQPage() {
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
               The Pro Shop is open 9 AM – 7 PM, seven days a week during the season. The
-              Bistro line picks up 12 – 5 PM. Slow season (November – March), leave a
+              Bistro line picks up 10 am – 6 pm. Slow season (November – March), leave a
               voicemail, the office returns calls within a business day.
             </p>
           </div>

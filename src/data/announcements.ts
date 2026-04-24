@@ -40,7 +40,7 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   },
   {
     eyebrow: "The Bistro",
-    title: "Noon to five. Every day.",
+    title: "Ten to six. Every day.",
     body: "Fully licensed. Covered patio on the river. Catering for member events, weddings, and tournaments.",
     cta: { label: "See the menus", href: "/bistro" },
     image: {

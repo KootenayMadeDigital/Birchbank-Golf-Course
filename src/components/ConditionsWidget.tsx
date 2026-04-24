@@ -167,7 +167,7 @@ export default function ConditionsWidget() {
 
         <div>
           <dt className="text-silt text-xs uppercase tracking-widest mb-1">The Bistro</dt>
-          <dd className="font-display text-lg text-granite">12 – 5 pm</dd>
+          <dd className="font-display text-lg text-granite">10 am – 6 pm</dd>
           <dd className="text-silt text-xs mt-0.5">7 days · licensed</dd>
         </div>
       </dl>

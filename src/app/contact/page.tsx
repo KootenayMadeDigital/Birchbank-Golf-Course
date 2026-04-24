@@ -71,7 +71,7 @@ export default function Contact() {
           </div>
           <div>
             <p className="eyebrow mb-2">Bistro hours</p>
-            <p>12:00 pm – 5:00 pm, 7 days a week</p>
+            <p>10:00 am – 6:00 pm, 7 days a week</p>
           </div>
         </aside>
 

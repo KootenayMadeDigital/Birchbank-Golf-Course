@@ -33,7 +33,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "What are the Bistro hours?",
     answer:
-      "The Bistro is open daily from 12 pm to 5 pm. It is fully licensed with a covered patio. The Bistro line is 250-693-5451.",
+      "The Bistro is open daily from 10 am to 6 pm. It is fully licensed with a covered patio. The Bistro line is 250-693-5451.",
   },
   {
     category: "visiting",
