@@ -161,7 +161,7 @@ export default function ConditionsWidget() {
 
         <div>
           <dt className="text-silt text-xs uppercase tracking-widest mb-1">Pro Shop</dt>
-          <dd className="font-display text-lg text-granite">9 am – 7 pm</dd>
+          <dd className="font-display text-lg text-granite">8 am to dusk</dd>
           <dd className="text-silt text-xs mt-0.5">7 days</dd>
         </div>
 

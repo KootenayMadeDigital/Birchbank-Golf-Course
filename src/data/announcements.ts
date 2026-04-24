@@ -27,7 +27,7 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   },
   {
     eyebrow: "Pro Shop",
-    title: "9 am – 7 pm, seven days.",
+    title: "8 am to dusk, seven days.",
     body: "Booking, fittings, lessons with our CPGA head pro, club repairs. Walk in or call ahead.",
     cta: { label: "Call 250-693-2255", href: "tel:+12506932255" },
     // Source: birchbankgolf.com homepage slideshow, the "Pro-shop is open

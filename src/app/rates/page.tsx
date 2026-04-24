@@ -272,7 +272,7 @@ export default function RatesPage() {
             </Link>
           </div>
           <p className="mt-10 font-mono text-xs text-paper/60 leading-relaxed">
-            Pro Shop 9 am – 7 pm · 7 days · 250-693-2255
+            Pro Shop 8 am to dusk · 7 days · 250-693-2255
           </p>
         </div>
       </section>

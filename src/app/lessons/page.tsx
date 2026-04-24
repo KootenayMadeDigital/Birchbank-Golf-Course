@@ -64,7 +64,7 @@ const BOOKING_STEPS = [
         <a href="tel:+12506932255" className="text-granite underline hover:text-amber">
           250-693-2255
         </a>
-        , 9 AM to 7 PM, seven days a week during the season. Off-season,
+        , 8 AM to dusk, seven days a week during the season. Off-season,
         leave a message or email and we&apos;ll be back to you the same
         business day.
       </>
@@ -135,7 +135,7 @@ export default function Lessons() {
       <section className="pt-28 md:pt-32 pb-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="grid gap-10 md:gap-14 md:grid-cols-12 items-center">
-            <div className="md:col-span-6 md:order-1 order-2">
+            <div className="md:col-span-7 md:order-1 order-2">
               <p className="eyebrow text-cedar mb-6">Lessons</p>
               <h1
                 className="font-display text-granite mb-7"
@@ -165,17 +165,17 @@ export default function Lessons() {
               </div>
 
               <p className="font-mono text-xs text-silt uppercase tracking-widest">
-                Pro Shop · 9 AM to 7 PM · 7 days · April 1 to October 31
+                Pro Shop · 8 AM to dusk · 7 days · April 1 to October 31
               </p>
             </div>
 
-            <figure className="md:col-span-6 md:order-2 order-1">
-              <div className="relative aspect-square bg-granite/5 overflow-hidden">
+            <figure className="md:col-span-5 md:order-2 order-1 md:justify-self-end w-full max-w-[22rem]">
+              <div className="relative w-full aspect-square bg-granite/5 overflow-hidden">
                 <Image
                   src="/team/jeff-papilion.webp"
                   alt="Jeff Papilion, Director of Golf and Head Professional at Birchbank, in front of a framed display of historic golf champions"
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 22rem"
                   priority
                   className="object-cover"
                 />
@@ -221,7 +221,7 @@ export default function Lessons() {
               </p>
               <p className="text-granite/80 text-sm mt-2 leading-relaxed">
                 The season runs April through October. Pro Shop hours are
-                9 AM to 7 PM, seven days a week.
+                8 AM to dusk, seven days a week.
               </p>
             </li>
             <li>

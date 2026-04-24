@@ -27,7 +27,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "What are the Pro Shop hours?",
     answer:
-      "Pro Shop hours are 9 am to 7 pm, seven days a week during the April 1 through October 31 season.",
+      "Pro Shop hours are 8 am to dusk, seven days a week during the April 1 through October 31 season.",
   },
   {
     category: "visiting",

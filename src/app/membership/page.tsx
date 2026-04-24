@@ -288,7 +288,7 @@ export default function Membership() {
             <BookButton label="Play first, join later" />
           </div>
           <p className="mt-10 font-mono text-xs text-paper/60 leading-relaxed">
-            Pro Shop 9 am – 7 pm · 7 days · 5500 Highway 22, Genelle BC
+            Pro Shop 8 am to dusk · 7 days · 5500 Highway 22, Genelle BC
           </p>
         </div>
       </section>

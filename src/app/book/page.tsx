@@ -187,7 +187,7 @@ export default async function BookPage() {
             <div className="border border-granite/15 p-6 bg-paper">
               <p className="eyebrow text-cedar mb-4">Questions?</p>
               <p className="text-silt text-sm leading-relaxed mb-4">
-                Someone picks up at the Pro Shop every day of the season, 9 am – 7 pm.
+                Someone picks up at the Pro Shop every day of the season, 8 am to dusk.
               </p>
               <ul className="space-y-2 font-mono text-xs">
                 <li>

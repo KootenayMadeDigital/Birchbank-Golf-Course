@@ -413,7 +413,7 @@ export default async function Conditions() {
                 href="tel:+12506932255"
                 className="block mt-2 text-tamarack underline hover:text-paper text-sm"
               >
-                250-693-2255 · 9 am to 7 pm, 7 days
+                250-693-2255 · 8 am to dusk, 7 days
               </a>
             </div>
             <div className="border-l-2 border-tamarack pl-5">

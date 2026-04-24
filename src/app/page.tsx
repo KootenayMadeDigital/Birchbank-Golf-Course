@@ -200,7 +200,7 @@ export default function Home() {
       {/* 7.5 Mid-page booking rail. WA/Albertan personas don't want to
            scroll 8 sections between booking prompts. One tight line +
            BookButton. No fake scarcity -- the time-of-day framing is
-           verifiable against the Pro Shop's 9 am - 7 pm schedule. */}
+           verifiable against the Pro Shop's 8 am to dusk schedule. */}
       <section className="bg-paper border-y border-granite/10">
         <div className="container-edge py-6 md:py-7 flex flex-wrap items-center justify-between gap-4">
           <p className="text-granite font-display text-lg md:text-xl">
@@ -362,7 +362,7 @@ export default function Home() {
             </div>
 
             <p className="mt-10 font-mono text-xs text-paper/50 leading-relaxed">
-              Pro Shop 9 am – 7 pm · Bistro 12 – 5 pm · 7 days in season
+              Pro Shop 8 am to dusk · Bistro 12 – 5 pm · 7 days in season
               <br />
               5500 Highway 22, Genelle BC
             </p>

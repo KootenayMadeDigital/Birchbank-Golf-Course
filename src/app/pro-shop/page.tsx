@@ -59,7 +59,7 @@ const SERVICES = [
 export default function ProShop() {
   return (
     <>
-      {/* HERO — photo-led, two-column on desktop */}
+      {/* HERO , photo-led, two-column on desktop */}
       <section className="pt-28 md:pt-32 pb-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="grid gap-10 md:gap-14 md:grid-cols-12 items-center">
@@ -92,7 +92,7 @@ export default function ProShop() {
               </div>
 
               <p className="font-mono text-xs text-silt uppercase tracking-widest">
-                9 AM to 7 PM · 7 days · April 1 to October 31
+                8 AM to dusk · 7 days · April 1 to October 31
               </p>
             </div>
 
@@ -118,7 +118,7 @@ export default function ProShop() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* WHAT'S STOCKED — brand strip */}
+      {/* WHAT'S STOCKED , brand strip */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <p className="eyebrow text-cedar mb-3">On the floor</p>
@@ -150,7 +150,7 @@ export default function ProShop() {
         </div>
       </section>
 
-      {/* SERVICES — 4 up */}
+      {/* SERVICES , 4 up */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -191,7 +191,7 @@ export default function ProShop() {
         </div>
       </section>
 
-      {/* DEMO DAY — annual event */}
+      {/* DEMO DAY , annual event */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
@@ -234,7 +234,7 @@ export default function ProShop() {
         </div>
       </section>
 
-      {/* MEMBERS NOTE — small block */}
+      {/* MEMBERS NOTE , small block */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="grid gap-10 md:grid-cols-12 items-start">
