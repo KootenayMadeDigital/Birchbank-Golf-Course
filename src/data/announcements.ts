@@ -43,11 +43,9 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
     title: "Noon to five. Every day.",
     body: "Fully licensed. Covered patio on the river. Catering for member events, weddings, and tournaments.",
     cta: { label: "See the menus", href: "/bistro" },
-    // The real Bistro plate from birchbankgolf.com's own slideshow, their
-    // food, photographed on-site. Not generated.
     image: {
-      src: "https://www.birchbankgolf.com/wp-content/uploads/2021/09/Slide1.jpg",
-      alt: "A burger and side salad from the Birchbank Bistro",
+      src: "/bistro/patio.webp",
+      alt: "The covered Bistro patio at Birchbank, overlooking the first green with Monashee foothills beyond",
     },
   },
 ];
