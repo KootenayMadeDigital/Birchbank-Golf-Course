@@ -54,7 +54,7 @@ const TRANSPARENCY_NOTES = [
   },
   {
     title: "Reciprocal rates",
-    body: "Members of participating clubs receive 25% off rack. Bring your member card to the Pro Shop or ask when you book — we'll match it on the line.",
+    body: "Members of participating clubs receive 25% off rack. Bring your member card to the Pro Shop or ask when you book, we'll match it on the line.",
   },
 ];
 
@@ -81,7 +81,7 @@ function RateList({ title, items, note }: { title: string; items: { label: strin
 export default function RatesPage() {
   return (
     <>
-      {/* Hero — lead with the two numbers the golfer is actually deciding
+      {/* Hero, lead with the two numbers the golfer is actually deciding
           between, not the word 'Rates'. */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
         <div className="container-edge">
@@ -105,7 +105,7 @@ export default function RatesPage() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Everyday green fees — the featured block. Three tiles the eye can
+      {/* Everyday green fees, the featured block. Three tiles the eye can
           tape between at a glance: walk-up, twilight, reciprocal. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
@@ -139,13 +139,13 @@ export default function RatesPage() {
             <div className="border border-cedar/30 bg-cedar/5 p-7">
               <p className="eyebrow mb-3 text-cedar">Reciprocal</p>
               <p className="font-display text-5xl text-granite">25% off</p>
-              <p className="text-silt text-sm mt-2">For members of participating clubs — bring your card.</p>
+              <p className="text-silt text-sm mt-2">For members of participating clubs, bring your card.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Beat the Heat — promoted into its own cedar block. This is the
+      {/* Beat the Heat, promoted into its own cedar block. This is the
           single most-searched-for rate at Birchbank by a wide margin. */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
@@ -156,7 +156,7 @@ export default function RatesPage() {
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
               {PROMOTIONS[0].price} gets you 18 holes and a half power cart through the peak
-              of the Kootenay summer. Start after 1 PM — the course cools down, the fairways
+              of the Kootenay summer. Start after 1 PM, the course cools down, the fairways
               play long, and the Bistro patio's running until five.
             </p>
           </div>
@@ -170,7 +170,7 @@ export default function RatesPage() {
         </div>
       </section>
 
-      {/* Punch passes — with the math shown explicitly. */}
+      {/* Punch passes, with the math shown explicitly. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -209,7 +209,7 @@ export default function RatesPage() {
         </div>
       </section>
 
-      {/* Power cart + storage + range + lockers — the transparent long list. */}
+      {/* Power cart + storage + range + lockers, the transparent long list. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -227,12 +227,12 @@ export default function RatesPage() {
             <RateList title="Power cart" items={CART_FEES} />
             <RateList title="Range pass" items={RANGE_PASS} note="Range access is a member benefit. Single-day range use is included with lessons." />
             <RateList title="Lockers" items={LOCKERS} />
-            <RateList title="Green fees — full list" items={GREEN_FEES} />
+            <RateList title="Green fees, full list" items={GREEN_FEES} />
           </div>
         </div>
       </section>
 
-      {/* Transparency block — the Kootenay-honest callouts. */}
+      {/* Transparency block, the Kootenay-honest callouts. */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">

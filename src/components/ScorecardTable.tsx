@@ -6,7 +6,7 @@ type Props = {
 };
 
 function formatYd(v: number | null | undefined): string {
-  return v == null ? "—" : String(v);
+  return v == null ? "–" : String(v);
 }
 
 function HalfTable({ holes, label, tee, showStrokeIndex, totalLabel }: {
@@ -38,7 +38,7 @@ function HalfTable({ holes, label, tee, showStrokeIndex, totalLabel }: {
             {holes.map((h) => (
               <td key={h.number} className="text-right py-2 px-2">{formatYd(h.yardage[tee])}</td>
             ))}
-            <td className="text-right py-2 pl-4 font-semibold">{y == null ? "—" : y}</td>
+            <td className="text-right py-2 pl-4 font-semibold">{y == null ? "–" : y}</td>
           </tr>
           <tr className="border-b border-granite/10">
             <td className="py-2 pr-4 text-silt">Par</td>
@@ -55,7 +55,7 @@ function HalfTable({ holes, label, tee, showStrokeIndex, totalLabel }: {
                   {forwardHcp ? (h.strokeIndexForward ?? h.strokeIndex) : h.strokeIndex}
                 </td>
               ))}
-              <td className="text-right py-2 pl-4 text-silt">—</td>
+              <td className="text-right py-2 pl-4 text-silt">–</td>
             </tr>
           )}
         </tbody>
@@ -72,7 +72,7 @@ export default function ScorecardTable({ tee, showStrokeIndex = true }: Props) {
       <HalfTable holes={BACK_NINE} label="Back nine" tee={tee} showStrokeIndex={showStrokeIndex} totalLabel="In" />
       <div className="border-t border-b border-granite/25 py-5 font-mono text-sm flex flex-wrap gap-x-10 gap-y-2">
         <span>Total par <span className="font-semibold">{HOLE_SUMMARY.par}</span></span>
-        <span>{tee.charAt(0).toUpperCase() + tee.slice(1)} total <span className="font-semibold">{totalYards == null ? "—" : `${totalYards.toLocaleString()} yd`}</span></span>
+        <span>{tee.charAt(0).toUpperCase() + tee.slice(1)} total <span className="font-semibold">{totalYards == null ? "–" : `${totalYards.toLocaleString()} yd`}</span></span>
       </div>
     </div>
   );

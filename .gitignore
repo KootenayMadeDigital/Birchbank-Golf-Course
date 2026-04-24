@@ -9,7 +9,7 @@ out/
 next-env.d.ts.bak
 hero-source/
 
-# Raw announcement source art — keep locally, commit only the WebP in /public/announcements/
+# Raw announcement source art, keep locally, commit only the WebP in /public/announcements/
 public/announcements/*.png
 public/announcements/*.jpg
 public/announcements/*.jpeg

@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import { useNow, getSeasonStatus } from "@/lib/season";
 
 /**
- * The emotional anchor after the hero lands — "213 days on the Columbia."
+ * The emotional anchor after the hero lands, "213 days on the Columbia."
  * Full-viewport cream block with scroll-triggered stagger on each line.
  *
  * The fourth chip in the metadata row is live: it reads the visitor's
  * clock, computes day-of-season, and shows a tamarack pulse dot when the
- * course is open. Other three chips are static by design — the Aman
+ * course is open. Other three chips are static by design, the Aman
  * discipline of "one thing moves per view."
  */
 export default function AnchorReveal() {
@@ -107,7 +107,7 @@ export default function AnchorReveal() {
           <span><span className="text-granite">Par 72</span> · 18 holes</span>
           <span><span className="text-granite">6,788 yd</span> · Gold tees</span>
           <span><span className="text-granite">Genelle, BC</span> · on the Columbia</span>
-          {/* Live chip — only this one animates. Renders a neutral placeholder
+          {/* Live chip, only this one animates. Renders a neutral placeholder
               during SSR/pre-hydration so the layout doesn't shift when the
               client clock kicks in. */}
           {season && now ? (

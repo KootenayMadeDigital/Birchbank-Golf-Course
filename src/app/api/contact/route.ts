@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const to = process.env.CONTACT_TO_EMAIL ?? "hello@birchbankgolf.com";
 
     if (!key) {
-      // Not configured yet — log locally, return success so dev flows don't break.
+      // Not configured yet, log locally, return success so dev flows don't break.
       console.log("[contact]", { name, email, topic, message });
       return NextResponse.json({ ok: true, delivered: false });
     }

@@ -46,25 +46,25 @@ const TIER_GROUPS = [
     key: "single",
     label: "Single play",
     blurb: "Unlimited rounds for one player. The flagship tier and the re-entry option for returning members.",
-    tiers: ["New Member — Single Full Play", "Single — Full Play"],
-    feature: "Single — Full Play",
+    tiers: ["New Member. Single Full Play", "Single. Full Play"],
+    feature: "Single. Full Play",
   },
   {
     key: "group",
     label: "Two or more",
     blurb: "Couples and families share the course under one membership.",
-    tiers: ["New Couple Members — Full Play", "Couple — Full Play", "Family"],
+    tiers: ["New Couple Members. Full Play", "Couple. Full Play", "Family"],
   },
 ] as const;
 
-// Math — Single Full Play payback at the $80 walk-up rate.
+// Math. Single Full Play payback at the $80 walk-up rate.
 const SINGLE_FULL_PLAY_PRICE = 1969;
 const DAY_RATE = 80;
 const PAYBACK_ROUNDS = Math.ceil(SINGLE_FULL_PLAY_PRICE / DAY_RATE); // 25
 
 const BENEFIT_DETAILS: Record<string, string> = {
   "Advance tee time booking":
-    "Book up to 14 days ahead via members.chronogolf.com — two days more than public booking.",
+    "Book up to 14 days ahead via members.chronogolf.com, two days more than public booking.",
   "Member-only Pro Shop discounts":
     "Preferred pricing on apparel, balls, and fittings with our CPGA head pro.",
   "Reciprocal rates at participating golf courses":
@@ -91,7 +91,7 @@ export default function Membership() {
             Unlimited play,<br />seven days a week.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Every tier below is full-play — no day-of-week restrictions, no blackout dates.
+            Every tier below is full-play, no day-of-week restrictions, no blackout dates.
             Seven tiers from Student at $640 to Family at $4,050. Fall Early Bird pricing
             runs through November 5 each year.
           </p>
@@ -104,7 +104,7 @@ export default function Membership() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Payback math — the Kootenay-honest 'show the numbers' block. */}
+      {/* Payback math, the Kootenay-honest 'show the numbers' block. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
@@ -114,7 +114,7 @@ export default function Membership() {
             </h2>
             <p className="prose-editorial text-granite/85 max-w-xl">
               At the ${DAY_RATE} day rate, ${SINGLE_FULL_PLAY_PRICE.toLocaleString()} is {PAYBACK_ROUNDS} rounds.
-              Across a 213-day season, that's a round every nine days — not hard to hit if you
+              Across a 213-day season, that's a round every nine days, not hard to hit if you
               play regularly. Rounds {PAYBACK_ROUNDS + 1} through whatever are free.
             </p>
           </div>
@@ -192,7 +192,7 @@ export default function Membership() {
         );
       })}
 
-      {/* All memberships include — with expanded detail per benefit */}
+      {/* All memberships include, with expanded detail per benefit */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -201,7 +201,7 @@ export default function Membership() {
               Five benefits. All concrete.
             </h2>
             <p className="prose-editorial text-paper/85">
-              No vague promises — here's what each benefit actually is.
+              No vague promises, here's what each benefit actually is.
             </p>
           </div>
 
@@ -248,7 +248,7 @@ export default function Membership() {
           <div className="md:col-span-6">
             <p className="eyebrow mb-5">Retirees Club</p>
             <p className="prose-editorial text-granite/85 mb-6">
-              Retired players — including visitors without a Birchbank membership — are
+              Retired players, including visitors without a Birchbank membership, are
               welcome at the Retirees Club. Thursday mornings, April through October, with
               a two-hour reserved tee block and a social after.
             </p>

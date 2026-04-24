@@ -47,7 +47,7 @@ export default function Members() {
         <li className="border border-granite/15 p-8">
           <p className="font-display text-2xl mb-2">Retirees Club</p>
           <p className="text-silt text-sm mb-5">
-            Schedule, sign-ups, and club contact — open to retired players regardless of
+            Schedule, sign-ups, and club contact, open to retired players regardless of
             Birchbank membership.
           </p>
           <Link href="/membership/retirees-club" className="btn-ghost">Visit Retirees Club →</Link>

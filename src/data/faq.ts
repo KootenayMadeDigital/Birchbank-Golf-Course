@@ -1,5 +1,5 @@
 // All answers drawn from birchbankgolf.com or verified public information.
-// Do not add unverified facts here — FAQ answers feed the FAQPage schema.
+// Do not add unverified facts here. FAQ answers feed the FAQPage schema.
 
 export type FAQCategory = "visiting" | "course" | "fees" | "community";
 
@@ -15,7 +15,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "How long is the Birchbank golf season?",
     answer:
-      "Birchbank's average season runs from April 1 through October 31 — 213 days of golf, per the course's published information.",
+      "Birchbank's average season runs from April 1 through October 31, 213 days of golf, per the course's published information.",
   },
   {
     category: "visiting",
@@ -45,13 +45,13 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "What is the dress code?",
     answer:
-      "Short version: golf-appropriate apparel, collared shirts or mock necks, shorts at least mid-thigh, soft-soled shoes (no metal spikes). Full published code — ladies, men, and footwear — is on the dedicated dress code page: /dress-code.",
+      "Short version: golf-appropriate apparel, collared shirts or mock necks, shorts at least mid-thigh, soft-soled shoes (no metal spikes). Full published code, ladies, men, and footwear, is on the dedicated dress code page: /dress-code.",
   },
   {
     category: "fees",
     question: "Do you have a driving range?",
     answer:
-      "Yes — Birchbank has a driving range. Season range passes are offered to members at $255 (single) or $385 (family).",
+      "Yes. Birchbank has a driving range. Season range passes are offered to members at $255 (single) or $385 (family).",
   },
   {
     category: "fees",

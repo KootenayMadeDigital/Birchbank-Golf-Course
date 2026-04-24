@@ -53,7 +53,7 @@ export default function BookYourEvent() {
           <p className="display-sm font-display mb-4">Bistro for larger groups</p>
           <p className="text-silt mb-6">
             The Bistro dining area can handle larger groups for meals, appetizers, and
-            refreshments — as a standalone function or paired with a golf package. The
+            refreshments, as a standalone function or paired with a golf package. The
             large covered patio suits summer gatherings.
           </p>
           <div className="space-y-2 font-mono text-sm">

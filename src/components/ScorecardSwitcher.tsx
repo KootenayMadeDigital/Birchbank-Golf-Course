@@ -28,7 +28,7 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
         <p className="eyebrow mr-4">Tee</p>
         {TEES.map((t) => {
           // Every tee is selectable. Tees without published per-hole data
-          // (currently Gold and Combo — see holes.ts) render a summary-only
+          // (currently Gold and Combo, see holes.ts) render a summary-only
           // panel instead of a per-hole table. No grey-out, no fabrication.
           return (
             <button
@@ -63,7 +63,7 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
       )}
 
       {/* Per-hole table only for tees where HOLES has every hole's yardage.
-          Currently Blue / White / Red satisfy that; Gold / Combo don't —
+          Currently Blue / White / Red satisfy that; Gold / Combo don't , 
           those tees show the summary panel with the honest caveat. */}
       {hasPerHoleData(tee) ? (
         <ScorecardTable tee={tee} />
@@ -79,11 +79,11 @@ export default function ScorecardSwitcher({ initialTee = "blue" }: { initialTee?
             Birchbank course panel.
             {activeTeeInfo.name === "Gold" && (
               <> Gold is the back-most tee set and was added after the 2020 printed
-              scorecard was produced — per-hole breakdown isn't published publicly yet.
+              scorecard was produced, per-hole breakdown isn't published publicly yet.
               Ask the Pro Shop for a Gold-set pin sheet when you check in.</>
             )}
             {activeTeeInfo.name === "Combo" && (
-              <> Combo plays a mixed-yardage routing (some Blue holes, some White) —
+              <> Combo plays a mixed-yardage routing (some Blue holes, some White) , 
               Birchbank prints the aggregate but not an extractable per-hole column.
               Pick up a printed card at the counter.</>
             )}

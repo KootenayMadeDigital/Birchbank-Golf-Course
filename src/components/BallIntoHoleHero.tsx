@@ -7,7 +7,7 @@ const FRAME_COUNT = 120;
 const FRAME_PATH = (i: number) => `/hero/${String(i + 1).padStart(4, "0")}.webp`;
 
 /**
- * Scroll-scrubbed image sequence hero — works identically across fine and
+ * Scroll-scrubbed image sequence hero, works identically across fine and
  * coarse pointer devices.
  *
  * Layout is driven by CSS (see .hero-wrap / .hero-inner in globals.css):
@@ -226,7 +226,7 @@ export default function BallIntoHoleHero() {
     <section
       ref={heroRef}
       className="hero-wrap"
-      aria-label="Birchbank Golf — opening sequence"
+      aria-label="Birchbank Golf, opening sequence"
     >
       <div className="hero-inner">
         {framesAvailable && !reduced ? (
@@ -247,7 +247,7 @@ export default function BallIntoHoleHero() {
           />
         )}
 
-        {/* Scrim — balanced across the frame so text reads cleanly across the
+        {/* Scrim, balanced across the frame so text reads cleanly across the
             varied bokeh. Slightly darker top (nav legibility), light middle
             (let the grass show), stronger bottom (protects hero text + CTAs). */}
         <div
@@ -267,10 +267,10 @@ export default function BallIntoHoleHero() {
           </h1>
           <p className="prose-editorial text-paper/95 mt-4 md:mt-6 max-w-xl text-[15px] sm:text-base md:text-lg leading-snug sm:leading-normal">
             Set along the banks of the Columbia River. The 18-hole course of the Rossland
-            Trail Country Club. Open April 1 through October 31 — 213 days of golf.
+            Trail Country Club. Open April 1 through October 31, 213 days of golf.
           </p>
           <div className="mt-7 md:mt-10 flex flex-wrap items-center gap-4 md:gap-6">
-            {/* Tier 1 — signature invitation (hero CTA).
+            {/* Tier 1, signature invitation (hero CTA).
                 Gilt-edged cedar artifact, not a standard button.
                 Do NOT add .chrono-bookingbutton here: the Chronogolf
                 script clones that class and the cloned anchor hides
@@ -284,7 +284,7 @@ export default function BallIntoHoleHero() {
               Book a tee time
               <span aria-hidden className="text-tamarack">→</span>
             </Link>
-            {/* Tier 2 — editorial secondary.
+            {/* Tier 2, editorial secondary.
                 Gambetta serif with a hairline underline; inherits
                 currentColor so it reads correctly on the dark hero. */}
             <Link

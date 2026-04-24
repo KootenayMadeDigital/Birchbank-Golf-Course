@@ -4,7 +4,7 @@ import ScrollReveal from "./ScrollReveal";
 import { GRID_ANNOUNCEMENTS } from "@/data/announcements";
 
 /**
- * 3-up announcement grid — all three cards visible at once, no rotation.
+ * 3-up announcement grid, all three cards visible at once, no rotation.
  * Cards may carry an optional `image` for cards whose message benefits from
  * a photograph (e.g. the Bistro). We only attach real, attributable images;
  * typography-only is the default.

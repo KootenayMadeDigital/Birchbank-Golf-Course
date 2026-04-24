@@ -7,15 +7,15 @@ import { TEES, type Hole, type TeeKey } from "@/data/holes";
  * Per-hole interactive tee selector.
  *
  * Shown on the individual hole page (/course/holes/[n]). The visitor
- * picks a tee — Gold / Blue / Combo / White / Red — and the single
+ * picks a tee. Gold / Blue / Combo / White / Red, and the single
  * big readout underneath updates to that tee's yardage for this hole,
  * plus the stroke index appropriate to the tee set (forward tees
  * share a women's stroke index; the Blue men's index applies elsewhere).
  *
  * Honesty rules:
  *   - A tee whose per-hole yardage isn't in the data (currently Gold
- *     and Combo — see holes.ts) renders its pill as disabled with a
- *     "—" readout rather than fabricating a number.
+ *     and Combo, see holes.ts) renders its pill as disabled with a
+ *     dash readout rather than fabricating a number.
  *   - Rating / slope come from TEES; they don't change per hole, so
  *     we show the tee's course rating + slope alongside for context.
  */
@@ -63,7 +63,7 @@ export default function HoleTeeSwitcher({ hole }: { hole: Hole }) {
                     ? "bg-cedar border-cedar text-paper"
                     : "bg-transparent border-granite/25 text-granite hover:border-amber hover:text-amber",
               ].join(" ")}
-              title={hasYardage ? `${tee.name} · ${hole.yardage[tee.key]} yd` : `${tee.name} — per-hole yardage not published for this tee`}
+              title={hasYardage ? `${tee.name} · ${hole.yardage[tee.key]} yd` : `${tee.name}, per-hole yardage not published for this tee`}
             >
               {tee.name}
             </button>
@@ -87,7 +87,7 @@ export default function HoleTeeSwitcher({ hole }: { hole: Hole }) {
                 <span className="text-silt text-2xl md:text-3xl align-baseline ml-2">yd</span>
               </>
             ) : (
-              <span className="text-silt">—</span>
+              <span className="text-silt">–</span>
             )}
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function HoleTeeSwitcher({ hole }: { hole: Hole }) {
       {typeof yards !== "number" && (
         <p className="mt-6 text-xs text-silt font-mono max-w-xl">
           Per-hole yardage for {active.name} tees isn't published on the 2020 scorecard
-          or GolfNow's course panel — the aggregate total ({active.total.toLocaleString()} yd)
+          or GolfNow's course panel, the aggregate total ({active.total.toLocaleString()} yd)
           is confirmed. Ask the Pro Shop for a printed {active.name}-set pin sheet at
           check-in.
         </p>

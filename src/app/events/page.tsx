@@ -27,7 +27,7 @@ const EVENT_KINDS = [
   {
     eyebrow: "Tournaments & group golf",
     title: "Book your event",
-    body: "From a round for a small group to a large tournament — customized dates, times, and formats. Call the office or the Pro Shop to scope your event.",
+    body: "From a round for a small group to a large tournament, customized dates, times, and formats. Call the office or the Pro Shop to scope your event.",
     href: "/events/book",
     cta: "See booking details",
   },
@@ -41,14 +41,14 @@ const EVENT_KINDS = [
   {
     eyebrow: "Dining & social",
     title: "The Bistro's covered patio",
-    body: "Larger groups for meals, appetizers, and refreshments — as a standalone function or paired with a golf package. The covered patio suits summer gatherings.",
+    body: "Larger groups for meals, appetizers, and refreshments, as a standalone function or paired with a golf package. The covered patio suits summer gatherings.",
     href: "/events/book",
     cta: "Dining package details",
   },
   {
     eyebrow: "Club play",
     title: "Retirees, Men's, Ladies'",
-    body: "Regular weekly schedules for the three in-club leagues — Retirees on Thursdays, Men's and Ladies' night on their respective evenings. Posted schedules on the Public Documents page.",
+    body: "Regular weekly schedules for the three in-club leagues. Retirees on Thursdays, Men's and Ladies' night on their respective evenings. Posted schedules on the Public Documents page.",
     href: "/membership/retirees-club",
     cta: "Retirees Club details",
   },
@@ -69,7 +69,7 @@ export default function Events() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Birchbank hosts custom golf events, corporate outings, dining functions, and
-            regular club play. Every event is built to your group — we don't run a cookie-
+            regular club play. Every event is built to your group, we don't run a cookie-
             cutter package. Call the office at{" "}
             <a href="tel:+12506932366" className="underline hover:text-amber">250-693-2366</a>
             {" "}to start a conversation.

@@ -1,13 +1,13 @@
-# Birchbank Golf — Project Brain
+# Birchbank Golf. Project Brain
 
 ## Project
 Rebuilding birchbankgolf.com as a flagship demo site. Next.js 15 App Router,
 React 19, Tailwind 4, Sanity CMS, Vercel, Chronogolf booking widget.
 
 ## Reference materials
-- /docs/blueprint.md — full research blueprint (READ THIS FIRST)
-- /reference/landing-page.html — Claude.ai/design export, source of truth for visual design
-- /reference/screenshots/ — section-by-section screenshots
+- /docs/blueprint.md, full research blueprint (READ THIS FIRST)
+- /reference/landing-page.html. Claude.ai/design export, source of truth for visual design
+- /reference/screenshots/, section-by-section screenshots
 
 ## Design system (enforce these)
 - Display: GT Sectra (or closest open-source: Fraunces)
@@ -23,10 +23,10 @@ React 19, Tailwind 4, Sanity CMS, Vercel, Chronogolf booking widget.
 ## Working style
 1. Read /docs/blueprint.md and /reference/landing-page.html before any work
 2. Match the reference design pixel-for-pixel before adding interactivity
-3. Build section by section — ship one before moving to next
+3. Build section by section, ship one before moving to next
 4. GSAP ScrollTrigger + Lenis for the ball-into-hole hero
 5. Chronogolf widget via next/script strategy="lazyOnload"
-6. Preserve the voice from /docs/blueprint.md — no generic golf copy
+6. Preserve the voice from /docs/blueprint.md, no generic golf copy
 7. When uncertain, match the reference HTML and ask before deviating
 
 ## Never

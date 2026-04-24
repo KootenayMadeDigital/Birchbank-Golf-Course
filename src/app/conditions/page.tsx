@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/conditions" },
 };
 
-// Revalidate the whole page every 15 minutes — matches the upstream
+// Revalidate the whole page every 15 minutes, matches the upstream
 // weather fetch cache so the page and the underlying data agree.
 export const revalidate = 900;
 
@@ -21,7 +21,7 @@ export const revalidate = 900;
  * card. This page is the deep version for the obsessive: 24-hour chart,
  * 7-day outlook, golfer-specific commentary ("A three-club day. Hold
  * onto your hat."), and a frank note about what is NOT live (frost
- * delays, cart-path-only calls — those still come from the Pro Shop).
+ * delays, cart-path-only calls, those still come from the Pro Shop).
  *
  * Data source: Open-Meteo with Environment Canada's GEM model, same
  * pipeline as the home widget. Fetched server-side and revalidated every
@@ -40,7 +40,7 @@ function weatherGlyph(code: number): string {
 }
 
 // A one-line human take on whether it's a good golf day. Concrete and
-// honest — no hype, no "you'll love it." Derived from precip prob and
+// honest, no hype, no "you'll love it." Derived from precip prob and
 // wind max.
 function golfDayCall(precip: number, windMax: number, highC: number): string {
   if (precip >= 60) return "Rain likely. Bring layers or reschedule.";
@@ -70,7 +70,7 @@ export default async function Conditions() {
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Data from Environment Canada's GEM model via Open-Meteo, updated every 15
             minutes. Frost delays, cart-path-only calls, and same-day tee-sheet status still
-            come from the Pro Shop — call ahead on questionable mornings.
+            come from the Pro Shop, call ahead on questionable mornings.
           </p>
         </div>
       </section>
@@ -194,7 +194,7 @@ export default async function Conditions() {
         </section>
       )}
 
-      {/* What we don't measure — honesty block */}
+      {/* What we don't measure, honesty block */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
@@ -218,7 +218,7 @@ export default async function Conditions() {
               <p className="font-display text-lg text-paper mb-1">Call the Pro Shop</p>
               <p className="text-paper/80 text-sm leading-relaxed">
                 Frost-delay status, cart-path-only calls, green-speed readings, fairway
-                firmness — these are judgment calls from the superintendent and the Pro
+                firmness, these are judgment calls from the superintendent and the Pro
                 Shop, not things we'd fake with an invented number on this page.
                 <a href="tel:+12506932255" className="block mt-2 text-tamarack underline hover:text-paper">
                   250-693-2255 · 9 am – 7 pm, 7 days
@@ -239,7 +239,7 @@ export default async function Conditions() {
       {/* Final CTA */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge text-center max-w-3xl mx-auto">
-          <p className="eyebrow mb-6">Weather's fine — go play</p>
+          <p className="eyebrow mb-6">Weather's fine, go play</p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <BookButton />
             <Link href="/rates" className="btn-ghost">Rates</Link>

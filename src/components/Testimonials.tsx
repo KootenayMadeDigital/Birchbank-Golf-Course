@@ -12,7 +12,7 @@ import ScrollReveal from "./ScrollReveal";
 const REVIEWS = [
   {
     quote:
-      "Birchbank is a course that you want to play regularly. It is challenging, has gorgeous views and the staff is very friendly. The course is kept in great shape. Lots of wildlife — especially the wild turkeys.",
+      "Birchbank is a course that you want to play regularly. It is challenging, has gorgeous views and the staff is very friendly. The course is kept in great shape. Lots of wildlife, especially the wild turkeys.",
     author: "mhyham",
     rating: 5,
     date: "2017",

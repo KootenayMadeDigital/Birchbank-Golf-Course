@@ -21,7 +21,7 @@ export default function HistoryPage() {
       <section className="pb-[var(--spacing-section)] container-edge grid gap-12 md:grid-cols-12">
         <div className="md:col-span-8 md:col-start-3 prose-editorial text-granite/90 space-y-10">
           <div>
-            <p className="eyebrow mb-3">In the beginning — the Rossland course</p>
+            <p className="eyebrow mb-3">In the beginning, the Rossland course</p>
             <p>
               The Rossland Trail Country Club was organized on April 22, 1922. Initial
               membership totalled 81 shareholders, of which 56 were playing members. The
@@ -63,11 +63,11 @@ export default function HistoryPage() {
           <div className="md:col-span-7">
             <ul className="divide-y divide-paper/20">
               {[
-                ["1922", "Rossland Trail Country Club organized — 81 shareholders, 56 playing members."],
+                ["1922", "Rossland Trail Country Club organized, 81 shareholders, 56 playing members."],
                 ["1926", "Nine-hole Rossland course constructed on Cominco-leased land."],
                 ["1962", "Construction of Birchbank begins on Cominco-leased property."],
                 ["1964", "First nine holes at Birchbank completed."],
-                ["1969", "Back nine and clubhouse open — designed by Roy Stone."],
+                ["1969", "Back nine and clubhouse open, designed by Roy Stone."],
                 ["2004", "Club purchases Birchbank property from Cominco."],
                 ["2006", "Rossland course closes after Cominco sells the land."],
                 ["2018", "Birchbank reconfigured to resemble original 1969 layout (June 1)."],
@@ -112,7 +112,7 @@ export default function HistoryPage() {
               />
             </div>
             <figcaption className="mt-3 text-sm text-silt">
-              W.S. Harrison, horse-drawn hay rake — farmland at the current Birchbank site.
+              W.S. Harrison, horse-drawn hay rake, farmland at the current Birchbank site.
             </figcaption>
           </figure>
           <figure>

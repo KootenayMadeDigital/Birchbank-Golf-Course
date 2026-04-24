@@ -65,7 +65,7 @@ export default function Bistro() {
             <div key={src} className="relative aspect-square bg-granite/5 overflow-hidden">
               <Image
                 src={src}
-                alt={`Birchbank Bistro — ${i + 1}`}
+                alt={`Birchbank Bistro, ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 50vw, 33vw"
                 className="object-cover"
@@ -76,7 +76,7 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* Jeff's own words about the Bistro — quoted from SCOREGolf's
+      {/* Jeff's own words about the Bistro, quoted from SCOREGolf's
           October 2022 feature by Andrew Penner. Attribution is spelled
           out below the quote. */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
@@ -116,7 +116,7 @@ export default function Bistro() {
             </p>
             <p className="text-paper/85 prose-editorial">
               The Bistro dining area can handle larger groups for meals, appetizers, and
-              refreshments — as a stand-alone function or paired with a golf package.
+              refreshments, as a stand-alone function or paired with a golf package.
               The covered patio suits summer gatherings.
             </p>
           </div>

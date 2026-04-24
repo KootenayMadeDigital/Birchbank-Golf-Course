@@ -2,7 +2,7 @@
  * Open-Meteo integration for Birchbank Golf Course.
  *
  * Uses Environment Canada's GEM model (`gem_seamless`) as the primary
- * forecast source — it's the authoritative model for Canadian weather
+ * forecast source, it's the authoritative model for Canadian weather
  * and covers the Kootenay region natively. Falls back to the ECMWF
  * blend when GEM is unavailable.
  *
@@ -10,14 +10,14 @@
  * requests/day; with a 15-minute server-side revalidation, this works
  * out to 96 requests/day worst case.
  *
- * Location: Genelle, BC — 49.20° N, 117.75° W.
+ * Location: Genelle, BC, 49.20° N, 117.75° W.
  */
 
-// Genelle, BC — coordinates from the blueprint + verified against maps.
+// Genelle, BC, coordinates from the blueprint + verified against maps.
 const BIRCHBANK_LAT = 49.2;
 const BIRCHBANK_LON = -117.75;
 
-// https://open-meteo.com/en/docs — weather code WMO table.
+// https://open-meteo.com/en/docs, weather code WMO table.
 const WEATHER_CODE_MAP: Record<number, string> = {
   0: "Clear sky",
   1: "Mostly clear",
@@ -79,7 +79,7 @@ export type WeatherSnapshot = {
  * "N-club day" callout. The rule-of-thumb (pro-shop folklore, not
  * meteorology): every ~10 km/h of sustained wind costs you roughly
  * one club of distance on a full shot. We cap at 4 because past that
- * nobody's counting anymore — they're just hanging on.
+ * nobody's counting anymore, they're just hanging on.
  *
  * Verbatim from the blueprint's daily-conditions voice (line 385):
  *   "SW wind 12 km/h. A two-club day."
@@ -103,7 +103,7 @@ export function cardinalFromBearing(deg: number): string {
  *
  * Caller should handle its own caching (Next.js route handler uses
  * `next: { revalidate: 900 }` for 15-minute freshness). Returns null on
- * network failure — the ConditionsWidget degrades gracefully to
+ * network failure, the ConditionsWidget degrades gracefully to
  * season-status-only rather than showing a stale or fake number.
  */
 export async function fetchBirchbankWeather(): Promise<WeatherSnapshot | null> {

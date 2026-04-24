@@ -13,8 +13,8 @@ type TeeKey = typeof TEES[number]["key"];
  * yardage + course rating / slope update live in a single large readout.
  *
  * Not to be confused with the full-table `ScorecardSwitcher` used on the
- * dedicated /course/scorecard page. This one is a summary only — no per-hole
- * breakdown, no table — intended for the one-screen moment on the home page.
+ * dedicated /course/scorecard page. This one is a summary only, no per-hole
+ * breakdown, no table, intended for the one-screen moment on the home page.
  *
  * UI/UX Pro Max checks:
  *   - 44x44pt tap targets on every pill (touch-target-size rule)
@@ -23,7 +23,7 @@ type TeeKey = typeof TEES[number]["key"];
  *   - Reduced-motion: no opacity/transform transition on the readout
  */
 export default function ScorecardCompact() {
-  // Default to Blue — the men's tee with full published rating/slope
+  // Default to Blue, the men's tee with full published rating/slope
   // and the most-played of the five sets per the course scorecard.
   const [selected, setSelected] = useState<TeeKey>("blue");
 
@@ -83,7 +83,7 @@ export default function ScorecardCompact() {
           >
             {active.courseRating && active.slopeRating
               ? `${active.courseRating.toFixed(1)} / ${active.slopeRating}`
-              : "—"}
+              : "–"}
           </p>
           {(!active.courseRating || !active.slopeRating) && (
             <p className="text-paper/50 text-xs font-mono mt-1">

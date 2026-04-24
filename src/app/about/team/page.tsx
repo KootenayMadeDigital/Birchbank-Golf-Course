@@ -80,7 +80,7 @@ export default function Team() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Small team, seven days a week, April through October. If you call the number
-            below the right name, they'll pick up — or call you back the same day.
+            below the right name, they'll pick up, or call you back the same day.
           </p>
         </div>
       </section>
@@ -93,14 +93,14 @@ export default function Team() {
           <ul className="space-y-16">
             {TEAM.map((p) => (
               <li key={p.name} className="grid gap-8 md:grid-cols-12 items-start border-t border-granite/15 pt-10">
-                {/* Portrait placeholder — swap with real photograph when available. */}
+                {/* Portrait placeholder, swap with real photograph when available. */}
                 <div className="md:col-span-4">
                   <div className="aspect-[4/5] bg-cedar/5 border border-granite/10 flex flex-col items-center justify-center p-8">
                     <p className="font-display text-7xl text-cedar leading-none">
                       {p.name.split(" ").map((n) => n[0]).join("")}
                     </p>
                     <p className="font-mono text-xs text-silt mt-4 text-center">
-                      Portrait coming — photograph the team in spring.
+                      Portrait coming, photograph the team in spring.
                     </p>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export default function Team() {
           </h2>
           <p className="prose-editorial text-paper/85">
             Beyond the three above, Birchbank is kept running by a rotating crew of Pro
-            Shop attendants, greens staff, and Bistro servers — mostly Kootenay locals,
+            Shop attendants, greens staff, and Bistro servers, mostly Kootenay locals,
             many returning summer-over-summer. You'll meet them when you come out. We'll
             add portraits and handles here as the team sits for photos.
           </p>

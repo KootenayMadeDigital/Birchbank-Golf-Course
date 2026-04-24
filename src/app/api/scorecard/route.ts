@@ -4,7 +4,7 @@ import { readFileSync } from "fs";
 import path from "path";
 
 /**
- * GET /api/scorecard — returns the Birchbank printed scorecard as a
+ * GET /api/scorecard, returns the Birchbank printed scorecard as a
  * single-download PDF. Two pages: inside (scoring grid + all tees) and
  * back (course map + local rules).
  *
@@ -27,9 +27,9 @@ async function buildPdf(): Promise<Uint8Array> {
   const back = readFileSync(path.join(process.cwd(), "public/scorecard/back.jpg"));
 
   const pdf = await PDFDocument.create();
-  pdf.setTitle("Birchbank Golf Course — Scorecard");
+  pdf.setTitle("Birchbank Golf Course. Scorecard");
   pdf.setAuthor("Birchbank Golf Course");
-  pdf.setSubject("Printed scorecard (2020 edition) — Par 72, five sets of tees");
+  pdf.setSubject("Printed scorecard (2020 edition). Par 72, five sets of tees");
   pdf.setCreator("birchbankgolf.com");
   pdf.setProducer("birchbankgolf.com");
   pdf.setCreationDate(new Date());
@@ -41,7 +41,7 @@ async function buildPdf(): Promise<Uint8Array> {
   const pageHeight = 612; // 8.5in
   const margin = 28;
 
-  for (const [label, bytes] of [["Inside — scoring grid", inside], ["Back — course map & local rules", back]] as const) {
+  for (const [label, bytes] of [["Inside, scoring grid", inside], ["Back, course map & local rules", back]] as const) {
     const page = pdf.addPage([pageWidth, pageHeight]);
     const image = await pdf.embedJpg(bytes);
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pro Shop",
   description:
-    "The Birchbank Pro Shop — fully stocked clothing and accessories, club fitting with the Head Pro, lessons from a CPGA-certified professional, full repair service, and the annual Manufacturers' Demo Day.",
+    "The Birchbank Pro Shop, fully stocked clothing and accessories, club fitting with the Head Pro, lessons from a CPGA-certified professional, full repair service, and the annual Manufacturers' Demo Day.",
   alternates: { canonical: "/pro-shop" },
 };
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  * service offerings.
  *
  * The published Pro Shop page lists four services (Clothing & Accessories,
- * Club Fitting, Instruction, Full Service Shop) — we surface all four,
+ * Club Fitting, Instruction, Full Service Shop), we surface all four,
  * plus the "Manufacturers' Demo Day" event that's published on the same
  * page as a recurring annual program.
  */
@@ -24,13 +24,13 @@ const SERVICES = [
   {
     title: "Clothing & accessories",
     body:
-      "Fully stocked Pro Shop with a variety of clothing manufacturers — good choice of colour, style, and comfort. Always a selection and sales for every budget.",
+      "Fully stocked Pro Shop with a variety of clothing manufacturers, good choice of colour, style, and comfort. Always a selection and sales for every budget.",
     cta: { label: "Call 250-693-2255", href: "tel:+12506932255" },
   },
   {
     title: "Club fitting",
     body:
-      "Our Head Pro fits the latest models of clubs and fine-tunes them to get the most out of your game. Try our individual demo clubs on the range — or take them out for a full round and feel the difference between models and brands.",
+      "Our Head Pro fits the latest models of clubs and fine-tunes them to get the most out of your game. Try our individual demo clubs on the range, or take them out for a full round and feel the difference between models and brands.",
     cta: { label: "Book a fitting", href: "tel:+12506932255" },
   },
   {
@@ -42,7 +42,7 @@ const SERVICES = [
   {
     title: "Full service shop",
     body:
-      "We repair, re-grip, bend, straighten, and tweak just about any piece of equipment you use. Watch for specials on re-gripping — make those old, slippery grips a thing of the past.",
+      "We repair, re-grip, bend, straighten, and tweak just about any piece of equipment you use. Watch for specials on re-gripping, make those old, slippery grips a thing of the past.",
     cta: { label: "Drop in or call", href: "tel:+12506932255" },
   },
 ];
@@ -91,7 +91,7 @@ export default function ProShop() {
             </h2>
             <p className="prose-editorial text-granite/85">
               Everything the Pro Shop handles, listed exactly as it's described on the
-              counter — and on the current birchbankgolf.com Pro Shop page.
+              counter, and on the current birchbankgolf.com Pro Shop page.
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export default function ProShop() {
         </div>
       </section>
 
-      {/* Manufacturers' Demo Day — mentioned on the real site's Pro Shop page */}
+      {/* Manufacturers' Demo Day, mentioned on the real site's Pro Shop page */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
@@ -130,7 +130,7 @@ export default function ProShop() {
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
               Once a year, the manufacturers' reps come to Birchbank and bring every model
-              from the new lineup. Hit them all on our driving range — no commitment, no
+              from the new lineup. Hit them all on our driving range, no commitment, no
               pressure, just the latest equipment under your hands for an afternoon.
               Watch the Pro Shop page or our social feeds for the date.
             </p>

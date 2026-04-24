@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Aman-style horizontal drag gallery. Real photographs from
- * birchbankgolf.com's media library — a mix of on-property course
+ * birchbankgolf.com's media library, a mix of on-property course
  * shots and the Bistro interior. All unoptimized through next/image
  * and lazy-loaded below the fold.
  */

@@ -5,7 +5,7 @@ import BookButton from "@/components/BookButton";
 export const metadata: Metadata = {
   title: "For US visitors",
   description:
-    "Crossing into BC to play Birchbank — Paterson, Waneta, and Nelway border crossings, what documents you need, currency, Spokane-area drive times, and how our Canadian rates compare for US dollar visitors.",
+    "Crossing into BC to play Birchbank. Paterson, Waneta, and Nelway border crossings, what documents you need, currency, Spokane-area drive times, and how our Canadian rates compare for US dollar visitors.",
   alternates: { canonical: "/usa-visitors" },
 };
 
@@ -33,14 +33,14 @@ const CROSSINGS = [
     name: "Paterson / Frontier",
     highway: "BC-22 ↔ US-395",
     hours: "Typically 8 AM – 11 PM Pacific",
-    bestFor: "Spokane, Kettle Falls, and the upper Okanogan — shortest route to Birchbank.",
+    bestFor: "Spokane, Kettle Falls, and the upper Okanogan, shortest route to Birchbank.",
     time: "~30 minutes from the crossing to the first tee.",
   },
   {
     name: "Waneta / Boundary",
     highway: "BC-22A ↔ Boundary Rd",
     hours: "Typically 8 AM – midnight Pacific",
-    bestFor: "Second-closest crossing — a direct alternate if Paterson has a line.",
+    bestFor: "Second-closest crossing, a direct alternate if Paterson has a line.",
     time: "~15 minutes from the crossing to the first tee.",
   },
   {
@@ -67,17 +67,17 @@ const WHAT_TO_BRING = [
     bullets: [
       "Valid passport or NEXUS card (passport cards and enhanced driver's licenses work for land crossings too)",
       "Vehicle registration if you're driving a vehicle that isn't in your name",
-      "No cannabis in the vehicle — Canada and the US both prohibit bringing it across even though it's legal on both sides",
-      "Declare groceries, alcohol, and gifts truthfully — CBSA's limits are published",
+      "No cannabis in the vehicle. Canada and the US both prohibit bringing it across even though it's legal on both sides",
+      "Declare groceries, alcohol, and gifts truthfully. CBSA's limits are published",
     ],
   },
   {
     title: "For the round",
     bullets: [
-      "Clubs — Canadian airports fine with golf bags; driving is easier",
-      "Valid credit card — we take all major US cards, no FX surcharge from us",
+      "Clubs. Canadian airports fine with golf bags; driving is easier",
+      "Valid credit card, we take all major US cards, no FX surcharge from us",
       "A small amount of CAD cash if you want to tip the beverage-cart staff in local currency",
-      "Golf-appropriate apparel — see the Birchbank dress code",
+      "Golf-appropriate apparel, see the Birchbank dress code",
     ],
   },
   {
@@ -85,7 +85,7 @@ const WHAT_TO_BRING = [
     bullets: [
       "The same passport/NEXUS you came in on",
       "Receipts for anything you bought in Canada (CBP allowance is typically $800 per US resident after 48 hours)",
-      "A little patience — southbound lines at Paterson can build up late Sunday afternoon in summer",
+      "A little patience, southbound lines at Paterson can build up late Sunday afternoon in summer",
     ],
   },
 ];
@@ -106,7 +106,7 @@ export default function UsaVisitors() {
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Birchbank is the closest full-length 18-hole course in BC to the Washington
             border, and one of the most underplayed golf destinations in the Pacific
-            Northwest. This page covers what you need to know before you drive — crossings,
+            Northwest. This page covers what you need to know before you drive, crossings,
             documents, drive times, and how Canadian rates work out for US-dollar visitors.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
@@ -127,7 +127,7 @@ export default function UsaVisitors() {
               Three ways into BC.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Hours below are typical — always check the{" "}
+              Hours below are typical, always check the{" "}
               <a
                 href="https://www.cbsa-asfc.gc.ca/bwt-taf/menu-eng.html"
                 target="_blank"
@@ -196,7 +196,7 @@ export default function UsaVisitors() {
               All Birchbank rates are listed in Canadian dollars. With the exchange rate
               typically putting the USD stronger than the CAD, a walk-up round that prices
               at <span className="text-tamarack font-semibold">CA$80</span> lands well under
-              US$70 after conversion — less than most comparable Spokane-area courses
+              US$70 after conversion, less than most comparable Spokane-area courses
               charge for a midweek tee time.
             </p>
             <p className="prose-editorial text-paper/85">
@@ -229,7 +229,7 @@ export default function UsaVisitors() {
               Three short lists.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Not exhaustive — just the stuff first-time cross-border golfers usually ask
+              Not exhaustive, just the stuff first-time cross-border golfers usually ask
               about. When in doubt, CBSA's own site has the official word.
             </p>
           </div>
@@ -277,7 +277,7 @@ export default function UsaVisitors() {
               >
                 Kootenay Golf Trail
               </a>
-              {" "}makes a solid 3-day Pacific-Northwest golf trip — and the exchange rate
+              {" "}makes a solid 3-day Pacific-Northwest golf trip, and the exchange rate
               effectively covers the hotel.
             </p>
           </div>

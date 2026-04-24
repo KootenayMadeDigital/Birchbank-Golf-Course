@@ -5,7 +5,7 @@ import BookButton from "@/components/BookButton";
 export const metadata: Metadata = {
   title: "Stay & play",
   description:
-    "Where to stay when you come to play Birchbank — partner hotels and inns in Rossland, Castlegar, and Trail, plus the Kootenay Golf Trail for multi-course trips.",
+    "Where to stay when you come to play Birchbank, partner hotels and inns in Rossland, Castlegar, and Trail, plus the Kootenay Golf Trail for multi-course trips.",
   alternates: { canonical: "/stay-and-play" },
 };
 
@@ -70,7 +70,7 @@ const AFTER_THE_ROUND = [
   {
     name: "The Colander",
     area: "Trail",
-    note: "Trail's iconic family-style Italian — the kind of dinner you drive for. Open for dinner; get the fish.",
+    note: "Trail's iconic family-style Italian, the kind of dinner you drive for. Open for dinner; get the fish.",
   },
   {
     name: "Rossland Beer Company",
@@ -103,7 +103,7 @@ const LOCAL_RESOURCES = [
     url: "https://destinationcastlegar.com",
   },
   {
-    name: "City of Trail — Recreation & Parks",
+    name: "City of Trail. Recreation & Parks",
     blurb:
       "Trail's municipal recreation site, listed as a Birchbank partner. Useful for campgrounds and city-operated facilities.",
     url: "https://trail.ca",
@@ -134,7 +134,7 @@ const TRAIL_COURSES = [
   {
     name: "Castlegar Golf Club",
     detail: "18 holes · tree-lined · Castlegar, BC",
-    note: "15 minutes north. The other local 18 — shorter and tighter, great for an afternoon round.",
+    note: "15 minutes north. The other local 18, shorter and tighter, great for an afternoon round.",
     href: "https://www.castlegargolfclub.com",
     external: true,
   },
@@ -216,7 +216,7 @@ export default function StayAndPlay() {
           <p className="mt-6 font-mono text-xs text-silt max-w-2xl">
             Bundling a round with a room? Call the Pro Shop at{" "}
             <a href="tel:+12506932255" className="underline hover:text-amber">250-693-2255</a>{" "}
-            before you book the hotel — if we're hosting an event or have group rates
+            before you book the hotel, if we're hosting an event or have group rates
             available, we'll let you know.
           </p>
         </div>
@@ -257,7 +257,7 @@ export default function StayAndPlay() {
         </div>
       </section>
 
-      {/* After the round — where to eat dinner once the Bistro closes. */}
+      {/* After the round, where to eat dinner once the Bistro closes. */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-10 max-w-2xl">
@@ -267,7 +267,7 @@ export default function StayAndPlay() {
             </h2>
             <p className="prose-editorial text-granite/85">
               The Birchbank Bistro runs 12–5 every day. When it closes, the Kootenay dining
-              scene takes over — four spots we'd send family to.
+              scene takes over, four spots we'd send family to.
             </p>
           </div>
 
@@ -296,7 +296,7 @@ export default function StayAndPlay() {
             </h2>
             <p className="prose-editorial text-paper/85">
               Birchbank sits on a trail of BC Interior courses as varied as the terrain they
-              occupy — riverside, mountainside, tree-lined, or open. A 2- or 3-day trip
+              occupy, riverside, mountainside, tree-lined, or open. A 2- or 3-day trip
               across the region is what the local tourism boards are built around.
             </p>
             <p className="mt-4">
@@ -343,7 +343,7 @@ export default function StayAndPlay() {
         </div>
       </section>
 
-      {/* Local resources — partners + aggregators */}
+      {/* Local resources, partners + aggregators */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-10 max-w-2xl">

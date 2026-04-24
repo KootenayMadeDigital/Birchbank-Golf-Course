@@ -1,4 +1,4 @@
-// Sanity schema — imported by the Studio, not the Next app.
+// Sanity schema, imported by the Studio, not the Next app.
 // Rule validation is loosely typed here; Studio supplies concrete Rule types at runtime.
 export const holeSchema = {
   name: "hole",

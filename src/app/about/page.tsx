@@ -26,7 +26,7 @@ const MILESTONES = [
   { year: "1962", event: "Birchbank land leased from Cominco; construction begins on the Columbia River." },
   { year: "1964", event: "First nine completed at Birchbank." },
   { year: "1969", event: "Back nine and clubhouse designed by Roy Stone; course opens as 18 holes." },
-  { year: "2004", event: "Club purchases the Birchbank property from Cominco — member-owned." },
+  { year: "2004", event: "Club purchases the Birchbank property from Cominco, member-owned." },
   { year: "2006", event: "Rossland course closed after Cominco sells that land." },
   { year: "2018", event: "Birchbank reconfigured to match Stone's original 1969 routing." },
 ];
@@ -79,7 +79,7 @@ export default function About() {
             <p className="text-xl">
               The club was organized on April 22, 1922, with 81 shareholders and a first
               course on Floyd Ranch above Warfield. By 1926 we'd moved to Cominco-leased
-              land and built nine holes in Rossland — the course that would run for eighty
+              land and built nine holes in Rossland, the course that would run for eighty
               years.
             </p>
             <p>
@@ -91,7 +91,7 @@ export default function About() {
             </p>
             <p>
               The club bought the Birchbank property from Cominco in 2004. The Rossland
-              course closed in 2006 after Cominco sold that land — but Birchbank, by then
+              course closed in 2006 after Cominco sold that land, but Birchbank, by then
               ours outright, kept playing. In 2018, new irrigation, restored greens, and
               ponds on holes 12 and 15 reconfigured the layout back to Stone's original
               1969 routing.
@@ -104,7 +104,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Milestones — dated timeline */}
+      {/* Milestones, dated timeline */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -127,7 +127,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Three branches — team, history, land acknowledgement */}
+      {/* Three branches, team, history, land acknowledgement */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-5 md:grid-cols-3">
           <Link

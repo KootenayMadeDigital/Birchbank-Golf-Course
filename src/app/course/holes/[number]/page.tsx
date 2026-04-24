@@ -21,10 +21,10 @@ export async function generateMetadata({
   const hole = HOLES.find((h) => h.number === Number(number));
   if (!hole) return {};
   const blue = hole.yardage.blue;
-  const title = hole.name ? `${hole.name} · Hole ${hole.number}` : `Hole ${hole.number} — Par ${hole.par}`;
+  const title = hole.name ? `${hole.name} · Hole ${hole.number}` : `Hole ${hole.number}. Par ${hole.par}`;
   return {
     title,
-    description: `${hole.name ? hole.name + " — " : ""}Par ${hole.par}${blue ? `, ${blue} yards from the Blue tees` : ""}. Stroke index ${hole.strokeIndex} at Birchbank Golf Course.`,
+    description: `${hole.name ? hole.name + ", " : ""}Par ${hole.par}${blue ? `, ${blue} yards from the Blue tees` : ""}. Stroke index ${hole.strokeIndex} at Birchbank Golf Course.`,
     alternates: { canonical: `/course/holes/${hole.number}` },
   };
 }
@@ -139,7 +139,7 @@ export default async function HolePage({
                 </p>
               )}
 
-              {/* Pro tip — only when we have a verified quote/paraphrase. */}
+              {/* Pro tip, only when we have a verified quote/paraphrase. */}
               {hole.proTip && (
                 <div className="mt-8 max-w-2xl border-l-2 border-tamarack pl-5">
                   <p className="font-mono text-[11px] uppercase tracking-widest text-tamarack mb-2">
@@ -156,7 +156,7 @@ export default async function HolePage({
         </div>
       </section>
 
-      {/* Featured photograph — only when credited photo exists. */}
+      {/* Featured photograph, only when credited photo exists. */}
       {hole.photo && (
         <section className="pb-12 bg-paper">
           <div className="container-edge">
@@ -241,7 +241,7 @@ export default async function HolePage({
         </div>
       </section>
 
-      {/* Round-progress strip — the 18-dot paper-scorecard margin. */}
+      {/* Round-progress strip, the 18-dot paper-scorecard margin. */}
       <RoundProgress current={hole.number} />
 
       {/* Prev / next + scorecard shortcuts */}

@@ -69,7 +69,7 @@ export default function Scorecard() {
             <div className="bg-granite/5 relative aspect-[16/9]">
               <Image
                 src={SCORECARD_IMAGES.inside}
-                alt="Birchbank Golf Course scorecard — inside"
+                alt="Birchbank Golf Course scorecard, inside"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain"
@@ -82,7 +82,7 @@ export default function Scorecard() {
             <div className="bg-granite/5 relative aspect-[16/9]">
               <Image
                 src={SCORECARD_IMAGES.back}
-                alt="Birchbank Golf Course scorecard — back"
+                alt="Birchbank Golf Course scorecard, back"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain"

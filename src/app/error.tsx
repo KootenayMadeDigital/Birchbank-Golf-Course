@@ -19,7 +19,7 @@ export default function Error({
       <p className="eyebrow mb-6">Something went sideways</p>
       <h1 className="display-xl mb-8">Out of bounds.</h1>
       <p className="prose-editorial text-granite/85 mb-10">
-        Our side, not yours. Give it another swing — or call the Pro Shop at 250-693-2366
+        Our side, not yours. Give it another swing, or call the Pro Shop at 250-693-2366
         and we'll book you in the old-fashioned way.
       </p>
       <div className="flex flex-wrap gap-4">

@@ -29,10 +29,10 @@ npm run lint       # next lint
 | Var | Purpose |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL (used by metadata + schema + sitemap). |
-| `NEXT_PUBLIC_CHRONOGOLF_CLUB_ID` | Birchbank's Lightspeed/Chronogolf club ID — the widget opens against this. |
+| `NEXT_PUBLIC_CHRONOGOLF_CLUB_ID` | Birchbank's Lightspeed/Chronogolf club ID, the widget opens against this. |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Plausible domain for analytics. Leave blank to disable. |
-| `SANITY_PROJECT_ID` / `SANITY_DATASET` | Optional — only needed if you wire up the CMS. |
-| `RESEND_API_KEY` / `CONTACT_TO_EMAIL` | Optional — Contact & newsletter forms log locally until this is set. |
+| `SANITY_PROJECT_ID` / `SANITY_DATASET` | Optional, only needed if you wire up the CMS. |
+| `RESEND_API_KEY` / `CONTACT_TO_EMAIL` | Optional. Contact & newsletter forms log locally until this is set. |
 
 ## The scroll hero
 
@@ -59,15 +59,15 @@ The v2 widget loads via `next/script strategy="lazyOnload"` in [src/app/layout.t
 
 Until Sanity is wired, content lives in typed files:
 
-- [src/data/holes.ts](./src/data/holes.ts) — 18 holes with names, yardages, descriptions, pro tips
-- [src/data/rates.ts](./src/data/rates.ts) — green fees, cart, memberships, promos
-- [src/data/faq.ts](./src/data/faq.ts) — FAQ (rendered into `FAQPage` schema)
+- [src/data/holes.ts](./src/data/holes.ts), 18 holes with names, yardages, descriptions, pro tips
+- [src/data/rates.ts](./src/data/rates.ts), green fees, cart, memberships, promos
+- [src/data/faq.ts](./src/data/faq.ts). FAQ (rendered into `FAQPage` schema)
 
-When you're ready for the CMS: see [sanity.config.ts](./sanity.config.ts) — everything is wired except the npm packages.
+When you're ready for the CMS: see [sanity.config.ts](./sanity.config.ts), everything is wired except the npm packages.
 
 ## SEO / AEO
 
-- JSON-LD: `Organization`, `GolfCourse`, `BreadcrumbList`, `FAQPage`, `Event` — all in [src/lib/schema.ts](./src/lib/schema.ts)
+- JSON-LD: `Organization`, `GolfCourse`, `BreadcrumbList`, `FAQPage`, `Event`, all in [src/lib/schema.ts](./src/lib/schema.ts)
 - Dynamic `opengraph-image.tsx` on every route
 - `sitemap.ts` covers 31 routes + 18 hole pages + journal
 - `llms.txt` at `/public/llms.txt` for LLM discoverability

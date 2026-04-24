@@ -44,7 +44,7 @@ export default function Lessons() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl mb-8">
             Jeff Papilion, our Director of Golf and Head Professional, is CPGA-certified
-            and teaches out of the Birchbank Pro Shop. Lessons are booked by phone — call
+            and teaches out of the Birchbank Pro Shop. Lessons are booked by phone, call
             the Pro Shop for available times and to confirm the format that fits your
             goals.
           </p>
@@ -60,7 +60,7 @@ export default function Lessons() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Two paths — beginner vs existing-game. Both paths are paraphrased
+      {/* Two paths, beginner vs existing-game. Both paths are paraphrased
           directly from the Pro Shop page's 'Instruction' copy. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
@@ -81,7 +81,7 @@ export default function Lessons() {
               <p className="eyebrow mb-4">Starting in golf</p>
               <p className="font-display text-2xl text-granite mb-4">The right fundamentals.</p>
               <p className="text-granite/85 text-base leading-relaxed mb-6">
-                Grip, stance, posture, alignment, and the full-swing sequence — the stuff
+                Grip, stance, posture, alignment, and the full-swing sequence, the stuff
                 that makes every later lesson stick. For new players, juniors, and anyone
                 coming back to the game after years away.
               </p>
@@ -93,7 +93,7 @@ export default function Lessons() {
               <p className="font-display text-2xl text-granite mb-4">Find the missing pieces.</p>
               <p className="text-granite/85 text-base leading-relaxed mb-6">
                 Ball flight you can't explain, a wedge you can't trust, a putt you can't
-                commit to — Jeff will find what's slipping and give you two or three things
+                commit to. Jeff will find what's slipping and give you two or three things
                 to work on. Bring your own clubs or use a demo set for a fitting-and-lesson
                 combo.
               </p>
@@ -103,7 +103,7 @@ export default function Lessons() {
         </div>
       </section>
 
-      {/* How to book — honest process. We phone-book because that is
+      {/* How to book, honest process. We phone-book because that is
           how the real site does it. */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
@@ -113,7 +113,7 @@ export default function Lessons() {
               One phone call, one conversation.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Lessons aren't on the online booking system — call the Pro Shop and Jeff (or
+              Lessons aren't on the online booking system, call the Pro Shop and Jeff (or
               whoever's at the counter) will find a time that works. Expect a quick
               conversation about your current game and what you're hoping to work on
               before you pick a slot.
@@ -135,7 +135,7 @@ export default function Lessons() {
               <p className="font-display text-5xl text-tamarack leading-none">2</p>
               <p className="font-display text-lg text-granite mt-4 mb-2">Pick a format</p>
               <p className="text-silt text-sm leading-relaxed">
-                Jeff will recommend what fits your game — foundational lesson, tune-up,
+                Jeff will recommend what fits your game, foundational lesson, tune-up,
                 full swing work, short game, or a playing lesson on the course.
               </p>
             </li>
@@ -144,14 +144,14 @@ export default function Lessons() {
               <p className="font-display text-lg text-granite mt-4 mb-2">Come play</p>
               <p className="text-silt text-sm leading-relaxed">
                 Lessons are on the range and around the Pro Shop. Pay at the counter before
-                or after — same desk as everything else.
+                or after, same desk as everything else.
               </p>
             </li>
           </ol>
         </div>
       </section>
 
-      {/* About the coach — facts from birchbankgolf.com/contacts */}
+      {/* About the coach, facts from birchbankgolf.com/contacts */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5">
@@ -170,7 +170,7 @@ export default function Lessons() {
             <p className="prose-editorial text-paper/85 max-w-xl">
               Jeff runs the Pro Shop, manages the tee sheet, and takes every instruction
               booking at Birchbank. He's certified by the Canadian Professional Golfers'
-              Association — the professional body that administers teaching and playing
+              Association, the professional body that administers teaching and playing
               credentials for golf pros across Canada.
             </p>
             <p className="prose-editorial text-paper/85 max-w-xl">
@@ -178,7 +178,7 @@ export default function Lessons() {
               <a href="mailto:office@birchbankgolf.com" className="underline text-tamarack hover:text-paper">
                 office@birchbankgolf.com
               </a>{" "}
-              — the office will get back to you the same business day.
+             , the office will get back to you the same business day.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <a
@@ -221,7 +221,7 @@ export default function Lessons() {
                 Practice between lessons.
               </p>
               <p className="text-silt text-sm leading-relaxed">
-                Season range pass for members — $255 single, $385 family. Single-day range
+                Season range pass for members, $255 single, $385 family. Single-day range
                 use is included with a lesson.
               </p>
             </Link>

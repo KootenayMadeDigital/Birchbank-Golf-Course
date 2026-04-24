@@ -9,7 +9,7 @@ import type { WeatherSnapshot } from "@/lib/weather";
  *
  * Weather data is sourced from Open-Meteo (Environment Canada's GEM
  * model), fetched via our own /api/weather route which caches 15 minutes
- * at the edge. If the upstream fails, we degrade gracefully — the season
+ * at the edge. If the upstream fails, we degrade gracefully, the season
  * + hours block stays visible without fabricating any number.
  *
  * Season utilities (useNow, getSeasonStatus) are shared with AnchorReveal
@@ -47,7 +47,7 @@ export default function ConditionsWidget() {
         const data = (await res.json()) as WeatherSnapshot;
         if (!cancelled) setWeather(data);
       } catch {
-        /* degrade silently — season + hours stay visible */
+        /* degrade silently, season + hours stay visible */
       }
     };
     load();
@@ -79,7 +79,7 @@ export default function ConditionsWidget() {
       <p className="font-mono text-sm text-silt mb-1">{day || <span>&nbsp;</span>}</p>
       <p className="font-mono text-sm text-silt mb-5">{time || <span>&nbsp;</span>}</p>
 
-      {/* Live weather block — only renders once the fetch resolves. Pre-fetch
+      {/* Live weather block, only renders once the fetch resolves. Pre-fetch
           state keeps the season / hours block at a stable height via a
           min-height placeholder so we don't induce CLS. */}
       <div className="min-h-[128px] mb-5">

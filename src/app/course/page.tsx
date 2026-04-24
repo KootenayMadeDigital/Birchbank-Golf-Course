@@ -46,16 +46,16 @@ const EXPERIENCE_NOTES = [
   {
     title: "Walkable by design",
     body:
-      "Roy Stone routed Birchbank when carts were still rare — the holes flow one into the next with short tee-to-green walks. Most members walk. A power cart is $24 per rider for 18, if you want one.",
+      "Roy Stone routed Birchbank when carts were still rare, the holes flow one into the next with short tee-to-green walks. Most members walk. A power cart is $24 per rider for 18, if you want one.",
   },
   {
     title: "Five sets of tees",
-    body: `${GOLD.total.toLocaleString()} yards from the Gold to ${RED.total.toLocaleString()} from the Red. The Blue tees (${BLUE.total.toLocaleString()} yd) are the most-played; rating 71.5, slope 121 — a fair test without being punishing.`,
+    body: `${GOLD.total.toLocaleString()} yards from the Gold to ${RED.total.toLocaleString()} from the Red. The Blue tees (${BLUE.total.toLocaleString()} yd) are the most-played; rating 71.5, slope 121, a fair test without being punishing.`,
   },
   {
     title: "Water on the back nine",
     body:
-      "The 2018 irrigation project added two ponds — one on hole 12, one on hole 15. Both in play from the Blue. Neither was there in Stone's original 1969 routing, but the ponds earn their place.",
+      "The 2018 irrigation project added two ponds, one on hole 12, one on hole 15. Both in play from the Blue. Neither was there in Stone's original 1969 routing, but the ponds earn their place.",
   },
   {
     title: "A single river",
@@ -144,7 +144,7 @@ export default function CoursePage() {
               Four things that make Birchbank Birchbank.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Not a marketing list — the specific facts that shape every round here.
+              Not a marketing list, the specific facts that shape every round here.
             </p>
           </div>
 
@@ -159,7 +159,7 @@ export default function CoursePage() {
         </div>
       </section>
 
-      {/* How to play it — Jeff Papilion's strategy quotes sourced verbatim
+      {/* How to play it. Jeff Papilion's strategy quotes sourced verbatim
           from SCOREGolf's Oct 2022 feature by Andrew Penner. Every quote is
           attributed inline and the source article is linked once at the
           section's footer. */}
@@ -171,7 +171,7 @@ export default function CoursePage() {
               Smart over strong.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Jeff Papilion, our CPGA head pro, on how to navigate the course — in his
+              Jeff Papilion, our CPGA head pro, on how to navigate the course, in his
               own words.
             </p>
           </div>
@@ -203,7 +203,7 @@ export default function CoursePage() {
               <p className="prose-editorial text-granite/90 italic leading-snug">
                 Good players who understand the course will use numerous clubs off the tee
                 throughout the round. But there are some outstanding holes that scream grip
-                it and rip it — the opener and the closer, both shortish par 5s that can be
+                it and rip it, the opener and the closer, both shortish par 5s that can be
                 had.
               </p>
             </li>
@@ -218,7 +218,7 @@ export default function CoursePage() {
               rel="noopener"
               className="underline hover:text-amber"
             >
-              SCOREGolf — &ldquo;Birchbank a Kootenay Rockies classic,&rdquo; October 2022 ↗
+              SCOREGolf, &ldquo;Birchbank a Kootenay Rockies classic,&rdquo; October 2022 ↗
             </a>
             .
           </p>
@@ -236,7 +236,7 @@ export default function CoursePage() {
           </div>
           <div className="md:col-span-7 prose-editorial text-paper/85 space-y-5">
             <p>
-              The front nine opens along the river — your first sight of the Columbia on the
+              The front nine opens along the river, your first sight of the Columbia on the
               walk to the first tee, and your last sight of it when you putt out on nine.
               Tight to the water, generous fairways, the sort of holes that reward a
               well-placed drive over a long one.
@@ -244,7 +244,7 @@ export default function CoursePage() {
             <p>
               The back nine turns inland through the Cominco land and the trees, with the
               two ponds (holes 12 and 15) both in play on the long par-4s. Hole 6 is the
-              stroke index 1 from the Blue — the one that tends to decide your card.
+              stroke index 1 from the Blue, the one that tends to decide your card.
             </p>
             <p>
               Stone's original 1969 routing came back in 2018 along with new irrigation,
@@ -277,7 +277,7 @@ export default function CoursePage() {
               <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
                 <Image
                   src={SCORECARD_IMAGES.inside}
-                  alt="Birchbank scorecard — inside view with all five tees, par, and handicap index"
+                  alt="Birchbank scorecard, inside view with all five tees, par, and handicap index"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
@@ -285,14 +285,14 @@ export default function CoursePage() {
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs text-silt">
-                Scorecard — inside · Gold / Blue / Combo / White / Red
+                Scorecard, inside · Gold / Blue / Combo / White / Red
               </figcaption>
             </figure>
             <figure>
               <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
                 <Image
                   src={SCORECARD_IMAGES.back}
-                  alt="Birchbank scorecard — back cover with course info and local rules"
+                  alt="Birchbank scorecard, back cover with course info and local rules"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
@@ -300,7 +300,7 @@ export default function CoursePage() {
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs text-silt">
-                Scorecard — back · local rules and contacts
+                Scorecard, back · local rules and contacts
               </figcaption>
             </figure>
           </div>

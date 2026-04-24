@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Member Portal",
   description:
-    "Log in to the Birchbank Member Portal — advance tee-time booking, account management, and reciprocal-club access via Chronogolf.",
+    "Log in to the Birchbank Member Portal, advance tee-time booking, account management, and reciprocal-club access via Chronogolf.",
   alternates: { canonical: "/login" },
   robots: { index: false, follow: true },
 };
@@ -27,7 +27,7 @@ const CHRONOGOLF_MEMBER_PORTAL = "https://members.chronogolf.com/login";
 const MEMBER_TOOLS = [
   {
     title: "Tee-time booking",
-    body: "Members book up to 14 days out — two days ahead of public. Same Chronogolf account as the widget.",
+    body: "Members book up to 14 days out, two days ahead of public. Same Chronogolf account as the widget.",
     cta: { label: "Open member portal ↗", href: CHRONOGOLF_MEMBER_PORTAL, external: true },
   },
   {
@@ -60,7 +60,7 @@ export default function Login() {
             Log in to your account.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Your member account lives on Chronogolf — same login as the tee-time widget. Use
+            Your member account lives on Chronogolf, same login as the tee-time widget. Use
             the button below, or pick a tool from the list to go straight there.
           </p>
 

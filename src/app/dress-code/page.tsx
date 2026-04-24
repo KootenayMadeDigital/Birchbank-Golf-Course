@@ -5,7 +5,7 @@ import BookButton from "@/components/BookButton";
 export const metadata: Metadata = {
   title: "Dress code",
   description:
-    "Birchbank Golf Course dress code: what to wear and what to leave at home. Ladies, men, and footwear — verbatim from birchbankgolf.com.",
+    "Birchbank Golf Course dress code: what to wear and what to leave at home. Ladies, men, and footwear, verbatim from birchbankgolf.com.",
   alternates: { canonical: "/dress-code" },
 };
 
@@ -126,7 +126,7 @@ export default function DressCode() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Golf-specific, not fancy. The short version: collared shirt or mock neck, shorts
-            at least mid-thigh, soft-soled shoes. The full version's below — straight from
+            at least mid-thigh, soft-soled shoes. The full version's below, straight from
             the course's published dress code. When in doubt, ask at the Pro Shop.
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function DressCode() {
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <p className="eyebrow mb-5">Ladies</p>
-          <h2 className="display-md font-display mb-8">What works — and what doesn't.</h2>
+          <h2 className="display-md font-display mb-8">What works, and what doesn't.</h2>
           <div className="grid md:grid-cols-2 gap-5 md:gap-6">
             <RuleCard tone="ok" title="Acceptable" rules={LADIES_OK} />
             <RuleCard tone="no" title="Not permitted" rules={LADIES_NOT_OK} />
@@ -182,7 +182,7 @@ export default function DressCode() {
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <p className="eyebrow mb-5">Men</p>
-          <h2 className="display-md font-display mb-8">What works — and what doesn't.</h2>
+          <h2 className="display-md font-display mb-8">What works, and what doesn't.</h2>
           <div className="grid md:grid-cols-2 gap-5 md:gap-6">
             <RuleCard tone="ok" title="Acceptable" rules={MEN_OK} />
             <RuleCard tone="no" title="Not permitted" rules={MEN_NOT_OK} />
@@ -190,7 +190,7 @@ export default function DressCode() {
         </div>
       </section>
 
-      {/* Footwear — same rules for everyone */}
+      {/* Footwear, same rules for everyone */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <p className="eyebrow mb-5">Footwear</p>
@@ -200,7 +200,7 @@ export default function DressCode() {
             <RuleCard tone="no" title="Not permitted" rules={FOOT_NOT_OK} />
           </div>
           <p className="mt-6 text-xs text-silt font-mono max-w-2xl">
-            Metal spikes damage the greens. We're strict about this — it's the one rule you'll
+            Metal spikes damage the greens. We're strict about this, it's the one rule you'll
             get turned away for at the first tee.
           </p>
         </div>
@@ -227,7 +227,7 @@ export default function DressCode() {
             </p>
             <p className="prose-editorial text-paper/85">
               We're not hard-line about it. If something slipped past while you were packing
-              the car, ask at the Pro Shop — more often than not we can sort it out without
+              the car, ask at the Pro Shop, more often than not we can sort it out without
               sending you home.
             </p>
           </div>

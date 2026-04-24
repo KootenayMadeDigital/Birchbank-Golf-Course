@@ -16,12 +16,12 @@ export default function Home() {
     <>
       <BallIntoHoleHero />
 
-      {/* 2. Anchor — 213 days on the Columbia */}
+      {/* 2. Anchor, 213 days on the Columbia */}
       <AnchorReveal />
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* 2.5 What's on — the 3-up announcement grid (replaces the old carousel pattern) */}
+      {/* 2.5 What's on, the 3-up announcement grid (replaces the old carousel pattern) */}
       <AnnouncementGrid />
 
       <div className="container-edge"><div className="rule-hair" /></div>
@@ -37,7 +37,7 @@ export default function Home() {
               </h2>
               <p className="prose-editorial text-granite/85 max-w-xl">
                 Book online or call the Pro Shop. Frost delays and course conditions
-                post before the first tee — we don't hide them.
+                post before the first tee, we don't hide them.
               </p>
             </ScrollReveal>
 
@@ -122,7 +122,7 @@ export default function Home() {
       {/* 6. Photo marquee */}
       <PhotoMarquee />
 
-      {/* 6.5 October gold — single full-bleed cinematic moment with one
+      {/* 6.5 October gold, single full-bleed cinematic moment with one
            blueprint-voice line. No CTA, no link-out. Pure editorial beat
            that pulls the shoulder-season visitor. */}
       <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden bg-granite">
@@ -154,7 +154,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Course + scorecard — cedar block, polished */}
+      {/* 7. Course + scorecard, cedar block, polished */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5">
@@ -304,7 +304,7 @@ export default function Home() {
               Member-owned since 2004. Routed by Roy Stone, 1962.
             </p>
 
-            {/* Drive-times strip links to /plan-your-visit — the full
+            {/* Drive-times strip links to /plan-your-visit, the full
                 destination hub with drive routes, border crossings,
                 airports, lodging, and the Kootenay golf trail for
                 multi-day trips. */}
@@ -332,7 +332,7 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Trust stack (enhancement 7) — three chips, every number
+            {/* Trust stack (enhancement 7), three chips, every number
                 traceable to a file in src/data/ or the Testimonials component.
                 No fabricated stats. */}
             <div className="mt-12 grid sm:grid-cols-3 gap-3 md:gap-5 max-w-2xl mx-auto">

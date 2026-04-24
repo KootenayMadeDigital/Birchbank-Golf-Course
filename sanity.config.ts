@@ -4,7 +4,7 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./src/sanity/schema";
 
 /**
- * Sanity Studio — mounted at /studio (see src/app/studio/[[...tool]]/page.tsx).
+ * Sanity Studio, mounted at /studio (see src/app/studio/[[...tool]]/page.tsx).
  *
  * To activate:
  *   1. Create a Sanity project at https://www.sanity.io

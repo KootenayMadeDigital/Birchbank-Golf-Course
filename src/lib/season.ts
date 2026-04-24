@@ -1,5 +1,5 @@
 /**
- * Birchbank season status — shared by ConditionsWidget and AnchorReveal.
+ * Birchbank season status, shared by ConditionsWidget and AnchorReveal.
  *
  * The course runs April 1 -> October 31 every year, explicitly documented as
  * "213 days" on birchbankgolf.com. This module turns a Date into a loud
@@ -18,7 +18,7 @@ export type SeasonStatus = {
 };
 
 /**
- * React hook — returns the current Date, updating every minute.
+ * React hook, returns the current Date, updating every minute.
  *
  * Initial state is intentionally null so SSR and first client render
  * agree. Seeding with `new Date()` would trigger hydration mismatch #418

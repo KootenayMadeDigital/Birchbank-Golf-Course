@@ -13,7 +13,7 @@ export type GridAnnouncement = {
 };
 
 // Mirrors the four messages rotating on birchbankgolf.com, distilled to three
-// evergreen cards. All visible at once — no rotation, no carousel.
+// evergreen cards. All visible at once, no rotation, no carousel.
 export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
   {
     eyebrow: "Open now",
@@ -30,7 +30,7 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
     title: "9 am – 7 pm, seven days.",
     body: "Booking, fittings, lessons with our CPGA head pro, club repairs. Walk in or call ahead.",
     cta: { label: "Call 250-693-2255", href: "tel:+12506932255" },
-    // Source: birchbankgolf.com homepage slideshow — the "Pro-shop is open
+    // Source: birchbankgolf.com homepage slideshow, the "Pro-shop is open
     // 9am-7pm 7 days a week" slide. Their own photograph, used in their
     // current rotation.
     image: {
@@ -43,7 +43,7 @@ export const GRID_ANNOUNCEMENTS: GridAnnouncement[] = [
     title: "Noon to five. Every day.",
     body: "Fully licensed. Covered patio on the river. Catering for member events, weddings, and tournaments.",
     cta: { label: "See the menus", href: "/bistro" },
-    // The real Bistro plate from birchbankgolf.com's own slideshow — their
+    // The real Bistro plate from birchbankgolf.com's own slideshow, their
     // food, photographed on-site. Not generated.
     image: {
       src: "https://www.birchbankgolf.com/wp-content/uploads/2021/09/Slide1.jpg",

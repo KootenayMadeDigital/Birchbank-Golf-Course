@@ -1,4 +1,4 @@
-// All values verified from birchbankgolf.com — April 2026
+// All values verified from birchbankgolf.com. April 2026
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://birchbankgolf.com";
 
 export const NAP = {
@@ -19,7 +19,7 @@ export const NAP = {
   mailingAddress: "PO Box 250, Trail, BC V1R 4L5",
   postalCode: "V0G 1G0",
   addressCountry: "CA",
-  // Approx coords for Genelle, BC along Highway 22 — confirm before shipping
+  // Approx coords for Genelle, BC along Highway 22, confirm before shipping
   latitude: 49.2,
   longitude: -117.7,
   url: SITE,

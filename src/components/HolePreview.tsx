@@ -4,10 +4,10 @@ import { HOLES } from "@/data/holes";
 /**
  * Editorial-row hole preview for the home page. Spotlights three holes
  * on verifiable grounds:
- *   • Hole 2  — signature hole (downhill par 3, Columbia River gorge view —
+ *   • Hole 2 , signature hole (downhill par 3, Columbia River gorge view , 
  *     per SCOREGolf feature by Andrew Penner, Oct 2022)
- *   • Hole 6  — stroke index 1 (hardest hole on the course)
- *   • Hole 15 — second pond + Columbia River view; published photo by
+ *   • Hole 6 , stroke index 1 (hardest hole on the course)
+ *   • Hole 15, second pond + Columbia River view; published photo by
  *     Andrew Penner (SCOREGolf)
  */
 const HIGHLIGHTS: Array<{
@@ -21,7 +21,7 @@ const HIGHLIGHTS: Array<{
     number: 2,
     headline: "The signature.",
     body: "Downhill par 3 with a spectacular view down the Columbia River gorge. One of the best tee shots in the Kootenays.",
-    aside: "Pro tip: the drop changes your yardage more than you think — take one club less, and commit to it.",
+    aside: "Pro tip: the drop changes your yardage more than you think, take one club less, and commit to it.",
     badge: "Signature",
   },
   {
@@ -77,7 +77,7 @@ export default function HolePreview() {
                       )}
                     </div>
                     <p className="mt-2 text-silt text-base max-w-xl">{h.body}</p>
-                    {/* Aside — always visible on mobile (since the HCP / yardage
+                    {/* Aside, always visible on mobile (since the HCP / yardage
                         columns are hidden there); on md+ it's tucked under
                         the fold and rises in on hover as a reveal. */}
                     <p

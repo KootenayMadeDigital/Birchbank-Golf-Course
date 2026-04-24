@@ -16,9 +16,9 @@
 
 ## Staff
 
-- Jeff Papilion — Director of Golf / Head Professional (CPGA)
-- Mike DesMarias — Course Superintendent
-- Brenda Hyson — Accounting
+- Jeff Papilion. Director of Golf / Head Professional (CPGA)
+- Mike DesMarias. Course Superintendent
+- Brenda Hyson. Accounting
 
 ## Rates (2026 season, CAD)
 
@@ -33,19 +33,19 @@
 
 ## Where to find things on the site
 
-- /rates — green fees, cart, punch passes, range pass, lockers, promotions
-- /membership — seven membership tiers with published prices
-- /membership/retirees-club — Thursday morning Retirees Club schedule and contact
-- /bistro — hours, contact, links to food and drink menu PDFs
-- /events — events calendar and private event booking
-- /events/book — booking larger groups, tournaments, dining functions
-- /course — course overview and scorecard images
-- /course/scorecard — full scorecard (inside + back)
-- /course/history — complete club history 1922 → 2018
-- /about/team — staff contacts
-- /plan-your-visit — regional partners and the Kootenay Golf Trail
-- /contact — all departments, addresses, emails
-- /members — dashboard links (Chronogolf + Golf Canada SCG)
+- /rates, green fees, cart, punch passes, range pass, lockers, promotions
+- /membership, seven membership tiers with published prices
+- /membership/retirees-club. Thursday morning Retirees Club schedule and contact
+- /bistro, hours, contact, links to food and drink menu PDFs
+- /events, events calendar and private event booking
+- /events/book, booking larger groups, tournaments, dining functions
+- /course, course overview and scorecard images
+- /course/scorecard, full scorecard (inside + back)
+- /course/history, complete club history 1922 → 2018
+- /about/team, staff contacts
+- /plan-your-visit, regional partners and the Kootenay Golf Trail
+- /contact, all departments, addresses, emails
+- /members, dashboard links (Chronogolf + Golf Canada SCG)
 
 ## Source
 

@@ -7,7 +7,7 @@ import { faqJsonLd } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Everything visitors ask about Birchbank Golf Course — season, hours, booking, dress code, course design, rates, equipment, and the Retirees Club.",
+    "Everything visitors ask about Birchbank Golf Course, season, hours, booking, dress code, course design, rates, equipment, and the Retirees Club.",
   alternates: { canonical: "/faq" },
 };
 
@@ -133,7 +133,7 @@ export default function FAQPage() {
             <p className="prose-editorial text-paper/85 max-w-xl">
               The Pro Shop is open 9 AM – 7 PM, seven days a week during the season. The
               Bistro line picks up 12 – 5 PM. Slow season (November – March), leave a
-              voicemail — the office returns calls within a business day.
+              voicemail, the office returns calls within a business day.
             </p>
           </div>
           <div className="md:col-span-5 md:text-right">

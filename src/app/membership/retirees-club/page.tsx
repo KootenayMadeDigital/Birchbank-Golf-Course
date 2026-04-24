@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Retirees Club",
-  description: "The Birchbank Retirees Club plays every Thursday morning April through October. Open to retired players — a Birchbank Golf Course membership is not required.",
+  description: "The Birchbank Retirees Club plays every Thursday morning April through October. Open to retired players, a Birchbank Golf Course membership is not required.",
   alternates: { canonical: "/membership/retirees-club" },
 };
 
@@ -26,7 +26,7 @@ export default function RetireesClub() {
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-7 prose-editorial text-granite/85 space-y-6">
           <p>
-            Membership in the Retirees Club is open to players who have retired — it does
+            Membership in the Retirees Club is open to players who have retired, it does
             not require a Birchbank Golf Course membership. The club plays every Thursday
             morning from April to October with a two-hour reserved block of tee times.
           </p>

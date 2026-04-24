@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { fetchBirchbankWeather } from "@/lib/weather";
 
 /**
- * GET /api/weather — returns the current Birchbank weather snapshot.
+ * GET /api/weather, returns the current Birchbank weather snapshot.
  *
  * Served from Next.js's data cache at the edge; revalidates every 15
  * minutes via the fetch call inside fetchBirchbankWeather. Upstream

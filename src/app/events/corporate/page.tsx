@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Corporate events",
   description:
-    "Corporate golf outings, client events, tournament hosting, and buyouts at Birchbank Golf Course — on the Columbia River, 15 minutes from Teck Trail and the Lower Columbia corporate district.",
+    "Corporate golf outings, client events, tournament hosting, and buyouts at Birchbank Golf Course, on the Columbia River, 15 minutes from Teck Trail and the Lower Columbia corporate district.",
   alternates: { canonical: "/events/corporate" },
 };
 
@@ -28,17 +28,17 @@ const WHAT_WE_HANDLE = [
   {
     title: "Tournament hosting",
     body:
-      "Full-day shotgun start, scramble or best-ball format, tee-box sponsorship, prize packages, on-course contests (longest drive, closest to pin). We run the logistics — you host the guests.",
+      "Full-day shotgun start, scramble or best-ball format, tee-box sponsorship, prize packages, on-course contests (longest drive, closest to pin). We run the logistics, you host the guests.",
   },
   {
     title: "Client golf days",
     body:
-      "Half-day or full-day outings for a small group — four to sixteen players. Private tee block, green fees at negotiated rate, optional Bistro package after the round.",
+      "Half-day or full-day outings for a small group, four to sixteen players. Private tee block, green fees at negotiated rate, optional Bistro package after the round.",
   },
   {
     title: "Course buyouts",
     body:
-      "The whole course, for the whole day. Available mid-week during shoulder seasons (April–May, September–October). Ask about October — the tamarack turn is spectacular.",
+      "The whole course, for the whole day. Available mid-week during shoulder seasons (April–May, September–October). Ask about October, the tamarack turn is spectacular.",
   },
   {
     title: "Bistro catering",
@@ -84,7 +84,7 @@ export default function CorporateEvents() {
             Host your day<br />on the Columbia.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank is the largest 18-hole venue in the Lower Columbia — 15 minutes from
+            Birchbank is the largest 18-hole venue in the Lower Columbia, 15 minutes from
             Teck's Trail smelter, 10 minutes from downtown Trail, and an easy drive for
             every chamber in the region. We host corporate tournaments, client days,
             buyouts, and business lunches with full Bistro catering.
@@ -107,7 +107,7 @@ export default function CorporateEvents() {
               Four kinds of corporate day.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Every event is built around your guest list and budget — same pattern the
+              Every event is built around your guest list and budget, same pattern the
               course has used for decades. No cookie-cutter package, no surprise fees.
             </p>
           </div>
@@ -173,7 +173,7 @@ export default function CorporateEvents() {
               <p className="font-display text-lg text-paper mb-1">The Bistro</p>
               <p className="text-paper/80 text-sm leading-relaxed">
                 Fully licensed, full kitchen, covered patio for outdoor events. Handles
-                larger groups for meals, appetizers, and refreshments — standalone or
+                larger groups for meals, appetizers, and refreshments, standalone or
                 paired with a golf package.
               </p>
             </div>
@@ -198,7 +198,7 @@ export default function CorporateEvents() {
             </h2>
             <p className="prose-editorial text-granite/85">
               Corporate events aren't built through a widget. Call the office, tell us your
-              guest list, date range, and what you're hoping to accomplish — we'll come back
+              guest list, date range, and what you're hoping to accomplish, we'll come back
               with a plan.
             </p>
           </div>
@@ -218,7 +218,7 @@ export default function CorporateEvents() {
               <p className="font-display text-5xl text-tamarack leading-none">2</p>
               <p className="font-display text-lg text-granite mt-4 mb-2">Build the day</p>
               <p className="text-silt text-sm leading-relaxed">
-                Format, start time, catering menu, prizes, sponsorship options — we'll
+                Format, start time, catering menu, prizes, sponsorship options, we'll
                 quote it as a single package.
               </p>
             </li>

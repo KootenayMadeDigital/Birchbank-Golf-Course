@@ -12,14 +12,14 @@ declare global {
 /**
  * Premium sticky booking pill. Anchors to the bottom-right of the
  * viewport (respecting the mobile safe-area inset) once the user has
- * scrolled past the hero section. Dismissible with × — dismissal
+ * scrolled past the hero section. Dismissible with ×, dismissal
  * persists for the browser session.
  *
  * Visual design:
  *   • Cedar background with amber accent line above for gravitas
  *   • Two-line layout: "Ready to book?" eyebrow + CTA row
  *   • Drop shadow for separation from page content
- *   • Scales comfortably for touch — 48px+ tap targets
+ *   • Scales comfortably for touch, 48px+ tap targets
  */
 export default function StickyBookBar() {
   const [visible, setVisible] = useState(false);
@@ -31,7 +31,7 @@ export default function StickyBookBar() {
       return;
     }
     const onScroll = () => {
-      const hero = document.querySelector('[aria-label="Birchbank Golf — opening sequence"]');
+      const hero = document.querySelector('[aria-label="Birchbank Golf, opening sequence"]');
       if (!hero) {
         setVisible(window.scrollY > 300);
         return;

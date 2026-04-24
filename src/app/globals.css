@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette — Columbia River valley */
+  /* Palette. Columbia River valley */
   --color-paper: #F5F2EA;
   --color-silt: #8C8A82;
   --color-tamarack: #C89B3C;
@@ -11,7 +11,7 @@
   --color-amber: #B5691F;
   --color-amber-dark: #98551A;
 
-  /* Type — Fontshare: Gambetta (editorial serif) + Switzer (neo-grotesque sans) */
+  /* Type. Fontshare: Gambetta (editorial serif) + Switzer (neo-grotesque sans) */
   --font-display: "Gambetta", "GT Sectra", Georgia, serif;
   --font-sans: "Switzer", "GT America", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -42,7 +42,13 @@
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.015em;
-    color: var(--color-granite);
+    /* Inherit color from the nearest ancestor so headings flow with
+       their section context. A cedar/granite section can set
+       `text-paper` on the wrapper and headings pick it up
+       automatically; light sections still read as granite because
+       body defaults to that. Hard-coding color here created
+       dark-on-dark headlines in cedar sections. */
+    color: inherit;
   }
 
   ::selection {
@@ -50,7 +56,7 @@
     color: var(--color-granite);
   }
 
-  /* Focus — WCAG 2.4.11 */
+  /* Focus. WCAG 2.4.11 */
   :focus-visible {
     outline: 2px solid var(--color-amber);
     outline-offset: 3px;
@@ -83,7 +89,7 @@
   }
 }
 
-/* ScrollReveal — IntersectionObserver-driven fade/rise. Keeps CSS outside
+/* ScrollReveal. IntersectionObserver-driven fade/rise. Keeps CSS outside
    any @layer so Tailwind utilities can't override the initial-hidden state
    via specificity accident. When JS hasn't applied .sr-ready yet, content
    is fully visible (graceful no-JS fallback). */
@@ -124,7 +130,7 @@
 }
 
 /*
-  Chronogolf v2 widget — let Chronogolf's own stylesheet render the
+  Chronogolf v2 widget, let Chronogolf's own stylesheet render the
   panel. We do NOT override its internals; fighting cdn2.chronogolf.com
   for specificity was the wrong path. The source trigger in layout.tsx
   is a <div> (matching birchbankgolf.com's live embed) so the cloned
@@ -144,7 +150,7 @@
   z-index: 30 !important;
 }
 
-/* The cloned wrapper — Chronogolf's own CSS starts it at
+/* The cloned wrapper. Chronogolf's own CSS starts it at
    `transform: translateY(3000px) !important` (hidden off-screen) and
    expects their JS to remove that offset. On our embed the JS path
    that clears it doesn't fire, so the widget stays hidden. Force it
@@ -162,7 +168,7 @@
   color: #2B2A28 !important;
 }
 
-/* The booking iframe body — Chronogolf leaves this unsized, so its
+/* The booking iframe body. Chronogolf leaves this unsized, so its
    100%-height iframe collapses to 0. Give it a large, viewport-aware
    size and position it ABOVE the header when active, since the widget
    is pinned to the bottom of the viewport. */
@@ -192,7 +198,7 @@
 
 
 
-/* Hero wrapper — kept as plain CSS (not inside @layer) so Tailwind 4's
+/* Hero wrapper, kept as plain CSS (not inside @layer) so Tailwind 4's
    layered specificity doesn't swallow it. Desktop / fine pointer gets
    100vh + an absolutely-positioned inner so GSAP ScrollTrigger can pin it;
    touch devices get a 300vh wrapper with a sticky inner so frames scrub
@@ -274,7 +280,7 @@
   .btn-ghost:hover { color: var(--color-amber); border-color: var(--color-amber); }
 
   /* ──────────────────────────────────────────────────────────────────
-     Header CTA system — three tiered variants built specifically for
+     Header CTA system, three tiered variants built specifically for
      the Birchbank nav. These are NOT generic buttons. They are small
      brand artifacts: a gilt-edged cedar signature, an editorial serif
      underline, and a mono-caps keyline "side door" for members.
@@ -303,9 +309,9 @@
     .header-cta:hover { transform: none !important; }
   }
 
-  /* Tier 1 — Signature invitation.
+  /* Tier 1. Signature invitation.
      Cedar-filled, paper text, generous letter-spacing. A 1px tamarack
-     rule sits across the top edge like a gilt inlay — the single
+     rule sits across the top edge like a gilt inlay, the single
      ornamental detail that says "this club has taste." */
   .header-cta-primary {
     padding: 0.7rem 1.25rem;
@@ -324,7 +330,7 @@
     transform: translateY(-1px);
   }
 
-  /* Tier 2 — Editorial secondary.
+  /* Tier 2. Editorial secondary.
      Serif, upright, no fill. A hairline at 40% currentColor sits under
      the text like a magazine "continued on →" link. Reads against
      both dark hero and light scrolled states because it uses
@@ -355,10 +361,10 @@
     opacity: 1;
   }
 
-  /* Tier 3 — Private keyline.
+  /* Tier 3. Private keyline.
      The side door. Mono caps, tight letter-spacing, single-pixel
      currentColor border. Understated opacity at rest; at hover the
-     color resolves to tamarack — quiet exclusivity. */
+     color resolves to tamarack, quiet exclusivity. */
   .header-cta-keyline {
     padding: 0.55rem 0.85rem;
     border: 1px solid currentColor;

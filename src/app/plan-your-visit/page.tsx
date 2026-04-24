@@ -5,12 +5,12 @@ import BookButton from "@/components/BookButton";
 export const metadata: Metadata = {
   title: "Plan your visit",
   description:
-    "How to get to Birchbank Golf Course in Genelle, BC — drive routes from Spokane, Kelowna, Calgary, and Vancouver; the four regional airports; and the Kootenay weather window.",
+    "How to get to Birchbank Golf Course in Genelle, BC, drive routes from Spokane, Kelowna, Calgary, and Vancouver; the four regional airports; and the Kootenay weather window.",
   alternates: { canonical: "/plan-your-visit" },
 };
 
 /**
- * Plan-your-visit page — scoped strictly to "how to get here."
+ * Plan-your-visit page, scoped strictly to "how to get here."
  *
  * Distinct from its Visit-submenu siblings:
  *   /stay-and-play   → lodging + dinner + multi-course trips
@@ -47,7 +47,7 @@ const DRIVE_ROUTES = [
     distance: "640 km",
     time: "~6.5 – 7.5 hours",
     route: "AB-22X → Crowsnest Pass (Hwy 3) → Creston → BC-3 W → BC-22",
-    note: "A committed day on the road. Many golfers break the trip in Fernie or Cranbrook — good courses in both.",
+    note: "A committed day on the road. Many golfers break the trip in Fernie or Cranbrook, good courses in both.",
   },
   {
     city: "Vancouver, BC",
@@ -81,7 +81,7 @@ const AIRPORTS = [
     code: "YXC",
     name: "Canadian Rockies International (Cranbrook)",
     distance: "250 km · ~3 hours",
-    notes: "Alternative for trips routing through the Rockies — Calgary-bound WestJet flights stop here.",
+    notes: "Alternative for trips routing through the Rockies. Calgary-bound WestJet flights stop here.",
   },
 ];
 
@@ -107,7 +107,7 @@ export default function PlanYourVisit() {
             Three hours from Spokane.<br />Seven from Calgary.<br />Worth the drive.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank sits on the west bank of the Columbia River in Genelle, BC — 15 minutes
+            Birchbank sits on the west bank of the Columbia River in Genelle, BC, 15 minutes
             from Castlegar, 12 minutes from Trail. This page covers the logistics of getting
             here. For where to stay, see{" "}
             <Link href="/stay-and-play" className="underline hover:text-amber">Stay &amp; play</Link>;
@@ -195,7 +195,7 @@ export default function PlanYourVisit() {
         </div>
       </section>
 
-      {/* Cross-border callout — routes to the dedicated /usa-visitors page. */}
+      {/* Cross-border callout, routes to the dedicated /usa-visitors page. */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-8 md:grid-cols-12 items-center">
           <div className="md:col-span-8">
@@ -207,8 +207,8 @@ export default function PlanYourVisit() {
               Three border crossings · passport details · USD rates.
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
-              We keep all the cross-border specifics — Paterson / Frontier, Waneta / Boundary,
-              Nelway / Metaline Falls, NEXUS, what to bring, CAD versus USD — on one
+              We keep all the cross-border specifics. Paterson / Frontier, Waneta / Boundary,
+              Nelway / Metaline Falls, NEXUS, what to bring, CAD versus USD, on one
               dedicated page.
             </p>
           </div>
@@ -232,8 +232,8 @@ export default function PlanYourVisit() {
               June 15 – September 15.
             </h2>
             <p className="prose-editorial text-granite/85 max-w-xl">
-              The Kootenay summer is warm, dry, and long. Shoulder seasons — April to early June,
-              mid-September to October — play firmer, cooler, cheaper, and less crowded. October
+              The Kootenay summer is warm, dry, and long. Shoulder seasons. April to early June,
+              mid-September to October, play firmer, cooler, cheaper, and less crowded. October
               is the best month for colour; the tamaracks along the river go gold for about three
               weeks mid-month.
             </p>
@@ -255,7 +255,7 @@ export default function PlanYourVisit() {
         </div>
       </section>
 
-      {/* Next steps — the three sibling pages */}
+      {/* Next steps, the three sibling pages */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-10 max-w-2xl">

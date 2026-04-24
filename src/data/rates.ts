@@ -1,4 +1,4 @@
-// All rates verified from https://www.birchbankgolf.com/rates/ — April 2026.
+// All rates verified from https://www.birchbankgolf.com/rates/. April 2026.
 // Dollar amounts are CAD; tax treatment per the source site.
 
 export type Rate = {
@@ -8,10 +8,10 @@ export type Rate = {
 };
 
 export const GREEN_FEES: Rate[] = [
-  { label: "18 Holes — day rate", amount: "$80" },
+  { label: "18 Holes, day rate", amount: "$80" },
   { label: "9 Holes", amount: "$45" },
-  { label: "Twilight — after 1:00 PM", amount: "$55" },
-  { label: "Twilight — after 3:00 PM", amount: "$45" },
+  { label: "Twilight, after 1:00 PM", amount: "$55" },
+  { label: "Twilight, after 3:00 PM", amount: "$45" },
   { label: "Reciprocal rate", amount: "25% off rack", note: "Participating clubs" },
 ];
 
@@ -25,11 +25,11 @@ export const PROMOTIONS = [
 ];
 
 export const CART_FEES = [
-  { label: "Power cart — 9 holes", amount: "$13.50", note: "Per rider, tax included" },
-  { label: "Power cart — 18 holes", amount: "$24.00", note: "Per rider, tax included" },
+  { label: "Power cart, 9 holes", amount: "$13.50", note: "Per rider, tax included" },
+  { label: "Power cart, 18 holes", amount: "$24.00", note: "Per rider, tax included" },
   { label: "Seasonal lease (one seat)", amount: "$635" },
-  { label: "Personal cart storage — gas", amount: "$285" },
-  { label: "Personal cart storage — electric", amount: "$320" },
+  { label: "Personal cart storage, gas", amount: "$285" },
+  { label: "Personal cart storage, electric", amount: "$320" },
   { label: "Cart trackage fee", amount: "$225" },
 ];
 
@@ -49,14 +49,14 @@ export const LOCKERS = [
 ];
 
 // Verified from https://www.birchbankgolf.com/memberships/ (2025 Early Bird prices displayed).
-// 2026 prices to be confirmed — source page listed Early Bird pricing through Nov 5, 2025.
+// 2026 prices to be confirmed, source page listed Early Bird pricing through Nov 5, 2025.
 export const MEMBERSHIP_TIERS = [
-  { name: "Single — Full Play", price: "$1,969", blurb: "Unlimited play, 7 days a week, no restrictions." },
-  { name: "Couple — Full Play", price: "$3,590", blurb: "Unlimited play for two members." },
+  { name: "Single · Full Play", price: "$1,969", blurb: "Unlimited play, 7 days a week, no restrictions." },
+  { name: "Couple · Full Play", price: "$3,590", blurb: "Unlimited play for two members." },
   { name: "Family", price: "$4,050", blurb: "Unlimited play for family members." },
   { name: "Intermediate (19–29)", price: "$1,175", blurb: "Unlimited play for the 19–29 age bracket." },
-  { name: "New Member — Single Full Play", price: "$1,525", blurb: "For members who have not held membership for 2 years." },
-  { name: "New Couple Members — Full Play", price: "$2,780", blurb: "For new members (non-members for 2 years)." },
+  { name: "New Member · Single Full Play", price: "$1,525", blurb: "For members who have not held membership for 2 years." },
+  { name: "New Couple Members · Full Play", price: "$2,780", blurb: "For new members (non-members for 2 years)." },
   { name: "Student", price: "$640", blurb: "Unlimited play for students." },
 ];
 

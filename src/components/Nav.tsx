@@ -7,11 +7,11 @@ import BookButton from "./BookButton";
 import SocialLinks from "./SocialLinks";
 import Logo from "./Logo";
 
-type NavChild = { href: string; label: string };
+type NavChild = { href: string; label: string; external?: boolean };
 type NavItem = { href: string; label: string; children?: NavChild[] };
 
 /**
- * Top navigation — audience-grouped with dropdowns.
+ * Top navigation, audience-grouped with dropdowns.
  *
  * Seven top-level items, each a valid landing page. Four of them
  * (Course / Memberships / Events / Visit) have a dropdown that
@@ -43,7 +43,7 @@ const NAV: NavItem[] = [
     children: [
       { href: "/membership", label: "Membership tiers" },
       { href: "/membership/retirees-club", label: "Retirees Club" },
-      { href: "/login", label: "Member Portal" },
+      { href: "https://members.chronogolf.com/login", label: "Member Portal ↗", external: true },
     ],
   },
   { href: "/bistro", label: "The Bistro" },
@@ -80,7 +80,7 @@ export default function Nav() {
    * Two rule sets depending on whether the current page has a dark hero
    * backdrop that the nav needs to sit on top of:
    *
-   *   1. Home page (has [aria-label="Birchbank Golf — opening sequence"]):
+   *   1. Home page (has [aria-label="Birchbank Golf, opening sequence"]):
    *      - Transparent at the very top (nav text = paper, reads on the
    *        dark cinematic hero)
    *      - Flips opaque once the AnchorReveal section crosses the viewport
@@ -93,7 +93,7 @@ export default function Nav() {
    */
   useEffect(() => {
     const update = () => {
-      const hero = document.querySelector('[aria-label="Birchbank Golf — opening sequence"]');
+      const hero = document.querySelector('[aria-label="Birchbank Golf, opening sequence"]');
 
       // Subpage: always opaque. No dark hero backdrop means we can't
       // run transparent without making text invisible.
@@ -102,13 +102,13 @@ export default function Nav() {
         return;
       }
 
-      // Home page — hard floor at top, transparent over the hero.
+      // Home page, hard floor at top, transparent over the hero.
       if (window.scrollY < 10) {
         setOnLight(false);
         return;
       }
 
-      // Home page — flip opaque once the anchor-reveal section crosses the top.
+      // Home page, flip opaque once the anchor-reveal section crosses the top.
       const sentinel = document.getElementById("anchor-heading")?.closest("section");
       if (sentinel) {
         setOnLight(sentinel.getBoundingClientRect().top <= 0);
@@ -140,16 +140,16 @@ export default function Nav() {
           : "bg-transparent",
       )}
     >
-      <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-10 h-20 md:h-24 lg:h-28 xl:h-32 2xl:h-36">
-        <Link href="/" aria-label="Birchbank Golf Club — home" className="flex items-center">
+      <div className="container-edge grid grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-10 h-16 md:h-18 lg:h-20 xl:h-22 2xl:h-24">
+        <Link href="/" aria-label="Birchbank Golf Club, home" className="flex items-center">
           <Logo
             variant={light ? "flush" : "plate"}
-            className="h-12 md:h-14 lg:h-16 xl:h-20 2xl:h-24"
+            className="h-10 md:h-11 lg:h-12 xl:h-14 2xl:h-16"
             priority
           />
         </Link>
 
-        {/* Desktop nav — dropdowns open on hover / focus-within */}
+        {/* Desktop nav, dropdowns open on hover / focus-within */}
         <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-8 2xl:gap-10">
           {NAV.map((item) =>
             item.children ? (
@@ -180,15 +180,27 @@ export default function Nav() {
                   )}
                 >
                   <div className="min-w-[240px] bg-paper border border-granite/15 shadow-xl rounded-sm py-2">
-                    {item.children.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="block px-5 py-2.5 text-sm text-granite hover:bg-cedar/5 hover:text-amber whitespace-nowrap transition-colors"
-                      >
-                        {c.label}
-                      </Link>
-                    ))}
+                    {item.children.map((c) =>
+                      c.external ? (
+                        <a
+                          key={c.href}
+                          href={c.href}
+                          target="_blank"
+                          rel="noopener"
+                          className="block px-5 py-2.5 text-sm text-granite hover:bg-cedar/5 hover:text-amber whitespace-nowrap transition-colors"
+                        >
+                          {c.label}
+                        </a>
+                      ) : (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          className="block px-5 py-2.5 text-sm text-granite hover:bg-cedar/5 hover:text-amber whitespace-nowrap transition-colors"
+                        >
+                          {c.label}
+                        </Link>
+                      ),
+                    )}
                   </div>
                 </div>
               </div>
@@ -223,16 +235,19 @@ export default function Nav() {
             250-693-2255
           </a>
 
-          {/* Member Portal — keyline tier 3 treatment (the quiet side door). */}
-          <Link
-            href="/login"
+          {/* Member Portal, keyline tier 3 treatment (the quiet side door).
+              Links directly to Chronogolf's member login (no gateway page). */}
+          <a
+            href="https://members.chronogolf.com/login"
+            target="_blank"
+            rel="noopener"
             className={clsx(
               "header-cta header-cta-keyline hidden md:inline-flex",
               light ? "text-granite" : "text-paper",
             )}
           >
             Member Portal
-          </Link>
+          </a>
 
           <button
             aria-label="Menu"
@@ -247,7 +262,7 @@ export default function Nav() {
         </div>
       </div>
 
-      {/* Mobile menu — flat expanded layout, no nested tapping */}
+      {/* Mobile menu, flat expanded layout, no nested tapping */}
       {open && (
         <div className="lg:hidden bg-paper border-t border-granite/10 max-h-[calc(100vh-5rem)] overflow-y-auto">
           <nav className="container-edge py-6 flex flex-col gap-5">
@@ -266,13 +281,25 @@ export default function Nav() {
                       .filter((c) => c.href !== item.href)
                       .map((c) => (
                         <li key={c.href}>
-                          <Link
-                            href={c.href}
-                            onClick={() => setOpen(false)}
-                            className="block text-sm text-silt hover:text-amber py-1.5"
-                          >
-                            {c.label}
-                          </Link>
+                          {c.external ? (
+                            <a
+                              href={c.href}
+                              target="_blank"
+                              rel="noopener"
+                              onClick={() => setOpen(false)}
+                              className="block text-sm text-silt hover:text-amber py-1.5"
+                            >
+                              {c.label}
+                            </a>
+                          ) : (
+                            <Link
+                              href={c.href}
+                              onClick={() => setOpen(false)}
+                              className="block text-sm text-silt hover:text-amber py-1.5"
+                            >
+                              {c.label}
+                            </Link>
+                          )}
                         </li>
                       ))}
                   </ul>
@@ -281,13 +308,15 @@ export default function Nav() {
             ))}
             <div className="pt-4 flex flex-col gap-3 items-start">
               <BookButton />
-              <Link
-                href="/login"
+              <a
+                href="https://members.chronogolf.com/login"
+                target="_blank"
+                rel="noopener"
                 onClick={() => setOpen(false)}
                 className="header-cta header-cta-keyline text-granite"
               >
                 Member Portal
-              </Link>
+              </a>
               <a href="tel:+12506932255" className="mt-2 text-sm text-silt hover:text-amber">
                 Call Pro Shop · 250-693-2255
               </a>

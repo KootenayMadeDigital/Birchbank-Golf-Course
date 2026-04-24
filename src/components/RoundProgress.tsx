@@ -20,7 +20,7 @@ export default function RoundProgress({ current }: { current: number }) {
 
   return (
     <nav
-      aria-label="Round progress — 18-hole navigation"
+      aria-label="Round progress, 18-hole navigation"
       className="border-t border-b border-granite/15 py-5 md:py-6"
     >
       <div className="container-edge">

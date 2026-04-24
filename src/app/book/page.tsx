@@ -26,7 +26,7 @@ const BOOKING_STEPS = [
   {
     n: "2",
     title: "Get the confirmation",
-    body: "Chronogolf emails you a confirmation with the time, party size, and a cancellation link. Keep it — it's your reference if you need to reach the Pro Shop.",
+    body: "Chronogolf emails you a confirmation with the time, party size, and a cancellation link. Keep it, it's your reference if you need to reach the Pro Shop.",
   },
   {
     n: "3",
@@ -81,7 +81,7 @@ export default async function BookPage() {
             Pick a time.<br />We'll see you at the first.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Book directly with Birchbank — no third-party fees, no surge pricing, the same
+            Book directly with Birchbank, no third-party fees, no surge pricing, the same
             rate you'd pay walking in. If the widget loads slow or your wi-fi's spotty,{" "}
             <a href="tel:+12506932255" className="underline hover:text-amber">call 250-693-2255</a>
             {" "}and we'll do it on the phone.
@@ -101,13 +101,13 @@ export default async function BookPage() {
       {/* Booking widget + weather + rates sidebar */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge grid gap-8 lg:gap-10 lg:grid-cols-12">
-          {/* Chronogolf booking iframe — the actual booking surface. */}
+          {/* Chronogolf booking iframe, the actual booking surface. */}
           <div className="lg:col-span-8">
             <p className="eyebrow mb-4">Live tee sheet</p>
             <div className="border border-granite/15 overflow-hidden bg-paper">
               <iframe
                 src={CHRONOGOLF_WIDGET_SRC}
-                title="Birchbank Golf — Chronogolf tee time booking"
+                title="Birchbank Golf. Chronogolf tee time booking"
                 className="w-full h-[720px] border-0 block bg-paper"
                 allow="payment"
               />
@@ -263,7 +263,7 @@ export default async function BookPage() {
         </div>
       </section>
 
-      {/* Final CTA — alternatives */}
+      {/* Final CTA, alternatives */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
@@ -275,7 +275,7 @@ export default async function BookPage() {
               Four or more plays best on the phone.
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
-              Tournaments, corporate days, weddings, bachelor parties, Saturday foursomes —
+              Tournaments, corporate days, weddings, bachelor parties, Saturday foursomes , 
               the office handles groups directly. You'll get a real human, real rates, and
               actual availability instead of a widget.
             </p>

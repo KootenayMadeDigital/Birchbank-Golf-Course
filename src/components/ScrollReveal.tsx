@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 type Props = {
   children: React.ReactNode;
-  /** Stagger children (direct descendants) on reveal. Default: false — whole block fades as one. */
+  /** Stagger children (direct descendants) on reveal. Default: false, whole block fades as one. */
   stagger?: boolean;
   /** Delay in ms before the animation starts when it enters the viewport. Default 0. */
   delay?: number;
@@ -14,7 +14,7 @@ type Props = {
 
 /**
  * Scroll-triggered fade/rise wrapper. Uses the native IntersectionObserver
- * for the reveal trigger and a CSS transition for the animation — no GSAP
+ * for the reveal trigger and a CSS transition for the animation, no GSAP
  * dependency, no ScrollTrigger position-recalc edge cases. Content is
  * never left permanently invisible:
  *   - reduced-motion: content visible immediately, no animation

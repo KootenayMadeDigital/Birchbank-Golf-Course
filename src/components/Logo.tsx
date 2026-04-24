@@ -12,8 +12,8 @@ import clsx from "clsx";
  * smoothly from phones up through ultra-wide monitors.
  *
  * Variants:
- *   • `flush` — bare logo, used on paper / light backgrounds
- *   • `plate` — logo wrapped in a small paper-colored plate so the dark
+ *   • `flush`, bare logo, used on paper / light backgrounds
+ *   • `plate`, logo wrapped in a small paper-colored plate so the dark
  *     ink reads over dark surfaces (hero, footer)
  */
 type Props = {
