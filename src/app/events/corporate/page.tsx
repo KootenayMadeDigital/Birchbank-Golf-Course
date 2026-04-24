@@ -16,7 +16,7 @@ export const metadata: Metadata = {
  *     for a business-buyer audience.
  *   - Verifiable facts: Teck Trail smelter / lower Columbia corporate
  *     presence, Bistro capacity (large covered patio), course layout
- *     (Par 72, 6,788 Gold, five tees), phone numbers.
+ *     (Par 72, 6,584 Blue, four tees), phone numbers.
  *
  * We do NOT invent: specific package pricing, custom sponsorship tiers,
  * minimum group sizes, prize-package costs, catered menu prices.
@@ -157,14 +157,14 @@ export default function CorporateEvents() {
               className="font-display mb-5"
               style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
             >
-              Par 72 · five tees ·<br />one river.
+              Par 72 · four tees ·<br />one river.
             </h2>
           </div>
           <div className="md:col-span-7 space-y-4">
             <div className="border-l-2 border-tamarack pl-5">
               <p className="font-display text-lg text-paper mb-1">The course</p>
               <p className="text-paper/80 text-sm leading-relaxed">
-                18 holes, par 72, 6,788 yards from the Gold to 5,345 from the Red. Five sets
+                18 holes, par 72, 6,584 yards from the Blue to 5,330 from the Red. Four sets
                 of tees means mixed-ability groups can play together without anyone feeling
                 over- or underchallenged.
               </p>

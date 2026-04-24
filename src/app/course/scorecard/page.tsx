@@ -6,7 +6,7 @@ import ScorecardSwitcher from "@/components/ScorecardSwitcher";
 
 export const metadata: Metadata = {
   title: "Course layout & scorecard",
-  description: "Par 72, 6,555 yards from the Blue tees (rating 71.5 / slope 121). Full per-hole yardage and stroke index for Blue, White, and Red tees.",
+  description: "Par 72, 6,584 yards from the Blue tees (rating 71.5 / slope 121). Full per-hole yardage and stroke index for Blue, Combo, White, and Red tees.",
   alternates: { canonical: "/course/scorecard" },
 };
 
@@ -14,7 +14,7 @@ export default function Scorecard() {
   return (
     <section className="pt-36 pb-[var(--spacing-section)] container-edge">
       <p className="eyebrow mb-6">Course layout & scorecard</p>
-      <h1 className="display-xl mb-10 max-w-[20ch]">Par 72. Five sets of tees.</h1>
+      <h1 className="display-xl mb-10 max-w-[20ch]">Par 72. Four sets of tees.</h1>
       <p className="prose-editorial max-w-2xl text-granite/85 mb-10">
         As of June 1, {new Date(COURSE_FACTS.reconfiguredOn).getFullYear()}, Birchbank has
         been reconfigured to resemble the course as it was originally built. The

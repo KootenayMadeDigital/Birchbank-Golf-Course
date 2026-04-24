@@ -29,7 +29,7 @@ async function buildPdf(): Promise<Uint8Array> {
   const pdf = await PDFDocument.create();
   pdf.setTitle("Birchbank Golf Course. Scorecard");
   pdf.setAuthor("Birchbank Golf Course");
-  pdf.setSubject("Printed scorecard (2020 edition). Par 72, five sets of tees");
+  pdf.setSubject("Printed Birchbank scorecard. Par 72, four sets of tees");
   pdf.setCreator("birchbankgolf.com");
   pdf.setProducer("birchbankgolf.com");
   pdf.setCreationDate(new Date());

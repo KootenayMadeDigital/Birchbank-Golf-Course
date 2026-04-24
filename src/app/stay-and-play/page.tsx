@@ -119,7 +119,7 @@ const LOCAL_RESOURCES = [
 const TRAIL_COURSES = [
   {
     name: "Birchbank Golf Course",
-    detail: "Par 72 · 6,788 yd · riverside routing · Genelle, BC",
+    detail: "Par 72 · 6,584 yd · riverside routing · Genelle, BC",
     note: "You're here. Par 72 along the Columbia, Roy Stone's 1962 routing, restored 2018.",
     href: "/course",
     external: false,

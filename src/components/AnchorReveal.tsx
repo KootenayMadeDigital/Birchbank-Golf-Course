@@ -105,7 +105,7 @@ export default function AnchorReveal() {
           style={{ willChange: "transform, opacity" }}
         >
           <span><span className="text-granite">Par 72</span> · 18 holes</span>
-          <span><span className="text-granite">6,788 yd</span> · Gold tees</span>
+          <span><span className="text-granite">6,584 yd</span> · Blue tees</span>
           <span><span className="text-granite">Genelle, BC</span> · on the Columbia</span>
           {/* Live chip, only this one animates. Renders a neutral placeholder
               during SSR/pre-hydration so the layout doesn't shift when the

@@ -81,7 +81,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "course",
     question: "What is the course rating and slope?",
     answer:
-      "Par 72. From the Blue tees (6,555 yards): course rating 71.5, slope 121. From the White tees (5,882 yards): course rating 73.9, slope 128. From the Red tees (5,345 yards): course rating 70.8, slope 119. Gold tees measure 6,788 yards; Combo tees 6,240 yards.",
+      "Par 72. Four sets of tees per the printed scorecard. Blue (6,584 yards): men's rating 71.5, slope 121. Combo (6,277 yards): men's rating 70.0, slope 120; women's rating 72.3, slope 124 over 5,620 yards. White (5,941 yards): men's rating 68.1, slope 115. Red (5,330 yards): women's rating 70.8, slope 119.",
   },
   {
     category: "fees",

@@ -48,8 +48,8 @@ export default function HolePreview() {
             Three holes that'll tell you what you're in for.
           </h2>
           <p className="prose-editorial text-granite/85 mt-6 max-w-xl">
-            Par 72 across 18 holes, from 5,345 yards at the Red tees to 6,788 at the
-            Gold. Here are three worth scouting before your round.
+            Par 72 across 18 holes, from 5,330 yards at the Red tees to 6,584 at the
+            Blue. Here are three worth scouting before your round.
           </p>
         </div>
 

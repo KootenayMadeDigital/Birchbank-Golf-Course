@@ -161,14 +161,14 @@ export default function Home() {
             <ScrollReveal>
               <p className="eyebrow text-paper/60 mb-5">The scorecard</p>
               <p className="display-lg font-display">
-                Par 72.<br />Five sets of tees.<br />One Columbia River.
+                Par 72.<br />Four sets of tees.<br />One Columbia River.
               </p>
             </ScrollReveal>
           </div>
           <div className="md:col-span-7">
             <ScrollReveal>
               <p className="prose-editorial text-paper/85">
-                Five sets of tees, 5,345 yards from the Red to 6,788 from the Gold.
+                Four sets of tees, 5,330 yards from the Red to 6,584 from the Blue.
                 New irrigation with ponds on holes 12 and 15, restored greens, the
                 original Roy Stone routing returned in 2018.
               </p>

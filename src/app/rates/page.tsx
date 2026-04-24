@@ -137,16 +137,21 @@ export default function RatesPage() {
             </div>
 
             <figure className="md:col-span-5 md:order-2 order-1">
-              <div className="relative aspect-[4/5] bg-granite/5 overflow-hidden">
+              {/* Natural 4:3 aspect of the source PNG (1448x1086), no
+                  cropping applied. */}
+              <div className="relative aspect-[4/3] bg-granite/5 overflow-hidden">
                 <Image
-                  src="/course/october-gold.webp"
-                  alt="Larches turning gold above the Columbia River at Birchbank in mid-October"
+                  src="/course/hole-2-signature.webp"
+                  alt="The signature par-3 second at Birchbank, looking down the Columbia River gorge with the Selkirk and Monashee mountains framing the view"
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   priority
                   className="object-cover"
                 />
               </div>
+              <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-silt">
+                Hole 2 · The signature
+              </figcaption>
             </figure>
           </div>
         </div>

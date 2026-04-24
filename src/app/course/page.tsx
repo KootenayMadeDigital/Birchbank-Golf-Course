@@ -8,7 +8,7 @@ import { breadcrumbJsonLd } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "The course",
   description:
-    "Eighteen holes along the Columbia River. Par 72, 6,788 yards from the Gold tees. Routed by Roy Stone in 1962, restored to his 1969 layout in 2018. Walkable, five sets of tees, public-access.",
+    "Eighteen holes along the Columbia River. Par 72, 6,584 yards from the Blue tees. Routed by Roy Stone in 1962, restored to his 1969 layout in 2018. Walkable, four sets of tees, public-access.",
   alternates: { canonical: "/course" },
 };
 
@@ -264,7 +264,7 @@ export default function CoursePage() {
           <div className="mb-12 max-w-2xl">
             <p className="eyebrow mb-5">The scorecard</p>
             <h2 className="display-lg font-display mb-5">
-              All five tees, in the open.
+              All four tees, in the open.
             </h2>
             <p className="prose-editorial text-granite/85">
               The course's own scorecard, photographed straight from the book.
@@ -276,7 +276,7 @@ export default function CoursePage() {
               <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
                 <Image
                   src={SCORECARD_IMAGES.inside}
-                  alt="Birchbank scorecard, inside view with all five tees, par, and handicap index"
+                  alt="Birchbank scorecard, inside view with all four tees, par, and handicap index"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain"
@@ -284,7 +284,7 @@ export default function CoursePage() {
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs text-silt">
-                Scorecard, inside · Gold / Blue / Combo / White / Red
+                Scorecard, inside · Blue / Combo / White / Red
               </figcaption>
             </figure>
             <figure>

@@ -8,15 +8,15 @@ import CountUp from "./CountUp";
  * Per-hole interactive tee selector.
  *
  * Shown on the individual hole page (/course/holes/[n]). The visitor
- * picks a tee. Gold / Blue / Combo / White / Red, and the single
- * big readout underneath updates to that tee's yardage for this hole,
- * plus the stroke index appropriate to the tee set (forward tees
- * share a women's stroke index; the Blue men's index applies elsewhere).
+ * picks a tee. Blue / Combo / White / Red (the four sets on the
+ * printed Birchbank scorecard), and the single big readout underneath
+ * updates to that tee's yardage for this hole, plus the stroke index
+ * appropriate to the tee set (forward tees share a women's stroke
+ * index; the Blue men's index applies elsewhere).
  *
  * Honesty rules:
- *   - A tee whose per-hole yardage isn't in the data (currently Gold
- *     and Combo, see holes.ts) renders its pill as disabled with a
- *     dash readout rather than fabricating a number.
+ *   - A tee whose per-hole yardage isn't in the data renders its pill
+ *     as disabled with a dash readout rather than fabricating a number.
  *   - Rating / slope come from TEES; they don't change per hole, so
  *     we show the tee's course rating + slope alongside for context.
  */
