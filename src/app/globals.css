@@ -273,6 +273,108 @@
   }
   .btn-ghost:hover { color: var(--color-amber); border-color: var(--color-amber); }
 
+  /* ──────────────────────────────────────────────────────────────────
+     Header CTA system — three tiered variants built specifically for
+     the Birchbank nav. These are NOT generic buttons. They are small
+     brand artifacts: a gilt-edged cedar signature, an editorial serif
+     underline, and a mono-caps keyline "side door" for members.
+     ────────────────────────────────────────────────────────────────── */
+
+  .header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    white-space: nowrap;
+    transition:
+      transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      background 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      color 220ms ease,
+      border-color 220ms ease,
+      opacity 220ms ease;
+  }
+  .header-cta:focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 4px;
+    border-radius: 1px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .header-cta { transition: none; }
+    .header-cta:hover { transform: none !important; }
+  }
+
+  /* Tier 1 — Signature invitation.
+     Cedar-filled, paper text, generous letter-spacing. A 1px tamarack
+     rule sits across the top edge like a gilt inlay — the single
+     ornamental detail that says "this club has taste." */
+  .header-cta-primary {
+    padding: 0.7rem 1.25rem;
+    background: var(--color-cedar);
+    color: var(--color-paper);
+    border-top: 1px solid var(--color-tamarack);
+    border-radius: 1px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .header-cta-primary:hover {
+    background: var(--color-cedar-dark);
+    transform: translateY(-1px);
+  }
+
+  /* Tier 2 — Editorial secondary.
+     Serif, upright, no fill. A hairline at 40% currentColor sits under
+     the text like a magazine "continued on →" link. Reads against
+     both dark hero and light scrolled states because it uses
+     currentColor inherited from the nav's active color state. */
+  .header-cta-editorial {
+    position: relative;
+    padding: 0.5rem 0;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+  .header-cta-editorial::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.35rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.35;
+    transition: opacity 220ms ease, background 220ms ease;
+  }
+  .header-cta-editorial:hover {
+    color: var(--color-amber);
+  }
+  .header-cta-editorial:hover::after {
+    opacity: 1;
+  }
+
+  /* Tier 3 — Private keyline.
+     The side door. Mono caps, tight letter-spacing, single-pixel
+     currentColor border. Understated opacity at rest; at hover the
+     color resolves to tamarack — quiet exclusivity. */
+  .header-cta-keyline {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid currentColor;
+    border-radius: 1px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.72;
+  }
+  .header-cta-keyline:hover {
+    opacity: 1;
+    color: var(--color-tamarack);
+    border-color: var(--color-tamarack);
+  }
+
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.75rem;

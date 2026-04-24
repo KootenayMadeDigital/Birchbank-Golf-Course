@@ -43,7 +43,7 @@ const NAV: NavItem[] = [
     children: [
       { href: "/membership", label: "Membership tiers" },
       { href: "/membership/retirees-club", label: "Retirees Club" },
-      { href: "/login", label: "Members Portal" },
+      { href: "/login", label: "Member Portal" },
     ],
   },
   { href: "/bistro", label: "The Bistro" },
@@ -207,28 +207,52 @@ export default function Nav() {
           )}
         </nav>
 
-        <div className="flex items-center gap-4 md:gap-5 justify-self-end">
+        <div className="flex items-center gap-3 md:gap-4 xl:gap-5 justify-self-end">
           <SocialLinks
             variant={light ? "dark" : "light"}
             className="hidden md:flex"
-            size={20}
+            size={18}
           />
-          <a
-            href="tel:+12506932255"
+
+          {/* Three-tiered CTA system — each intentionally distinct.
+              Responsive stacking:
+                xl+ : all three visible (Walk the 18 · Member Portal · Book a tee time)
+                lg  : Member Portal · Book a tee time
+                md  : Book a tee time only
+                <md : hamburger menu (mobile sheet carries all three)
+           */}
+
+          {/* Tier 2 · editorial — Walk the 18 */}
+          <Link
+            href="/course"
             className={clsx(
-              "hidden 2xl:inline text-base whitespace-nowrap hover:text-amber transition-colors",
+              "header-cta header-cta-editorial hidden xl:inline-flex",
               light ? "text-granite" : "text-paper",
             )}
           >
-            250-693-2255
-          </a>
+            Walk the 18
+          </Link>
+
+          {/* Tier 3 · keyline — Member Portal (the side door) */}
           <Link
             href="/login"
-            className="hidden md:inline-flex btn-primary whitespace-nowrap"
+            className={clsx(
+              "header-cta header-cta-keyline hidden lg:inline-flex",
+              light ? "text-granite" : "text-paper",
+            )}
           >
-            Members Portal
-            <span aria-hidden>→</span>
+            Member Portal
           </Link>
+
+          {/* Tier 1 · signature — Book a tee time */}
+          <Link
+            href="/book"
+            className="header-cta header-cta-primary hidden md:inline-flex"
+          >
+            Book a tee time
+            <span aria-hidden className="text-tamarack">→</span>
+          </Link>
+
           <button
             aria-label="Menu"
             aria-expanded={open}
@@ -274,19 +298,33 @@ export default function Nav() {
                 )}
               </div>
             ))}
-            <div className="pt-2 flex flex-col gap-3">
-              <BookButton />
+            <div className="pt-4 flex flex-col gap-4 items-start">
+              <Link
+                href="/book"
+                onClick={() => setOpen(false)}
+                className="header-cta header-cta-primary"
+              >
+                Book a tee time
+                <span aria-hidden className="text-tamarack">→</span>
+              </Link>
+              <Link
+                href="/course"
+                onClick={() => setOpen(false)}
+                className="header-cta header-cta-editorial text-granite"
+              >
+                Walk the 18
+              </Link>
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
-                className="btn-ghost self-start"
+                className="header-cta header-cta-keyline text-granite"
               >
-                Members Portal →
+                Member Portal
               </Link>
-              <a href="tel:+12506932255" className="btn-ghost self-start">
+              <a href="tel:+12506932255" className="mt-2 text-sm text-silt hover:text-amber">
                 Call Pro Shop · 250-693-2255
               </a>
-              <SocialLinks variant="dark" className="mt-2" size={22} />
+              <SocialLinks variant="dark" className="mt-1" size={22} />
             </div>
           </nav>
         </div>

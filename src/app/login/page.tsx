@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Members Portal",
+  title: "Member Portal",
   description:
-    "Log in to the Birchbank Members Portal — advance tee-time booking, account management, and reciprocal-club access via Chronogolf.",
+    "Log in to the Birchbank Member Portal — advance tee-time booking, account management, and reciprocal-club access via Chronogolf.",
   alternates: { canonical: "/login" },
   robots: { index: false, follow: true },
 };
@@ -52,7 +52,7 @@ export default function Login() {
     <>
       <section className="pt-32 md:pt-40 pb-12 bg-paper">
         <div className="container-edge">
-          <p className="eyebrow mb-6">Members Portal</p>
+          <p className="eyebrow mb-6">Member Portal</p>
           <h1
             className="font-display text-granite max-w-[20ch] mb-8"
             style={{ fontSize: "clamp(2.5rem, 6.5vw, 4.5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}

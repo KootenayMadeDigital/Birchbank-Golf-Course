@@ -64,7 +64,7 @@ export default function Footer() {
         <div>
           <p className="eyebrow text-paper/60 mb-4">More</p>
           <ul className="space-y-2 text-sm">
-            <li><a href="https://members.chronogolf.com/login" target="_blank" rel="noopener" className="hover:text-tamarack">Members Portal ↗</a></li>
+            <li><a href="https://members.chronogolf.com/login" target="_blank" rel="noopener" className="hover:text-tamarack">Member Portal ↗</a></li>
             <li><a href="https://scg.golfcanada.ca" target="_blank" rel="noopener" className="hover:text-tamarack">Enter score ↗</a></li>
             <li><Link href="/membership/retirees-club" className="hover:text-tamarack">Retirees Club</Link></li>
             <li><Link href="/contact" className="hover:text-tamarack">Contacts</Link></li>
