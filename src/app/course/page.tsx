@@ -159,6 +159,72 @@ export default function CoursePage() {
         </div>
       </section>
 
+      {/* How to play it — Jeff Papilion's strategy quotes sourced verbatim
+          from SCOREGolf's Oct 2022 feature by Andrew Penner. Every quote is
+          attributed inline and the source article is linked once at the
+          section's footer. */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow mb-5">How to play it</p>
+            <h2 className="display-lg font-display mb-5">
+              Smart over strong.
+            </h2>
+            <p className="prose-editorial text-granite/85">
+              Jeff Papilion, our CPGA head pro, on how to navigate the course — in his
+              own words.
+            </p>
+          </div>
+
+          <ul className="grid md:grid-cols-3 gap-6 md:gap-8">
+            <li className="border-l-2 border-tamarack pl-5">
+              <p className="font-display text-tamarack text-5xl leading-none mb-2" aria-hidden>
+                &ldquo;
+              </p>
+              <p className="prose-editorial text-granite/90 italic leading-snug">
+                The corridors are actually quite generous, but if you don't know your
+                yardages and the ideal lines, blowing it through fairways and getting
+                blocked out is easy to do.
+              </p>
+            </li>
+            <li className="border-l-2 border-tamarack pl-5">
+              <p className="font-display text-tamarack text-5xl leading-none mb-2" aria-hidden>
+                &ldquo;
+              </p>
+              <p className="prose-editorial text-granite/90 italic leading-snug">
+                It's better to err on the side of caution when you're playing Birchbank.
+                You can easily get into trouble if you're too aggressive.
+              </p>
+            </li>
+            <li className="border-l-2 border-tamarack pl-5">
+              <p className="font-display text-tamarack text-5xl leading-none mb-2" aria-hidden>
+                &ldquo;
+              </p>
+              <p className="prose-editorial text-granite/90 italic leading-snug">
+                Good players who understand the course will use numerous clubs off the tee
+                throughout the round. But there are some outstanding holes that scream grip
+                it and rip it — the opener and the closer, both shortish par 5s that can be
+                had.
+              </p>
+            </li>
+          </ul>
+
+          <p className="mt-10 font-mono text-xs text-silt max-w-3xl leading-relaxed">
+            Quotes from Jeff Papilion, Director of Golf / CPGA Head Professional. Originally
+            published by Andrew Penner in{" "}
+            <a
+              href="https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/"
+              target="_blank"
+              rel="noopener"
+              className="underline hover:text-amber"
+            >
+              SCOREGolf — &ldquo;Birchbank a Kootenay Rockies classic,&rdquo; October 2022 ↗
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
       {/* Routing narrative */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
@@ -184,6 +250,10 @@ export default function CoursePage() {
               Stone's original 1969 routing came back in 2018 along with new irrigation,
               restored greens, and the rebuilt back-nine ponds. What you walk today is what
               he drew on paper sixty-some years ago.
+            </p>
+            <p className="text-tamarack">
+              The course has been called on to host several provincial championships over
+              the years.
             </p>
           </div>
         </div>

@@ -76,6 +76,37 @@ export default function Bistro() {
         </div>
       </section>
 
+      {/* Jeff's own words about the Bistro — quoted from SCOREGolf's
+          October 2022 feature by Andrew Penner. Attribution is spelled
+          out below the quote. */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge max-w-3xl">
+          <p className="eyebrow mb-6">From the head pro</p>
+          <blockquote className="border-l-2 border-tamarack pl-6 md:pl-8">
+            <p
+              className="font-display text-granite leading-snug"
+              style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)", letterSpacing: "-0.01em" }}
+            >
+              The Bistro, thanks to the delicious food and the huge, covered deck, is the
+              perfect spot for your after-golf winddown.
+            </p>
+            <footer className="mt-5 font-mono text-xs text-silt leading-relaxed">
+              Jeff Papilion, Director of Golf · CPGA Head Professional.{" "}
+              Quoted in{" "}
+              <a
+                href="https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/"
+                target="_blank"
+                rel="noopener"
+                className="underline hover:text-amber"
+              >
+                SCOREGolf · October 2022 ↗
+              </a>
+              , by Andrew Penner.
+            </footer>
+          </blockquote>
+        </div>
+      </section>
+
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
