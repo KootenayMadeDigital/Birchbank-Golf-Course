@@ -79,7 +79,7 @@ export default function Scorecard() {
             title="Birchbank Course Atlas"
             caption="Course Atlas · routing, local rules, pin colours"
             downloadName="birchbank-course-atlas.jpg"
-            ratio="3/4"
+            ratio="5/4"
           />
         </div>
         <div className="mt-8 flex flex-wrap gap-4">
