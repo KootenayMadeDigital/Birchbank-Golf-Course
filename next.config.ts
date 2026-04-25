@@ -17,7 +17,12 @@ const securityHeaders = [
       "font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com https://api.fontshare.com",
       "img-src 'self' data: blob: https://cdn.sanity.io https://www.chronogolf.com https://cdn2.chronogolf.com https://www.birchbankgolf.com https://birchbankgolf.com",
       "connect-src 'self' https://plausible.io https://vitals.vercel-insights.com https://vercel.live https://www.chronogolf.com https://cdn2.chronogolf.com https://api.resend.com",
-      "frame-src https://www.chronogolf.com https://members.chronogolf.com https://chronogolf.ca",
+      // 'self' added so the in-house BookingDrawer can iframe chronogolf.com,
+      // and so the MenuPdfCard lightbox can iframe our own /bistro/menus/*.pdf.
+      "frame-src 'self' https://www.chronogolf.com https://members.chronogolf.com https://chronogolf.ca",
+      // Same-origin <object data="...pdf"> needs object-src 'self', otherwise
+      // browsers fall back to the broken-document icon.
+      "object-src 'self'",
       "base-uri 'self'",
       "form-action 'self'",
       "frame-ancestors 'self'",
