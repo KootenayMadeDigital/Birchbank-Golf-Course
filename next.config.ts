@@ -48,7 +48,9 @@ const config: NextConfig = {
       { source: "/golf", destination: "/course", permanent: true },
       { source: "/rates-and-fees", destination: "/rates", permanent: true },
       { source: "/restaurant", destination: "/bistro", permanent: true },
-      { source: "/weddings", destination: "/events/weddings", permanent: true },
+      // The Bistro markets banquets, not weddings. Old WP /weddings URL
+      // points to the events hub now; no /events/weddings page exists.
+      { source: "/weddings", destination: "/events", permanent: true },
       { source: "/tournaments", destination: "/events/corporate", permanent: true },
     ];
   },

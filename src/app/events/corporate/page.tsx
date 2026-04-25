@@ -1,79 +1,102 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import MenuPdfCard from "@/components/MenuPdfCard";
+import { HOLE_SUMMARY } from "@/data/holes";
 
 export const metadata: Metadata = {
   title: "Corporate events",
   description:
-    "Corporate golf outings, client events, tournament hosting, and buyouts at Birchbank Golf Course, on the Columbia River, 15 minutes from Teck Trail and the Lower Columbia corporate district.",
+    "Corporate golf outings, client appreciation days, staff appreciation tournaments, and full-day buyouts at Birchbank Golf Course in Genelle, BC. Six published Bistro Banquet packages from $35 to $53 per person. 18 holes, par 72, member-owned since 2004.",
   alternates: { canonical: "/events/corporate" },
 };
 
 /**
- * Corporate events page. Everything here is either:
- *   - Derived from the real /the-bistro/book-your-event/ copy (which
- *     explicitly mentions 'large tournaments' and the Bistro handling
- *     larger groups) -- the service exists, we're just organizing it
- *     for a business-buyer audience.
- *   - Verifiable facts: Teck Trail smelter / lower Columbia corporate
- *     presence, Bistro capacity (large covered patio), course layout
- *     (Par 72, 6,584 Blue, four tees), phone numbers.
+ * Corporate events page. Built strictly from verified sources:
  *
- * We do NOT invent: specific package pricing, custom sponsorship tiers,
- * minimum group sizes, prize-package costs, catered menu prices.
- * Everything bookings go through the office at 250-693-2366 -- same
- * pattern as the real site's Book Your Event page.
+ *   - https://www.birchbankgolf.com/the-bistro/book-your-event/
+ *     "From a round of golf for a small group to a large tournament" +
+ *     "the Bistro dining area can handle larger groups for meals,
+ *     appetizers, and refreshments, as a standalone function or paired
+ *     with a golf package. The large covered patio suits summer
+ *     gatherings."
+ *   - public/bistro/menus/banquet.pdf  (six buffet packages, per-person prices)
+ *   - src/data/holes.ts  (par 72, 6,584 yd Blue, four sets of tees, ponds 12 + 15)
+ *   - src/app/plan-your-visit/page.tsx  (verified drive times: 15 min Castlegar,
+ *     12 min Trail; ~3h Spokane; ~3.5h Kelowna; ~6.5-7.5h Calgary; ~7h Vancouver)
+ *   - SCOREGolf, Andrew Penner, Oct 2022 (Jeff Papilion quote)
+ *
+ * What we deliberately DON'T claim, because we couldn't verify it:
+ *   - "Largest 18-hole venue in the Lower Columbia" (no source)
+ *   - Specific named past customers (Teck, banks, dealerships, named charities)
+ *   - "office@birchbankgolf.com" (no live page lists it)
+ *   - A "Canadian burger" (the actual Bistro signature is the Crispy
+ *     Birdie Burger; the menu has no Canadian burger)
+ *   - Player-count specifics like "four to sixteen players" (no source)
+ *   - Mid-week shoulder-season buyout availability (no source)
+ *
+ * Every banquet price below is transcribed from public/bistro/menus/banquet.pdf.
  */
 
-const WHAT_WE_HANDLE = [
+const BANQUET = [
   {
-    title: "Tournament hosting",
-    body:
-      "Full-day shotgun start, scramble or best-ball format, tee-box sponsorship, prize packages, on-course contests (longest drive, closest to pin). We run the logistics, you host the guests.",
+    name: "Italian Feast Buffet",
+    price: "$38",
+    items: ["Penne and meatballs", "Chicken cutlets", "Roast potatoes"],
   },
   {
-    title: "Client golf days",
-    body:
-      "Half-day or full-day outings for a small group, four to sixteen players. Private tee block, green fees at negotiated rate, optional Bistro package after the round.",
+    name: "Burger Buffet",
+    price: "$35",
+    items: ["Premium beef or crispy chicken burgers", "All the fixings on brioche", "French fries"],
   },
   {
-    title: "Course buyouts",
-    body:
-      "The whole course, for the whole day. Available mid-week during shoulder seasons (April–May, September–October). Ask about October, the tamarack turn is spectacular.",
+    name: "Chicken & Ribs Buffet",
+    price: "$51",
+    items: ["Half rack bourbon BBQ ribs", "Lemon-herb roasted chicken", "Roasted potatoes"],
   },
   {
-    title: "Bistro catering",
-    body:
-      "Pre-round breakfast, mid-round beverage cart, post-round dinner on the covered patio. Fully licensed, full kitchen. The Canadian burger travels well to the 10th tee.",
+    name: "Roast Beef Buffet",
+    price: "$49",
+    items: ["Carved roast beef au jus", "Horseradish and mustard", "Roast potatoes"],
+  },
+  {
+    name: "Top Sirloin Buffet",
+    price: "$53",
+    items: ["Centre-cut top sirloin steak", "Roasted potatoes", "Seasonal vegetables"],
+  },
+  {
+    name: "Chicken Cordon Bleu Buffet",
+    price: "$38",
+    items: ["Housemade chicken cordon bleu", "Roasted potatoes", "Seasonal vegetables"],
   },
 ];
 
-const EVENT_FIT = [
+/**
+ * Three audience verticals. Worded as "groups we are built to host"
+ * rather than "groups we have hosted" because we can't verify a named
+ * customer list.
+ */
+const BUILT_TO_HOST = [
   {
-    label: "Industry association conferences",
-    detail: "Kootenay mining and forestry gatherings that need a half-day golf program",
+    title: "Corporate tournaments",
+    body:
+      "A full day on the course with a shotgun start, a banquet on the patio after. The office and Pro Shop scope the format with you; the Bistro handles the meal.",
   },
   {
-    label: "Regional chamber outings",
-    detail: "Trail, Castlegar, Rossland, and Nelson chambers of commerce",
+    title: "Client appreciation days",
+    body:
+      "A small to mid-sized group, a tee block, and a published banquet package. Confirm your numbers, hand over your guest list, show up to host.",
   },
   {
-    label: "Staff appreciation tournaments",
-    detail: "Teck Trail, smelter trades, regional health authority",
-  },
-  {
-    label: "Customer appreciation days",
-    detail: "Banks, insurers, dealerships hosting their books",
-  },
-  {
-    label: "Fundraising tournaments",
-    detail: "Local charities, non-profits, foundation events",
+    title: "Staff appreciation outings",
+    body:
+      "Mixed-ability foursomes from four sets of tees mean a 12-handicap and a first-time golfer can both have a good day. Banquet after on the covered patio.",
   },
 ];
 
 export default function CorporateEvents() {
   return (
     <>
-      {/* Hero */}
+      {/* 1. HERO */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
         <div className="container-edge">
           <p className="eyebrow mb-6">Corporate events</p>
@@ -84,37 +107,45 @@ export default function CorporateEvents() {
             Host your day<br />on the Columbia.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank is the largest 18-hole venue in the Lower Columbia, 15 minutes from
-            Teck's Trail smelter, 10 minutes from downtown Trail, and an easy drive for
-            every chamber in the region. We host corporate tournaments, client days,
-            buyouts, and business lunches with full Bistro catering.
+            18 holes on the river, member-owned since 2004, the original Roy Stone
+            routing restored in 2018. Six published Bistro Banquet packages,
+            from $35 to $53 a person. The office runs the day, the Pro Shop
+            handles the round, the Bistro handles the meal.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <a href="tel:+12506932366" className="btn-primary">Call the office · 250-693-2366</a>
-            <Link href="/contact" className="btn-ghost">Send an inquiry</Link>
+            <a href="tel:+12506932366" className="btn-primary">
+              Call the office · 250-693-2366
+            </a>
+            <Link href="/contact" className="btn-ghost">
+              Send a written inquiry
+            </Link>
           </div>
         </div>
       </section>
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* What we handle */}
+      {/* 2. BUILT TO HOST */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
-            <p className="eyebrow mb-5">What we handle</p>
+            <p className="eyebrow mb-5">Built to host</p>
             <h2 className="display-lg font-display mb-5">
-              Four kinds of corporate day.
+              Three kinds of corporate day.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Every event is built around your guest list and budget, same pattern the
-              course has used for decades. No cookie-cutter package, no surprise fees.
+              Every event is built around your guest list and your format. The
+              published banquet PDF below answers most of the food questions
+              before you call.
             </p>
           </div>
 
-          <ul className="grid md:grid-cols-2 gap-5 md:gap-6">
-            {WHAT_WE_HANDLE.map((k) => (
-              <li key={k.title} className="border border-granite/15 p-7 md:p-8">
+          <ul className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {BUILT_TO_HOST.map((k) => (
+              <li
+                key={k.title}
+                className="border border-granite/15 p-7 md:p-8 hover:border-amber transition-colors"
+              >
                 <p className="font-display text-2xl text-granite mb-4">{k.title}</p>
                 <p className="text-granite/85 text-base leading-relaxed">{k.body}</p>
               </li>
@@ -123,32 +154,7 @@ export default function CorporateEvents() {
         </div>
       </section>
 
-      {/* Who's a fit */}
-      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
-        <div className="container-edge">
-          <div className="mb-10 max-w-2xl">
-            <p className="eyebrow mb-5">Who's a fit</p>
-            <h2 className="display-md font-display mb-5">
-              Groups we've hosted. Groups we host well.
-            </h2>
-          </div>
-
-          <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">
-            {EVENT_FIT.map((e) => (
-              <li key={e.label} className="grid grid-cols-12 gap-4 py-5 items-baseline">
-                <div className="col-span-12 md:col-span-5">
-                  <p className="font-display text-xl text-granite">{e.label}</p>
-                </div>
-                <p className="col-span-12 md:col-span-7 text-silt text-sm leading-relaxed">
-                  {e.detail}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* The course as a corporate venue */}
+      {/* 3. THE COURSE */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5">
@@ -157,39 +163,164 @@ export default function CorporateEvents() {
               className="font-display mb-5"
               style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
             >
-              Par 72 · four tees ·<br />one river.
+              Par 72, four tees,<br />one Columbia River.
             </h2>
+            <p className="prose-editorial text-paper/85 mb-7 max-w-md">
+              Roy Stone's original 1969 routing, restored in 2018 with new
+              irrigation and ponds on holes 12 and 15. Walkable for the fit
+              foursome, cart-friendly for everyone else.
+            </p>
+            <Link
+              href="/course"
+              className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
+            >
+              The course →
+            </Link>
           </div>
-          <div className="md:col-span-7 space-y-4">
+
+          <div className="md:col-span-7 space-y-5">
             <div className="border-l-2 border-tamarack pl-5">
               <p className="font-display text-lg text-paper mb-1">The course</p>
-              <p className="text-paper/80 text-sm leading-relaxed">
-                18 holes, par 72, 6,584 yards from the Blue to 5,330 from the Red. Four sets
-                of tees means mixed-ability groups can play together without anyone feeling
-                over- or underchallenged.
+              <p className="text-paper/80 text-sm leading-relaxed tabular-nums">
+                18 holes, par {HOLE_SUMMARY.par}, {HOLE_SUMMARY.yardageBlue.toLocaleString()} yards from
+                the Blue down to {HOLE_SUMMARY.yardageRed.toLocaleString()} from the Red. Four sets of
+                tees so a mixed-ability foursome plays together comfortably.
               </p>
             </div>
             <div className="border-l-2 border-tamarack pl-5">
               <p className="font-display text-lg text-paper mb-1">The Bistro</p>
               <p className="text-paper/80 text-sm leading-relaxed">
-                Fully licensed, full kitchen, covered patio for outdoor events. Handles
-                larger groups for meals, appetizers, and refreshments, standalone or
-                paired with a golf package.
+                Fully licensed kitchen, full bar, large covered patio. Per the
+                Bistro&apos;s own published copy, &ldquo;the Bistro dining area
+                can handle larger groups for meals, appetizers, and
+                refreshments, as a standalone function or paired with a golf
+                package.&rdquo;
               </p>
             </div>
             <div className="border-l-2 border-tamarack pl-5">
               <p className="font-display text-lg text-paper mb-1">The location</p>
               <p className="text-paper/80 text-sm leading-relaxed">
-                Genelle, BC. 15 minutes from Castlegar, 12 minutes from Trail, 30 minutes
-                from Rossland. Accessible for every community in the Lower Columbia region.
+                5500 Highway 22, Genelle BC. 12 minutes from Trail, 15 from
+                Castlegar, half an hour from Rossland, three hours from
+                Spokane.{" "}
+                <Link href="/plan-your-visit" className="underline hover:text-tamarack">
+                  Plan your visit →
+                </Link>
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How to start */}
+      {/* 4. THE BANQUET, MenuPdfCard + 6 packages */}
       <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge">
+          <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
+            <div className="md:col-span-7">
+              <p className="eyebrow mb-5">The Bistro Banquet</p>
+              <h2 className="display-lg max-w-[20ch]">
+                Six buffets. Per-person prices. No surprises.
+              </h2>
+            </div>
+            <p className="md:col-span-5 prose-editorial text-granite/85">
+              Pick a package, confirm your numbers, eat well. Pricing
+              transparency that most golf-club catering decks reserve for the
+              follow-up email.
+            </p>
+          </div>
+
+          <div className="grid gap-7 lg:grid-cols-12 items-start">
+            <div className="lg:col-span-5">
+              <MenuPdfCard
+                src="/bistro/menus/banquet.pdf"
+                eyebrow="Banquet · 2026"
+                title="The Bistro Banquet"
+                description="Six buffet packages for tournaments, corporate days, retirements, and any other group of size you bring through the door."
+                categories={[
+                  "Italian Feast",
+                  "Roast Beef",
+                  "Burger",
+                  "Top Sirloin",
+                  "Chicken & Ribs",
+                  "Cordon Bleu",
+                ]}
+                downloadName="bistro-2026-banquet-menu.pdf"
+              />
+            </div>
+
+            <ul className="lg:col-span-7 grid sm:grid-cols-2 gap-4 md:gap-5">
+              {BANQUET.map((b) => (
+                <li
+                  key={b.name}
+                  className="border border-granite/15 p-5 md:p-6 rounded-sm bg-paper"
+                >
+                  <div className="flex items-baseline justify-between gap-3 mb-3">
+                    <h3 className="font-display text-[1.15rem] md:text-[1.25rem] leading-tight">
+                      {b.name}
+                    </h3>
+                    <p className="font-display text-xl text-cedar tabular-nums shrink-0">
+                      {b.price}
+                    </p>
+                  </div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-silt mb-3">
+                    per person
+                  </p>
+                  <ul className="text-sm leading-relaxed text-granite/85 space-y-1">
+                    {b.items.map((i) => (
+                      <li key={i}>· {i}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="mt-8 font-mono text-xs text-silt">
+            Every package above includes Caesar or mixed greens and dessert.
+            Prices do not include taxes or gratuities. The full PDF lists every
+            dish in every buffet.
+          </p>
+        </div>
+      </section>
+
+      {/* 5. THE PATIO, with verified Jeff/SCOREGolf quote */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge max-w-3xl">
+          <p className="eyebrow mb-6">From the head pro</p>
+          <blockquote className="border-l-2 border-tamarack pl-6 md:pl-8">
+            <p
+              className="font-display text-granite leading-snug"
+              style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)", letterSpacing: "-0.01em" }}
+            >
+              The Bistro, thanks to the delicious food and the huge, covered
+              deck, is the perfect spot for your after-golf winddown.
+            </p>
+            <footer className="mt-5 font-mono text-xs text-silt leading-relaxed">
+              Jeff Papilion, Director of Golf · CPGA Head Professional. Quoted in{" "}
+              <a
+                href="https://scoregolf.com/features/golf-course-features/birchbank-a-kootenay-rockies-classic/"
+                target="_blank"
+                rel="noopener"
+                className="underline hover:text-amber"
+              >
+                SCOREGolf · October 2022 ↗
+              </a>
+              , by Andrew Penner.
+            </footer>
+          </blockquote>
+          <p className="mt-8 prose-editorial text-granite/85">
+            The patio sits one tier above the first green. From any table you
+            are looking down the front nine, across the Columbia, and up at
+            the Monashee foothills.{" "}
+            <Link href="/bistro" className="underline hover:text-amber">
+              See the Bistro →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* 6. HOW TO START */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="mb-10 max-w-2xl">
             <p className="eyebrow mb-5">How to start</p>
@@ -197,44 +328,59 @@ export default function CorporateEvents() {
               One call. One conversation.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Corporate events aren't built through a widget. Call the office, tell us your
-              guest list, date range, and what you're hoping to accomplish, we'll come back
-              with a plan.
+              Corporate events are not built through a widget. Call the office,
+              tell us your guest list, your date range, and what you are
+              hoping to accomplish. We come back with a plan.
             </p>
           </div>
 
-          <ol className="grid md:grid-cols-3 gap-5">
-            <li className="border border-granite/15 p-6">
-              <p className="font-display text-5xl text-tamarack leading-none">1</p>
-              <p className="font-display text-lg text-granite mt-4 mb-2">Call the office</p>
-              <p className="text-silt text-sm leading-relaxed">
-                <a href="tel:+12506932366" className="text-granite underline hover:text-amber">
-                  250-693-2366
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            <div className="border border-granite/15 p-7">
+              <p className="eyebrow mb-3">Office</p>
+              <a
+                href="tel:+12506932366"
+                className="font-display text-2xl text-granite hover:text-amber"
+              >
+                250-693-2366
+              </a>
+              <p className="text-silt text-sm mt-2">
+                Event bookings, tournament coordination
+              </p>
+            </div>
+            <div className="border border-granite/15 p-7">
+              <p className="eyebrow mb-3">Pro Shop</p>
+              <a
+                href="tel:+12506932255"
+                className="font-display text-2xl text-granite hover:text-amber"
+              >
+                250-693-2255
+              </a>
+              <p className="text-silt text-sm mt-2">
+                Tee times, group rates, day-of questions
+              </p>
+            </div>
+            <div className="border border-granite/15 p-7">
+              <p className="eyebrow mb-3">Bistro</p>
+              <a
+                href="tel:+12506935451"
+                className="font-display text-2xl text-granite hover:text-amber"
+              >
+                250-693-5451
+              </a>
+              <p className="text-silt text-sm mt-2">
+                <a
+                  href="mailto:bistro@birchbankgolf.com"
+                  className="underline hover:text-amber"
+                >
+                  bistro@birchbankgolf.com
                 </a>
-                . Give us a week on the calendar and your head count.
               </p>
-            </li>
-            <li className="border border-granite/15 p-6">
-              <p className="font-display text-5xl text-tamarack leading-none">2</p>
-              <p className="font-display text-lg text-granite mt-4 mb-2">Build the day</p>
-              <p className="text-silt text-sm leading-relaxed">
-                Format, start time, catering menu, prizes, sponsorship options, we'll
-                quote it as a single package.
-              </p>
-            </li>
-            <li className="border border-granite/15 p-6">
-              <p className="font-display text-5xl text-tamarack leading-none">3</p>
-              <p className="font-display text-lg text-granite mt-4 mb-2">We run the day</p>
-              <p className="text-silt text-sm leading-relaxed">
-                Show up and shake hands. Pro Shop handles check-in, starters run the shotgun,
-                Bistro handles the meal. You focus on your guests.
-              </p>
-            </li>
-          </ol>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* 7. FINAL CTA */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge text-center max-w-3xl mx-auto">
           <p className="eyebrow text-paper/60 mb-6">Ready to plan</p>
@@ -242,21 +388,24 @@ export default function CorporateEvents() {
             className="font-display mb-8"
             style={{ fontSize: "clamp(2.25rem, 6vw, 4rem)", lineHeight: "1.02", letterSpacing: "-0.02em" }}
           >
-            Call the office.<br />We'll take it from there.
+            Call the office.<br />We&apos;ll take it from there.
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
-            <a href="tel:+12506932366" className="btn-primary bg-tamarack text-granite hover:bg-paper">
+            <a
+              href="tel:+12506932366"
+              className="btn-primary bg-tamarack text-granite hover:bg-paper"
+            >
               Call 250-693-2366
             </a>
             <Link
-              href="/contact"
+              href="/events/book"
               className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
             >
-              Send a written inquiry
+              Booking details
             </Link>
           </div>
           <p className="mt-10 font-mono text-xs text-paper/60">
-            office@birchbankgolf.com · 5500 Highway 22, Genelle BC
+            5500 Highway 22, Genelle BC · April through October
           </p>
         </div>
       </section>
