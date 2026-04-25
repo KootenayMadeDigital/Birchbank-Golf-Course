@@ -54,42 +54,44 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://www.chronogolf.com" />
         <link rel="dns-prefetch" href="https://members.chronogolf.com" />
       </head>
-      <body>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-granite focus:text-paper focus:px-4 focus:py-2"
-        >
-          Skip to content
-        </a>
-        <Nav />
-        <main id="main">{children}</main>
-        <Footer />
-        <RouteCurtain />
-
-        {/* Chronogolf source trigger, the widget clones whichever element
-            has .chrono-bookingbutton and uses that tag as the wrapper for
-            the fixed-position panel. Birchbank's live site uses a <div>,
-            which flows block-level children (the panel) correctly; using
-            an <a> as we did before distorted the panel's layout. This node
-            is positioned off-screen but remains in layout so Chronogolf's
-            script can find and clone it. */}
-        <div className="chrono-bookingbutton" aria-hidden="true">
-          Book a Tee-Time
+      <body suppressHydrationWarning>
+        {/*
+          Wrap the entire React-managed UI in a single div so the body
+          itself only has ONE child that React owns. Defense-in-depth
+          against any third-party DOM injection (browser extensions,
+          analytics shims) interfering with React reconciliation.
+        */}
+        <div id="app-root">
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-granite focus:text-paper focus:px-4 focus:py-2"
+          >
+            Skip to content
+          </a>
+          <Nav />
+          <main id="main">{children}</main>
+          <Footer />
+          <RouteCurtain />
         </div>
 
-        {/* Chronogolf (Lightspeed Golf) booking widget, lazy-loaded.
-            Birchbank's public numeric club ID is 738; the widget requires
-            a valid clubId or it silently no-ops on click. Locale matches
-            their live site (en-US). Theme color = our brand cedar. */}
-        <Script id="chronogolf-settings" strategy="lazyOnload">
-          {`window.chronogolfSettings = { "clubId": ${process.env.NEXT_PUBLIC_CHRONOGOLF_CLUB_ID || "738"}, "locale": "en-US" };
-            window.chronogolfTheme = { "color": "#3C4A35" };`}
-        </Script>
-        <Script
-          id="chronogolf-loader"
-          strategy="lazyOnload"
-          src="https://cdn2.chronogolf.com/widgets/v2"
-        />
+        {/*
+          The Chronogolf body-injected widget script
+          (cdn2.chronogolf.com/widgets/v2) is intentionally NOT loaded
+          globally. That script physically moves a .chrono-bookingbutton
+          element from inside React's tree into a body-level
+          .chrono-container it appends after mount. Once React owns a
+          node and a third-party script relocates it, the next
+          reconciliation throws "Failed to execute 'removeChild' on
+          'Node': The node to be removed is not a child of this node",
+          which bubbled to error.tsx on every SPA navigation and looked
+          to visitors like an intermittent 404.
+
+          Booking is handled instead via /book, which embeds the
+          Chronogolf tee-sheet in a plain <iframe>. React owns the
+          iframe element; Chronogolf owns its internal document. The
+          two never touch each other's DOM. BookButton.tsx links to
+          /book and Next.js routes there normally.
+        */}
 
         <script
           type="application/ld+json"

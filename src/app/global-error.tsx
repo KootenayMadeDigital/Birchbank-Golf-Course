@@ -9,21 +9,27 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  // Aggressive self-heal: when the global error boundary fires, almost
-  // always the cause is a stale RSC payload from a previous Vercel
-  // deploy that the visitor's open tab is still trying to fetch. A
-  // single auto-reload pulls fresh HTML and the page works. Bounded by
-  // a per-path sessionStorage flag so a genuinely persistent error is
-  // not trapped in a reload loop, the second visit shows the actual
-  // "frost delay" message and the user can call.
+  // Self-heal chunk-load and stale-RSC errors that bubble all the way
+  // up to the global error boundary. The primary cause of error-boundary
+  // firing on this site (3rd-party DOM injection conflicting with React
+  // reconciliation) is fixed in layout.tsx by isolating React inside
+  // #app-root. This recovery remains as defense-in-depth for the rare
+  // stale-asset case after a Vercel deploy. Bounded by a per-path
+  // sessionStorage flag so a real error never loops.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const msg = (error?.message ?? "") + " " + (error?.name ?? "");
+    const isRecoverable =
+      /Loading chunk|Loading CSS chunk|ChunkLoadError|Failed to fetch dynamically imported module|RSC|manifest/i.test(
+        msg,
+      );
+    if (!isRecoverable) return;
     const path = window.location.pathname;
     const key = `gerr-reload:${path}`;
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
     window.setTimeout(() => window.location.reload(), 50);
-  }, []);
+  }, [error]);
 
   return (
     <html lang="en-CA">

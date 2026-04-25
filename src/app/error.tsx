@@ -12,14 +12,20 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error(error);
-    // Self-heal: when an error boundary fires after an in-app navigation
-    // it is almost always a stale RSC payload or chunk hash from a
-    // previous Vercel deploy. A single auto-reload pulls fresh HTML
-    // and the page renders. Bounded by a per-path sessionStorage flag
-    // so a genuinely persistent error is never trapped in a reload
-    // loop, the second visit shows this "out of bounds" message and
-    // the user can use the Try again button or call.
+    // Self-heal chunk-load errors after a fresh Vercel deploy. The
+    // primary cause of error-boundary firing on this site (3rd-party
+    // DOM injection conflicting with React reconciliation) is fixed in
+    // layout.tsx by isolating React inside #app-root. This recovery
+    // remains for the rare stale-chunk case after a deploy. Bounded
+    // by a per-path sessionStorage flag so a real error is never
+    // trapped in a reload loop.
     if (typeof window === "undefined") return;
+    const msg = (error?.message ?? "") + " " + (error?.name ?? "");
+    const isChunkError =
+      /Loading chunk|Loading CSS chunk|ChunkLoadError|Failed to fetch dynamically imported module/i.test(
+        msg,
+      );
+    if (!isChunkError) return;
     const path = window.location.pathname;
     const key = `err-reload:${path}`;
     if (sessionStorage.getItem(key)) return;
