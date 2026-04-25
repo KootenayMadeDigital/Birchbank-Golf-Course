@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import MenuPdfCard from "@/components/MenuPdfCard";
 import { HOLE_SUMMARY } from "@/data/holes";
 
 export const metadata: Metadata = {
@@ -37,40 +36,12 @@ export const metadata: Metadata = {
  * Every banquet price below is transcribed from public/bistro/menus/banquet.pdf.
  */
 
-const BANQUET = [
-  {
-    name: "Italian Feast Buffet",
-    price: "$38",
-    items: ["Penne and meatballs", "Chicken cutlets", "Roast potatoes"],
-  },
-  {
-    name: "Burger Buffet",
-    price: "$35",
-    items: ["Premium beef or crispy chicken burgers", "All the fixings on brioche", "French fries"],
-  },
-  {
-    name: "Chicken & Ribs Buffet",
-    price: "$51",
-    items: ["Half rack bourbon BBQ ribs", "Lemon-herb roasted chicken", "Roasted potatoes"],
-  },
-  {
-    name: "Roast Beef Buffet",
-    price: "$49",
-    items: ["Carved roast beef au jus", "Horseradish and mustard", "Roast potatoes"],
-  },
-  {
-    name: "Top Sirloin Buffet",
-    price: "$53",
-    items: ["Centre-cut top sirloin steak", "Roasted potatoes", "Seasonal vegetables"],
-  },
-  {
-    name: "Chicken Cordon Bleu Buffet",
-    price: "$38",
-    items: ["Housemade chicken cordon bleu", "Roasted potatoes", "Seasonal vegetables"],
-  },
-];
-
 /**
+ * Banquet detail (six packages with full dish lists, MenuPdfCard,
+ * pricing footnotes) lives canonically on /events/book. This page
+ * keeps a brief banquet teaser only, with a link out, so the B2B
+ * visitor isn't reading the same package list twice.
+ *
  * Three audience verticals. Worded as "groups we are built to host"
  * rather than "groups we have hosted" because we can't verify a named
  * customer list.
@@ -212,74 +183,34 @@ export default function CorporateEvents() {
         </div>
       </section>
 
-      {/* 4. THE BANQUET, MenuPdfCard + 6 packages */}
+      {/* 4. BANQUET TEASER. Detail lives on /events/book. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
-          <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
-            <div className="md:col-span-7">
-              <p className="eyebrow mb-5">The Bistro Banquet</p>
-              <h2 className="display-lg max-w-[20ch]">
+          <div className="grid gap-8 md:grid-cols-12 items-center max-w-5xl mx-auto border border-granite/15 p-8 md:p-10 rounded-sm">
+            <div className="md:col-span-8">
+              <p className="eyebrow mb-4">The Bistro Banquet</p>
+              <h2 className="display-md font-display mb-4 max-w-[22ch]">
                 Six buffets. Per-person prices. No surprises.
               </h2>
+              <p className="prose-editorial text-granite/85 max-w-xl">
+                Top Sirloin at $53, the Burger Buffet at $35. Most groups land
+                between. Full per-person pricing, every dish listed, and the
+                downloadable PDF live on{" "}
+                <Link href="/events/book" className="underline hover:text-amber">
+                  /events/book
+                </Link>
+                .
+              </p>
             </div>
-            <p className="md:col-span-5 prose-editorial text-granite/85">
-              Pick a package, confirm your numbers, eat well. Pricing
-              transparency that most golf-club catering decks reserve for the
-              follow-up email.
-            </p>
-          </div>
-
-          <div className="grid gap-7 lg:grid-cols-12 items-start">
-            <div className="lg:col-span-5">
-              <MenuPdfCard
-                src="/bistro/menus/banquet.pdf"
-                eyebrow="Banquet · 2026"
-                title="The Bistro Banquet"
-                description="Six buffet packages for tournaments, corporate days, retirements, and any other group of size you bring through the door."
-                categories={[
-                  "Italian Feast",
-                  "Roast Beef",
-                  "Burger",
-                  "Top Sirloin",
-                  "Chicken & Ribs",
-                  "Cordon Bleu",
-                ]}
-                downloadName="bistro-2026-banquet-menu.pdf"
-              />
+            <div className="md:col-span-4 md:text-right">
+              <Link
+                href="/events/book"
+                className="btn-primary"
+              >
+                See banquet packages →
+              </Link>
             </div>
-
-            <ul className="lg:col-span-7 grid sm:grid-cols-2 gap-4 md:gap-5">
-              {BANQUET.map((b) => (
-                <li
-                  key={b.name}
-                  className="border border-granite/15 p-5 md:p-6 rounded-sm bg-paper"
-                >
-                  <div className="flex items-baseline justify-between gap-3 mb-3">
-                    <h3 className="font-display text-[1.15rem] md:text-[1.25rem] leading-tight">
-                      {b.name}
-                    </h3>
-                    <p className="font-display text-xl text-cedar tabular-nums shrink-0">
-                      {b.price}
-                    </p>
-                  </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-silt mb-3">
-                    per person
-                  </p>
-                  <ul className="text-sm leading-relaxed text-granite/85 space-y-1">
-                    {b.items.map((i) => (
-                      <li key={i}>· {i}</li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
           </div>
-
-          <p className="mt-8 font-mono text-xs text-silt">
-            Every package above includes Caesar or mixed greens and dessert.
-            Prices do not include taxes or gratuities. The full PDF lists every
-            dish in every buffet.
-          </p>
         </div>
       </section>
 

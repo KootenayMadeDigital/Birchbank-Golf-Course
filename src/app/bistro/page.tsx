@@ -27,7 +27,6 @@ export const metadata: Metadata = {
 
 const MENUS = {
   foodDrinks: "/bistro/menus/food-and-drinks.pdf",
-  banquet: "/bistro/menus/banquet.pdf",
 };
 
 /**
@@ -80,85 +79,11 @@ const DISHES = [
 ];
 
 /**
- * Six banquet packages, transcribed verbatim from the 2026 Bistro
- * Banquet PDF. Every dollar amount and dish name is on the source PDF.
+ * Banquet content (six buffet packages, full per-person pricing, the
+ * banquet PDF MenuPdfCard) lives canonically on /events/book. We keep
+ * a short cross-link on this page so casual diners who land here can
+ * find banquet info, but we do NOT duplicate the package grid here.
  */
-const BANQUET = [
-  {
-    name: "Italian Feast Buffet",
-    price: "$38",
-    items: [
-      "Buns and butter",
-      "Caesar or mixed greens",
-      "Penne and meatballs",
-      "Chicken cutlets",
-      "Roast potatoes",
-      "Seasonal vegetables",
-      "Dessert",
-    ],
-  },
-  {
-    name: "Burger Buffet",
-    price: "$35",
-    items: [
-      "Caesar or mixed greens",
-      "Premium beef or crispy chicken burgers",
-      "All the fixings, bacon and cheese on brioche buns",
-      "French fries",
-      "Gravy, ketchup and garlic aioli",
-      "Dessert",
-    ],
-  },
-  {
-    name: "Chicken & Ribs Buffet",
-    price: "$51",
-    items: [
-      "Caesar or mixed greens",
-      "Half rack bourbon BBQ ribs",
-      "Lemon-herb roasted chicken",
-      "Roasted potatoes",
-      "Seasonal vegetables",
-      "Dessert",
-    ],
-  },
-  {
-    name: "Roast Beef Buffet",
-    price: "$49",
-    items: [
-      "Buns and butter",
-      "Caesar or mixed greens",
-      "Carved roast beef au jus",
-      "Horseradish and mustard",
-      "Roast potatoes",
-      "Seasonal vegetables",
-      "Dessert",
-    ],
-  },
-  {
-    name: "Top Sirloin Buffet",
-    price: "$53",
-    items: [
-      "Bread and butter",
-      "Caesar or mixed greens",
-      "Centre-cut top sirloin steak",
-      "Roasted potatoes",
-      "Seasonal vegetables",
-      "Dessert",
-    ],
-  },
-  {
-    name: "Chicken Cordon Bleu Buffet",
-    price: "$38",
-    items: [
-      "Bread and butter",
-      "Caesar or mixed greens",
-      "Housemade chicken cordon bleu",
-      "Roasted potatoes",
-      "Seasonal vegetables",
-      "Dessert",
-    ],
-  },
-];
 
 export default function Bistro() {
   return (
@@ -260,19 +185,22 @@ export default function Bistro() {
         <div className="container-edge">
           <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
             <div className="md:col-span-7">
-              <p className="eyebrow mb-5">The menus</p>
+              <p className="eyebrow mb-5">The menu</p>
               <h2 className="display-lg max-w-[18ch]">
-                Two PDFs. View on screen or print for the patio.
+                Read on screen, or print for the patio.
               </h2>
             </div>
             <p className="md:col-span-5 prose-editorial text-granite/85">
-              The day-to-day food and drinks menu, plus the Bistro Banquet
-              packages for groups. Open either to read on screen, or download
-              to print and bring in.
+              The day-to-day 2026 food and drinks menu in one PDF. Open to read,
+              or download to bring in. Hosting a group? See{" "}
+              <Link href="/events/book" className="underline hover:text-amber">
+                /events/book
+              </Link>{" "}
+              for the banquet packages.
             </p>
           </div>
 
-          <div className="grid gap-6 md:gap-7 md:grid-cols-2">
+          <div className="md:max-w-2xl">
             <MenuPdfCard
               src={MENUS.foodDrinks}
               eyebrow="Food & drinks · 2026"
@@ -287,21 +215,6 @@ export default function Bistro() {
                 "Beer · wine · spirits",
               ]}
               downloadName="bistro-2026-food-and-drinks-menu.pdf"
-            />
-            <MenuPdfCard
-              src={MENUS.banquet}
-              eyebrow="Banquet · 2026"
-              title="The Bistro Banquet"
-              description="Six buffet packages for tournaments, corporate days, celebrations of life, retirements, and any other group of size you bring through the door."
-              categories={[
-                "Italian Feast",
-                "Roast Beef",
-                "Burger",
-                "Top Sirloin",
-                "Chicken & Ribs",
-                "Cordon Bleu",
-              ]}
-              downloadName="bistro-2026-banquet-menu.pdf"
             />
           </div>
         </div>
@@ -529,68 +442,40 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* 8. BISTRO BANQUET, six verified buffet packages */}
+      {/* 8. HOSTING A GROUP, single cross-link card. Banquet detail lives on /events/book. */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge">
-          <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
+          <div className="grid gap-8 md:grid-cols-12 items-center">
             <div className="md:col-span-7">
-              <p className="eyebrow text-paper/60 mb-5">The Bistro Banquet</p>
-              <h2 className="display-lg max-w-[20ch]">
-                Six buffets. Per-person prices. No surprises.
-              </h2>
-            </div>
-            <p className="md:col-span-5 prose-editorial text-paper/85">
-              Tournaments, corporate days, celebrations of life, retirement
-              dinners, family gatherings. Pick a buffet, confirm your numbers,
-              eat. The full PDF lists every dish; here are the headlines.
-            </p>
-          </div>
-
-          <ul className="grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {BANQUET.map((b) => (
-              <li
-                key={b.name}
-                className="bg-paper text-granite border border-paper/15 p-6 md:p-7 rounded-sm"
+              <p className="eyebrow text-paper/60 mb-4">Hosting a group?</p>
+              <h2
+                className="font-display mb-4"
+                style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.5rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
               >
-                <div className="flex items-baseline justify-between gap-3 mb-4">
-                  <h3 className="font-display text-[1.4rem] md:text-[1.55rem] leading-tight max-w-[14ch]">
-                    {b.name}
-                  </h3>
-                  <p className="font-display text-2xl text-cedar tabular-nums shrink-0">
-                    {b.price}
-                  </p>
-                </div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-silt mb-3">
-                  per person
-                </p>
-                <ul className="text-sm leading-relaxed text-granite/85 space-y-1">
-                  {b.items.map((i) => (
-                    <li key={i}>· {i}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-12 items-center">
-            <p className="md:col-span-7 font-mono text-xs text-paper/65">
-              Prices do not include taxes or gratuities. Bookings and questions
-              direct to the Bistro.
-            </p>
+                Six published banquet packages, $35 to $53 per person.
+              </h2>
+              <p className="prose-editorial text-paper/85 max-w-xl">
+                Tournaments, corporate days, retirements, celebrations of life,
+                family reunions. The full per-person pricing, dish lists and
+                booking details live on{" "}
+                <Link href="/events/book" className="underline hover:text-tamarack">
+                  /events/book
+                </Link>
+                .
+              </p>
+            </div>
             <div className="md:col-span-5 md:text-right flex flex-wrap md:justify-end gap-3">
-              <a
-                href={MENUS.banquet}
-                target="_blank"
-                rel="noopener"
+              <Link
+                href="/events/book"
                 className="btn-primary bg-tamarack text-granite hover:bg-paper"
               >
-                Banquet menu (PDF) ↗
-              </a>
+                See banquet packages →
+              </Link>
               <a
                 href="tel:+12506935451"
                 className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
               >
-                Call · 250-693-5451
+                Or call · 250-693-5451
               </a>
             </div>
           </div>
@@ -653,15 +538,13 @@ export default function Bistro() {
                   to accommodate.
                 </li>
                 <li>
-                  Group bookings &amp; banquet packages, see the{" "}
-                  <a
-                    href={MENUS.banquet}
-                    target="_blank"
-                    rel="noopener"
+                  Group bookings &amp; banquet packages, see{" "}
+                  <Link
+                    href="/events/book"
                     className="underline underline-offset-2 hover:text-amber"
                   >
-                    banquet PDF
-                  </a>
+                    /events/book
+                  </Link>
                   .
                 </li>
                 <li>
