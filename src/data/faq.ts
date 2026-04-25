@@ -5,7 +5,7 @@ export type FAQCategory = "visiting" | "course" | "fees" | "community";
 
 export const FAQ_CATEGORIES: { key: FAQCategory; label: string; blurb: string }[] = [
   { key: "visiting",  label: "Visiting & booking", blurb: "Hours, location, how to book a tee time, dress code." },
-  { key: "course",    label: "The course",         blurb: "History, design, ratings, the 2018 restoration." },
+  { key: "course",    label: "The course",         blurb: "History, design, ratings, the 2018 reconfiguration." },
   { key: "fees",      label: "Fees & equipment",   blurb: "Cart rates, range access, scoring." },
   { key: "community", label: "Community",          blurb: "Member clubs and how to get involved." },
 ];
@@ -21,13 +21,13 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "Where is Birchbank Golf Course located?",
     answer:
-      "5500 Highway 22, Genelle, BC (mailing address: PO Box 250, Trail, BC V1R 4L5). The course sits along the banks of the Columbia River.",
+      "5500 Highway 22, Genelle, BC (mailing address: PO Box 250, Trail, BC V1R 4L5). The course sits along the west bank of the Columbia River, 15 minutes from Castlegar and 12 minutes from Trail.",
   },
   {
     category: "visiting",
     question: "What are the Pro Shop hours?",
     answer:
-      "Pro Shop hours are 8 am to dusk, seven days a week during the April 1 through October 31 season.",
+      "Pro Shop hours are 8 am to dusk, seven days a week during the April 1 through October 31 season. Phone 250-693-2255.",
   },
   {
     category: "visiting",
@@ -39,13 +39,37 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "How do I book a tee time?",
     answer:
-      "Tee times can be booked online via Chronogolf or by phoning the Pro Shop at 250-693-2255.",
+      "Tee times can be booked online via the Chronogolf widget on /book, or by phoning the Pro Shop at 250-693-2255.",
+  },
+  {
+    category: "visiting",
+    question: "Is the course walkable?",
+    answer:
+      "Yes. The routing returns to the clubhouse at the 9th and again at the 18th, which makes it walkable for fit players. Power carts are available at the Pro Shop ($13.50 per rider for 9, $24 for 18, tax in).",
+  },
+  {
+    category: "visiting",
+    question: "Where can I park?",
+    answer:
+      "Free parking at the clubhouse, off Highway 22 in Genelle. Pull straight up to the Pro Shop to check in.",
   },
   {
     category: "visiting",
     question: "What is the dress code?",
     answer:
       "Short version: golf-appropriate apparel, collared shirts or mock necks, shorts at least mid-thigh, soft-soled shoes (no metal spikes). Full published code, ladies, men, and footwear, is on the dedicated dress code page: /dress-code.",
+  },
+  {
+    category: "visiting",
+    question: "I'm coming from the US. What do I need?",
+    answer:
+      "Valid passport, NEXUS card, passport card, or enhanced driver's licence for the land crossing. Three crossings serve Birchbank: Paterson (BC-22 / US-395), Waneta (BC-22A), and Nelway (BC-6). Full cross-border details, including drive times from Spokane, Colville, and Sandpoint, are on /usa-visitors.",
+  },
+  {
+    category: "visiting",
+    question: "Where should I stay?",
+    answer:
+      "The Best Western Plus Columbia River Hotel in downtown Trail is the partner hotel listed on birchbankgolf.com. Other lodging in Rossland, Castlegar, and Trail (plus the four Kootenay Golf Trail courses for multi-round trips) is on /stay-and-play.",
   },
   {
     category: "fees",

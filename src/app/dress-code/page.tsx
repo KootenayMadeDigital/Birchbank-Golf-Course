@@ -126,8 +126,9 @@ export default function DressCode() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Golf-specific, not fancy. The short version: collared shirt or mock neck, shorts
-            at least mid-thigh, soft-soled shoes. The full version's below, straight from
-            the course's published dress code. When in doubt, ask at the Pro Shop.
+            at least mid-thigh, soft-soled shoes. The full version&apos;s below, straight from
+            the course&apos;s published dress code at birchbankgolf.com. When in doubt, ask
+            at the Pro Shop.
           </p>
         </div>
       </section>
@@ -173,7 +174,7 @@ export default function DressCode() {
             <RuleCard tone="no" title="Not permitted" rules={LADIES_NOT_OK} />
           </div>
           <p className="mt-6 text-xs text-silt font-mono">
-            Hoods are allowed on outerwear.
+            Tops may be worn untucked. Capri pants, plus fours, golf skirts and skorts all count.
           </p>
         </div>
       </section>
@@ -200,8 +201,7 @@ export default function DressCode() {
             <RuleCard tone="no" title="Not permitted" rules={FOOT_NOT_OK} />
           </div>
           <p className="mt-6 text-xs text-silt font-mono max-w-2xl">
-            Metal spikes damage the greens. We're strict about this, it's the one rule you'll
-            get turned away for at the first tee.
+            Metal spikes damage the greens. The one rule we&apos;re consistently strict on at the first tee.
           </p>
         </div>
       </section>

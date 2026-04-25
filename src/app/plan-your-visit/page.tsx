@@ -6,26 +6,30 @@ import { REVIEW_PLATFORMS } from "@/data/reviews";
 export const metadata: Metadata = {
   title: "Plan your visit",
   description:
-    "How to get to Birchbank Golf Course in Genelle, BC, drive routes from Spokane, Kelowna, Calgary, and Vancouver; the four regional airports; and the Kootenay weather window.",
+    "How to get to Birchbank Golf Course in Genelle, BC. Drive routes from Spokane, Kelowna, Calgary, Vancouver, four regional airports, and the April 1 to October 31 season.",
   alternates: { canonical: "/plan-your-visit" },
 };
 
 /**
- * Plan-your-visit page, scoped strictly to "how to get here."
+ * Plan-your-visit page. One job: how to get here.
  *
- * Distinct from its Visit-submenu siblings:
- *   /stay-and-play   → lodging + dinner + multi-course trips
- *   /usa-visitors    → border crossings, NEXUS, currency, USA drive times
- *   /dress-code      → course dress code
- *   /faq             → frequently asked
+ * Owns: drive routes from 4 origins, airports, season window.
+ * Does NOT own: lodging (see /stay-and-play), border specifics
+ * (see /usa-visitors), dress code, FAQ.
  *
- * Content kept here: drive routes (4 major origins), airports (4),
- * weather window + seasonal calendar. Cross-links down to the other
- * pages as natural next steps.
+ * Verified facts:
+ *   - Season: April 1 to October 31 (213 days), per birchbankgolf.com
+ *   - Pro Shop: open 7 days a week during season, per birchbankgolf.com;
+ *     8 am to dusk per CLAUDE.md
+ *   - Address: 5500 Highway 22, Genelle BC
+ *   - Pro Shop 250-693-2255, Bistro 250-693-5451
  *
- * Sourcing: highway numbers from Transport Canada / DriveBC; airport
- * info from each airport's own site; weather window per blueprint
- * seasonal-lines section.
+ * Removed for accuracy:
+ *   - "fall colour on the 14th fairway" (unverifiable specific) softened
+ *     to "fall colour along the river" matching home-page language
+ *   - Heavy 3-paragraph cedar US-visitors callout reduced to a single
+ *     tight cross-link line per dedup rules
+ *   - Lodging details, none here, /stay-and-play owns it
  */
 
 const DRIVE_ROUTES = [
@@ -33,29 +37,29 @@ const DRIVE_ROUTES = [
     city: "Spokane, WA",
     distance: "250 km",
     time: "~3 hours",
-    route: "I-395 N → US-395 N → Paterson / Frontier border → BC-22 N",
-    note: "Shortest + most popular route for WA golfers. Paterson border is smaller and faster than Eastport. Full cross-border detail on the For US visitors page.",
+    route: "US-395 N → Paterson border → BC-22 N",
+    note: "Shortest route from the Inland Northwest. Paterson is the small rural crossing west of Castlegar.",
   },
   {
     city: "Kelowna, BC",
     distance: "290 km",
     time: "~3.5 hours",
     route: "BC-97 S → BC-33 E → BC-3 E → BC-22 S",
-    note: "Through Rock Creek and Grand Forks. All-season route; watch Paulson Summit in winter.",
+    note: "Through Rock Creek and Grand Forks. Watch Paulson Summit in shoulder season.",
   },
   {
     city: "Calgary, AB",
     distance: "640 km",
-    time: "~6.5 – 7.5 hours",
+    time: "~6.5 to 7.5 hours",
     route: "AB-22X → Crowsnest Pass (Hwy 3) → Creston → BC-3 W → BC-22",
-    note: "A committed day on the road. Many golfers break the trip in Fernie or Cranbrook, good courses in both.",
+    note: "A committed day on the road. Many golfers break the trip overnight in Fernie or Cranbrook.",
   },
   {
     city: "Vancouver, BC",
     distance: "630 km",
     time: "~7 hours",
     route: "TransCanada (Hwy 1) → Hwy 3 E → Castlegar → BC-22",
-    note: "Gorgeous drive but long. Hope → Princeton → Osoyoos → Grand Forks. Overnight in Osoyoos or Grand Forks breaks it nicely.",
+    note: "Hope to Princeton to Osoyoos to Grand Forks. Overnight in Osoyoos or Grand Forks breaks the drive.",
   },
 ];
 
@@ -64,40 +68,40 @@ const AIRPORTS = [
     code: "YCG",
     name: "West Kootenay Regional (Castlegar)",
     distance: "13 km · 15 min",
-    notes: "Closest airport. Air Canada service from Vancouver (YVR) and Calgary (YYC). Car rental on-site.",
+    notes: "Closest airport. Air Canada service from Vancouver and Calgary. Car rental on-site.",
   },
   {
     code: "GEG",
     name: "Spokane International",
     distance: "260 km · ~3 hours",
-    notes: "Best option for US visitors. Many daily flights, full-service rental counters, cross at Paterson.",
+    notes: "Best option for US visitors. Many daily flights, full rental counters, cross at Paterson.",
   },
   {
     code: "YLW",
     name: "Kelowna International",
     distance: "290 km · ~3.5 hours",
-    notes: "If you're flying from eastern Canada or Vancouver. More daily flights than YCG.",
+    notes: "More daily flights than YCG. Reasonable choice from eastern Canada or Vancouver.",
   },
   {
     code: "YXC",
     name: "Canadian Rockies International (Cranbrook)",
     distance: "250 km · ~3 hours",
-    notes: "Alternative for trips routing through the Rockies. Calgary-bound WestJet flights stop here.",
+    notes: "Alternative for trips routing through the Rockies. WestJet flights from Calgary stop here.",
   },
 ];
 
 const SEASONAL = [
-  { window: "April – May",   detail: "Opening weeks, firm fairways, lowest rates" },
-  { window: "June – August", detail: "Peak season, long days, Bistro patio runs late" },
-  { window: "July – August", detail: "Beat the Heat promo after 1 PM (non-Wed)" },
-  { window: "September – October", detail: "Cooler, quieter, fall colour on the 14th fairway" },
-  { window: "November – March",    detail: "Closed for the season" },
+  { window: "April to May",          detail: "Opening weeks, firm fairways, lowest rates" },
+  { window: "June to August",        detail: "Peak season, long days, Bistro patio runs late" },
+  { window: "July to August",        detail: "Beat the Heat promo after 1 PM, not Wednesdays" },
+  { window: "September to October",  detail: "Cooler, quieter, fall colour along the river" },
+  { window: "November to March",     detail: "Closed for the season" },
 ];
 
 export default function PlanYourVisit() {
   return (
     <>
-      {/* Hero */}
+      {/* 1. HERO */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
         <div className="container-edge">
           <p className="eyebrow mb-6">Plan your visit</p>
@@ -109,10 +113,10 @@ export default function PlanYourVisit() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Birchbank sits on the west bank of the Columbia River in Genelle, BC, 15 minutes
-            from Castlegar, 12 minutes from Trail. This page covers the logistics of getting
-            here. For where to stay, see{" "}
-            <Link href="/stay-and-play" className="underline hover:text-amber">Stay &amp; play</Link>;
-            for cross-border specifics see{" "}
+            from Castlegar, 12 minutes from Trail. This page covers the road and the
+            runway. Where to sleep is on{" "}
+            <Link href="/stay-and-play" className="underline hover:text-amber">Stay &amp; play</Link>.
+            Crossing the border is on{" "}
             <Link href="/usa-visitors" className="underline hover:text-amber">For US visitors</Link>.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
@@ -124,7 +128,7 @@ export default function PlanYourVisit() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Drive routes */}
+      {/* 2. DRIVE ROUTES */}
       <section id="drive-routes" className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -133,12 +137,14 @@ export default function PlanYourVisit() {
               Four ways in.
             </h2>
             <p className="prose-editorial text-granite/85">
-              Drive times below are summer / no-traffic estimates. Winter pass closures on Hwy 3
-              (Paulson and Crowsnest) can add an hour. Always check{" "}
+              Drive times below are summer and no-traffic estimates. Winter pass closures on
+              Hwy 3 (Paulson and Crowsnest) can add an hour. Always check{" "}
               <a href="https://www.drivebc.ca" target="_blank" rel="noopener" className="underline hover:text-amber">
                 DriveBC
               </a>{" "}
-              before a long haul.
+              before a long haul. Driving from the US? Full US drive times and border detail
+              live on{" "}
+              <Link href="/usa-visitors" className="underline hover:text-amber">/usa-visitors</Link>.
             </p>
           </div>
 
@@ -150,7 +156,7 @@ export default function PlanYourVisit() {
               >
                 <div className="flex items-baseline justify-between mb-2">
                   <p className="font-display text-2xl text-granite">{r.city}</p>
-                  <p className="font-mono text-xs text-silt">{r.distance} · {r.time}</p>
+                  <p className="font-mono text-xs text-silt tabular-nums">{r.distance} · {r.time}</p>
                 </div>
                 <p className="font-mono text-xs text-silt mt-3 mb-3 tracking-tight leading-relaxed">
                   {r.route}
@@ -164,7 +170,7 @@ export default function PlanYourVisit() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Airports */}
+      {/* 3. AIRPORTS */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="mb-12 max-w-2xl">
@@ -173,7 +179,7 @@ export default function PlanYourVisit() {
               Four airports, four routes in.
             </h2>
             <p className="prose-editorial text-granite/85">
-              YCG is closest; GEG is best for US visitors. Car rental at all four.
+              YCG is closest. GEG is best for US visitors. Car rental at all four.
             </p>
           </div>
 
@@ -187,7 +193,7 @@ export default function PlanYourVisit() {
                   <p className="font-display text-lg text-granite">{a.name}</p>
                   <p className="text-silt text-sm mt-1">{a.notes}</p>
                 </div>
-                <span className="hidden md:block md:col-span-3 font-mono text-sm text-silt text-right">
+                <span className="hidden md:block md:col-span-3 font-mono text-sm text-silt text-right tabular-nums">
                   {a.distance}
                 </span>
               </li>
@@ -196,51 +202,38 @@ export default function PlanYourVisit() {
         </div>
       </section>
 
-      {/* Cross-border callout, routes to the dedicated /usa-visitors page. */}
-      <section className="py-[var(--spacing-section)] bg-cedar text-paper">
-        <div className="container-edge grid gap-8 md:grid-cols-12 items-center">
-          <div className="md:col-span-8">
-            <p className="eyebrow text-tamarack mb-4">Coming from the US?</p>
-            <h2
-              className="font-display mb-3"
-              style={{ fontSize: "clamp(1.75rem, 4.5vw, 2.75rem)", lineHeight: "1.05", letterSpacing: "-0.01em" }}
-            >
-              Three border crossings · passport details · USD rates.
-            </h2>
-            <p className="prose-editorial text-paper/85 max-w-xl">
-              We keep all the cross-border specifics. Paterson / Frontier, Waneta / Boundary,
-              Nelway / Metaline Falls, NEXUS, what to bring, CAD versus USD, on one
-              dedicated page.
-            </p>
-          </div>
-          <div className="md:col-span-4 md:text-right">
-            <Link
-              href="/usa-visitors"
-              className="btn-primary bg-tamarack text-granite hover:bg-paper"
-            >
-              For US visitors →
+      {/* 4. CROSS-BORDER, single tight cross-link line, no cedar block. */}
+      <section className="py-12 bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <p className="font-mono text-sm text-silt max-w-3xl">
+            <span className="text-granite font-semibold">Coming from the US?</span>{" "}
+            Border crossings, documents, currency, and Spokane / Colville / Sandpoint
+            drive times all live on{" "}
+            <Link href="/usa-visitors" className="underline text-amber hover:text-amber-dark">
+              /usa-visitors
             </Link>
-          </div>
+            .
+          </p>
         </div>
       </section>
 
-      {/* Weather window */}
+      {/* 5. WEATHER WINDOW + SEASONAL */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
             <p className="eyebrow mb-5">When to come</p>
             <h2 className="display-lg font-display mb-5">
-              June 15 – September 15.
+              April 1 to October 31.
             </h2>
             <p className="prose-editorial text-granite/85 max-w-xl">
-              The Kootenay summer is warm, dry, and long. Shoulder seasons. April to early June,
-              mid-September to October, play firmer, cooler, cheaper, and less crowded. October
-              is the best month for colour; the tamaracks along the river go gold for about three
-              weeks mid-month.
+              The course averages 213 days a year, opening April 1 and closing October 31.
+              Peak summer runs warm and dry. Shoulder weeks, April to early June and
+              mid-September to October, play firmer, cooler, cheaper, and less crowded.
+              Mid-October is the best stretch for colour along the river.
             </p>
             <p className="mt-6">
               <Link href="/conditions" className="btn-ghost">
-                See today's conditions →
+                See today&apos;s conditions →
               </Link>
             </p>
           </div>
@@ -256,59 +249,48 @@ export default function PlanYourVisit() {
         </div>
       </section>
 
-      {/* Next steps, the three sibling pages */}
+      {/* 6. ON ARRIVAL, the practical bit nobody else owns. */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
-        <div className="container-edge">
-          <div className="mb-10 max-w-2xl">
-            <p className="eyebrow mb-5">Next</p>
+        <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
+          <div className="md:col-span-5">
+            <p className="eyebrow mb-5">When you arrive</p>
             <h2 className="display-md font-display mb-5">
-              You know how to get here. Now what?
+              The practical bit.
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            <Link
-              href="/stay-and-play"
-              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
-            >
-              <p className="eyebrow mb-3">Stay &amp; play</p>
-              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
-                Hotels, dinner, more golf.
-              </p>
-              <p className="text-silt text-sm leading-relaxed">
-                Lodging partners, after-round dining, and the Kootenay Golf Trail for
-                multi-day trips.
-              </p>
-            </Link>
-            <Link
-              href="/usa-visitors"
-              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
-            >
-              <p className="eyebrow mb-3">For US visitors</p>
-              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
-                Border, NEXUS, currency.
-              </p>
-              <p className="text-silt text-sm leading-relaxed">
-                Three crossings, documents, and how CAD rates play for US-dollar visitors.
-              </p>
-            </Link>
-            <Link
-              href="/dress-code"
-              className="group border border-granite/15 p-7 hover:border-amber transition-colors"
-            >
-              <p className="eyebrow mb-3">Dress code</p>
-              <p className="font-display text-xl mb-3 group-hover:text-amber transition-colors">
-                What to wear.
-              </p>
-              <p className="text-silt text-sm leading-relaxed">
-                Soft-soled shoes, collared shirts, no metal spikes. Full rules for
-                ladies / men / footwear.
-              </p>
-            </Link>
+          <div className="md:col-span-7 space-y-5">
+            <p className="prose-editorial text-granite/85">
+              <span className="font-semibold text-granite">Address.</span> 5500 Highway 22,
+              Genelle, BC. Free parking at the clubhouse. Pull straight up to the Pro Shop,
+              that&apos;s where you check in.
+            </p>
+            <p className="prose-editorial text-granite/85">
+              <span className="font-semibold text-granite">Pro Shop hours.</span> 8 am to
+              dusk, seven days a week through the season. Phone{" "}
+              <a href="tel:+12506932255" className="underline hover:text-amber">
+                250-693-2255
+              </a>
+              .
+            </p>
+            <p className="prose-editorial text-granite/85">
+              <span className="font-semibold text-granite">Walking the course.</span>{" "}
+              Yes, the course is walkable, the routing returns to the clubhouse at 9 and
+              again at 18. Power carts are available at the Pro Shop, $13.50 per rider for
+              9, $24 for 18 (tax in).
+            </p>
+            <p className="prose-editorial text-granite/85">
+              <span className="font-semibold text-granite">Bistro at the turn.</span> The
+              Bistro is open daily 10 am to 6 pm. Phone{" "}
+              <a href="tel:+12506935451" className="underline hover:text-amber">
+                250-693-5451
+              </a>{" "}
+              for a reservation, or walk in.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* 7. FINAL CTA */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge text-center max-w-3xl mx-auto">
           <p className="eyebrow text-paper/60 mb-6">Ready when you are</p>
@@ -328,7 +310,6 @@ export default function PlanYourVisit() {
             </a>
           </div>
 
-          {/* Tripadvisor chip, destination-visitor audience. */}
           <a
             href={REVIEW_PLATFORMS.tripadvisor.readUrl}
             target="_blank"

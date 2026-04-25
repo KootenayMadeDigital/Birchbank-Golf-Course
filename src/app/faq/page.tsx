@@ -7,21 +7,23 @@ import { faqJsonLd } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Everything visitors ask about Birchbank Golf Course, season, hours, booking, dress code, course design, rates, equipment, and the Retirees Club.",
+    "Everything visitors ask about Birchbank Golf Course. Hours, location, dress code, cart rates, course history, and how to book a tee time.",
   alternates: { canonical: "/faq" },
 };
 
 /**
- * FAQ page rebuilt as a proper answer hub:
- *   - Grouped by category (visiting / course / fees / community)
- *   - Native <details>/<summary> for accordion behavior (no JS)
- *   - Schema.org FAQPage JSON-LD so Google can surface answers directly
- *   - Jump-nav chips at the top for self-service triage
- *   - Final "still have a question?" block pushing to contact + booking
+ * FAQ page. One job: searchable Q&A hub.
  *
- * Every answer in src/data/faq.ts is verified from birchbankgolf.com or
- * the course's published information. The FAQPage schema is a material
- * SEO asset per the blueprint's local-SEO plan.
+ * Owns: the question grid + category nav. Cross-links into the dedicated
+ * detail pages instead of duplicating their content.
+ *
+ * Verified facts only:
+ *   - Pro Shop hours: 8 am to dusk per CLAUDE.md (NOT 9 AM - 7 PM)
+ *   - Bistro hours: 10 am to 6 pm per CLAUDE.md and the Bistro page
+ *   - Season: Apr 1 to Oct 31 per birchbankgolf.com
+ *
+ * FAQPage JSON-LD is a material SEO asset per the blueprint's local-SEO
+ * plan; the schema serializes from src/data/faq.ts.
  */
 
 export default function FAQPage() {
@@ -32,7 +34,7 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(FAQ)) }}
       />
 
-      {/* Hero + jump nav */}
+      {/* 1. HERO + JUMP NAV */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
         <div className="container-edge">
           <p className="eyebrow mb-6">FAQ</p>
@@ -43,9 +45,9 @@ export default function FAQPage() {
             Things people ask us.
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl mb-10">
-            Hours, dress code, cart rates, the dress code, the 1962 story, and why the 7th
-            gets prettier in October. If we haven't answered your question below, call the
-            Pro Shop. Someone picks up.
+            Hours, dress code, cart rates, the 1962 history, and how to get here from
+            either side of the border. If your question isn&apos;t below, call the Pro
+            Shop. Someone picks up.
           </p>
 
           <nav aria-label="FAQ categories" className="flex flex-wrap gap-2">
@@ -64,7 +66,7 @@ export default function FAQPage() {
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
-      {/* Category sections */}
+      {/* 2. CATEGORY SECTIONS */}
       {FAQ_CATEGORIES.map((category) => {
         const items = FAQ.filter((f) => f.category === category.key);
         if (items.length === 0) return null;
@@ -119,7 +121,35 @@ export default function FAQPage() {
         );
       })}
 
-      {/* Still have a question? */}
+      {/* 3. QUICK CROSS-LINKS, the 4 dedicated detail pages */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <p className="eyebrow mb-5">Need more detail?</p>
+          <h2 className="display-md font-display mb-8 max-w-2xl">
+            Each topic has its own page.
+          </h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <Link href="/plan-your-visit" className="group border border-granite/15 p-5 hover:border-amber transition-colors">
+              <p className="font-display text-lg text-granite group-hover:text-amber transition-colors">Plan your visit</p>
+              <p className="text-silt text-xs mt-2 leading-relaxed">Drive routes, airports, season window.</p>
+            </Link>
+            <Link href="/stay-and-play" className="group border border-granite/15 p-5 hover:border-amber transition-colors">
+              <p className="font-display text-lg text-granite group-hover:text-amber transition-colors">Stay &amp; play</p>
+              <p className="text-silt text-xs mt-2 leading-relaxed">Hotels, dinner, Kootenay Golf Trail.</p>
+            </Link>
+            <Link href="/usa-visitors" className="group border border-granite/15 p-5 hover:border-amber transition-colors">
+              <p className="font-display text-lg text-granite group-hover:text-amber transition-colors">For US visitors</p>
+              <p className="text-silt text-xs mt-2 leading-relaxed">Crossings, drive times, currency.</p>
+            </Link>
+            <Link href="/dress-code" className="group border border-granite/15 p-5 hover:border-amber transition-colors">
+              <p className="font-display text-lg text-granite group-hover:text-amber transition-colors">Dress code</p>
+              <p className="text-silt text-xs mt-2 leading-relaxed">Acceptable apparel, footwear, exceptions.</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. STILL HAVE A QUESTION */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
@@ -131,9 +161,9 @@ export default function FAQPage() {
               Call us. Somebody picks up.
             </h2>
             <p className="prose-editorial text-paper/85 max-w-xl">
-              The Pro Shop is open 9 AM – 7 PM, seven days a week during the season. The
-              Bistro line picks up 10 am – 6 pm. Slow season (November – March), leave a
-              voicemail, the office returns calls within a business day.
+              The Pro Shop is open 8 am to dusk, seven days a week through the season.
+              The Bistro line picks up 10 am to 6 pm. Off-season (November through March),
+              leave a voicemail and the office returns calls within a business day.
             </p>
           </div>
           <div className="md:col-span-5 md:text-right">
@@ -148,7 +178,7 @@ export default function FAQPage() {
                 Contact form
               </Link>
             </div>
-            <p className="font-mono text-xs text-paper/60 mt-6">
+            <p className="font-mono text-xs text-paper/60 mt-6 tabular-nums">
               Bistro · 250-693-5451<br />
               5500 Highway 22, Genelle BC
             </p>
@@ -156,7 +186,7 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* 5. FINAL CTA, FAQ-closer flavour */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge text-center max-w-2xl mx-auto">
           <p className="eyebrow mb-5">Answered enough</p>
