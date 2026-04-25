@@ -224,28 +224,33 @@ export default function Bistro() {
       {/* 2. THE VIEW */}
       <section className="pb-[var(--spacing-section)]">
         <div className="container-edge">
-          <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
-            <Image
-              src="/bistro/view-from-patio.jpg"
-              alt="A Bistro patio table looking out over the Birchbank fairways with the Monashee foothills beyond"
-              fill
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className="object-cover"
-              priority
-              unoptimized
-            />
-          </div>
-          <div className="mt-6 grid gap-6 md:grid-cols-12 items-start">
-            <p className="md:col-span-7 prose-editorial text-granite/85">
-              The patio sits one tier above the first green. From any table you
-              are looking down the front nine, across the Columbia, and up at
-              the Monashee foothills. Most days you can hear the river before
-              you see it.
-            </p>
-            <p className="md:col-span-4 md:col-start-9 font-mono text-xs text-silt leading-relaxed">
-              Genelle, British Columbia. 15 minutes south of Trail, 35 from
-              Castlegar, 50 from the Spokane border crossing.
-            </p>
+          {/* Scenic photo, constrained so it sits as a tasteful editorial
+              moment rather than a full-bleed wall. Keeps native 16:9, no
+              cropping. */}
+          <div className="mx-auto max-w-4xl">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/bistro/view-from-patio.jpg"
+                alt="A Bistro patio table looking out over the Birchbank fairways with the Monashee foothills beyond"
+                fill
+                sizes="(max-width: 768px) 100vw, 56rem"
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <div className="mt-6 grid gap-6 md:grid-cols-12 items-start">
+              <p className="md:col-span-7 prose-editorial text-granite/85">
+                The patio sits one tier above the first green. From any table
+                you are looking down the front nine, across the Columbia, and
+                up at the Monashee foothills. Most days you can hear the river
+                before you see it.
+              </p>
+              <p className="md:col-span-4 md:col-start-9 font-mono text-xs text-silt leading-relaxed">
+                Genelle, British Columbia. 15 minutes south of Trail, 35 from
+                Castlegar, 50 from the Spokane border crossing.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -351,18 +356,21 @@ export default function Bistro() {
       {/* 5. THE SIGNATURE BURGER */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
-          <div className="grid gap-10 lg:grid-cols-12 items-center">
-            <div className="lg:col-span-7">
+          <div className="grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+            {/* Image column trimmed from 7/12 to 5/12 and the photo
+                squared off so the burger is hero-sized without being
+                wall-sized. */}
+            <div className="lg:col-span-5">
               <DishCard
                 src="/bistro/burger.jpg"
                 alt="Crispy Birdie Burger on a brioche bun with honey mustard slaw and a side salad"
                 kicker="The one to order"
                 caption="The Crispy Birdie Burger · $24"
-                ratio="4/5"
+                ratio="1/1"
                 priority
               />
             </div>
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6 lg:col-start-7">
               <p className="eyebrow mb-5">A regular's order</p>
               <h2 className="display-md mb-5 max-w-[16ch]">
                 Crispy fried chicken, cheddar, bacon, brioche.
