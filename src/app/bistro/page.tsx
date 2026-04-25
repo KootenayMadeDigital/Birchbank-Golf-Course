@@ -2,78 +2,168 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import DishCard from "@/components/DishCard";
+import MenuPdfCard from "@/components/MenuPdfCard";
 import BookButton from "@/components/BookButton";
 import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 export const metadata: Metadata = {
   title: "The Bistro",
   description:
-    "The Birchbank Bistro: covered patio over the course, fully licensed, open daily 10 to 6 from April through October. Burgers, fish and chips, breakfast all day, BC craft beer, and a beverage cart on course. Walk-in friendly. Genelle, BC.",
+    "The Bistro at Birchbank: covered patio over the course, fully licensed, full breakfast, lunch and dinner menu, BC craft beer on draft, and a beverage cart on course. Walk-in friendly. Genelle, BC.",
   alternates: { canonical: "/bistro" },
 };
 
+/**
+ * All copy on this page is verified against the live PDFs hosted in
+ * public/bistro/menus/:
+ *   - food-and-drinks.pdf  (The Bistro 2026 Menus, food + drinks)
+ *   - banquet.pdf          (Bistro Banquet, six buffet packages)
+ * Source originals: birchbankgolf.com/wp-content/uploads/2026/04/...
+ *                   and .../2026/03/BISTRO-BANQUET-2026-Menu-Online.pdf
+ *
+ * No fabricated dish names, no fabricated beer/wine, no weddings claim
+ * (the Bistro markets banquets, not weddings, on their published menus).
+ */
+
 const MENUS = {
-  food: "https://www.birchbankgolf.com/wp-content/uploads/2025/09/Fall-Menu-.pdf",
-  drinks:
-    "https://www.birchbankgolf.com/wp-content/uploads/2024/08/THE-BISTRO-New-Food_Drink-Menu-8.5x14.pdf",
+  foodDrinks: "/bistro/menus/food-and-drinks.pdf",
+  banquet: "/bistro/menus/banquet.pdf",
 };
 
 /**
- * Six dish photos sit in a magazine-style grid. Captions are honest
- * one-liners drawn from the live Fall menu PDF (Back 9 Burger, Crispy
- * Birdie Burger, Fish n' Chips, Birchbank Clubhouse, All Day Play
- * breakfast, ice cream from Bistro Classics). No invented prices, no
- * fictional dishes. The patio table photo anchors the atmosphere row.
+ * Six dish photos. Every caption transcribed verbatim or near-verbatim
+ * from the 2026 food menu.
  */
 const DISHES = [
   {
     src: "/bistro/breakfast.jpg",
-    alt: "Sunny-side eggs, sausage, bacon, tomato and toast on a Bistro plate",
-    kicker: "All Day Play",
-    caption: "Two eggs, your choice of bacon, ham or sausage, hashbrowns and toast.",
+    alt: "Two eggs, sausage, bacon, grilled tomato and toast on a Bistro plate",
+    kicker: "All Day Play · $18",
+    caption:
+      "Two eggs any style, your choice of bacon, ham or sausage, home fries and toast.",
   },
   {
     src: "/bistro/club.jpg",
     alt: "Birchbank Clubhouse triple-decker with bacon, turkey, cheddar and fries on the patio",
-    kicker: "Birchbank Clubhouse",
-    caption: "Triple-decker with bacon, turkey, cheddar and garlic aioli on toast.",
+    kicker: "Birchbank Clubhouse · $21",
+    caption:
+      "Triple decker. Bacon, turkey, cheddar, lettuce, tomato, garlic aioli, on white or whole wheat.",
   },
   {
     src: "/bistro/fish-and-chips.jpg",
-    alt: "Battered haddock and fries with coleslaw and a grilled lemon, course window behind",
-    kicker: "Fish n' Chips",
-    caption: "Battered haddock, coleslaw, tartar, grilled lemon. One piece or two.",
+    alt: "Beer-battered snapper and fries with a side salad and a grilled lemon, course window behind",
+    kicker: "Fish n' Chips · $19 / $24",
+    caption:
+      "Beer-battered snapper, fries, coleslaw, tartar, ketchup and lemon. One piece or two.",
   },
   {
     src: "/bistro/patio-table.jpg",
     alt: "A patio table set with plates and a small dried-flower centrepiece, the course visible beyond",
     kicker: "On the patio",
-    caption: "Tables face the first green and the Monashee foothills.",
+    caption:
+      "Tables face the first green and the Monashee foothills.",
   },
   {
     src: "/bistro/dessert.jpg",
     alt: "A scoop of vanilla ice cream with wafer cookies on a black napkin and marble counter",
-    kicker: "Ice cream",
-    caption: "Locally sourced. Ask about today's rotating flavour.",
+    kicker: "Ice Cream · $7",
+    caption:
+      "Locally sourced. Ask your server about today's rotating flavour.",
   },
   {
     src: "/bistro/burger.jpg",
-    alt: "Crispy Birdie Burger on a brioche bun with honey mustard slaw and fries on a Bistro plate",
-    kicker: "Crispy Birdie",
-    caption: "Crispy fried chicken, aged cheddar, bacon, honey mustard slaw, brioche.",
+    alt: "Crispy Birdie Burger on a brioche bun with honey mustard slaw and a side salad",
+    kicker: "Crispy Birdie Burger · $24",
+    caption:
+      "Crispy fried chicken, bacon, cheddar, brioche bun, honey mustard coleslaw.",
+  },
+];
+
+/**
+ * Six banquet packages, transcribed verbatim from the 2026 Bistro
+ * Banquet PDF. Every dollar amount and dish name is on the source PDF.
+ */
+const BANQUET = [
+  {
+    name: "Italian Feast Buffet",
+    price: "$38",
+    items: [
+      "Buns and butter",
+      "Caesar or mixed greens",
+      "Penne and meatballs",
+      "Chicken cutlets",
+      "Roast potatoes",
+      "Seasonal vegetables",
+      "Dessert",
+    ],
+  },
+  {
+    name: "Burger Buffet",
+    price: "$35",
+    items: [
+      "Caesar or mixed greens",
+      "Premium beef or crispy chicken burgers",
+      "All the fixings, bacon and cheese on brioche buns",
+      "French fries",
+      "Gravy, ketchup and garlic aioli",
+      "Dessert",
+    ],
+  },
+  {
+    name: "Chicken & Ribs Buffet",
+    price: "$51",
+    items: [
+      "Caesar or mixed greens",
+      "Half rack bourbon BBQ ribs",
+      "Lemon-herb roasted chicken",
+      "Roasted potatoes",
+      "Seasonal vegetables",
+      "Dessert",
+    ],
+  },
+  {
+    name: "Roast Beef Buffet",
+    price: "$49",
+    items: [
+      "Buns and butter",
+      "Caesar or mixed greens",
+      "Carved roast beef au jus",
+      "Horseradish and mustard",
+      "Roast potatoes",
+      "Seasonal vegetables",
+      "Dessert",
+    ],
+  },
+  {
+    name: "Top Sirloin Buffet",
+    price: "$53",
+    items: [
+      "Bread and butter",
+      "Caesar or mixed greens",
+      "Centre-cut top sirloin steak",
+      "Roasted potatoes",
+      "Seasonal vegetables",
+      "Dessert",
+    ],
+  },
+  {
+    name: "Chicken Cordon Bleu Buffet",
+    price: "$38",
+    items: [
+      "Bread and butter",
+      "Caesar or mixed greens",
+      "Housemade chicken cordon bleu",
+      "Roasted potatoes",
+      "Seasonal vegetables",
+      "Dessert",
+    ],
   },
 ];
 
 export default function Bistro() {
   return (
     <>
-      {/* ──────────────────────────────────────────────────────────────
-          1. HERO
-          Editorial split. Headline, warm subhead, trust line, two CTAs.
-          One primary (cedar). One secondary (phone, inline tel).
-          The hero scenic photo lives in the next section so its full
-          16:9 ratio is preserved, per the user's hard constraint.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 1. HERO */}
       <section className="pt-40 pb-16 container-edge">
         <div className="grid gap-10 lg:grid-cols-12 items-end">
           <div className="lg:col-span-7">
@@ -83,9 +173,8 @@ export default function Bistro() {
             </h1>
             <p className="prose-editorial max-w-2xl text-granite/85">
               Fully licensed and open to the public, golfers and walk-ins both.
-              The kitchen runs from breakfast straight through to dinner, the
-              covered patio is open whenever the doors are, and the view earns
-              its keep all day.
+              Breakfast through dinner from one kitchen, the covered patio open
+              whenever the doors are, and the view earns its keep all day.
             </p>
           </div>
           <div className="lg:col-span-5 lg:pl-6">
@@ -119,12 +208,12 @@ export default function Bistro() {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <a
-            href={MENUS.food}
+            href={MENUS.foodDrinks}
             target="_blank"
             rel="noopener"
             className="btn-primary"
           >
-            See the food menu (PDF) ↗
+            See the food &amp; drinks menu (PDF) ↗
           </a>
           <a href="tel:+12506935451" className="btn-ghost">
             Call to book a table · 250-693-5451
@@ -132,11 +221,7 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          2. THE VIEW
-          One full-bleed scenic at native ~16:9. NO cropping. The hero
-          visual moment of the page; one editorial line beneath.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 2. THE VIEW */}
       <section className="pb-[var(--spacing-section)]">
         <div className="container-edge">
           <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
@@ -165,27 +250,73 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          3. WHAT'S ON THE MENU
-          Editorial intro + 6-photo dishes grid. Each photo opens in a
-          lightbox. Captions name real dishes verified from the live
-          Fall menu PDF.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 3. THE MENUS, two PDF cards */}
+      <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
+        <div className="container-edge">
+          <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
+            <div className="md:col-span-7">
+              <p className="eyebrow mb-5">The menus</p>
+              <h2 className="display-lg max-w-[18ch]">
+                Two PDFs. View on screen or print for the patio.
+              </h2>
+            </div>
+            <p className="md:col-span-5 prose-editorial text-granite/85">
+              The day-to-day food and drinks menu, plus the Bistro Banquet
+              packages for groups. Open either to read on screen, or download
+              to print and bring in.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:gap-7 md:grid-cols-2">
+            <MenuPdfCard
+              src={MENUS.foodDrinks}
+              eyebrow="Food & drinks · 2026"
+              title="The Bistro Menu"
+              description="Breakfast, soup, salads, bowls, handhelds, Bistro classics, desserts, plus the full beer, wine, cocktails and spirits list."
+              categories={[
+                "Breakfast",
+                "Salads & bowls",
+                "Handhelds",
+                "Classics",
+                "Desserts",
+                "Beer · wine · spirits",
+              ]}
+              downloadName="bistro-2026-food-and-drinks-menu.pdf"
+            />
+            <MenuPdfCard
+              src={MENUS.banquet}
+              eyebrow="Banquet · 2026"
+              title="The Bistro Banquet"
+              description="Six buffet packages for tournaments, corporate days, celebrations of life, retirements, and any other group of size you bring through the door."
+              categories={[
+                "Italian Feast",
+                "Roast Beef",
+                "Burger",
+                "Top Sirloin",
+                "Chicken & Ribs",
+                "Cordon Bleu",
+              ]}
+              downloadName="bistro-2026-banquet-menu.pdf"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. WHAT'S ON THE MENU, dish grid with verified captions */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <div className="grid gap-10 md:grid-cols-12 items-end mb-12">
             <div className="md:col-span-7">
-              <p className="eyebrow mb-5">What's on the menu</p>
-              <h2 className="display-lg max-w-[18ch]">
+              <p className="eyebrow mb-5">From the kitchen</p>
+              <h2 className="display-lg max-w-[20ch]">
                 Honest food, cooked the way you'd hope.
               </h2>
             </div>
             <p className="md:col-span-5 prose-editorial text-granite/85">
-              Breakfast, burgers, salads, a fish-and-chips that earns the
-              two-piece order, a clubhouse triple-decker, wood-fired pizzas,
-              wings, and a daily soup the kitchen is happy to talk you through.
-              Vegetarian and gluten-aware options on every section, just ask
-              the server.
+              Wagyu burgers, beer-battered snapper, an all-day breakfast plate,
+              the Birchbank Clubhouse triple decker, a locally sourced ice
+              cream that rotates flavours, and a seasonal soup the kitchen will
+              talk you through. All prices on the menu PDF.
             </p>
           </div>
 
@@ -203,36 +334,30 @@ export default function Bistro() {
           </div>
 
           <p className="mt-10 font-mono text-xs text-silt">
-            Photos shot on the patio. Menu changes seasonally; the{" "}
+            Photos shot on the patio at Birchbank. Menu changes seasonally; the{" "}
             <a
-              href={MENUS.food}
+              href={MENUS.foodDrinks}
               target="_blank"
               rel="noopener"
               className="text-granite underline underline-offset-2 hover:text-amber"
             >
-              full Fall menu (PDF)
+              full 2026 menu (PDF)
             </a>{" "}
             has prices and the daily features.
           </p>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          4. THE SIGNATURE
-          The Crispy Birdie / Back 9 burger pair gets a larger moment.
-          One image, one paragraph, one call-out. The home page already
-          says "the Canadian burger is the one to order"; this is where
-          we deliver on that promise.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 5. THE SIGNATURE BURGER */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <div className="grid gap-10 lg:grid-cols-12 items-center">
             <div className="lg:col-span-7">
               <DishCard
                 src="/bistro/burger.jpg"
-                alt="Crispy Birdie Burger on a brioche bun with honey mustard slaw, fries and a side salad"
+                alt="Crispy Birdie Burger on a brioche bun with honey mustard slaw and a side salad"
                 kicker="The one to order"
-                caption="The Crispy Birdie Burger"
+                caption="The Crispy Birdie Burger · $24"
                 ratio="4/5"
                 priority
               />
@@ -240,19 +365,18 @@ export default function Bistro() {
             <div className="lg:col-span-5">
               <p className="eyebrow mb-5">A regular's order</p>
               <h2 className="display-md mb-5 max-w-[16ch]">
-                Crispy fried chicken, aged cheddar, bacon, brioche.
+                Crispy fried chicken, cheddar, bacon, brioche.
               </h2>
               <p className="prose-editorial text-granite/85 mb-6">
-                Honey-mustard slaw does the heavy lifting. The brioche bun
-                holds. Fries on the side, or sub the Caesar if you're pacing
-                yourself for the back nine. Members order it without looking at
-                the menu. First-timers usually order it twice.
+                Honey mustard coleslaw does the heavy lifting. The brioche bun
+                holds. Fries on the side, mixed greens if you'd rather, or sub
+                Caesar for three dollars.
               </p>
               <p className="prose-editorial text-granite/85 mb-8">
-                Prefer a beef patty? The Back 9 Burger runs the same brioche
-                with bacon, cheddar, lettuce, tomato, pickles and garlic aioli.
-                The Out of Bounds adds ham, extra cheddar and a fried egg, for
-                the rounds that earned it.
+                Prefer beef? The Back 9 Burger ($22) is a Wagyu patty with
+                bacon, cheddar, lettuce, tomato, pickles and garlic aioli on
+                brioche. The Out of Bounds ($24) adds ham, extra cheddar and a
+                fried egg, for the rounds that earned it.
               </p>
               <a href="tel:+12506935451" className="btn-primary">
                 Call to reserve a patio table
@@ -262,10 +386,7 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          5. WHAT'S ON TAP
-          Drinks. BC craft pulls verified from the drinks PDF.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 6. WHAT'S ON TAP, drinks verified from the 2026 PDF */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge">
           <div className="grid gap-10 md:grid-cols-12 items-start">
@@ -274,70 +395,102 @@ export default function Bistro() {
               <h2 className="display-lg max-w-[14ch] mb-6">
                 BC on the taps. The wine list reads sensibly.
               </h2>
+              <p className="prose-editorial text-paper/85 mb-7 max-w-md">
+                Four Kootenay and East-Kootenay drafts, a deep can list, real
+                wines by the glass and the bottle, and a bar well that does the
+                Caesar properly.
+              </p>
               <a
-                href={MENUS.drinks}
+                href={MENUS.foodDrinks}
                 target="_blank"
                 rel="noopener"
                 className="btn-primary bg-tamarack text-granite hover:bg-paper"
               >
-                See the drinks menu (PDF) ↗
+                See the full drinks list (PDF) ↗
               </a>
             </div>
 
             <div className="md:col-span-7 grid sm:grid-cols-2 gap-x-10 gap-y-8 text-paper/90">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
-                  Draft
+                  16oz draft · $7.75
                 </p>
                 <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
-                  <li>Nelson Lager</li>
-                  <li>Rossland Cream Ale</li>
+                  <li>Erie Creek Brewing</li>
                   <li>Fernie Hazy IPA</li>
-                  <li>Red Truck IPA</li>
+                  <li>Nelson Loki Lager</li>
+                  <li>Rossland Beer Co.</li>
                 </ul>
               </div>
+
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
-                  Cans &amp; coolers
+                  Tall cans · $8.50
                 </p>
                 <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
-                  <li>Kokanee, Pilsner, Coors Light</li>
-                  <li>Corona, Corona 0.0%</li>
+                  <li>Rossland Beer Company, seasonal</li>
+                  <li>Nelson Brewing Company, seasonal</li>
+                </ul>
+                <p className="mt-3 font-mono text-[11px] text-paper/55">
+                  Ask your server for the rotation.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
+                  Cider, coolers &amp; seltzers
+                </p>
+                <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
                   <li>Okanagan Cider</li>
-                  <li>Mott's Caesar, White Claw</li>
+                  <li>NUTRL Vodka Seltzer · White Claw</li>
+                  <li>SVNS Hard 7UP · Hey Y'all Hard Iced Tea</li>
+                  <li>Matt &amp; Steve's Caesar (473ml)</li>
                 </ul>
               </div>
+
               <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
+                  Cocktails &amp; spirits
+                </p>
+                <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
+                  <li>Caesar &amp; Long Island, $14</li>
+                  <li>Bar well 2oz, $12</li>
+                  <li>Premium 2oz, $13</li>
+                  <li className="text-paper/70 text-sm">
+                    Jameson, Sambuca, El Tequileño Reposado
+                  </li>
+                </ul>
+              </div>
+
+              <div className="sm:col-span-2 pt-4 border-t border-paper/15">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
                   Wine, by the glass &amp; bottle
                 </p>
-                <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
-                  <li>Copper Moon Pinot Grigio</li>
-                  <li>Peller Estates Chardonnay</li>
-                  <li>Gehringer Riesling (BC)</li>
-                  <li>Bask Pinot Noir, Cab Sauv</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-tamarack mb-3">
-                  Spirits &amp; the rest
+                <div className="grid sm:grid-cols-2 gap-x-10 gap-y-1.5 font-display text-[1.05rem] leading-relaxed">
+                  <ul className="space-y-1">
+                    <li>Copper Moon Pinot Grigio</li>
+                    <li>Peller Estates Sauvignon Blanc</li>
+                    <li>Peller Estates Chardonnay</li>
+                    <li>Gehringer Riesling</li>
+                  </ul>
+                  <ul className="space-y-1">
+                    <li>Peller Estates Cabernet Merlot</li>
+                    <li>Shot In The Dark Cabernet Shiraz</li>
+                    <li>Le Volte dell'Ornellaia Sangiovese Blend</li>
+                    <li>Frind Estate Winery Rosé</li>
+                  </ul>
+                </div>
+                <p className="mt-3 font-mono text-[11px] text-paper/55">
+                  Plus In The Clear Sauv Blanc, Chateau St. Jean Chardonnay,
+                  and Bouvet Saumur Brut sparkling on the bottle list.
                 </p>
-                <ul className="font-display text-[1.05rem] leading-relaxed space-y-1">
-                  <li>Caesars, Long Islands, well &amp; premium pours</li>
-                  <li>Jameson, El Jimador, Crown Royal</li>
-                  <li>Pop, juice, coffee</li>
-                  <li>Non-alcoholic beer on hand</li>
-                </ul>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          6. FOR THE ROUND
-          Beverage cart on course + the turn between holes 9 and 10.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 7. FOR THE ROUND */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5">
@@ -348,14 +501,13 @@ export default function Bistro() {
           </div>
           <div className="md:col-span-7 prose-editorial text-granite/85">
             <p>
-              The beverage cart works the course in season. Cold drinks, snacks,
-              the small things that make a hot 11th tee easier to walk onto.
-              Wave it down or flag it on the way through.
+              The beverage cart works the course in season. Cold drinks and
+              snacks; wave it down or flag it on the way through.
             </p>
             <p>
-              At the turn, between 9 and 10, the Bistro is two minutes from the
-              tenth tee box. Phone an order ahead from the ninth green and a
-              sandwich is on the bar by the time you walk in.
+              At the turn between the ninth and tenth, the Bistro is a short
+              walk from the tee box. Phone an order ahead and a sandwich is on
+              the bar by the time you walk in.
             </p>
             <p className="font-mono text-sm text-silt mt-6">
               <a
@@ -369,50 +521,75 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          7. BRING A GROUP (private events)
-          Cedar block treatment. Tightened from the previous page.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 8. BISTRO BANQUET, six verified buffet packages */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
-        <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
-          <div className="md:col-span-7">
-            <p className="eyebrow text-paper/60 mb-4">Bring a group</p>
-            <h2 className="display-md mb-5 max-w-[20ch]">
-              Tournaments, weddings, birthdays, corporate days.
-            </h2>
-            <p className="prose-editorial text-paper/85 max-w-2xl">
-              The dining room and the covered patio together seat real numbers.
-              Plated meals, appetizer spreads, late-day refreshments, paired
-              with golf or stand-alone. Tournament packages and catering quoted
-              over the phone.
+        <div className="container-edge">
+          <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
+            <div className="md:col-span-7">
+              <p className="eyebrow text-paper/60 mb-5">The Bistro Banquet</p>
+              <h2 className="display-lg max-w-[20ch]">
+                Six buffets. Per-person prices. No surprises.
+              </h2>
+            </div>
+            <p className="md:col-span-5 prose-editorial text-paper/85">
+              Tournaments, corporate days, celebrations of life, retirement
+              dinners, family gatherings. Pick a buffet, confirm your numbers,
+              eat. The full PDF lists every dish; here are the headlines.
             </p>
           </div>
-          <div className="md:col-span-5 md:text-right space-y-4">
-            <div>
-              <Link
-                href="/events/book"
+
+          <ul className="grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {BANQUET.map((b) => (
+              <li
+                key={b.name}
+                className="bg-paper text-granite border border-paper/15 p-6 md:p-7 rounded-sm"
+              >
+                <div className="flex items-baseline justify-between gap-3 mb-4">
+                  <h3 className="font-display text-[1.4rem] md:text-[1.55rem] leading-tight max-w-[14ch]">
+                    {b.name}
+                  </h3>
+                  <p className="font-display text-2xl text-cedar tabular-nums shrink-0">
+                    {b.price}
+                  </p>
+                </div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-silt mb-3">
+                  per person
+                </p>
+                <ul className="text-sm leading-relaxed text-granite/85 space-y-1">
+                  {b.items.map((i) => (
+                    <li key={i}>· {i}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-12 items-center">
+            <p className="md:col-span-7 font-mono text-xs text-paper/65">
+              Prices do not include taxes or gratuities. Bookings and questions
+              direct to the Bistro.
+            </p>
+            <div className="md:col-span-5 md:text-right flex flex-wrap md:justify-end gap-3">
+              <a
+                href={MENUS.banquet}
+                target="_blank"
+                rel="noopener"
                 className="btn-primary bg-tamarack text-granite hover:bg-paper"
               >
-                Plan an event →
-              </Link>
-            </div>
-            <div className="font-mono text-sm text-paper/70">
+                Banquet menu (PDF) ↗
+              </a>
               <a
                 href="tel:+12506935451"
-                className="underline underline-offset-2 hover:text-tamarack"
+                className="btn-ghost text-paper border-paper/70 hover:text-tamarack hover:border-tamarack"
               >
-                Or call the Bistro · 250-693-5451
+                Call · 250-693-5451
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          8. HOURS + HOW TO FIND US
-          The decision-simplification card. Hours, phone, email, address,
-          parking, dietary, reservations policy. Tabular nums on hours.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 9. HOURS + HOW TO FIND US */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge">
           <p className="eyebrow mb-6">Hours and how to find us</p>
@@ -422,12 +599,9 @@ export default function Bistro() {
                 Hours
               </p>
               <ul className="font-mono text-sm text-granite tabular-nums space-y-1.5">
-                <li>Mon to Sun · 10:00 am – 6:00 pm</li>
+                <li>Open daily · 10:00 am – 6:00 pm</li>
                 <li className="text-silt">Season runs April through October</li>
               </ul>
-              <p className="font-mono text-xs text-silt mt-4">
-                Kitchen closes at 5:30. Last call follows.
-              </p>
             </div>
 
             <div className="md:col-span-4">
@@ -465,20 +639,33 @@ export default function Bistro() {
                 Good to know
               </p>
               <ul className="font-mono text-sm text-granite/85 space-y-2 leading-relaxed">
-                <li>Walk-in friendly. Parties of six or more, please call ahead.</li>
-                <li>Vegetarian and gluten-aware options on every menu. Ask the kitchen.</li>
-                <li>Take-out on most menu items. Order at the bar or by phone.</li>
-                <li>Dogs welcome on the patio.</li>
+                <li>Walk-in friendly. Larger parties, please call ahead.</li>
+                <li>
+                  Ask the kitchen about dietary preferences; the menu is built
+                  to accommodate.
+                </li>
+                <li>
+                  Group bookings &amp; banquet packages, see the{" "}
+                  <a
+                    href={MENUS.banquet}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline underline-offset-2 hover:text-amber"
+                  >
+                    banquet PDF
+                  </a>
+                  .
+                </li>
+                <li>
+                  Tag the Bistro on Instagram, @birchbankgolf.
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          9. THE QUOTE
-          SCOREGolf, Andrew Penner, October 2022. Citation preserved.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 10. THE QUOTE, SCOREGolf 2022 */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge max-w-3xl">
           <p className="eyebrow mb-6">From the head pro</p>
@@ -506,10 +693,7 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          10. REVIEWS
-          Tripadvisor + Facebook prompts.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 11. REVIEWS */}
       <section className="py-16 bg-paper border-t border-granite/10">
         <div className="container-edge text-center max-w-2xl mx-auto">
           <p className="eyebrow mb-4">Ate something you liked?</p>
@@ -537,11 +721,7 @@ export default function Bistro() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          11. FINAL CTA + CROSS-LINKS
-          Tee time + Bistro phone, with quiet cross-links to events and
-          the Retirees Club Thursday lunch tradition.
-          ────────────────────────────────────────────────────────────── */}
+      {/* 12. FINAL CTA */}
       <section className="py-[var(--spacing-section)] bg-paper border-t border-granite/10">
         <div className="container-edge text-center max-w-3xl mx-auto">
           <p className="eyebrow mb-5">Come for the view, stay for the burger</p>
