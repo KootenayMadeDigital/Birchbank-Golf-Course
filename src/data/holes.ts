@@ -183,8 +183,20 @@ export const TEES = [
 ] as const;
 
 export const SCORECARD_IMAGES = {
-  inside: "https://www.birchbankgolf.com/wp-content/uploads/2020/02/2020-Score-Card-inside.jpg",
-  back: "https://www.birchbankgolf.com/wp-content/uploads/2020/02/2020-score-card-back.jpg",
+  /**
+   * Two printable take-with-you scorecards. Hosted locally so visitors
+   * can download them without leaving the site, and so the PDF route
+   * has a stable source.
+   *   - classic: the Classic Scorecard with all four tee yardages, par,
+   *     and HCP. The card a member or visitor brings to the first tee.
+   *   - atlas:   the Course Atlas with the routing diagram, RCGA local
+   *     rules, fairway markers, and flag positions.
+   */
+  classic: "/scorecard/classic.png",
+  atlas: "/scorecard/atlas.jpg",
+  // Aliases for legacy callers (PDF route, older imports).
+  inside: "/scorecard/classic.png",
+  back: "/scorecard/atlas.jpg",
 };
 
 // Confirmed facts from birchbankgolf.com:

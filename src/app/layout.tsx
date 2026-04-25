@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RouteCurtain from "@/components/RouteCurtain";
+import BookingDrawer from "@/components/BookingDrawer";
 import { organizationJsonLd, golfCourseJsonLd } from "@/lib/schema";
 import "./globals.css";
 
@@ -72,26 +73,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main">{children}</main>
           <Footer />
           <RouteCurtain />
+          {/*
+            In-house booking drawer. Replaces the body-injected
+            Chronogolf widget script (cdn2.chronogolf.com/widgets/v2)
+            which broke SPA navigation by physically moving DOM nodes
+            out of React's tree, corrupting reconciliation on every
+            route change. The drawer wraps the same Chronogolf
+            tee-sheet in an iframe; React owns the iframe element,
+            Chronogolf owns its internal document, and the two never
+            touch each other's DOM. See src/components/BookingDrawer.tsx
+            for the full rationale.
+          */}
+          <BookingDrawer />
         </div>
 
-        {/*
-          The Chronogolf body-injected widget script
-          (cdn2.chronogolf.com/widgets/v2) is intentionally NOT loaded
-          globally. That script physically moves a .chrono-bookingbutton
-          element from inside React's tree into a body-level
-          .chrono-container it appends after mount. Once React owns a
-          node and a third-party script relocates it, the next
-          reconciliation throws "Failed to execute 'removeChild' on
-          'Node': The node to be removed is not a child of this node",
-          which bubbled to error.tsx on every SPA navigation and looked
-          to visitors like an intermittent 404.
-
-          Booking is handled instead via /book, which embeds the
-          Chronogolf tee-sheet in a plain <iframe>. React owns the
-          iframe element; Chronogolf owns its internal document. The
-          two never touch each other's DOM. BookButton.tsx links to
-          /book and Next.js routes there normally.
-        */}
 
         <script
           type="application/ld+json"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import BookButton from "@/components/BookButton";
+import ScorecardCard from "@/components/ScorecardCard";
 import { HOLE_SUMMARY, SCORECARD_IMAGES, COURSE_FACTS, HOLES, TEES } from "@/data/holes";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
@@ -264,44 +265,32 @@ export default function CoursePage() {
           <div className="mb-12 max-w-2xl">
             <p className="eyebrow mb-5">The scorecard</p>
             <h2 className="display-lg font-display mb-5">
-              All four tees, in the open.
+              Two cards. Print, fold, walk.
             </h2>
             <p className="prose-editorial text-granite/85">
-              The course's own scorecard, photographed straight from the book.
+              The Classic Scorecard for tracking the round, the Course Atlas for the
+              routing, local rules, and pin colours. Click either to view full size, or
+              download to print at home and bring along.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <figure>
-              <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
-                <Image
-                  src={SCORECARD_IMAGES.inside}
-                  alt="Birchbank scorecard, inside view with all four tees, par, and handicap index"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
-              <figcaption className="mt-3 font-mono text-xs text-silt">
-                Scorecard, inside · Blue / Combo / White / Red
-              </figcaption>
-            </figure>
-            <figure>
-              <div className="relative aspect-[16/10] bg-granite/5 border border-granite/10">
-                <Image
-                  src={SCORECARD_IMAGES.back}
-                  alt="Birchbank scorecard, back cover with course info and local rules"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
-              <figcaption className="mt-3 font-mono text-xs text-silt">
-                Scorecard, back · local rules and contacts
-              </figcaption>
-            </figure>
+          <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-start">
+            <ScorecardCard
+              src={SCORECARD_IMAGES.classic}
+              alt="Birchbank Classic Scorecard with yardages and HCP for Blue, Combo, White, and Red tees, plus par and ladies' HCP"
+              title="Birchbank Classic Scorecard"
+              caption="Classic Scorecard · Blue / Combo / White / Red"
+              downloadName="birchbank-classic-scorecard.png"
+              ratio="5/4"
+            />
+            <ScorecardCard
+              src={SCORECARD_IMAGES.atlas}
+              alt="Birchbank Course Atlas with the routing diagram, RCGA local rules, fairway markers, and flag positions, signed by Director of Golf Jeff Papilion"
+              title="Birchbank Course Atlas"
+              caption="Course Atlas · routing, local rules, pin colours"
+              downloadName="birchbank-course-atlas.jpg"
+              ratio="3/4"
+            />
           </div>
 
           <div className="mt-12 flex flex-wrap gap-4">

@@ -5,13 +5,15 @@ import path from "path";
 
 /**
  * GET /api/scorecard, returns the Birchbank printed scorecard as a
- * single-download PDF. Two pages: inside (scoring grid + all tees) and
- * back (course map + local rules).
+ * single-download PDF. Two pages:
+ *   1. Classic Scorecard (PNG) -- yardages and HCP for all four tees,
+ *      par, and ladies' HCP. The card a golfer brings to the first tee.
+ *   2. Course Atlas (JPG)      -- the routing diagram, RCGA local
+ *      rules, fairway markers, and pin colours.
  *
- * Source images live at public/scorecard/inside.jpg and
- * public/scorecard/back.jpg -- they are the exact 2020 scorecard
- * JPEGs published by birchbankgolf.com, committed to this repo so the
- * PDF is self-contained (no runtime fetch from a third-party domain).
+ * Source images live at public/scorecard/classic.png and
+ * public/scorecard/atlas.jpg, committed to this repo so the PDF is
+ * self-contained (no runtime fetch from a third-party domain).
  *
  * Rendered on demand at the edge and cached by the CDN for a day.
  * Content-Disposition attachment forces a download rather than inline
@@ -23,8 +25,8 @@ export const dynamic = "force-static";
 export const revalidate = 86400; // 24h
 
 async function buildPdf(): Promise<Uint8Array> {
-  const inside = readFileSync(path.join(process.cwd(), "public/scorecard/inside.jpg"));
-  const back = readFileSync(path.join(process.cwd(), "public/scorecard/back.jpg"));
+  const classic = readFileSync(path.join(process.cwd(), "public/scorecard/classic.png"));
+  const atlas = readFileSync(path.join(process.cwd(), "public/scorecard/atlas.jpg"));
 
   const pdf = await PDFDocument.create();
   pdf.setTitle("Birchbank Golf Course. Scorecard");
@@ -41,9 +43,16 @@ async function buildPdf(): Promise<Uint8Array> {
   const pageHeight = 612; // 8.5in
   const margin = 28;
 
-  for (const [label, bytes] of [["Inside, scoring grid", inside], ["Back, course map & local rules", back]] as const) {
+  type Page = { label: string; bytes: Buffer; kind: "png" | "jpg" };
+  const pages: Page[] = [
+    { label: "Classic Scorecard, all four tees", bytes: classic, kind: "png" },
+    { label: "Course Atlas, routing & local rules", bytes: atlas, kind: "jpg" },
+  ];
+
+  for (const { label, bytes, kind } of pages) {
     const page = pdf.addPage([pageWidth, pageHeight]);
-    const image = await pdf.embedJpg(bytes);
+    const image =
+      kind === "png" ? await pdf.embedPng(bytes) : await pdf.embedJpg(bytes);
 
     // Fit within margins preserving aspect ratio.
     const maxW = pageWidth - margin * 2;

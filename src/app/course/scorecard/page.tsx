@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { SCORECARD_IMAGES, COURSE_FACTS, TEES, HOLE_SUMMARY } from "@/data/holes";
 import ScorecardSwitcher from "@/components/ScorecardSwitcher";
+import ScorecardCard from "@/components/ScorecardCard";
 
 export const metadata: Metadata = {
   title: "Course layout & scorecard",
@@ -51,45 +51,45 @@ export default function Scorecard() {
         <ScorecardSwitcher initialTee="blue" />
       </div>
 
-      {/* Printed scorecard reference */}
+      {/* Printable take-with-you scorecards */}
       <div className="mt-16">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <p className="eyebrow">Printed scorecard reference</p>
+        <div className="mb-8 max-w-2xl">
+          <p className="eyebrow mb-4">Print, fold, walk</p>
+          <h2 className="display-md font-display mb-4">
+            The two cards we hand out at the first tee.
+          </h2>
+          <p className="prose-editorial text-granite/85">
+            The Classic Scorecard for tracking the round; the Course Atlas for the
+            routing, RCGA local rules, fairway markers, and pin colours. Click either
+            to view full size, or download to print at home.
+          </p>
+        </div>
+        <div className="grid gap-8 md:gap-10 md:grid-cols-2 items-start">
+          <ScorecardCard
+            src={SCORECARD_IMAGES.classic}
+            alt="Birchbank Classic Scorecard with yardages and HCP for Blue, Combo, White, and Red tees, plus par and ladies' HCP"
+            title="Birchbank Classic Scorecard"
+            caption="Classic Scorecard · all four tees, par, HCP"
+            downloadName="birchbank-classic-scorecard.png"
+            ratio="5/4"
+          />
+          <ScorecardCard
+            src={SCORECARD_IMAGES.atlas}
+            alt="Birchbank Course Atlas with the routing diagram, RCGA local rules, fairway markers, and flag positions, signed by Director of Golf Jeff Papilion"
+            title="Birchbank Course Atlas"
+            caption="Course Atlas · routing, local rules, pin colours"
+            downloadName="birchbank-course-atlas.jpg"
+            ratio="3/4"
+          />
+        </div>
+        <div className="mt-8 flex flex-wrap gap-4">
           <a
             href="/api/scorecard"
             download="birchbank-scorecard.pdf"
-            className="font-mono text-xs text-amber hover:text-amber-dark underline underline-offset-2"
+            className="btn-ghost"
           >
-            Download scorecard PDF ↓
+            Both cards as a single PDF ↓
           </a>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2">
-          <figure>
-            <p className="text-xs text-silt font-mono mb-3">Inside</p>
-            <div className="bg-granite/5 relative aspect-[16/9]">
-              <Image
-                src={SCORECARD_IMAGES.inside}
-                alt="Birchbank Golf Course scorecard, inside"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                unoptimized
-              />
-            </div>
-          </figure>
-          <figure>
-            <p className="text-xs text-silt font-mono mb-3">Back</p>
-            <div className="bg-granite/5 relative aspect-[16/9]">
-              <Image
-                src={SCORECARD_IMAGES.back}
-                alt="Birchbank Golf Course scorecard, back"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                unoptimized
-              />
-            </div>
-          </figure>
         </div>
       </div>
 
