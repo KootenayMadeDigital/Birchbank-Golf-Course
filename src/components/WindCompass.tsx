@@ -37,19 +37,30 @@ export default function WindCompass({
   bearing,
   kmh,
   cardinal,
-  size = 200,
+  size,
+  className,
+  compact = false,
 }: {
   /** Meteorological bearing 0..360, where the wind comes FROM. */
   bearing: number;
   kmh: number;
   cardinal: string;
+  /** Optional fixed pixel size. If omitted the compass auto-sizes to its
+   *  parent's measured width via ResizeObserver, so callers can drive
+   *  size with CSS (e.g. `className="w-[min(72vw,280px)]"`). */
   size?: number;
+  className?: string;
+  /** Hide the Beaufort label (Calm / Light breeze / etc). Use for tight
+   *  contexts like the home-page sidebar widget where the narrative copy
+   *  already conveys intensity. */
+  compact?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const hoverGustRef = useRef(false);
   const [reduced, setReduced] = useState(false);
+  const [measuredSize, setMeasuredSize] = useState<number>(size ?? 0);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -59,25 +70,54 @@ export default function WindCompass({
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  // Auto-measure container width (only when a fixed `size` isn't passed).
+  useEffect(() => {
+    if (size) {
+      setMeasuredSize(size);
+      return;
+    }
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const apply = () => {
+      const w = Math.round(wrap.getBoundingClientRect().width);
+      if (w > 0) setMeasuredSize(w);
+    };
+    apply();
+    const RO = (window as unknown as { ResizeObserver?: typeof ResizeObserver })
+      .ResizeObserver;
+    if (RO) {
+      const ro = new RO(apply);
+      ro.observe(wrap);
+      return () => ro.disconnect();
+    }
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, [size]);
+
+  // Effective compass size used for canvas + overlay typography.
+  const eff = measuredSize || size || 200;
+
   useEffect(() => {
     if (reduced) return;
+    if (!eff) return;
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const sz = eff;
 
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
+    canvas.width = sz * dpr;
+    canvas.height = sz * dpr;
+    canvas.style.width = `${sz}px`;
+    canvas.style.height = `${sz}px`;
     ctx.scale(dpr, dpr);
 
-    const cx = size / 2;
-    const cy = size / 2;
-    const radius = size / 2 - 2;
+    const cx = sz / 2;
+    const cy = sz / 2;
+    const radius = sz / 2 - 2;
 
     // Wind tier drives streak density, color, base speed. We always show
     // streaks (even at calm) so the compass never reads "dead".
@@ -117,8 +157,8 @@ export default function WindCompass({
 
     // Pre-render the static face.
     const face = document.createElement("canvas");
-    face.width = size * dpr;
-    face.height = size * dpr;
+    face.width = sz * dpr;
+    face.height = sz * dpr;
     const fctx = face.getContext("2d")!;
     fctx.scale(dpr, dpr);
 
@@ -185,7 +225,7 @@ export default function WindCompass({
     }
 
     fctx.fillStyle = "rgba(140,138,130,0.85)";
-    fctx.font = `${Math.max(10, Math.round(size * 0.062))}px var(--font-mono), ui-monospace, monospace`;
+    fctx.font = `${Math.max(10, Math.round(sz * 0.062))}px var(--font-mono), ui-monospace, monospace`;
     fctx.textAlign = "center";
     fctx.textBaseline = "middle";
     const labelR = radius - 18;
@@ -256,11 +296,11 @@ export default function WindCompass({
       speedFrac += (targetSpeedFrac - speedFrac) * Math.min(1, dt * 3);
 
       // ---- DRAW ----
-      ctx.clearRect(0, 0, size, size);
-      ctx.drawImage(face, 0, 0, size, size);
+      ctx.clearRect(0, 0, sz, sz);
+      ctx.drawImage(face, 0, 0, sz, sz);
 
       // Speed ring (concentric arc, gradient stroke).
-      const ringStroke = ctx.createLinearGradient(0, 0, size, 0);
+      const ringStroke = ctx.createLinearGradient(0, 0, sz, 0);
       ringStroke.addColorStop(0, "rgba(200,155,60,0.95)");
       ringStroke.addColorStop(1, "rgba(181,105,31,0.95)");
       // Track (faint full ring).
@@ -351,7 +391,7 @@ export default function WindCompass({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       io.disconnect();
     };
-  }, [bearing, kmh, size, reduced]);
+  }, [bearing, kmh, eff, reduced]);
 
   // Hover/touch-down triggers a manual gust.
   const onPointerDown = () => { hoverGustRef.current = true; };
@@ -359,17 +399,28 @@ export default function WindCompass({
   const onMouseEnter = () => { hoverGustRef.current = true; };
   const onMouseLeave = () => { hoverGustRef.current = false; };
 
-  const numSize = Math.round(size * 0.21);
-  const captionSize = Math.max(9, Math.round(size * 0.058));
+  const numSize = Math.round(eff * 0.21);
+  const captionSize = Math.max(9, Math.round(eff * 0.058));
   const beaufort = BEAUFORT(kmh);
   const beaufortColor =
     beaufort.tone === "silt" ? "text-silt" : beaufort.tone === "tamarack" ? "text-tamarack" : "text-amber";
 
+  // Fixed-size mode keeps inline-block + explicit pixel dims so callers
+  // can drop it inline. Responsive mode uses block + aspect-square so the
+  // parent's CSS width drives everything and the canvas tracks via
+  // ResizeObserver above.
+  const wrapperStyle = size
+    ? { width: size, height: size }
+    : { aspectRatio: "1 / 1" };
+  const wrapperClassName = size
+    ? `relative inline-block select-none cursor-pointer ${className ?? ""}`
+    : `relative block w-full select-none cursor-pointer ${className ?? ""}`;
+
   return (
     <div
       ref={wrapRef}
-      className="relative inline-block select-none cursor-pointer"
-      style={{ width: size, height: size }}
+      className={wrapperClassName}
+      style={wrapperStyle}
       role="img"
       aria-label={`Wind ${kmh} km/h from ${cardinal}, ${beaufort.label.toLowerCase()}`}
       onMouseEnter={onMouseEnter}
@@ -379,7 +430,7 @@ export default function WindCompass({
       onPointerCancel={onPointerUp}
     >
       {reduced ? (
-        <StaticArrow bearing={bearing} size={size} />
+        <StaticArrow bearing={bearing} size={eff} />
       ) : (
         <canvas ref={canvasRef} className="block" />
       )}
@@ -399,12 +450,14 @@ export default function WindCompass({
         >
           km/h · {cardinal}
         </span>
-        <span
-          className={`font-mono mt-2 tracking-[0.22em] uppercase ${beaufortColor}`}
-          style={{ fontSize: Math.max(8, Math.round(captionSize * 0.85)) }}
-        >
-          {beaufort.label}
-        </span>
+        {!compact && (
+          <span
+            className={`font-mono mt-2 tracking-[0.22em] uppercase ${beaufortColor}`}
+            style={{ fontSize: Math.max(8, Math.round(captionSize * 0.85)) }}
+          >
+            {beaufort.label}
+          </span>
+        )}
       </div>
     </div>
   );

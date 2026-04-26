@@ -181,7 +181,8 @@ export default function ConditionsWidget() {
                     bearing={weather.windBearing}
                     kmh={weather.windKmh}
                     cardinal={weather.windCardinal}
-                    size={96}
+                    size={104}
+                    compact
                   />
                 </div>
               </div>

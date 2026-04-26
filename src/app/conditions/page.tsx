@@ -170,28 +170,17 @@ export default async function Conditions() {
               </div>
             </div>
 
-            {/* Big WindCompass */}
+            {/* Wind compass. Auto-sized via CSS so it scales smoothly across
+                phone -> tablet -> desktop without two fixed-size copies. */}
             <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
-              <p className="eyebrow mb-6 self-start lg:self-auto">Wind</p>
-              <div className="hidden md:block">
+              <p className="eyebrow mb-5 self-start lg:self-auto">Wind</p>
+              <div className="w-[clamp(180px,62vw,300px)]">
                 <WindCompass
                   bearing={forecast.now.windBearing}
                   kmh={forecast.now.windKmh}
                   cardinal={forecast.now.windCardinal}
-                  size={280}
                 />
               </div>
-              <div className="md:hidden">
-                <WindCompass
-                  bearing={forecast.now.windBearing}
-                  kmh={forecast.now.windKmh}
-                  cardinal={forecast.now.windCardinal}
-                  size={200}
-                />
-              </div>
-              <p className="mt-5 font-mono text-xs text-cedar uppercase tracking-widest text-center lg:text-right">
-                {forecast.now.clubCall}
-              </p>
             </div>
           </div>
 
