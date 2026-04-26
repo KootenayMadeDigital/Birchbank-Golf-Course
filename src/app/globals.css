@@ -31,6 +31,16 @@
     text-rendering: optimizeLegibility;
   }
 
+  html, body {
+    /* Clip horizontal overflow at the document root so a stray wide
+       child (long marquee, flag-pole canvas crop bias, etc.) never
+       reveals a white strip beside the layout when the user pinch-
+       zooms out on mobile. `clip` is preferred over `hidden` because
+       it doesn't establish a containing block for fixed/absolute
+       descendants (which would otherwise break the BookingDrawer). */
+    overflow-x: clip;
+  }
+
   body {
     background: var(--color-paper);
     color: var(--color-granite);
@@ -351,14 +361,14 @@
   inset: 0;
 }
 @media (pointer: coarse) {
-  /* Touch devices: tight 160vh wrapper so the scroll-scrubbed frame
-     sequence completes in just ~60vh of real finger drag (about half a
-     screen). Combined with `scrub: true` in BallIntoHoleHero.tsx the
-     animation engages on the first real scroll pixel after the iOS
-     address-bar collapse, instead of waiting for ~120vh of accumulated
-     scroll before the visible motion catches up. */
+  /* Touch devices: long 280vh wrapper so the ball drifts in at its
+     original cinematic pace (about ~180vh of real finger drag from
+     the first frame to the last). Combined with `scrub: true` in
+     BallIntoHoleHero.tsx the animation engages on the first scroll
+     pixel without any smoothing lag, but the per-pixel frame advance
+     stays small enough that the ball doesn't fly through the sequence. */
   .hero-wrap {
-    height: 160vh;
+    height: 280vh;
     overflow: visible;
   }
   .hero-inner {

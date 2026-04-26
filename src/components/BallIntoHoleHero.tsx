@@ -169,14 +169,6 @@ export default function BallIntoHoleHero() {
         const common = {
           frame: FRAME_COUNT - 1,
           snap: "frame",
-          // Desktop is linear; mobile overrides to power2.out below to
-          // front-load the frame progression. The source video keeps the
-          // ball small + far for the first half of the sequence and the
-          // dramatic in-the-hole motion happens in the last third, so
-          // linear scrub on mobile means the user has to scroll past the
-          // address-bar collapse AND through 50% of the runway before any
-          // obvious motion appears. Front-loading puts the visible action
-          // on the first real scroll pixel.
           ease: "none",
           onUpdate: () => {
             if (!ticking) {
@@ -187,18 +179,14 @@ export default function BallIntoHoleHero() {
         };
 
         if (isCoarse) {
-          // Touch: 160vh wrapper + sticky inner (CSS in globals.css). Progress
-          // 0→1 maps to frames 0→119 across ~60vh of scroll. Tight enough that
-          // the very first real scroll pixel after the iOS address-bar collapse
-          // visibly advances multiple frames; the animation stops feeling like
-          // it's waiting for the URL bar to retract before engaging.
-          //
-          // scrub: true (instant, no smoothing) so the canvas tracks the finger
-          // 1:1 with no perceptible lag; the previous 0.15 was still a 150ms
-          // delay against a single-finger drag.
+          // Touch: long sticky wrapper (CSS in globals.css uses 280vh) so the
+          // ball moves at its original cinematic pace rather than flying in.
+          // scrub: true ties the canvas 1:1 to the scroll position so the
+          // animation engages on the first real scroll pixel (no smoothing
+          // lag), while the long runway keeps the per-pixel frame advance
+          // small enough that the ball still drifts in slowly.
           gsap.to(state, {
             ...common,
-            ease: "power2.out", // mobile-only override, see comment above
             scrollTrigger: {
               trigger: hero,
               start: "top top",

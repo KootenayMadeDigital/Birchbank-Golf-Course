@@ -39,6 +39,7 @@ export default function BookingDrawer() {
   const [open, setOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [heroInView, setHeroInView] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -48,6 +49,29 @@ export default function BookingDrawer() {
     return () => {
       if (window.chronogolfOpen) delete window.chronogolfOpen;
     };
+  }, []);
+
+  /**
+   * Hide the floating trigger while the home-page hero is in view: the
+   * hero already has its own "Book a tee time" CTA, and stacking a
+   * second one in the bottom-right corner reads as duplication. As soon
+   * as the visitor scrolls past the hero, the floating trigger slides
+   * back in and is available on every other page from the first paint.
+   */
+  useEffect(() => {
+    const hero = document.querySelector(
+      '[aria-label="Birchbank Golf, opening sequence"]',
+    );
+    if (!hero) {
+      setHeroInView(false);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { rootMargin: "0px 0px -25% 0px", threshold: 0 },
+    );
+    io.observe(hero);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -87,7 +111,9 @@ export default function BookingDrawer() {
           "transition-all duration-200 will-change-transform",
           "hover:bg-cedar-dark hover:-translate-y-0.5 active:opacity-80",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
-          open ? "opacity-0 pointer-events-none translate-y-2" : "opacity-100",
+          open || heroInView
+            ? "opacity-0 pointer-events-none translate-y-2"
+            : "opacity-100",
         ].join(" ")}
       >
         Book a tee time
