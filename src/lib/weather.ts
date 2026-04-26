@@ -364,6 +364,59 @@ export function findBestWindow(hourly: HourlyPoint[]): {
 }
 
 /**
+ * Find the top N best playing windows across the week from the daily
+ * outlook. Each window is one day; the "when" within the day is a coarse
+ * call (morning if the high arrives midday and wind is calm; afternoon
+ * if winds peak early and settle; otherwise just "all day").
+ *
+ * Used by the /conditions page hero to surface 2-3 specific recommendations
+ * like "Tomorrow morning, 7 to 10 a.m." without requiring an extra API call.
+ */
+export function findBestWindowsThisWeek(
+  daily: ForecastDay[],
+  topN = 3,
+): Array<{ index: number; dayLabel: string; whenLabel: string; reason: string }> {
+  if (daily.length === 0) return [];
+  const scored = daily.map((d, i) => {
+    let score = 0;
+    score += (d.precipProbMax ?? 0) * 1.4;
+    score += Math.max(0, d.windMaxKmh - 14) * 1.6;
+    if (d.highC < 10) score += (10 - d.highC) * 4;
+    else if (d.highC < 16) score += (16 - d.highC) * 2;
+    else if (d.highC > 28) score += (d.highC - 28) * 3;
+
+    // Coarse time-of-day call. Hot days favour mornings; cool calm days
+    // favour mid-day. We keep this restrained, no fake hour-by-hour data.
+    let whenLabel = "all day";
+    if (d.highC >= 26) whenLabel = "morning, before the heat";
+    else if (d.windMaxKmh >= 22) whenLabel = "early, before the wind";
+    else if (d.highC < 14) whenLabel = "midday, after the chill";
+
+    const bits: string[] = [];
+    if ((d.precipProbMax ?? 0) <= 15) bits.push("dry");
+    else if ((d.precipProbMax ?? 0) <= 35) bits.push("mostly dry");
+    if (d.windMaxKmh < 12) bits.push("calm");
+    else if (d.windMaxKmh < 22) bits.push("light wind");
+    if (d.highC >= 16 && d.highC <= 26) bits.push("comfortable");
+
+    return {
+      index: i,
+      dayLabel: d.dayLabel,
+      whenLabel,
+      reason: bits.length ? bits.join(", ") : "best on offer",
+      score,
+    };
+  });
+  scored.sort((a, b) => a.score - b.score);
+  return scored.slice(0, topN).map(({ index, dayLabel, whenLabel, reason }) => ({
+    index,
+    dayLabel,
+    whenLabel,
+    reason,
+  }));
+}
+
+/**
  * Pick the single best day in the 7-day outlook for a round of golf.
  * Same scoring approach as findBestWindow, applied to daily aggregates.
  */

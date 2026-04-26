@@ -3,7 +3,12 @@ import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import WindCompass from "@/components/WindCompass";
 import HourChart from "@/components/HourChart";
-import { fetchBirchbankForecast, findBestWindow, findBestDay } from "@/lib/weather";
+import {
+  fetchBirchbankForecast,
+  findBestWindow,
+  findBestDay,
+  findBestWindowsThisWeek,
+} from "@/lib/weather";
 
 export const metadata: Metadata = {
   title: "Conditions",
@@ -29,21 +34,17 @@ export const revalidate = 900;
  * calls, not data we'd fake on this page.
  */
 
-// Colored emoji glyphs (with variation selector U+FE0F where needed) so
-// the OS renders them in native color rather than monochrome text. The
-// isDay flag swaps clear / mostly-clear / partly-cloudy day icons for
-// their nighttime counterparts so 11 PM doesn't render as a sun.
 function weatherGlyph(code: number, isDay: 0 | 1 = 1): string {
   const day = isDay === 1;
-  if (code === 0) return day ? "☀\uFE0F" : "🌙\uFE0F";                            // clear
-  if (code === 1) return day ? "🌤\uFE0F" : "🌙\uFE0F";                          // mostly clear
-  if (code === 2) return day ? "⛅\uFE0F" : "☁\uFE0F";                           // partly cloudy
-  if (code === 3) return "☁\uFE0F";                                              // overcast (same day/night)
-  if (code >= 45 && code <= 48) return "🌫\uFE0F";                               // fog
-  if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";              // light drizzle / showers
-  if ((code >= 61 && code <= 67) || (code >= 81 && code <= 82)) return "🌧\uFE0F"; // rain
-  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "🌨\uFE0F"; // snow
-  if (code >= 95) return "⛈\uFE0F";                                              // thunderstorm
+  if (code === 0) return day ? "☀\uFE0F" : "🌙\uFE0F";
+  if (code === 1) return day ? "🌤\uFE0F" : "🌙\uFE0F";
+  if (code === 2) return day ? "⛅\uFE0F" : "☁\uFE0F";
+  if (code === 3) return "☁\uFE0F";
+  if (code >= 45 && code <= 48) return "🌫\uFE0F";
+  if ((code >= 51 && code <= 57) || code === 80) return "🌦\uFE0F";
+  if ((code >= 61 && code <= 67) || (code >= 81 && code <= 82)) return "🌧\uFE0F";
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "🌨\uFE0F";
+  if (code >= 95) return "⛈\uFE0F";
   return "·";
 }
 
@@ -57,10 +58,28 @@ function golfDayCall(precip: number, windMax: number, highC: number): string {
   return "A solid day for golf.";
 }
 
+// Translate the weather code into a faint hero background tint. Sub-8%
+// opacity so the page still reads as paper.
+function heroTint(code: number, isDay: 0 | 1 = 1): string {
+  if (code === 0 || code === 1) {
+    return isDay === 1
+      ? "linear-gradient(180deg, rgba(200,155,60,0.07), rgba(245,242,234,0) 60%)"
+      : "linear-gradient(180deg, rgba(43,42,40,0.06), rgba(245,242,234,0) 60%)";
+  }
+  if (code === 2 || code === 3 || (code >= 45 && code <= 48)) {
+    return "linear-gradient(180deg, rgba(140,138,130,0.07), rgba(245,242,234,0) 60%)";
+  }
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+    return "linear-gradient(180deg, rgba(43,42,40,0.06), rgba(245,242,234,0) 60%)";
+  }
+  return "linear-gradient(180deg, rgba(60,74,53,0.07), rgba(245,242,234,0) 60%)";
+}
+
 export default async function Conditions() {
   const forecast = await fetchBirchbankForecast();
   const bestWindow = forecast ? findBestWindow(forecast.hourly) : null;
   const bestDay = forecast ? findBestDay(forecast.daily) : null;
+  const weekWindows = forecast ? findBestWindowsThisWeek(forecast.daily, 3) : [];
 
   if (!forecast) {
     return (
@@ -83,89 +102,101 @@ export default async function Conditions() {
 
   const today = forecast.daily[0];
   const todayCall = golfDayCall(today.precipProbMax, today.windMaxKmh, today.highC);
+  const tint = heroTint(forecast.now.conditionCode, forecast.now.isDay);
+
+  // Compute the week's high/low envelope so each daily card's range bar
+  // can be drawn on a consistent scale.
+  const weekHighs = forecast.daily.map((d) => d.highC);
+  const weekLows = forecast.daily.map((d) => d.lowC);
+  const weekMax = Math.max(...weekHighs);
+  const weekMin = Math.min(...weekLows);
+  const weekRange = Math.max(1, weekMax - weekMin);
 
   return (
     <>
       {/* HERO, the big read */}
-      <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
+      <section
+        className="pt-32 md:pt-40 pb-20 bg-paper relative overflow-hidden"
+        style={{ background: tint, backgroundColor: "var(--color-paper)" }}
+      >
+        <div className="container-edge relative">
           <p className="eyebrow text-cedar mb-6">
             Live at Birchbank · Genelle, BC
           </p>
-          <h1
-            className="font-display text-granite max-w-[24ch] mb-12"
-            style={{
-              fontSize: "clamp(2.25rem, 6vw, 4.75rem)",
-              lineHeight: "1.02",
-              letterSpacing: "-0.018em",
-            }}
-          >
-            Should you play today?
-          </h1>
 
-          <div className="grid gap-12 md:gap-14 md:grid-cols-12 items-start">
-            {/* Temp + condition */}
-            <div className="md:col-span-5">
-              <div className="flex items-baseline gap-5">
+          <div className="grid gap-12 md:gap-16 lg:grid-cols-12 items-start">
+            {/* Big temp + condition + call */}
+            <div className="lg:col-span-7">
+              <div className="flex items-start gap-6">
                 <span
-                  className="font-display text-granite leading-none tabular-nums"
-                  style={{ fontSize: "clamp(5rem, 14vw, 10rem)" }}
+                  className="font-display text-granite leading-[0.85] tabular-nums"
+                  style={{ fontSize: "clamp(4rem, 12vw, 9rem)" }}
                 >
                   {forecast.now.tempC}°
                 </span>
                 <span
                   aria-hidden
-                  className="font-mono text-cedar leading-none"
-                  style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)" }}
+                  className="font-mono text-cedar leading-none mt-3"
+                  style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
                 >
                   {weatherGlyph(forecast.now.conditionCode, forecast.now.isDay)}
                 </span>
               </div>
-              <p className="mt-4 font-display text-2xl md:text-3xl text-granite leading-snug">
+              <p
+                className="mt-6 font-display text-granite leading-snug max-w-[20ch]"
+                style={{ fontSize: "clamp(1.75rem, 3.4vw, 2.75rem)" }}
+              >
                 {forecast.now.conditionLabel}.
               </p>
-              <p className="mt-2 font-mono text-sm text-silt">
-                Today {today.lowC}° / {today.highC}° · precip {today.precipProbMax}%
+              <p className="mt-4 font-mono text-sm text-silt">
+                Today {today.lowC}° / {today.highC}° · precip {today.precipProbMax}% · {forecast.now.clubCall}
               </p>
+              <div className="mt-8 border-l-2 border-tamarack pl-5 max-w-xl">
+                <p className="eyebrow text-tamarack mb-3">Today's call</p>
+                <p
+                  className="font-display text-granite leading-snug"
+                  style={{ fontSize: "clamp(1.5rem, 2.4vw + 0.5rem, 2.25rem)" }}
+                >
+                  {todayCall}
+                </p>
+                {bestWindow && (
+                  <p className="mt-5 font-mono text-xs text-silt uppercase tracking-widest">
+                    Best window today
+                    <span className="block text-granite font-display text-lg normal-case tracking-normal mt-1">
+                      {bestWindow.startLabel} to {bestWindow.endLabel}
+                    </span>
+                  </p>
+                )}
+              </div>
             </div>
 
-            {/* Wind compass */}
-            <div className="md:col-span-3">
-              <p className="eyebrow mb-4">Wind</p>
-              <WindCompass
-                bearing={forecast.now.windBearing}
-                kmh={forecast.now.windKmh}
-                cardinal={forecast.now.windCardinal}
-                size={132}
-              />
-              <p className="mt-3 font-mono text-xs text-cedar uppercase tracking-widest">
+            {/* Big WindCompass */}
+            <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
+              <p className="eyebrow mb-6 self-start lg:self-auto">Wind</p>
+              <div className="hidden md:block">
+                <WindCompass
+                  bearing={forecast.now.windBearing}
+                  kmh={forecast.now.windKmh}
+                  cardinal={forecast.now.windCardinal}
+                  size={280}
+                />
+              </div>
+              <div className="md:hidden">
+                <WindCompass
+                  bearing={forecast.now.windBearing}
+                  kmh={forecast.now.windKmh}
+                  cardinal={forecast.now.windCardinal}
+                  size={200}
+                />
+              </div>
+              <p className="mt-5 font-mono text-xs text-cedar uppercase tracking-widest text-center lg:text-right">
                 {forecast.now.clubCall}
               </p>
             </div>
-
-            {/* Today's call */}
-            <aside className="md:col-span-4 border-l-2 border-tamarack pl-6 md:pl-7">
-              <p className="eyebrow text-tamarack mb-3">Today's call</p>
-              <p
-                className="font-display text-granite leading-snug"
-                style={{ fontSize: "clamp(1.5rem, 2.2vw + 0.5rem, 2rem)" }}
-              >
-                {todayCall}
-              </p>
-              {bestWindow && (
-                <p className="mt-5 font-mono text-xs text-silt uppercase tracking-widest">
-                  Best window today
-                  <span className="block text-granite font-display text-base normal-case tracking-normal mt-1">
-                    {bestWindow.startLabel} to {bestWindow.endLabel}
-                  </span>
-                </p>
-              )}
-            </aside>
           </div>
 
-          {/* Daylight, simple inline strip (the SVG arc was visually
-              awkward at this column width and got cut off). */}
-          <div className="mt-12 flex flex-wrap items-baseline gap-x-8 gap-y-2 font-mono text-xs uppercase tracking-widest text-silt">
+          {/* Daylight strip */}
+          <div className="mt-14 flex flex-wrap items-baseline gap-x-8 gap-y-2 font-mono text-xs uppercase tracking-widest text-silt">
             <span className="text-tamarack">Daylight</span>
             <span><span className="text-granite">↑ {today.sunrise}</span> sunrise</span>
             <span><span className="text-granite">↓ {today.sunset}</span> sunset</span>
@@ -173,6 +204,41 @@ export default async function Conditions() {
           </div>
         </div>
       </section>
+
+      {/* BEST WINDOWS THIS WEEK, the headline strip */}
+      {weekWindows.length > 0 && (
+        <section className="py-14 bg-paper border-t border-granite/10">
+          <div className="container-edge">
+            <div className="flex flex-wrap items-end justify-between gap-6 mb-8">
+              <div>
+                <p className="eyebrow text-tamarack mb-3">Best playing windows this week</p>
+                <h2 className="display-md font-display max-w-[22ch]">
+                  When the course will read best.
+                </h2>
+              </div>
+            </div>
+            <ol className="grid gap-5 md:grid-cols-3">
+              {weekWindows.map((w, i) => (
+                <li
+                  key={w.index}
+                  className="border border-granite/15 bg-paper p-5 md:p-6 rounded-sm relative"
+                >
+                  <span className="absolute top-4 right-5 font-mono text-[10px] uppercase tracking-widest text-tamarack">
+                    {i === 0 ? "Top pick" : `#${i + 1}`}
+                  </span>
+                  <p className="font-display text-2xl md:text-3xl text-granite">
+                    {w.dayLabel}
+                  </p>
+                  <p className="font-mono text-xs text-silt uppercase tracking-widest mt-2">
+                    {w.whenLabel}
+                  </p>
+                  <p className="font-mono text-xs text-cedar mt-3">{w.reason}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
       <div className="container-edge"><div className="rule-hair" /></div>
 
@@ -199,7 +265,7 @@ export default async function Conditions() {
           </div>
 
           {/* SVG chart */}
-          <div className="border border-granite/15 bg-paper p-4 md:p-6 mb-8">
+          <div className="border border-granite/15 bg-paper p-4 md:p-6 mb-8 overflow-hidden">
             <HourChart hourly={forecast.hourly} bestWindow={bestWindow} />
             <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-widest text-silt">
               <span className="inline-flex items-center gap-2">
@@ -216,6 +282,7 @@ export default async function Conditions() {
                   Best window
                 </span>
               )}
+              <span className="ml-auto text-silt/70 normal-case tracking-normal">Hover or tap for details.</span>
             </div>
           </div>
 
@@ -301,6 +368,8 @@ export default async function Conditions() {
           <ul className="divide-y divide-granite/15 border-t border-b border-granite/15">
             {forecast.daily.map((d, i) => {
               const isBest = bestDay && bestDay.index === i;
+              const lowPct = ((d.lowC - weekMin) / weekRange) * 100;
+              const highPct = ((d.highC - weekMin) / weekRange) * 100;
               return (
                 <li
                   key={d.date}
@@ -322,8 +391,9 @@ export default async function Conditions() {
                     {d.conditionLabel}
                   </span>
                   <span className="col-span-3 md:col-span-2 font-display text-base md:text-lg text-granite text-right md:text-left">
-                    {d.highC}°{" "}
-                    <span className="text-silt text-sm">/ {d.lowC}°</span>
+                    <span className="text-silt text-sm">{d.lowC}°</span>{" "}
+                    <RangeBar lowPct={lowPct} highPct={highPct} />{" "}
+                    {d.highC}°
                   </span>
                   <span className="hidden md:flex md:col-span-2 items-center gap-2 font-mono text-xs text-silt">
                     <PrecipBar pct={d.precipProbMax} />
@@ -462,13 +532,30 @@ function PrecipBar({ pct }: { pct: number }) {
 }
 
 function WindBar({ kmh }: { kmh: number }) {
-  // Scale: 40 km/h fills the bar
   const w = Math.max(0, Math.min(100, (kmh / 40) * 100));
   return (
     <span className="inline-block w-12 h-1.5 bg-granite/15 relative" aria-hidden>
       <span
         className="absolute inset-y-0 left-0 bg-tamarack"
         style={{ width: `${w}%` }}
+      />
+    </span>
+  );
+}
+
+/** A horizontal range strip showing the day's low to high relative to the week. */
+function RangeBar({ lowPct, highPct }: { lowPct: number; highPct: number }) {
+  const left = Math.max(0, Math.min(100, lowPct));
+  const right = Math.max(0, Math.min(100, highPct));
+  const width = Math.max(2, right - left);
+  return (
+    <span
+      className="inline-block align-middle w-16 h-1 bg-granite/10 relative mx-1"
+      aria-hidden
+    >
+      <span
+        className="absolute inset-y-0 bg-tamarack rounded-full"
+        style={{ left: `${left}%`, width: `${width}%` }}
       />
     </span>
   );
