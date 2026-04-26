@@ -53,23 +53,22 @@ export default function BookingDrawer() {
   }, []);
 
   /**
-   * On TOUCH devices only, hide the floating trigger when it would
-   * overlap meaningful content:
+   * Hide the floating trigger when it would overlap meaningful content,
+   * on every viewport:
    *
-   *   - Home-page hero: the hero already has a "Book a tee time" CTA,
-   *     and stacking a second one in the bottom-right of a phone screen
-   *     reads as duplication.
+   *   - Home-page hero: the hero already has a "Book a tee time" CTA
+   *     plus a "Walk the 18" secondary, and the floating trigger sits
+   *     directly over the secondary on desktop and duplicates the
+   *     primary on mobile. Hide while hero is in view.
    *   - Footer: the trigger sits over the footer's bottom row when the
    *     visitor scrolls all the way down, covering the land
-   *     acknowledgement link and the office email.
+   *     acknowledgement link and the office email. Hide while footer
+   *     is in view.
    *
-   * On desktop the trigger always shows. The bottom-right corner is far
-   * enough from page content there that it doesn't cover anything.
+   * Trigger fades back in the moment the visitor scrolls between those
+   * two regions.
    */
   useEffect(() => {
-    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-    if (!isCoarse) return; // desktop: always show the trigger
-
     const observers: IntersectionObserver[] = [];
 
     const hero = document.querySelector(
