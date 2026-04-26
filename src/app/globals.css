@@ -371,13 +371,21 @@
     height: 280vh;
     overflow: visible;
   }
+  /* Sticky inner uses 100vh (the LARGEST viewport, locked at page load)
+     instead of 100dvh (which recalculates every frame as the iOS / Android
+     URL bar collapses during scroll). 100dvh caused a continuous reflow
+     that made the canvas + sticky element twitch as the user scrolled.
+     With 100vh the inner stays exactly the same size from first paint
+     through the entire animation, so the ball motion looks perfectly
+     stable. The browser chrome may briefly cover the bottom 60-90px when
+     the URL bar is shown, but the hero text already sits in the safe
+     interior so nothing important is hidden. */
   .hero-inner {
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
     height: 100vh;
-    height: 100dvh;
     overflow: hidden;
   }
 }

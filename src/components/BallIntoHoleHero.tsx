@@ -122,9 +122,21 @@ export default function BallIntoHoleHero() {
     // Running sizeCanvas / render on every one leaves the canvas in half-
     // painted states. Debounce lightly; rAF the settle so we paint once the
     // layout has actually relaxed.
+    //
+    // Mobile-specific: the iOS/Android URL bar collapses on scroll, which
+    // fires resize on every frame of the chrome animation but only changes
+    // the viewport HEIGHT, not its width. Letting that re-run sizeCanvas +
+    // ScrollTrigger.refresh mid-scroll causes a visible canvas-clear-and-
+    // redraw flicker plus a sticky-element re-pin jolt. So we ignore any
+    // resize where the width has not changed; orientation changes (which
+    // do change width) and desktop window resizes still re-fit correctly.
     let resizeTimer: number | undefined;
     let resizeRAF: number | undefined;
+    let lastWidth = window.innerWidth;
     const handleResize = () => {
+      const w = window.innerWidth;
+      if (w === lastWidth) return; // height-only change (URL bar): ignore
+      lastWidth = w;
       if (resizeTimer) window.clearTimeout(resizeTimer);
       if (resizeRAF) cancelAnimationFrame(resizeRAF);
       resizeTimer = window.setTimeout(() => {
@@ -136,13 +148,23 @@ export default function BallIntoHoleHero() {
       }, 120);
     };
 
-    // ResizeObserver catches every dimension change -- not just window resize
-    // but also CSS layout shifts, dvh unit recomputes on mobile chrome UI
-    // expand/collapse, etc.
-    const ro = "ResizeObserver" in window ? new ResizeObserver(handleResize) : null;
+    // Orientation flips reset our cached width too, since the new portrait /
+    // landscape width is genuinely different.
+    const handleOrientation = () => {
+      lastWidth = window.innerWidth;
+      handleResize();
+    };
+
+    // ResizeObserver on the canvas would also fire on URL-bar collapse; skip
+    // it on touch devices and rely on width-gated window resize instead.
+    const isCoarsePointer = matchMedia("(pointer: coarse)").matches;
+    const ro =
+      !isCoarsePointer && "ResizeObserver" in window
+        ? new ResizeObserver(handleResize)
+        : null;
     ro?.observe(canvas);
     window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
+    window.addEventListener("orientationchange", handleOrientation);
 
     (async () => {
       const gsapMod = await import("gsap");
@@ -220,7 +242,7 @@ export default function BallIntoHoleHero() {
     return () => {
       ro?.disconnect();
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
+      window.removeEventListener("orientationchange", handleOrientation);
       if (resizeTimer) window.clearTimeout(resizeTimer);
       if (resizeRAF) cancelAnimationFrame(resizeRAF);
       gsapCtx?.revert();
