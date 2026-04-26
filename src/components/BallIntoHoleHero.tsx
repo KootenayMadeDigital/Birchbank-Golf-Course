@@ -200,38 +200,27 @@ export default function BallIntoHoleHero() {
           },
         };
 
-        if (isCoarse) {
-          // Touch: long sticky wrapper (CSS in globals.css uses 280vh) so the
-          // ball moves at its original cinematic pace rather than flying in.
-          // scrub: true ties the canvas 1:1 to the scroll position so the
-          // animation engages on the first real scroll pixel (no smoothing
-          // lag), while the long runway keeps the per-pixel frame advance
-          // small enough that the ball still drifts in slowly.
-          gsap.to(state, {
-            ...common,
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "bottom bottom",
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          });
-        } else {
-          // Desktop: 100vh section, pinned, scrubbed across an extra 1200px of scroll.
-          gsap.to(state, {
-            ...common,
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "+=1200",
-              scrub: 0.5,
-              pin: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          });
-        }
+        // Same approach on every viewport: a long sticky wrapper (CSS in
+        // globals.css) plus a scroll-scrubbed frame sequence. We deliberately
+        // do NOT use GSAP's `pin: true` on desktop anymore. That option
+        // wraps the trigger element in a `.pin-spacer` div as a side effect
+        // of layout, and on SPA navigation away from the home page React's
+        // reconciler tries to remove the original element from its original
+        // parent, which is no longer where it is. That's the source of the
+        // intermittent "Failed to execute 'removeChild' on 'Node'" 404
+        // cascade visitors were hitting on /course (and elsewhere). CSS
+        // sticky leaves the element exactly where React put it, so
+        // unmounting is clean.
+        gsap.to(state, {
+          ...common,
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: isCoarse ? true : 0.4,
+            invalidateOnRefresh: true,
+          },
+        });
       }, hero);
 
       return () => {

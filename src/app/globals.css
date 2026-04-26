@@ -343,51 +343,37 @@
 
 
 
-/* Hero wrapper, kept as plain CSS (not inside @layer) so Tailwind 4's
-   layered specificity doesn't swallow it. Desktop / fine pointer gets
-   100vh + an absolutely-positioned inner so GSAP ScrollTrigger can pin it;
-   touch devices get a 300vh wrapper with a sticky inner so frames scrub
-   across scroll distance without relying on unreliable iOS pinning. */
+/* Hero wrapper. Same architecture on every viewport: a tall outer
+   wrapper that creates the scroll-scrub runway, plus a sticky inner
+   that holds the canvas at top:0 while the wrapper scrolls past
+   underneath.
+
+   Why the same on desktop AND touch: GSAP's `pin: true` (the previous
+   desktop approach) wraps the trigger in a `.pin-spacer` div as a side
+   effect, which conflicts with React reconciliation when the home page
+   unmounts on SPA navigation. CSS sticky never moves the element so
+   the unmount stays clean — no more "removeChild" cascade hitting
+   /course and elsewhere.
+
+   Inner uses `100vh` (largest viewport, locked at page load) instead
+   of `100dvh` so iOS / Android URL-bar collapse doesn't continuously
+   reflow the canvas mid-scroll. The hero text sits in the safe
+   interior so the brief 60-90px the URL bar covers doesn't hide
+   anything important. */
 .hero-wrap {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
+  height: 280vh;
+  overflow: visible;
   background: var(--color-granite);
 }
 .hero-inner {
-  position: absolute;
-  inset: 0;
-}
-@media (pointer: coarse) {
-  /* Touch devices: long 280vh wrapper so the ball drifts in at its
-     original cinematic pace (about ~180vh of real finger drag from
-     the first frame to the last). Combined with `scrub: true` in
-     BallIntoHoleHero.tsx the animation engages on the first scroll
-     pixel without any smoothing lag, but the per-pixel frame advance
-     stays small enough that the ball doesn't fly through the sequence. */
-  .hero-wrap {
-    height: 280vh;
-    overflow: visible;
-  }
-  /* Sticky inner uses 100vh (the LARGEST viewport, locked at page load)
-     instead of 100dvh (which recalculates every frame as the iOS / Android
-     URL bar collapses during scroll). 100dvh caused a continuous reflow
-     that made the canvas + sticky element twitch as the user scrolled.
-     With 100vh the inner stays exactly the same size from first paint
-     through the entire animation, so the ball motion looks perfectly
-     stable. The browser chrome may briefly cover the bottom 60-90px when
-     the URL bar is shown, but the hero text already sits in the safe
-     interior so nothing important is hidden. */
-  .hero-inner {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 @layer components {
