@@ -69,7 +69,7 @@ export const FAQ: Array<{ question: string; answer: string; category: FAQCategor
     category: "visiting",
     question: "Where should I stay?",
     answer:
-      "The Best Western Plus Columbia River Hotel in downtown Trail is the partner hotel listed on birchbankgolf.com. Other lodging in Rossland, Castlegar, and Trail (plus the four Kootenay Golf Trail courses for multi-round trips) is on /stay-and-play.",
+      "Our partner hotel is the Best Western Plus Columbia River Hotel in downtown Trail, 15 minutes from the first tee. Other lodging in Rossland, Castlegar, and Trail (plus the four Kootenay Golf Trail courses for multi-round trips) is on /stay-and-play.",
   },
   {
     category: "fees",

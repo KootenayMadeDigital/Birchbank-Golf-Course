@@ -5,7 +5,7 @@ import BookButton from "@/components/BookButton";
 export const metadata: Metadata = {
   title: "Dress code",
   description:
-    "Birchbank Golf Course dress code: what to wear and what to leave at home. Ladies, men, and footwear, verbatim from birchbankgolf.com.",
+    "Birchbank Golf Course dress code: what to wear and what to leave at home. Ladies, men, and footwear, the full published code.",
   alternates: { canonical: "/dress-code" },
 };
 
@@ -126,9 +126,8 @@ export default function DressCode() {
           </h1>
           <p className="prose-editorial text-granite/85 max-w-2xl">
             Golf-specific, not fancy. The short version: collared shirt or mock neck, shorts
-            at least mid-thigh, soft-soled shoes. The full version&apos;s below, straight from
-            the course&apos;s published dress code at birchbankgolf.com. When in doubt, ask
-            at the Pro Shop.
+            at least mid-thigh, soft-soled shoes. The full published code is below. When in
+            doubt, ask at the Pro Shop.
           </p>
         </div>
       </section>

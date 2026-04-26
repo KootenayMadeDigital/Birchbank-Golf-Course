@@ -39,7 +39,7 @@ const PARTNER_HOTEL = {
   area: "Trail · 15 min from the course",
   address: "1001 Rossland Avenue, Trail, BC",
   phone: "250-368-3355",
-  note: "The hotel listed as a Birchbank partner on birchbankgolf.com/more-things-to-do. Downtown Trail, on-site Columbia Steakhouse, on-site Coffee Garden for breakfast, meeting facilities for groups.",
+  note: "Our partner hotel. Downtown Trail, on-site Columbia Steakhouse, on-site Coffee Garden for breakfast, meeting facilities for groups.",
   url: "https://www.bestwesterntrail.com",
 };
 
@@ -166,8 +166,8 @@ export default function StayAndPlay() {
               Best Western Plus.<br />Downtown Trail.
             </h2>
             <p className="prose-editorial text-granite/85">
-              The hotel listed as a Birchbank partner on the current
-              birchbankgolf.com/more-things-to-do page. About 15 minutes from the first tee.
+              Our partner hotel for visitors playing the course. About 15 minutes from
+              the first tee.
             </p>
           </div>
 
@@ -364,8 +364,8 @@ export default function StayAndPlay() {
             </h2>
             <p className="prose-editorial text-granite/85">
               Tourism Rossland, the Kootenay Columbia Trails Society, and the City of
-              Trail&apos;s Recreation &amp; Parks site are all listed as Birchbank partners
-              on the current birchbankgolf.com.
+              Trail&apos;s Recreation &amp; Parks site. Birchbank partners on the things
+              to do beyond the round.
             </p>
           </div>
 

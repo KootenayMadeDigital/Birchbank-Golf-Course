@@ -202,7 +202,6 @@ const TIMELINE: Array<[string, string]> = [
 ];
 
 const SOURCES: Array<{ label: string; href: string }> = [
-  { label: "Birchbank Golf Course · Club History", href: "https://www.birchbankgolf.com/club-history/" },
   { label: "Rossland Museum & Discovery Centre · Rossland Trail Country Club", href: "https://www.rosslandmuseum.ca/golf-course" },
   { label: "BC Golf House · The Stones of Trail (March 23, 2017)", href: "https://www.bcgolfhouse.com/the-stones-of-trail" },
   { label: "Canadian Register of Historic Places · Rossland Trail Golf Clubhouse", href: "https://www.historicplaces.ca/en/rep-reg/place-lieu.aspx?id=24115" },
@@ -446,7 +445,7 @@ export default function HistoryPage() {
           </div>
 
           <p className="mt-10 text-xs font-mono text-silt">
-            Archival photographs courtesy birchbankgolf.com.
+            Archival photographs from the club archives.
           </p>
         </div>
       </section>

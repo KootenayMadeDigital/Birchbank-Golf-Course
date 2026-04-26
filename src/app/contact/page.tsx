@@ -273,8 +273,8 @@ export default function Contact() {
               </h2>
             </div>
             <p className="md:col-span-5 prose-editorial text-paper/85">
-              The three people you&apos;re most likely to deal with. Phone
-              numbers and direct emails verified against birchbankgolf.com.
+              The three people you&apos;re most likely to deal with. Direct
+              line, direct email, no front desk in between.
             </p>
           </div>
 
