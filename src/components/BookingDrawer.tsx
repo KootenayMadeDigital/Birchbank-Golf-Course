@@ -40,6 +40,7 @@ export default function BookingDrawer() {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [heroInView, setHeroInView] = useState(false);
+  const [footerInView, setFooterInView] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -52,34 +53,52 @@ export default function BookingDrawer() {
   }, []);
 
   /**
-   * On TOUCH devices only, hide the floating trigger while the home-page
-   * hero is in view: the hero already has its own "Book a tee time" CTA,
-   * and stacking a second one in the bottom-right corner of a phone
-   * screen reads as duplication. As soon as the visitor scrolls past
-   * the hero, the floating trigger slides back in.
+   * On TOUCH devices only, hide the floating trigger when it would
+   * overlap meaningful content:
+   *
+   *   - Home-page hero: the hero already has a "Book a tee time" CTA,
+   *     and stacking a second one in the bottom-right of a phone screen
+   *     reads as duplication.
+   *   - Footer: the trigger sits over the footer's bottom row when the
+   *     visitor scrolls all the way down, covering the land
+   *     acknowledgement link and the office email.
    *
    * On desktop the trigger always shows. The bottom-right corner is far
-   * enough from the hero CTA that it doesn't read as duplicate, and the
-   * floating widget is the primary booking affordance for visitors who
-   * have scrolled away from the hero.
+   * enough from page content there that it doesn't cover anything.
    */
   useEffect(() => {
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
     if (!isCoarse) return; // desktop: always show the trigger
 
+    const observers: IntersectionObserver[] = [];
+
     const hero = document.querySelector(
       '[aria-label="Birchbank Golf, opening sequence"]',
     );
-    if (!hero) {
+    if (hero) {
+      const heroIO = new IntersectionObserver(
+        ([entry]) => setHeroInView(entry.isIntersecting),
+        { rootMargin: "0px 0px -25% 0px", threshold: 0 },
+      );
+      heroIO.observe(hero);
+      observers.push(heroIO);
+    } else {
       setHeroInView(false);
-      return;
     }
-    const io = new IntersectionObserver(
-      ([entry]) => setHeroInView(entry.isIntersecting),
-      { rootMargin: "0px 0px -25% 0px", threshold: 0 },
-    );
-    io.observe(hero);
-    return () => io.disconnect();
+
+    const footer = document.querySelector("footer");
+    if (footer) {
+      const footerIO = new IntersectionObserver(
+        ([entry]) => setFooterInView(entry.isIntersecting),
+        // Trigger as soon as ~12% of the footer enters the viewport, well
+        // before the floating button would visually overlap the bottom row.
+        { rootMargin: "0px 0px 12% 0px", threshold: 0 },
+      );
+      footerIO.observe(footer);
+      observers.push(footerIO);
+    }
+
+    return () => observers.forEach((io) => io.disconnect());
   }, []);
 
   useEffect(() => {
@@ -119,7 +138,7 @@ export default function BookingDrawer() {
           "transition-all duration-200 will-change-transform",
           "hover:bg-cedar-dark hover:-translate-y-0.5 active:opacity-80",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
-          open || heroInView
+          open || heroInView || footerInView
             ? "opacity-0 pointer-events-none translate-y-2"
             : "opacity-100",
         ].join(" ")}
