@@ -52,13 +52,21 @@ export default function BookingDrawer() {
   }, []);
 
   /**
-   * Hide the floating trigger while the home-page hero is in view: the
-   * hero already has its own "Book a tee time" CTA, and stacking a
-   * second one in the bottom-right corner reads as duplication. As soon
-   * as the visitor scrolls past the hero, the floating trigger slides
-   * back in and is available on every other page from the first paint.
+   * On TOUCH devices only, hide the floating trigger while the home-page
+   * hero is in view: the hero already has its own "Book a tee time" CTA,
+   * and stacking a second one in the bottom-right corner of a phone
+   * screen reads as duplication. As soon as the visitor scrolls past
+   * the hero, the floating trigger slides back in.
+   *
+   * On desktop the trigger always shows. The bottom-right corner is far
+   * enough from the hero CTA that it doesn't read as duplicate, and the
+   * floating widget is the primary booking affordance for visitors who
+   * have scrolled away from the hero.
    */
   useEffect(() => {
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    if (!isCoarse) return; // desktop: always show the trigger
+
     const hero = document.querySelector(
       '[aria-label="Birchbank Golf, opening sequence"]',
     );
