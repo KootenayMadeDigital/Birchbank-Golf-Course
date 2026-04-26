@@ -169,6 +169,14 @@ export default function BallIntoHoleHero() {
         const common = {
           frame: FRAME_COUNT - 1,
           snap: "frame",
+          // Desktop is linear; mobile overrides to power2.out below to
+          // front-load the frame progression. The source video keeps the
+          // ball small + far for the first half of the sequence and the
+          // dramatic in-the-hole motion happens in the last third, so
+          // linear scrub on mobile means the user has to scroll past the
+          // address-bar collapse AND through 50% of the runway before any
+          // obvious motion appears. Front-loading puts the visible action
+          // on the first real scroll pixel.
           ease: "none",
           onUpdate: () => {
             if (!ticking) {
@@ -190,6 +198,7 @@ export default function BallIntoHoleHero() {
           // delay against a single-finger drag.
           gsap.to(state, {
             ...common,
+            ease: "power2.out", // mobile-only override, see comment above
             scrollTrigger: {
               trigger: hero,
               start: "top top",
