@@ -176,7 +176,7 @@ export default function ConditionsWidget() {
 
       <a
         href="tel:+12506932255"
-        className="mt-6 inline-block text-xs text-amber hover:underline font-mono"
+        className="mt-4 inline-flex items-center min-h-[44px] py-2 text-sm text-amber hover:underline font-mono"
       >
         Call the Pro Shop · 250-693-2255 →
       </a>

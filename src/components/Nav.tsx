@@ -263,7 +263,7 @@ export default function Nav() {
             aria-label="Menu"
             aria-expanded={open}
             onClick={() => setOpen(!open)}
-            className="lg:hidden p-2 -mr-2"
+            className="lg:hidden inline-flex flex-col justify-center items-center w-11 h-11 -mr-2 transition-opacity duration-150 active:opacity-60"
           >
             <span className={clsx("block w-6 h-px mb-1.5", light ? "bg-granite" : "bg-paper")} />
             <span className={clsx("block w-6 h-px mb-1.5", light ? "bg-granite" : "bg-paper")} />
@@ -274,19 +274,25 @@ export default function Nav() {
 
       {/* Mobile menu, flat expanded layout, no nested tapping */}
       {open && (
-        <div className="lg:hidden bg-paper border-t border-granite/10 max-h-[calc(100vh-5rem)] overflow-y-auto">
-          <nav className="container-edge py-6 flex flex-col gap-5">
+        <div
+          className="lg:hidden bg-paper border-t border-granite/10 overflow-y-auto"
+          style={{
+            maxHeight: "calc(100vh - 4rem)",
+            paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+          }}
+        >
+          <nav className="container-edge py-4 flex flex-col">
             {NAV.map((item) => (
-              <div key={item.href} className="border-b border-granite/10 pb-4">
+              <div key={item.href} className="border-b border-granite/10 py-2">
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block text-xl font-display text-granite py-1"
+                  className="block text-xl font-display text-granite py-3 min-h-[44px]"
                 >
                   {item.label}
                 </Link>
                 {item.children && (
-                  <ul className="mt-2 ml-1 space-y-1">
+                  <ul className="mt-1 ml-1 mb-2">
                     {item.children
                       .filter((c) => c.href !== item.href)
                       .map((c) => (
@@ -297,7 +303,7 @@ export default function Nav() {
                               target="_blank"
                               rel="noopener"
                               onClick={() => setOpen(false)}
-                              className="block text-sm text-silt hover:text-amber py-1.5"
+                              className="block text-base text-silt hover:text-amber py-3 min-h-[44px] transition-colors duration-150"
                             >
                               {c.label}
                             </a>
@@ -305,7 +311,7 @@ export default function Nav() {
                             <Link
                               href={c.href}
                               onClick={() => setOpen(false)}
-                              className="block text-sm text-silt hover:text-amber py-1.5"
+                              className="block text-base text-silt hover:text-amber py-3 min-h-[44px] transition-colors duration-150"
                             >
                               {c.label}
                             </Link>
@@ -316,7 +322,7 @@ export default function Nav() {
                 )}
               </div>
             ))}
-            <div className="pt-4 flex flex-col gap-3 items-start">
+            <div className="pt-6 flex flex-col gap-4 items-start">
               <BookButton />
               <a
                 href="https://members.chronogolf.com/login"
@@ -327,10 +333,10 @@ export default function Nav() {
               >
                 Member Portal
               </a>
-              <a href="tel:+12506932255" className="mt-2 text-sm text-silt hover:text-amber">
+              <a href="tel:+12506932255" className="text-base text-silt hover:text-amber py-3 min-h-[44px] inline-flex items-center">
                 Call Pro Shop · 250-693-2255
               </a>
-              <SocialLinks variant="dark" className="mt-1" size={22} />
+              <SocialLinks variant="dark" className="mt-1" size={26} />
             </div>
           </nav>
         </div>

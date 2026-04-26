@@ -68,19 +68,24 @@ export default function BookingDrawer() {
 
   return (
     <>
-      {/* Floating trigger, bottom-right of every page. */}
+      {/* Floating trigger, bottom-right of every page. Respects iOS safe-area
+          inset so it never sits under the home-bar gesture region. */}
       <button
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open the booking panel"
+        style={{
+          bottom: "max(1.25rem, env(safe-area-inset-bottom))",
+          right: "max(1.25rem, env(safe-area-inset-right))",
+        }}
         className={[
-          "fixed bottom-5 right-5 md:bottom-6 md:right-6 z-30",
-          "inline-flex items-center gap-2 px-4 py-3 md:px-5 md:py-3.5",
+          "fixed md:bottom-6 md:right-6 z-30",
+          "inline-flex items-center gap-2 min-h-[48px] px-5 py-3 md:px-5 md:py-3.5",
           "bg-cedar text-paper border-t border-tamarack rounded-sm",
-          "text-[13px] md:text-sm font-medium tracking-[0.04em]",
+          "text-sm md:text-sm font-medium tracking-[0.04em]",
           "shadow-[0_10px_30px_-10px_rgba(43,42,40,0.45)]",
           "transition-all duration-200 will-change-transform",
-          "hover:bg-cedar-dark hover:-translate-y-0.5",
+          "hover:bg-cedar-dark hover:-translate-y-0.5 active:opacity-80",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
           open ? "opacity-0 pointer-events-none translate-y-2" : "opacity-100",
         ].join(" ")}
@@ -135,7 +140,7 @@ export default function BookingDrawer() {
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Close the booking panel"
-            className="w-9 h-9 inline-flex items-center justify-center text-granite hover:text-amber transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber rounded-sm"
+            className="w-11 h-11 -mr-2 inline-flex items-center justify-center text-granite hover:text-amber transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber rounded-sm"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden>
               <path
@@ -178,19 +183,19 @@ export default function BookingDrawer() {
           )}
         </div>
 
-        <footer className="px-5 py-3 border-t border-granite/12 bg-paper text-[12px] text-silt flex flex-wrap items-center justify-between gap-2">
-          <span className="font-mono">
+        <footer className="px-5 py-3 border-t border-granite/12 bg-paper text-[13px] text-silt flex flex-wrap items-center justify-between gap-2">
+          <span className="font-mono inline-flex items-center min-h-[44px]">
             Or call{" "}
             <a
               href="tel:+12506932255"
-              className="text-granite hover:text-amber underline underline-offset-2"
+              className="text-granite hover:text-amber underline underline-offset-2 inline-flex items-center min-h-[44px] ml-1 px-1"
             >
               250-693-2255
             </a>
           </span>
           <a
             href="/book"
-            className="font-mono text-granite hover:text-amber underline underline-offset-2"
+            className="font-mono text-granite hover:text-amber underline underline-offset-2 inline-flex items-center min-h-[44px]"
           >
             Open in full page →
           </a>

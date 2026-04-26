@@ -12,13 +12,13 @@ type Props = {
 
 const iconClass = (v: "light" | "dark") =>
   clsx(
-    "transition-colors",
+    "inline-flex items-center justify-center w-11 h-11 -m-2.5 transition-colors duration-150",
     v === "light" ? "text-paper/80 hover:text-tamarack" : "text-granite/75 hover:text-amber",
   );
 
 export default function SocialLinks({ variant = "dark", className, size = 18 }: Props) {
   return (
-    <div className={clsx("flex items-center gap-4", className)}>
+    <div className={clsx("flex items-center gap-3", className)}>
       <a
         href="https://www.facebook.com/BirchbankGolf"
         target="_blank"

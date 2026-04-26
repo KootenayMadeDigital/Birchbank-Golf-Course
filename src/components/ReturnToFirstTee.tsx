@@ -19,11 +19,11 @@ export default function ReturnToFirstTee() {
 
   return (
     <div className="border-b border-paper/10">
-      <div className="container-edge py-6">
+      <div className="container-edge py-3 md:py-4">
         <a
           href="#main"
           onClick={handleClick}
-          className="link-editorial inline-flex items-center gap-2 text-paper/80 hover:text-paper text-sm md:text-base font-mono uppercase tracking-[0.18em]"
+          className="link-editorial inline-flex items-center gap-2 text-paper/80 hover:text-paper text-sm md:text-base font-mono uppercase tracking-[0.18em] py-3"
         >
           <span aria-hidden>↑</span>
           <span>Return to the first tee</span>

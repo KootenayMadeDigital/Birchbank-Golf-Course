@@ -351,8 +351,13 @@
   inset: 0;
 }
 @media (pointer: coarse) {
+  /* Touch devices: shorter wrapper so the scroll-scrubbed frame sequence
+     completes in ~120vh of finger drag (one screen + change) instead of
+     200vh. Combined with a tighter scrub timing in BallIntoHoleHero.tsx,
+     the first pixel of finger movement visibly advances the frame, so the
+     animation no longer feels like it lags behind the scroll. */
   .hero-wrap {
-    height: 300vh;
+    height: 220vh;
     overflow: visible;
   }
   .hero-inner {
@@ -406,6 +411,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.25rem;
+    min-height: 44px;
     color: var(--color-granite);
     font-size: 0.9375rem;
     font-weight: 500;

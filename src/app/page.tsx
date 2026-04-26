@@ -59,8 +59,8 @@ export default function Home() {
               </div>
             </ScrollReveal>
 
-            <div className="mt-8 flex flex-wrap items-center gap-5 text-sm">
-              <a href="tel:+12506932255" className="text-granite hover:text-amber underline">
+            <div className="mt-8 flex flex-wrap items-center gap-5 text-base">
+              <a href="tel:+12506932255" className="inline-flex items-center min-h-[44px] py-2 text-granite hover:text-amber underline">
                 Or call the Pro Shop · 250-693-2255
               </a>
             </div>
@@ -202,12 +202,12 @@ export default function Home() {
            BookButton. No fake scarcity -- the time-of-day framing is
            verifiable against the Pro Shop's 8 am to dusk schedule. */}
       <section className="bg-paper border-y border-granite/10">
-        <div className="container-edge py-6 md:py-7 flex flex-wrap items-center justify-between gap-4">
+        <div className="container-edge py-6 md:py-7 flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-5">
           <p className="text-granite font-display text-lg md:text-xl">
             The Pro Shop is open until 7 PM today.
           </p>
-          <div className="flex items-center gap-4">
-            <a href="tel:+12506932255" className="text-silt hover:text-amber text-sm hidden md:inline">
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="tel:+12506932255" className="inline-flex items-center min-h-[44px] py-2 text-silt hover:text-amber text-base">
               250-693-2255
             </a>
             <BookButton label="Book a tee time" />
@@ -305,7 +305,7 @@ export default function Home() {
                 multi-day trips. */}
             <Link
               href="/plan-your-visit"
-              className="block mb-10 font-mono text-xs text-paper/65 tracking-wide hover:text-paper transition-colors"
+              className="block mb-10 py-3 font-mono text-[13px] md:text-xs text-paper/65 tracking-wide leading-relaxed hover:text-paper transition-colors duration-150"
             >
               <span className="text-tamarack">Spokane 3h</span>
               <span className="mx-2 text-paper/30">·</span>
@@ -314,7 +314,7 @@ export default function Home() {
               <span className="text-tamarack">Calgary 7h</span>
               <span className="mx-2 text-paper/30">·</span>
               <span className="text-tamarack">Vancouver 7h</span>
-              <span className="ml-3 text-paper/50">Plan your visit →</span>
+              <span className="ml-3 inline-block text-paper/50">Plan your visit →</span>
             </Link>
 
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5">
@@ -331,12 +331,12 @@ export default function Home() {
                 Aggregation effect: multiple platforms agreeing reads stronger
                 than any single rating. Every number traceable to src/data/ or
                 the Testimonials component, no fabricated stats. */}
-            <div className="mt-12 grid sm:grid-cols-3 gap-3 md:gap-4 max-w-2xl mx-auto">
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 max-w-2xl mx-auto">
               <a
                 href={REVIEW_PLATFORMS.golfpass.readUrl}
                 target="_blank"
                 rel="noopener"
-                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors duration-150 rounded-sm px-4 py-4 min-h-[60px] flex flex-col justify-center"
               >
                 <span className="block text-tamarack mb-0.5">47 reviews · 4.4★</span>
                 <span className="block text-paper/60">on GolfPass ↗</span>
@@ -345,7 +345,7 @@ export default function Home() {
                 href={REVIEW_PLATFORMS.facebook.readUrl}
                 target="_blank"
                 rel="noopener"
-                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors duration-150 rounded-sm px-4 py-4 min-h-[60px] flex flex-col justify-center"
               >
                 <span className="block text-tamarack mb-0.5">22 reviews · 82% recommend</span>
                 <span className="block text-paper/60">on Facebook ↗</span>
@@ -354,7 +354,7 @@ export default function Home() {
                 href={REVIEW_PLATFORMS.tripadvisor.readUrl}
                 target="_blank"
                 rel="noopener"
-                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors rounded-sm px-4 py-3"
+                className="font-mono text-xs text-paper/75 border border-paper/15 hover:border-tamarack hover:text-paper transition-colors duration-150 rounded-sm px-4 py-4 min-h-[60px] flex flex-col justify-center"
               >
                 <span className="block text-tamarack mb-0.5">Listed · new this year</span>
                 <span className="block text-paper/60">on Tripadvisor ↗</span>

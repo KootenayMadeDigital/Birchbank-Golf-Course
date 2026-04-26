@@ -179,14 +179,20 @@ export default function BallIntoHoleHero() {
         };
 
         if (isCoarse) {
-          // Touch: 300vh wrapper + sticky inner. Progress 0→1 maps to frames 0→119.
+          // Touch: 220vh wrapper + sticky inner (CSS in globals.css). Progress
+          // 0→1 maps to frames 0→119 across ~120vh of scroll, so the animation
+          // completes inside roughly one extra screen-height of finger-drag
+          // instead of two. scrub of 0.15 keeps the canvas tracking the finger
+          // tightly so the very first scroll pixel visibly advances the frame
+          // (previously felt like the page "slid down" before the animation
+          // engaged because of address-bar collapse + 0.4s scrub lag).
           gsap.to(state, {
             ...common,
             scrollTrigger: {
               trigger: hero,
               start: "top top",
               end: "bottom bottom",
-              scrub: 0.4,
+              scrub: 0.15,
               invalidateOnRefresh: true,
             },
           });
