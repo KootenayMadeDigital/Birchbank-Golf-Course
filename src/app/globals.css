@@ -351,13 +351,14 @@
   inset: 0;
 }
 @media (pointer: coarse) {
-  /* Touch devices: shorter wrapper so the scroll-scrubbed frame sequence
-     completes in ~120vh of finger drag (one screen + change) instead of
-     200vh. Combined with a tighter scrub timing in BallIntoHoleHero.tsx,
-     the first pixel of finger movement visibly advances the frame, so the
-     animation no longer feels like it lags behind the scroll. */
+  /* Touch devices: tight 160vh wrapper so the scroll-scrubbed frame
+     sequence completes in just ~60vh of real finger drag (about half a
+     screen). Combined with `scrub: true` in BallIntoHoleHero.tsx the
+     animation engages on the first real scroll pixel after the iOS
+     address-bar collapse, instead of waiting for ~120vh of accumulated
+     scroll before the visible motion catches up. */
   .hero-wrap {
-    height: 220vh;
+    height: 160vh;
     overflow: visible;
   }
   .hero-inner {
