@@ -619,22 +619,22 @@ export default function Membership() {
           ════════════════════════════════════════════════════════════ */}
       <section className="py-[var(--spacing-section)] bg-paper">
         {/* Editorial photo above the section: morning mist + sun rays
-            through the trees. Capped at max-w-3xl so it sits as a
-            "this is the moment" image, not a wall. */}
+            through the trees. Source is now 16:9 (1280x720), rendered
+            at native aspect, capped at max-w-4xl, centered. */}
         <div className="container-edge mb-12 md:mb-16">
-          <figure className="max-w-3xl">
-            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+          <figure className="max-w-4xl mx-auto">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
                 src="/membership/morning-tuesday.webp"
                 alt="Sun rays through the trees on an early-summer morning at Birchbank, light catching the dew"
                 fill
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-cover"
                 loading="lazy"
                 unoptimized
               />
             </div>
-            <figcaption className="mt-3 font-mono text-xs text-silt">
+            <figcaption className="mt-3 font-mono text-xs text-silt text-center">
               First tee, 7:50 a.m.
             </figcaption>
           </figure>
