@@ -128,10 +128,10 @@ export default function UsaVisitors() {
             </div>
           </div>
           <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
-            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+            <div className="relative w-full aspect-[3/2] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
-                src="/visit/columbia-from-above.webp"
-                alt="The Columbia River winding through the Selkirk valley north of the US border, with mountains rising on both sides"
+                src="/visit/usa-visitors-hero.webp"
+                alt="A Birchbank fairway in the foreground with tall grass, opening up to a wall of Selkirk mountains beyond"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
@@ -140,7 +140,7 @@ export default function UsaVisitors() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
-              The Columbia, headed for Birchbank.
+              The view that's a three-hour drive from Spokane.
             </figcaption>
           </figure>
         </div>

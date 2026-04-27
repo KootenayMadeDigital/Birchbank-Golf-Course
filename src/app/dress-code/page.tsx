@@ -207,16 +207,16 @@ export default function DressCode() {
       </section>
 
       {/* Editorial photo, between footwear and the cedar "why" block.
-          A clean teed-up ball with the Birchbank wooden sign + mountain
-          backdrop reinforces the "small standards = better experience"
-          message of the page without lecturing. */}
+          A bench under birch and fir, dappled afternoon light. The
+          contemplative tone matches "small standards = better
+          experience" without lecturing. */}
       <section className="py-12 bg-paper">
         <div className="container-edge">
           <figure className="max-w-2xl mx-auto">
-            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+            <div className="relative w-full aspect-[3/2] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
-                src="/visit/ball-on-tee.webp"
-                alt="A Callaway ball on a red tee at Birchbank, fairway in the middle distance with the mountains beyond"
+                src="/about/bench-grove.webp"
+                alt="A wooden bench in a grove of birches at Birchbank, dappled afternoon light through the leaves"
                 fill
                 sizes="(max-width: 768px) 100vw, 672px"
                 className="object-cover"
@@ -225,7 +225,7 @@ export default function DressCode() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt text-center">
-              First tee, dressed and ready.
+              A grove between the holes. Quiet between groups.
             </figcaption>
           </figure>
         </div>
