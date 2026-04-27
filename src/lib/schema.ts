@@ -74,14 +74,11 @@ export function golfCourseJsonLd() {
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        // Verified from birchbankgolf.com /contacts/: Pro Shop is
-        // "Open daily 8am-dusk, April 1-Oct 31; Closed during off
-        // season". Schema.org needs a fixed close time, so we encode
-        // the realistic operational range (sunset in Genelle, BC
-        // varies from ~7pm in April/Oct to ~9pm in late June; 20:00
-        // is the safe midpoint that won't suggest an off-hours visit).
-        opens: "08:00",
-        closes: "20:00",
+        // Club hours, 9am-7pm. The Pro Shop separately stays open
+        // 8am-dusk per /contacts; that's the on-course tee-time
+        // window, not the GolfCourse entity hours represented here.
+        opens: "09:00",
+        closes: "19:00",
         validFrom: "2026-04-01",
         validThrough: "2026-10-31",
       },
