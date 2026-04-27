@@ -109,12 +109,14 @@ const SPECIALTY = [
 export default function Contact() {
   return (
     <>
-      {/* 1. HERO with a small "two balls beside the cup" accent on the
-          right. Tight 1:1, capped at 200px so it never crowds the
-          headline. */}
+      {/* 1. HERO with a "two balls beside the cup" accent on the right.
+          Source is now native 16:9, rendered at aspect-[16/9] in a
+          5/12 column so it gets meaningful presence beside the
+          headline without crowding it. Image drops UNDER text on
+          mobile so the headline + intro stay above the fold. */}
       <section className="pt-32 md:pt-40 pb-12 bg-paper">
-        <div className="container-edge grid gap-8 md:gap-10 md:grid-cols-12 items-end">
-          <div className="md:col-span-9 order-1">
+        <div className="container-edge grid gap-8 md:gap-10 lg:grid-cols-12 items-end">
+          <div className="lg:col-span-7 order-1">
             <p className="eyebrow mb-6">Contacts</p>
             <h1
               className="font-display text-granite max-w-[18ch] mb-6"
@@ -128,19 +130,19 @@ export default function Contact() {
               point you down the hall.
             </p>
           </div>
-          <figure className="md:col-span-3 order-2 md:justify-self-end">
-            <div className="relative w-full max-w-[200px] aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
                 src="/contact/balls-green.webp"
                 alt="Two golf balls resting next to the cup on a Birchbank green"
                 fill
-                sizes="200px"
+                sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
                 loading="lazy"
                 unoptimized
               />
             </div>
-            <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-silt">
+            <figcaption className="mt-3 font-mono text-xs text-silt">
               Two balls, one cup.
             </figcaption>
           </figure>
