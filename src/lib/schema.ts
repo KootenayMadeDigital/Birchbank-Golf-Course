@@ -10,7 +10,6 @@ export const NAP = {
   telephoneSuperintendent: "+1-250-693-2263",
   emailOffice: "office@birchbankgolf.com",
   emailProShop: "proshop@birchbankgolf.com",
-  emailBistro: "bistro@birchbankgolf.com",
   emailCourse: "course@birchbankgolf.com",
   emailAccounting: "accounting@birchbankgolf.com",
   streetAddress: "5500 Highway 22",

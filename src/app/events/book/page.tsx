@@ -189,8 +189,8 @@ export default function BookYourEvent() {
                   </a>
                 </p>
                 <p>
-                  <a href="mailto:bistro@birchbankgolf.com" className="hover:text-amber underline">
-                    bistro@birchbankgolf.com
+                  <a href="mailto:office@birchbankgolf.com" className="hover:text-amber underline">
+                    office@birchbankgolf.com
                   </a>
                 </p>
               </div>
@@ -402,12 +402,13 @@ export default function BookYourEvent() {
                   250-693-5451
                 </a>
                 <p className="text-silt text-sm mt-2 leading-relaxed">
-                  Banquets, patio, menu planning.{" "}
+                  Banquets, patio, menu planning. The Bistro doesn&apos;t have an
+                  inbox; for paper-trail follow-ups,{" "}
                   <a
-                    href="mailto:bistro@birchbankgolf.com"
+                    href="mailto:office@birchbankgolf.com"
                     className="underline underline-offset-2 hover:text-amber"
                   >
-                    bistro@birchbankgolf.com
+                    office@birchbankgolf.com
                   </a>
                 </p>
               </div>

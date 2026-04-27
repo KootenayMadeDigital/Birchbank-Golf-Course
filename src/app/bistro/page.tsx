@@ -119,13 +119,6 @@ export default function Bistro() {
                 >
                   250-693-5451
                 </a>
-                <span className="mx-2 text-silt/60">·</span>
-                <a
-                  href="mailto:bistro@birchbankgolf.com"
-                  className="text-granite underline underline-offset-2 hover:text-amber"
-                >
-                  bistro@birchbankgolf.com
-                </a>
               </p>
             </div>
           </div>
@@ -507,14 +500,6 @@ export default function Bistro() {
                     className="underline underline-offset-2 hover:text-amber"
                   >
                     250-693-5451
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:bistro@birchbankgolf.com"
-                    className="underline underline-offset-2 hover:text-amber"
-                  >
-                    bistro@birchbankgolf.com
                   </a>
                 </li>
                 <li className="text-silt pt-2">

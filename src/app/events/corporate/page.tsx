@@ -320,10 +320,10 @@ export default function CorporateEvents() {
               </a>
               <p className="text-silt text-sm mt-2">
                 <a
-                  href="mailto:bistro@birchbankgolf.com"
+                  href="mailto:office@birchbankgolf.com"
                   className="underline hover:text-amber"
                 >
-                  bistro@birchbankgolf.com
+                  office@birchbankgolf.com
                 </a>
               </p>
             </div>

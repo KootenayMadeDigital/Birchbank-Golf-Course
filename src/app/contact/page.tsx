@@ -56,12 +56,13 @@ const PRIMARY_LINES = [
   {
     label: "Bistro",
     headline: "Food, patio, drinks.",
-    blurb: "Walk-in dining, take-out, banquet questions, beverage cart on course.",
+    blurb: "Walk-in dining, take-out, banquet questions, beverage cart on course. Phone is fastest, the Bistro doesn't have its own inbox.",
     tel: "+12506935451",
     display: "250-693-5451",
-    email: "bistro@birchbankgolf.com",
   },
 ];
+
+type PrimaryLine = (typeof PRIMARY_LINES)[number] & { email?: string };
 
 const ROUTE_ME = [
   { label: "Book a tee time",          href: "/book",                      description: "The Chronogolf widget, all available times." },
@@ -152,7 +153,7 @@ export default function Contact() {
       <section className="pb-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
           <ul className="grid md:grid-cols-3 gap-5 md:gap-6">
-            {PRIMARY_LINES.map((p) => (
+            {(PRIMARY_LINES as readonly PrimaryLine[]).map((p) => (
               <li
                 key={p.label}
                 className="flex flex-col border border-granite/15 p-6 md:p-7 hover:border-amber transition-colors"
@@ -170,12 +171,14 @@ export default function Contact() {
                 >
                   {p.display}
                 </a>
-                <a
-                  href={`mailto:${p.email}`}
-                  className="mt-2 font-mono text-xs text-silt hover:text-amber underline underline-offset-2 break-all"
-                >
-                  {p.email}
-                </a>
+                {p.email && (
+                  <a
+                    href={`mailto:${p.email}`}
+                    className="mt-2 font-mono text-xs text-silt hover:text-amber underline underline-offset-2 break-all"
+                  >
+                    {p.email}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
