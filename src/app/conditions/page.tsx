@@ -140,7 +140,7 @@ export default async function Conditions() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to right, var(--color-paper) 0%, rgba(245, 242, 234, 0.92) 45%, rgba(245, 242, 234, 0.65) 80%, rgba(245, 242, 234, 0.45) 100%)",
+              "linear-gradient(to right, var(--color-paper) 0%, rgba(245, 242, 234, 0.88) 40%, rgba(245, 242, 234, 0.45) 75%, rgba(245, 242, 234, 0.20) 100%)",
           }}
         />
         <div

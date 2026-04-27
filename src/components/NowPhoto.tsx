@@ -79,7 +79,7 @@ export default function NowPhoto({
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-[center_30%] opacity-[0.18]"
+          className="object-cover object-[center_30%] opacity-[0.42]"
           priority
           unoptimized
         />
