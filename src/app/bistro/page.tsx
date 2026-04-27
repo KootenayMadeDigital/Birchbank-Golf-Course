@@ -171,7 +171,7 @@ export default function Bistro() {
                 before you see it.
               </p>
               <p className="md:col-span-4 md:col-start-9 font-mono text-xs text-silt leading-relaxed">
-                Genelle, British Columbia. 15 minutes south of Trail, 35 from
+                Genelle, British Columbia. 12 minutes south of Trail, 15 from
                 Castlegar, 50 from the Spokane border crossing.
               </p>
             </div>

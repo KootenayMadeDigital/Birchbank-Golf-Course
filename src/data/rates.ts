@@ -27,7 +27,7 @@ export const PROMOTIONS = [
 export const CART_FEES = [
   { label: "Power cart, 9 holes", amount: "$13.50", note: "Per rider, tax included" },
   { label: "Power cart, 18 holes", amount: "$24.00", note: "Per rider, tax included" },
-  { label: "Seasonal lease (one seat)", amount: "$635" },
+  { label: "Power cart seasonal lease", amount: "$635" },
   { label: "Personal cart storage, gas", amount: "$285" },
   { label: "Personal cart storage, electric", amount: "$320" },
   { label: "Cart trackage fee", amount: "$225" },
