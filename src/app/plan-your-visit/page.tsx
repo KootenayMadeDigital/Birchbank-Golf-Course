@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import { REVIEW_PLATFORMS } from "@/data/reviews";
@@ -101,28 +102,50 @@ const SEASONAL = [
 export default function PlanYourVisit() {
   return (
     <>
-      {/* 1. HERO */}
+      {/* 1. HERO. Text on the left, the autumn driveway photo on the
+          right. The image is the literal "you've turned in off Hwy 22"
+          moment. Native 1:1; rendered at aspect-square. Photo drops
+          UNDER the text on small viewports so the headline + CTA
+          stay above the fold. */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">Plan your visit</p>
-          <h1
-            className="font-display text-granite max-w-[22ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Three hours from Spokane.<br />Seven from Calgary.<br />Worth the drive.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank sits on the west bank of the Columbia River in Genelle, BC, 15 minutes
-            from Castlegar, 12 minutes from Trail. This page covers the road and the
-            runway. Where to sleep is on{" "}
-            <Link href="/stay-and-play" className="underline hover:text-amber">Stay &amp; play</Link>.
-            Crossing the border is on{" "}
-            <Link href="/usa-visitors" className="underline hover:text-amber">For US visitors</Link>.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <BookButton />
-            <a href="#drive-routes" className="btn-ghost">Drive routes →</a>
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">Plan your visit</p>
+            <h1
+              className="font-display text-granite max-w-[22ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Three hours from Spokane.<br />Seven from Calgary.<br />Worth the drive.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Birchbank sits on the west bank of the Columbia River in Genelle, BC, 15 minutes
+              from Castlegar, 12 minutes from Trail. This page covers the road and the
+              runway. Where to sleep is on{" "}
+              <Link href="/stay-and-play" className="underline hover:text-amber">Stay &amp; play</Link>.
+              Crossing the border is on{" "}
+              <Link href="/usa-visitors" className="underline hover:text-amber">For US visitors</Link>.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <BookButton />
+              <a href="#drive-routes" className="btn-ghost">Drive routes →</a>
+            </div>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/visit/driveway-autumn.webp"
+                alt="The Birchbank driveway in autumn, yellow trees lining both sides of the road into the course"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              The driveway in mid-October.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

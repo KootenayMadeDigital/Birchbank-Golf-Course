@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { HOLE_SUMMARY } from "@/data/holes";
 
@@ -67,30 +68,50 @@ const BUILT_TO_HOST = [
 export default function CorporateEvents() {
   return (
     <>
-      {/* 1. HERO */}
+      {/* 1. HERO. Photo on the right shows actual people on the course
+          (a B2B buyer is buying their group's day, not the venue
+          itself; the human element matters). */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">Corporate events</p>
-          <h1
-            className="font-display text-granite max-w-[22ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Host your day<br />on the Columbia.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            18 holes on the river, member-owned since 2004, the original Roy Stone
-            routing restored in 2018. Six published Bistro Banquet packages,
-            from $35 to $53 a person. The office runs the day, the Pro Shop
-            handles the round, the Bistro handles the meal.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a href="tel:+12506932366" className="btn-primary">
-              Call the office · 250-693-2366
-            </a>
-            <Link href="/contact" className="btn-ghost">
-              Send a written inquiry
-            </Link>
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">Corporate events</p>
+            <h1
+              className="font-display text-granite max-w-[22ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Host your day<br />on the Columbia.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              18 holes on the river, member-owned since 2004, the original Roy Stone
+              routing restored in 2018. Six published Bistro Banquet packages,
+              from $35 to $53 a person. The office runs the day, the Pro Shop
+              handles the round, the Bistro handles the meal.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a href="tel:+12506932366" className="btn-primary">
+                Call the office · 250-693-2366
+              </a>
+              <Link href="/contact" className="btn-ghost">
+                Send a written inquiry
+              </Link>
+            </div>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[3/2] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/events/players-on-green.webp"
+                alt="A foursome on the green at Birchbank with cart parked on the cart path, the Selkirks rising behind"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              A foursome on the 8th, midweek.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

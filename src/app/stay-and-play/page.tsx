@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 
@@ -125,33 +126,51 @@ const TRAIL_COURSES = [
 export default function StayAndPlay() {
   return (
     <>
-      {/* 1. HERO */}
+      {/* 1. HERO with sun-drenched fairway photo on the right. */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">Stay &amp; play</p>
-          <h1
-            className="font-display text-granite max-w-[22ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Come for the golf.<br />Stay for the adventure.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank&apos;s own framing, and the calibration for this page. Play a round,
-            stay in Trail or Rossland for the night, hit a second course on the{" "}
-            <a
-              href="http://www.kootenaygolftrail.com/"
-              target="_blank"
-              rel="noopener"
-              className="underline hover:text-amber"
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">Stay &amp; play</p>
+            <h1
+              className="font-display text-granite max-w-[22ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
             >
-              Kootenay Golf Trail
-            </a>
-            {" "}in the morning, and you have a weekend that beats most destination packages.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <BookButton />
-            <Link href="/plan-your-visit" className="btn-ghost">How to get here →</Link>
+              Come for the golf.<br />Stay for the adventure.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Birchbank&apos;s own framing, and the calibration for this page. Play a round,
+              stay in Trail or Rossland for the night, hit a second course on the{" "}
+              <a
+                href="http://www.kootenaygolftrail.com/"
+                target="_blank"
+                rel="noopener"
+                className="underline hover:text-amber"
+              >
+                Kootenay Golf Trail
+              </a>
+              {" "}in the morning, and you have a weekend that beats most destination packages.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <BookButton />
+              <Link href="/plan-your-visit" className="btn-ghost">How to get here →</Link>
+            </div>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/visit/stay-and-play-hero.webp"
+                alt="The fairway at Birchbank running into a wall of mountains, late-morning sun raking across the grass"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-[center_45%]"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              Fairway 14, looking east into the Selkirks.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

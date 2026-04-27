@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 
@@ -202,6 +203,31 @@ export default function DressCode() {
           <p className="mt-6 text-xs text-silt font-mono max-w-2xl">
             Metal spikes damage the greens. The one rule we&apos;re consistently strict on at the first tee.
           </p>
+        </div>
+      </section>
+
+      {/* Editorial photo, between footwear and the cedar "why" block.
+          A clean teed-up ball with the Birchbank wooden sign + mountain
+          backdrop reinforces the "small standards = better experience"
+          message of the page without lecturing. */}
+      <section className="py-12 bg-paper">
+        <div className="container-edge">
+          <figure className="max-w-2xl mx-auto">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/visit/ball-on-tee.webp"
+                alt="A Callaway ball on a red tee at Birchbank, the wooden Birchbank Golf Club sign in the middle distance and the mountains beyond"
+                fill
+                sizes="(max-width: 768px) 100vw, 672px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt text-center">
+              First tee, dressed and ready.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

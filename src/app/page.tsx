@@ -256,10 +256,10 @@ export default function Home() {
               <div className="relative aspect-[5/3] bg-cedar overflow-hidden">
                 <Image
                   src="/membership/hero.webp"
-                  alt="Birchbank Golf Club, seven membership tiers from $640, a red pin on a lit fairway at sunrise"
+                  alt="A single golf cart parked along the fence line at Birchbank with the Selkirk mountains rising behind"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  className="object-cover object-[center_45%] group-hover:scale-[1.02] transition-transform duration-500"
                 />
               </div>
               <div className="p-8 md:p-10">

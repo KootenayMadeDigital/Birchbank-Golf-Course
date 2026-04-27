@@ -137,20 +137,23 @@ export default function RatesPage() {
             </div>
 
             <figure className="md:col-span-5 md:order-2 order-1">
-              {/* Natural 4:3 aspect of the source PNG (1448x1086), no
-                  cropping applied. */}
-              <div className="relative aspect-[4/3] bg-granite/5 overflow-hidden">
+              {/* Natural ~16:10 of the source ball-on-tee shot. The
+                  Birchbank wooden sign + mountain backdrop is the
+                  literal "ready-to-play" anchor for the $80 price
+                  the headline leads with. */}
+              <div className="relative aspect-[16/10] bg-granite/5 overflow-hidden">
                 <Image
-                  src="/course/hole-2-signature.webp"
-                  alt="The signature par-3 second at Birchbank, looking down the Columbia River gorge with the Selkirk and Monashee mountains framing the view"
+                  src="/visit/ball-on-tee.webp"
+                  alt="A Callaway ball on a red tee at Birchbank, the wooden Birchbank Golf Club sign in the middle distance and the mountains beyond"
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   priority
                   className="object-cover"
+                  unoptimized
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-silt">
-                Hole 2 · The signature
+                The first tee · ready to play
               </figcaption>
             </figure>
           </div>

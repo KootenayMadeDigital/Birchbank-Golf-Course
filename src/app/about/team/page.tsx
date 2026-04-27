@@ -73,20 +73,40 @@ const TEAM: Person[] = [
 export default function Team() {
   return (
     <>
-      {/* Hero */}
+      {/* Hero with editorial photo on the right: a cart parked under
+          a birch tree at Birchbank, not a portrait, an introduction
+          to where the team works. */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">The team</p>
-          <h1
-            className="font-display text-granite max-w-[22ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            The people who run<br />the course.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Small team, seven days a week, April through October. If you call the number
-            below the right name, they'll pick up, or call you back the same day.
-          </p>
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">The team</p>
+            <h1
+              className="font-display text-granite max-w-[22ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              The people who run<br />the course.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Small team, seven days a week, April through October. If you call the number
+              below the right name, they&apos;ll pick up, or call you back the same day.
+            </p>
+          </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/about/birch-cart.webp"
+                alt="A cart parked under a tall birch tree at Birchbank with the Selkirks in the morning haze behind"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              Where the team meets, every morning.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

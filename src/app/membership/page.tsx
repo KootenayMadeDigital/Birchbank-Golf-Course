@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import {
@@ -617,6 +618,27 @@ export default function Membership() {
           the persuasion; the spec sheet is the proof.
           ════════════════════════════════════════════════════════════ */}
       <section className="py-[var(--spacing-section)] bg-paper">
+        {/* Editorial photo above the section: morning mist + sun rays
+            through the trees. Capped at max-w-3xl so it sits as a
+            "this is the moment" image, not a wall. */}
+        <div className="container-edge mb-12 md:mb-16">
+          <figure className="max-w-3xl">
+            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/membership/morning-tuesday.webp"
+                alt="Sun rays through the trees on an early-summer morning at Birchbank, light catching the dew"
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              First tee, 7:50 a.m.
+            </figcaption>
+          </figure>
+        </div>
         <div className="container-edge grid gap-12 md:gap-16 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="eyebrow text-cedar mb-5">A day with the card</p>

@@ -147,6 +147,27 @@ export default function ProShop() {
             or size? Call ahead, the Head Pro will tell you what&rsquo;s on
             the rack today.
           </p>
+
+          {/* Display photo: literally shows the verified brands stocked
+              (adidas, Titleist, FootJoy on visible labels) so the brand
+              strip above is backed by photographic proof, not just a
+              copy claim. */}
+          <figure className="mt-12 max-w-3xl mx-auto">
+            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/pro-shop/display.webp"
+                alt="A staged Pro Shop apparel display: navy and grey Titleist hats, an adidas branded backdrop, FootJoy shoes on the front edge of the display, and Birchbank-branded golf accessories"
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              The window display, freshly merchandised. adidas, Titleist, FootJoy.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

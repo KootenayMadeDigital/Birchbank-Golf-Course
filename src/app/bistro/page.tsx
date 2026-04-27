@@ -76,6 +76,13 @@ const DISHES = [
     caption:
       "Crispy fried chicken, bacon, cheddar, brioche bun, honey mustard coleslaw.",
   },
+  {
+    src: "/bistro/burger-beer.webp",
+    alt: "A burger and fries on a white plate beside a tall pint of beer, the course visible through the patio window",
+    kicker: "Burger + a cold one",
+    caption:
+      "On the patio. The Bistro is fully licensed; four BC craft beers on draft plus a deeper can list.",
+  },
 ];
 
 /**
@@ -275,11 +282,11 @@ export default function Bistro() {
                 wall-sized. */}
             <div className="lg:col-span-5">
               <DishCard
-                src="/bistro/burger.jpg"
-                alt="Crispy Birdie Burger on a brioche bun with honey mustard slaw and a side salad"
+                src="/bistro/burger.webp"
+                alt="A hand lifting a Crispy Birdie Burger off a marble counter beside a bowl of golden onion rings and a glass of ice water with lime, the Birchbank Golf Club plaque visible in the background"
                 kicker="The one to order"
                 caption="The Crispy Birdie Burger · $24"
-                ratio="1/1"
+                ratio="16/9"
                 priority
               />
             </div>

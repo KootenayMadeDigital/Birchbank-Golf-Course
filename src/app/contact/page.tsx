@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import BookButton from "@/components/BookButton";
@@ -108,21 +109,41 @@ const SPECIALTY = [
 export default function Contact() {
   return (
     <>
-      {/* 1. HERO */}
+      {/* 1. HERO with a small "two balls beside the cup" accent on the
+          right. Tight 1:1, capped at 200px so it never crowds the
+          headline. */}
       <section className="pt-32 md:pt-40 pb-12 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">Contacts</p>
-          <h1
-            className="font-display text-granite max-w-[18ch] mb-6"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Call, email, or drop by.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Three offices, one course. Pick the right one below and somebody
-            picks up. If you&apos;re not sure where to start, the Office can
-            point you down the hall.
-          </p>
+        <div className="container-edge grid gap-8 md:gap-10 md:grid-cols-12 items-end">
+          <div className="md:col-span-9 order-1">
+            <p className="eyebrow mb-6">Contacts</p>
+            <h1
+              className="font-display text-granite max-w-[18ch] mb-6"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Call, email, or drop by.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Three offices, one course. Pick the right one below and somebody
+              picks up. If you&apos;re not sure where to start, the Office can
+              point you down the hall.
+            </p>
+          </div>
+          <figure className="md:col-span-3 order-2 md:justify-self-end">
+            <div className="relative w-full max-w-[200px] aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/contact/balls-green.webp"
+                alt="Two golf balls resting next to the cup on a Birchbank green"
+                fill
+                sizes="200px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-silt">
+              Two balls, one cup.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

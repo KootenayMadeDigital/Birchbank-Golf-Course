@@ -79,26 +79,47 @@ export default function CoursePage() {
         }}
       />
 
-      {/* Hero */}
+      {/* Hero. Text on the left, mountain-flag photo on the right.
+          Photo is square (native 1:1) so it gets aspect-square; column
+          ratio 7/5 keeps headline + CTA reachable above the fold on
+          mobile (photo drops UNDER the text on small viewports). */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">The course</p>
-          <h1
-            className="font-display text-granite max-w-[20ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Eighteen holes<br />along the Columbia.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Par 72, {HOLE_SUMMARY.yardageBlue.toLocaleString()} yards from the Blue.
-            Routed by Roy Stone in 1962 along the west bank of the Columbia River, restored
-            to his original 1969 layout in 2018. Surrounded by the Selkirk and Monashee
-            mountains. Walkable, public-access, open {new Date(COURSE_FACTS.reconfiguredOn).getFullYear() <= new Date().getFullYear() ? "April 1" : "April 1"} through October 31.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <BookButton />
-            <Link href="/course/scorecard" className="btn-ghost">Full scorecard →</Link>
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">The course</p>
+            <h1
+              className="font-display text-granite max-w-[20ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Eighteen holes<br />along the Columbia.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Par 72, {HOLE_SUMMARY.yardageBlue.toLocaleString()} yards from the Blue.
+              Routed by Roy Stone in 1962 along the west bank of the Columbia River, restored
+              to his original 1969 layout in 2018. Surrounded by the Selkirk and Monashee
+              mountains. Walkable, public-access, open {new Date(COURSE_FACTS.reconfiguredOn).getFullYear() <= new Date().getFullYear() ? "April 1" : "April 1"} through October 31.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <BookButton />
+              <Link href="/course/scorecard" className="btn-ghost">Full scorecard →</Link>
+            </div>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/course/mountain-flag.webp"
+                alt="A red flag on a Birchbank green with the Selkirk mountain wall behind it"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-[center_45%]"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              The 8th green, full sun, late summer.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -132,6 +153,30 @@ export default function CoursePage() {
               <p className="font-mono text-xs text-silt mt-1">from the Blue</p>
             </li>
           </ul>
+        </div>
+      </section>
+
+      {/* Aerial. The "what does this place look like" answer in one
+          image. 4:3 native, contained inside max-w-5xl so it sits as
+          an editorial moment, not a full-bleed marquee. */}
+      <section className="py-[var(--spacing-section)] bg-paper">
+        <div className="container-edge">
+          <figure className="max-w-5xl mx-auto">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/course/aerial.webp"
+                alt="Aerial view of Birchbank Golf Course winding along the west bank of the Columbia River, between the Selkirk and Monashee mountains"
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-4 font-mono text-xs text-silt text-center">
+              Eighteen holes between the Columbia and the Selkirks. From above.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

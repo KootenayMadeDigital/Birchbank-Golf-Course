@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -176,6 +177,31 @@ export default function RetireesClub() {
               </p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      {/* Editorial photo, between the hero and the trust strip. The
+          Thursday-pond image conveys the calm community atmosphere
+          better than copy. Capped at max-w-3xl so it sits as a
+          contained moment. */}
+      <section className="bg-paper">
+        <div className="container-edge pb-16">
+          <figure className="max-w-3xl">
+            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/membership/retirees-pond.webp"
+                alt="The pond and fountain at Birchbank with the fairway and trees beyond, distant players walking off the green"
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              The Thursday pond, after the second nine.
+            </figcaption>
+          </figure>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Land acknowledgement",
@@ -16,6 +17,25 @@ export default function LandAcknowledgement() {
       <h1 className="display-xl max-w-[22ch] mb-12">
         The land was here long before the course.
       </h1>
+
+      {/* Quiet contemplative photo: a bench in a birch grove, dappled
+          afternoon light. Tone match for the page. */}
+      <figure className="max-w-2xl mb-10">
+        <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+          <Image
+            src="/about/bench-grove.webp"
+            alt="A wooden bench in a grove of birches at Birchbank, dappled afternoon light through the leaves"
+            fill
+            sizes="(max-width: 768px) 100vw, 672px"
+            className="object-cover"
+            loading="lazy"
+            unoptimized
+          />
+        </div>
+        <figcaption className="mt-3 font-mono text-xs text-silt">
+          A grove between the 7th and the 8th.
+        </figcaption>
+      </figure>
 
       <div className="max-w-2xl prose-editorial text-granite/90 space-y-6">
         <p>

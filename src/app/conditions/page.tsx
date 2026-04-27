@@ -3,6 +3,7 @@ import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import WindCompass from "@/components/WindCompass";
 import HourChart from "@/components/HourChart";
+import NowPhoto from "@/components/NowPhoto";
 import {
   fetchBirchbankForecast,
   findBestWindow,
@@ -170,15 +171,22 @@ export default async function Conditions() {
               </div>
             </div>
 
-            {/* Wind compass. Auto-sized via CSS so it scales smoothly across
-                phone -> tablet -> desktop without two fixed-size copies. */}
-            <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
-              <p className="eyebrow mb-5 self-start lg:self-auto">Wind</p>
+            {/* Wind compass + live "vibe" photo. Auto-sized via CSS so
+                they scale smoothly across phone -> tablet -> desktop. */}
+            <div className="lg:col-span-5 flex flex-col items-center lg:items-end gap-10">
               <div className="w-[clamp(180px,62vw,300px)]">
+                <p className="eyebrow mb-5 text-left lg:text-right">Wind</p>
                 <WindCompass
                   bearing={forecast.now.windBearing}
                   kmh={forecast.now.windKmh}
                   cardinal={forecast.now.windCardinal}
+                />
+              </div>
+              <div className="w-[clamp(220px,72vw,360px)]">
+                <p className="eyebrow mb-5 text-left lg:text-right">The vibe</p>
+                <NowPhoto
+                  conditionCode={forecast.now.conditionCode}
+                  isDay={forecast.now.isDay}
                 />
               </div>
             </div>

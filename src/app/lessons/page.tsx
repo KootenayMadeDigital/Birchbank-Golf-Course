@@ -329,6 +329,29 @@ export default function Lessons() {
         </div>
       </section>
 
+      {/* Editorial photo: a wide green flanked by bunkers, the kind of
+          surface short-game work happens on. */}
+      <section className="py-12 bg-paper">
+        <div className="container-edge">
+          <figure className="max-w-3xl">
+            <div className="relative w-full aspect-[3/2] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/lessons/short-game.webp"
+                alt="A wide green at Birchbank flanked by sand bunkers, with a cart parked on the cart path and trees framing the approach"
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              Short-game work, the 7th green, late afternoon.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* FACILITIES */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
         <div className="container-edge grid gap-10 md:grid-cols-12 items-start">

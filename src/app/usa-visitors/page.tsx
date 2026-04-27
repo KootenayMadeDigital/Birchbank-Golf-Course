@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookButton from "@/components/BookButton";
 import { REVIEW_PLATFORMS } from "@/data/reviews";
@@ -102,26 +103,46 @@ const WHAT_TO_BRING = [
 export default function UsaVisitors() {
   return (
     <>
-      {/* 1. HERO, no superlatives, no banned words. */}
+      {/* 1. HERO, no superlatives, no banned words. Photo on the right
+          shows the Columbia winding through the valley, the literal
+          destination on the other side of the border. */}
       <section className="pt-32 md:pt-40 pb-16 bg-paper">
-        <div className="container-edge">
-          <p className="eyebrow mb-6">For US visitors</p>
-          <h1
-            className="font-display text-granite max-w-[22ch] mb-8"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
-          >
-            Three hours from Spokane.<br />One border.
-          </h1>
-          <p className="prose-editorial text-granite/85 max-w-2xl">
-            Birchbank is an 18-hole course on the Columbia River in Genelle, BC, about
-            three hours north of Spokane via the Paterson crossing on US-395 and BC-22.
-            This page covers what you need to know before you drive: crossings, documents,
-            US drive times, and how Canadian rates work for US-dollar visitors.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <BookButton />
-            <Link href="/rates" className="btn-ghost">See rates (CAD) →</Link>
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
+            <p className="eyebrow mb-6">For US visitors</p>
+            <h1
+              className="font-display text-granite max-w-[22ch] mb-8"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)", lineHeight: "1.02", letterSpacing: "-0.015em" }}
+            >
+              Three hours from Spokane.<br />One border.
+            </h1>
+            <p className="prose-editorial text-granite/85 max-w-2xl">
+              Birchbank is an 18-hole course on the Columbia River in Genelle, BC, about
+              three hours north of Spokane via the Paterson crossing on US-395 and BC-22.
+              This page covers what you need to know before you drive: crossings, documents,
+              US drive times, and how Canadian rates work for US-dollar visitors.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <BookButton />
+              <Link href="/rates" className="btn-ghost">See rates (CAD) →</Link>
+            </div>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/visit/columbia-from-above.webp"
+                alt="The Columbia River winding through the Selkirk valley north of the US border, with mountains rising on both sides"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              The Columbia, headed for Birchbank.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -223,6 +244,45 @@ export default function UsaVisitors() {
                 Bank of Canada
               </a>
               .
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Maple-leaf moment between currency and what-to-bring. A small
+          portrait card with the painted Canadian maple leaf on the
+          grass: a quiet welcome to the country, no banner, no copy. */}
+      <section className="py-16 bg-paper">
+        <div className="container-edge grid gap-8 md:grid-cols-12 items-center">
+          <figure className="md:col-span-3">
+            <div className="relative w-full max-w-[240px] mx-auto md:mx-0 aspect-[4/5] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/visit/maple-leaf-green.webp"
+                alt="A painted red maple leaf on the grass at Birchbank, with a flag and green visible behind"
+                fill
+                sizes="(max-width: 768px) 60vw, 240px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt">
+              On the grass, every July 1.
+            </figcaption>
+          </figure>
+          <div className="md:col-span-9">
+            <p className="eyebrow mb-3 text-tamarack">Across the line</p>
+            <p
+              className="font-display text-granite leading-snug max-w-2xl"
+              style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.25rem)", letterSpacing: "-0.01em" }}
+            >
+              You&apos;re in Canada now. Different units, different
+              spelling, same game.
+            </p>
+            <p className="mt-4 prose-editorial text-granite/80 max-w-xl">
+              Yardages on our scorecard are still in yards (RCGA convention).
+              Temperatures on the conditions page are Celsius. Tipping at the
+              Bistro is the Canadian standard, 15 to 20 percent.
             </p>
           </div>
         </div>

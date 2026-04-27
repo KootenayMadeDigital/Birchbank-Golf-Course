@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import MenuPdfCard from "@/components/MenuPdfCard";
 
@@ -237,6 +238,25 @@ export default function BookYourEvent() {
       {/* 4. Six banquet packages, ordered premium-first to anchor */}
       <section id="packages" className="py-[var(--spacing-section)] bg-paper border-t border-granite/10 scroll-mt-24">
         <div className="container-edge">
+          {/* Banquet-room photo: the actual room you're booking, set
+              for a group, course visible through the windows. */}
+          <figure className="max-w-4xl mx-auto mb-12 md:mb-16">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+              <Image
+                src="/events/banquet-room.webp"
+                alt="The Bistro dining room at Birchbank set with white linen, wine glasses, and dried-flower centrepieces, the course visible through the windows"
+                fill
+                sizes="(max-width: 1024px) 100vw, 896px"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-silt text-center">
+              The dining room, set for your group.
+            </figcaption>
+          </figure>
+
           <div className="grid gap-10 md:grid-cols-12 items-end mb-10">
             <div className="md:col-span-7">
               <p className="eyebrow mb-5">Per-person pricing</p>
@@ -299,10 +319,13 @@ export default function BookYourEvent() {
         </div>
       </section>
 
-      {/* 5. Combine with golf */}
+      {/* 5. Combine with golf. Cedar block, restructured to a 7/5 grid
+          with the fairway-carts photo on the right (two carts in
+          formation = group play). CTA stacks below the headline so it
+          stays touchable on mobile. */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
-        <div className="container-edge grid gap-10 md:grid-cols-12 items-center">
-          <div className="md:col-span-7">
+        <div className="container-edge grid gap-10 lg:gap-14 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-7 order-1">
             <p className="eyebrow text-tamarack mb-5">Combine the round with the meal</p>
             <h2
               className="font-display mb-5"
@@ -310,13 +333,11 @@ export default function BookYourEvent() {
             >
               Eighteen holes,<br />then a buffet on the patio.
             </h2>
-            <p className="prose-editorial text-paper/85 max-w-xl">
+            <p className="prose-editorial text-paper/85 max-w-xl mb-7">
               The most common booking. Tee times in the morning or early afternoon, then
               a Bistro Banquet on the covered patio when the last group walks off the 18th.
               Single conversation with the office, single bill.
             </p>
-          </div>
-          <div className="md:col-span-5 md:text-right">
             <a
               href="tel:+12506932366"
               className="btn-primary bg-tamarack text-granite hover:bg-paper"
@@ -324,6 +345,22 @@ export default function BookYourEvent() {
               Call the office · 250-693-2366
             </a>
           </div>
+          <figure className="lg:col-span-5 order-2 mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-paper/10 border border-paper/10 rounded-sm">
+              <Image
+                src="/events/fairway-carts.webp"
+                alt="Two golf carts on a fairway between rows of evergreens at Birchbank"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                loading="lazy"
+                unoptimized
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs text-paper/60">
+              Group play, fairway 9.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
