@@ -115,11 +115,40 @@ export default async function Conditions() {
 
   return (
     <>
-      {/* HERO, the big read */}
+      {/* HERO, the big read.
+          Layered backdrop, back to front:
+            1. NowPhoto background variant (current course "vibe", picked
+               by conditionCode + isDay, ~18% opacity)
+            2. Paper-fade gradient (stronger on the left where text sits,
+               lighter on the right where the WindCompass sits) so the
+               temperature + headline + Today's call all keep AA contrast
+            3. Existing condition tint as a soft wash on top
+            4. Content
+          The right column is now just the WindCompass; the photo no
+          longer sits beside it as a separate "the vibe" card. */}
       <section
         className="pt-32 md:pt-40 pb-20 bg-paper relative overflow-hidden"
-        style={{ background: tint, backgroundColor: "var(--color-paper)" }}
+        style={{ backgroundColor: "var(--color-paper)" }}
       >
+        <NowPhoto
+          conditionCode={forecast.now.conditionCode}
+          isDay={forecast.now.isDay}
+          variant="background"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to right, var(--color-paper) 0%, rgba(245, 242, 234, 0.92) 45%, rgba(245, 242, 234, 0.65) 80%, rgba(245, 242, 234, 0.45) 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: tint }}
+        />
+
         <div className="container-edge relative">
           <p className="eyebrow text-cedar mb-6">
             Live at Birchbank · Genelle, BC
@@ -171,22 +200,16 @@ export default async function Conditions() {
               </div>
             </div>
 
-            {/* Wind compass + live "vibe" photo. Auto-sized via CSS so
-                they scale smoothly across phone -> tablet -> desktop. */}
-            <div className="lg:col-span-5 flex flex-col items-center lg:items-end gap-10">
+            {/* Wind compass. The "vibe" photo moved to the section
+                background (above), so the compass gets the full right
+                column without competing for attention. */}
+            <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
               <div className="w-[clamp(180px,62vw,300px)]">
                 <p className="eyebrow mb-5 text-left lg:text-right">Wind</p>
                 <WindCompass
                   bearing={forecast.now.windBearing}
                   kmh={forecast.now.windKmh}
                   cardinal={forecast.now.windCardinal}
-                />
-              </div>
-              <div className="w-[clamp(220px,72vw,360px)]">
-                <p className="eyebrow mb-5 text-left lg:text-right">The vibe</p>
-                <NowPhoto
-                  conditionCode={forecast.now.conditionCode}
-                  isDay={forecast.now.isDay}
                 />
               </div>
             </div>

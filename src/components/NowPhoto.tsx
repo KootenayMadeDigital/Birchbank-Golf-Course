@@ -14,6 +14,14 @@ type Props = {
   conditionCode: number;
   isDay?: 0 | 1;
   className?: string;
+  /**
+   * "card" (default): renders the photo at the parent's width with a
+   * paper border + caption beneath. "background": renders the photo
+   * absolutely-positioned, filling the parent, decorative-only. The
+   * caller is responsible for layering a paper gradient + condition
+   * tint on top to keep foreground text legible.
+   */
+  variant?: "card" | "background";
 };
 
 function pickPhoto(code: number, isDay: 0 | 1) {
@@ -52,8 +60,33 @@ function pickPhoto(code: number, isDay: 0 | 1) {
   };
 }
 
-export default function NowPhoto({ conditionCode, isDay = 1, className }: Props) {
+export default function NowPhoto({
+  conditionCode,
+  isDay = 1,
+  className = "",
+  variant = "card",
+}: Props) {
   const { src, alt } = pickPhoto(conditionCode, isDay);
+
+  if (variant === "background") {
+    return (
+      <div
+        aria-hidden
+        className={`absolute inset-0 pointer-events-none ${className}`}
+      >
+        <Image
+          src={src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_30%] opacity-[0.18]"
+          priority
+          unoptimized
+        />
+      </div>
+    );
+  }
+
   return (
     <figure className={className}>
       <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
