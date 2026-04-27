@@ -330,23 +330,25 @@ export default function Lessons() {
       </section>
 
       {/* Editorial photo: a wide green flanked by bunkers, the kind of
-          surface short-game work happens on. */}
+          surface short-game work happens on. Source is now native 16:9
+          (1280x720), rendered at full aspect, capped at max-w-4xl,
+          centered. */}
       <section className="py-12 bg-paper">
         <div className="container-edge">
-          <figure className="max-w-3xl">
-            <div className="relative w-full aspect-[3/2] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+          <figure className="max-w-4xl mx-auto">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
                 src="/lessons/short-game.webp"
                 alt="A wide green at Birchbank flanked by sand bunkers, with a cart parked on the cart path and trees framing the approach"
                 fill
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-cover"
                 loading="lazy"
                 unoptimized
               />
             </div>
-            <figcaption className="mt-3 font-mono text-xs text-silt">
-              Short-game work, the 7th green, late afternoon.
+            <figcaption className="mt-3 font-mono text-xs text-silt text-center">
+              Short-game work, late afternoon.
             </figcaption>
           </figure>
         </div>

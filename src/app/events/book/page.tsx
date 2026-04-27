@@ -358,7 +358,7 @@ export default function BookYourEvent() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-paper/60">
-              Group play, fairway 9.
+              Two carts on the fairway, mid-round.
             </figcaption>
           </figure>
         </div>
