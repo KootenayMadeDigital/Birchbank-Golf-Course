@@ -25,6 +25,10 @@ type Props = {
   sizes?: string;
   /** Center-align the figure within its parent. */
   centered?: boolean;
+  /** Optional pill-button label below the caption. Triggers the
+   *  lightbox; useful when the figure deserves a more obvious
+   *  affordance than the inline "View larger" hover chip. */
+  ctaLabel?: string;
   className?: string;
 };
 
@@ -36,6 +40,7 @@ export default function ZoomableFigure({
   maxWidth = "max-w-3xl",
   sizes = "(max-width: 768px) 100vw, 768px",
   centered = true,
+  ctaLabel,
   className = "",
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -95,6 +100,19 @@ export default function ZoomableFigure({
         <figcaption className="mt-3 font-mono text-xs text-silt text-center">
           {caption}
         </figcaption>
+      )}
+
+      {ctaLabel && (
+        <div className="mt-5 text-center">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            {ctaLabel}
+            <span aria-hidden className="text-tamarack">↗</span>
+          </button>
+        </div>
       )}
 
       {open && (

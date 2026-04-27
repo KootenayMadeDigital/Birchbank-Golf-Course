@@ -158,20 +158,22 @@ export default function CoursePage() {
       </section>
 
       {/* Aerial. The "what does this place look like" answer in one
-          image. Constrained to max-w-2xl with a click-to-zoom lightbox
-          so the visitor can still inspect the full course routing at
-          native resolution. Equal top + bottom padding so the figure
-          sits centered between the section divider above and the
-          "Course experience" section below. */}
-      <section className="py-16 md:py-20 bg-paper">
+          image. Slightly larger (max-w-3xl) for visual presence, with
+          an explicit CTA button under the caption so visitors who
+          might miss the inline "View larger" chip get a clear
+          affordance. Tighter bottom padding (the next "Course
+          experience" section already has its own spacing-section top
+          padding, so a balanced gap doesn't need pb-20 here too). */}
+      <section className="pt-16 md:pt-20 pb-6 md:pb-8 bg-paper">
         <div className="container-edge">
           <ZoomableFigure
             src="/course/aerial.webp"
             alt="Aerial view of Birchbank Golf Course winding along the west bank of the Columbia River, between the Selkirk and Monashee mountains"
-            caption="Eighteen holes between the Columbia and the Selkirks. From above. Tap to view larger."
+            caption="Eighteen holes between the Columbia and the Selkirks. From above."
             aspect="4/3"
-            maxWidth="max-w-2xl"
-            sizes="(max-width: 768px) 100vw, 672px"
+            maxWidth="max-w-3xl"
+            sizes="(max-width: 768px) 100vw, 768px"
+            ctaLabel="See the course from above"
           />
         </div>
       </section>
