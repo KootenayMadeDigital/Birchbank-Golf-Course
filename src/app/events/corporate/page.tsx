@@ -109,7 +109,7 @@ export default function CorporateEvents() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
-              A foursome on the 8th, midweek.
+              A foursome on the green, midweek.
             </figcaption>
           </figure>
         </div>

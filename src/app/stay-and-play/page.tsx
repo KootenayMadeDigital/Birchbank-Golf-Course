@@ -168,7 +168,7 @@ export default function StayAndPlay() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
-              Fairway 14, looking east into the Selkirks.
+              Looking east into the Selkirks from the fairway.
             </figcaption>
           </figure>
         </div>

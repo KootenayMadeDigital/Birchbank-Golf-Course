@@ -182,23 +182,23 @@ export default function RetireesClub() {
 
       {/* Editorial photo, between the hero and the trust strip. The
           Thursday-pond image conveys the calm community atmosphere
-          better than copy. Capped at max-w-3xl so it sits as a
-          contained moment. */}
+          better than copy. Source is now native 16:9 (1280x720),
+          rendered at full aspect, capped at max-w-4xl, centered. */}
       <section className="bg-paper">
         <div className="container-edge pb-16">
-          <figure className="max-w-3xl">
-            <div className="relative w-full aspect-square overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
+          <figure className="max-w-4xl mx-auto">
+            <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
                 src="/membership/retirees-pond.webp"
                 alt="The pond and fountain at Birchbank with the fairway and trees beyond, distant players walking off the green"
                 fill
-                sizes="(max-width: 768px) 100vw, 768px"
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-cover"
                 loading="lazy"
                 unoptimized
               />
             </div>
-            <figcaption className="mt-3 font-mono text-xs text-silt">
+            <figcaption className="mt-3 font-mono text-xs text-silt text-center">
               The Thursday pond, after the second nine.
             </figcaption>
           </figure>
