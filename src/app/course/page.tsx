@@ -158,11 +158,13 @@ export default function CoursePage() {
       </section>
 
       {/* Aerial. The "what does this place look like" answer in one
-          image. Constrained to max-w-2xl so it sits as a contained
-          editorial moment instead of a full-width marquee, with a
-          click-to-zoom lightbox so the visitor can still inspect the
-          full course routing at native resolution. */}
-      <section className="py-[var(--spacing-section)] bg-paper">
+          image. Constrained to max-w-2xl with a click-to-zoom lightbox
+          so the visitor can still inspect the full course routing at
+          native resolution. Tight pb only (no top padding) to match
+          the rhythm of the hole-page photo sections; the preceding
+          "Quick specs row" already has its own bottom padding so the
+          gap between sections is naturally balanced. */}
+      <section className="pb-12 md:pb-16 bg-paper">
         <div className="container-edge">
           <ZoomableFigure
             src="/course/aerial.webp"
