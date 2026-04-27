@@ -1,7 +1,11 @@
 import clsx from "clsx";
+import { REVIEW_PLATFORMS } from "@/data/reviews";
 
 /**
- * Lightweight Facebook + Instagram icon links. Inline SVG (no icon library).
+ * Lightweight Facebook + Instagram + Tripadvisor icon links. Inline
+ * SVG (no icon library). Tripadvisor URL is sourced from
+ * src/data/reviews.ts so the same canonical link is used everywhere
+ * the platform is referenced on the site.
  */
 
 type Props = {
@@ -55,6 +59,30 @@ export default function SocialLinks({ variant = "dark", className, size = 18 }: 
           <rect x="3" y="3" width="18" height="18" rx="5" />
           <circle cx="12" cy="12" r="4" />
           <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
+      <a
+        href={REVIEW_PLATFORMS.tripadvisor.readUrl}
+        target="_blank"
+        rel="noopener"
+        aria-label="Birchbank Golf on Tripadvisor"
+        className={iconClass(variant)}
+      >
+        {/* Tripadvisor "binoculars" mark, monochrome glyph */}
+        <svg
+          width={size + 4}
+          height={size}
+          viewBox="0 0 28 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden="true"
+        >
+          <ellipse cx="14" cy="12" rx="12" ry="6.5" />
+          <circle cx="9" cy="12" r="3.6" />
+          <circle cx="9" cy="12" r="1" fill="currentColor" stroke="none" />
+          <circle cx="19" cy="12" r="3.6" />
+          <circle cx="19" cy="12" r="1" fill="currentColor" stroke="none" />
         </svg>
       </a>
     </div>
