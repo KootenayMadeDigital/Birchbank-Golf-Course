@@ -156,22 +156,27 @@ export default async function HolePage({
         </div>
       </section>
 
-      {/* Featured photograph, only when credited photo exists. */}
+      {/* Featured photograph, only when credited photo exists. Capped
+          at max-w-3xl with a consistent 4/3 frame so the photo reads
+          as a contained editorial moment rather than a full-bleed
+          marquee that dominates the page flow. The existing .hole-photo
+          class preserves the ken-burns CSS animation; border + paper
+          background match the rest of the site's editorial cards. */}
       {hole.photo && (
         <section className="pb-12 bg-paper">
           <div className="container-edge">
-            <figure>
-              <div className="hole-photo group relative aspect-[16/9] md:aspect-[21/9] bg-granite/5 overflow-hidden">
+            <figure className="max-w-3xl mx-auto">
+              <div className="hole-photo group relative aspect-[4/3] bg-granite/5 overflow-hidden border border-granite/10 rounded-sm">
                 <Image
                   src={hole.photo.src}
                   alt={hole.photo.alt}
                   fill
-                  sizes="(max-width: 1536px) 100vw, 1536px"
+                  sizes="(max-width: 768px) 100vw, 768px"
                   className="object-cover hole-photo__img"
                   priority
                 />
               </div>
-              <figcaption className="mt-3 font-mono text-xs text-silt">
+              <figcaption className="mt-3 font-mono text-xs text-silt text-center">
                 {hole.photo.credit}
                 {hole.photo.source && (
                   <>

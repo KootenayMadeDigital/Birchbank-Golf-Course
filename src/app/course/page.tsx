@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BookButton from "@/components/BookButton";
 import ScorecardCard from "@/components/ScorecardCard";
+import ZoomableFigure from "@/components/ZoomableFigure";
 import { HOLE_SUMMARY, SCORECARD_IMAGES, COURSE_FACTS, HOLES, TEES } from "@/data/holes";
 import { breadcrumbJsonLd } from "@/lib/schema";
 
@@ -117,7 +118,7 @@ export default function CoursePage() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
-              The 8th green, full sun, late summer.
+              A Birchbank green, full sun, late summer.
             </figcaption>
           </figure>
         </div>
@@ -157,26 +158,20 @@ export default function CoursePage() {
       </section>
 
       {/* Aerial. The "what does this place look like" answer in one
-          image. 4:3 native, contained inside max-w-5xl so it sits as
-          an editorial moment, not a full-bleed marquee. */}
+          image. Constrained to max-w-2xl so it sits as a contained
+          editorial moment instead of a full-width marquee, with a
+          click-to-zoom lightbox so the visitor can still inspect the
+          full course routing at native resolution. */}
       <section className="py-[var(--spacing-section)] bg-paper">
         <div className="container-edge">
-          <figure className="max-w-5xl mx-auto">
-            <div className="relative w-full aspect-[4/3] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
-              <Image
-                src="/course/aerial.webp"
-                alt="Aerial view of Birchbank Golf Course winding along the west bank of the Columbia River, between the Selkirk and Monashee mountains"
-                fill
-                sizes="(max-width: 1024px) 100vw, 1024px"
-                className="object-cover"
-                loading="lazy"
-                unoptimized
-              />
-            </div>
-            <figcaption className="mt-4 font-mono text-xs text-silt text-center">
-              Eighteen holes between the Columbia and the Selkirks. From above.
-            </figcaption>
-          </figure>
+          <ZoomableFigure
+            src="/course/aerial.webp"
+            alt="Aerial view of Birchbank Golf Course winding along the west bank of the Columbia River, between the Selkirk and Monashee mountains"
+            caption="Eighteen holes between the Columbia and the Selkirks. From above. Tap to view larger."
+            aspect="4/3"
+            maxWidth="max-w-2xl"
+            sizes="(max-width: 768px) 100vw, 672px"
+          />
         </div>
       </section>
 

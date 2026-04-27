@@ -56,7 +56,7 @@ export default function Scorecard() {
         <div className="mb-8 max-w-2xl">
           <p className="eyebrow mb-4">Print, fold, walk</p>
           <h2 className="display-md font-display mb-4">
-            The two cards we hand out at the first tee.
+            Two cards you can print and bring along.
           </h2>
           <p className="prose-editorial text-granite/85">
             The Classic Scorecard for tracking the round; the Course Atlas for the
