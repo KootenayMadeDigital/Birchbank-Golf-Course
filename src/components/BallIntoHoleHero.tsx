@@ -256,7 +256,7 @@ export default function BallIntoHoleHero() {
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage:
-                "linear-gradient(180deg, rgba(43,42,40,0.25), rgba(43,42,40,0.55)), url(/hero/fallback.jpg)",
+                "linear-gradient(180deg, rgba(43,42,40,0.25), rgba(43,42,40,0.55)), url(/hero/fallback.webp)",
               backgroundColor: "#2B2A28",
             }}
             aria-hidden="true"

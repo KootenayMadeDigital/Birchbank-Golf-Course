@@ -161,7 +161,6 @@ export default function Bistro() {
                 sizes="(max-width: 768px) 100vw, 56rem"
                 className="object-cover"
                 priority
-                unoptimized
               />
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-12 items-start">

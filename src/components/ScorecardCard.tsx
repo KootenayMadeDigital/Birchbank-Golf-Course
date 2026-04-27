@@ -76,7 +76,6 @@ export default function ScorecardCard({
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
           className="object-contain p-3 md:p-5 transition-transform duration-500 ease-out group-hover:scale-[1.015]"
-          unoptimized
         />
         {/* Subtle "view larger" affordance on hover */}
         <span
@@ -164,7 +163,6 @@ export default function ScorecardCard({
               fill
               sizes="100vw"
               className="object-contain"
-              unoptimized
               priority
             />
           </div>

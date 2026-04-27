@@ -391,7 +391,6 @@ export default function HistoryPage() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <figcaption className="mt-4 text-sm text-granite/80 leading-relaxed">
@@ -411,7 +410,6 @@ export default function HistoryPage() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <figcaption className="mt-4 text-sm text-granite/80 leading-relaxed">
@@ -431,7 +429,6 @@ export default function HistoryPage() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <figcaption className="mt-4 text-sm text-granite/80 leading-relaxed">

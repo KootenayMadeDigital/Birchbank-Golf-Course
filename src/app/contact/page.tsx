@@ -139,7 +139,6 @@ export default function Contact() {
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
                 loading="lazy"
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">

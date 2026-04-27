@@ -76,7 +76,6 @@ export default function ZoomableFigure({
           sizes={sizes}
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
           loading="lazy"
-          unoptimized
         />
         {/* "View larger" affordance on hover. */}
         <span
@@ -152,7 +151,6 @@ export default function ZoomableFigure({
               fill
               sizes="100vw"
               className="object-contain"
-              unoptimized
               priority
             />
           </div>

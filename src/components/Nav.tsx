@@ -80,6 +80,34 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   /**
+   * Body scroll lock + Escape key while the mobile drawer is open.
+   * Locking the document root (not just <body>) plus toggling
+   * `touch-action: none` prevents iOS Safari rubber-band scroll
+   * leaking to the page underneath the drawer. Without this, tapping
+   * a link inside the open menu can trigger a phantom scroll on the
+   * route the visitor just left.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
+
+  // Auto-close the mobile drawer on route change, defense in depth in
+  // case any link inside the menu navigates without firing the inline
+  // onClick handler (e.g. middle-click or right-click open-in-tab edge).
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  /**
    * Nav opacity policy.
    *
    * Two rule sets depending on whether the current page has a dark hero

@@ -88,7 +88,6 @@ export default function Footer() {
         <p className="leading-relaxed">© {new Date().getFullYear()} Rossland Trail Country Club · Birchbank Golf Course</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
           <a href="mailto:office@birchbankgolf.com" className="link-editorial hover:text-tamarack inline-flex items-center min-h-[44px]">office@birchbankgolf.com</a>
-          <Link href="/about/land-acknowledgement" className="link-editorial hover:text-tamarack inline-flex items-center min-h-[44px]">Land acknowledgement</Link>
         </div>
       </div>
     </footer>

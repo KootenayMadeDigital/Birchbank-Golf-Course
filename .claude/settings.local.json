@@ -3,7 +3,11 @@
     "allow": [
       "Bash(NEXT_PUBLIC_SITE_URL=https://birchbank-golf-course.vercel.app NEXT_PUBLIC_CHRONOGOLF_CLUB_ID=0 npx next build)",
       "Bash(curl -s http://localhost:3000 -o /tmp/page.html)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git -C \"C:/Users/bfauc/Desktop/Birchbank Golf Course\" log --oneline -30)",
+      "Bash(git -C \"C:/Users/bfauc/Desktop/Birchbank Golf Course\" status)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx tsc *)"
     ]
   }
 }

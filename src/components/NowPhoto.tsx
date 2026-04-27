@@ -81,7 +81,6 @@ export default function NowPhoto({
           sizes="100vw"
           className="object-cover object-[center_30%] opacity-[0.42]"
           priority
-          unoptimized
         />
       </div>
     );
@@ -97,7 +96,6 @@ export default function NowPhoto({
           sizes="(max-width: 768px) 100vw, 360px"
           className="object-cover object-[center_30%]"
           priority
-          unoptimized
         />
       </div>
       <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-silt">

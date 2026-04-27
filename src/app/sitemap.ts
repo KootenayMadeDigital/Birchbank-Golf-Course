@@ -22,7 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/plan-your-visit",
     "/about",
     "/about/team",
-    "/about/land-acknowledgement",
     "/conditions",
     "/faq",
     "/contact",

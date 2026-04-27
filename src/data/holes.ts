@@ -111,7 +111,7 @@ export const HOLES: Hole[] = [
     name: "The back-nine opener.",
     description: "The 10th turns the course inland and sets up the toughest stretch on the scorecard. Generous corridor off the tee, the line matters more than the length.",
     photo: {
-      src: "/course/holes/hole-10.jpg",
+      src: "/course/holes/hole-10.webp",
       alt: "The par-4 10th at Birchbank Golf Club, a tree-lined fairway bending toward the green",
       credit: "Photo: Andrew Penner",
       source: {
@@ -144,7 +144,7 @@ export const HOLES: Hole[] = [
     name: "Second pond.",
     description: "The second pond, then the walk back along the Columbia, the best river view on the back nine, looking upstream toward the Selkirks.",
     photo: {
-      src: "/course/holes/hole-15.jpg",
+      src: "/course/holes/hole-15.webp",
       alt: "The par-4 15th at Birchbank Golf Club, with the Columbia River in the background",
       credit: "Photo: Andrew Penner",
       source: {

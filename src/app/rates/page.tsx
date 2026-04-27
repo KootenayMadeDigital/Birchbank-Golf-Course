@@ -149,7 +149,6 @@ export default function RatesPage() {
                   sizes="(max-width: 768px) 100vw, 42vw"
                   priority
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-silt">

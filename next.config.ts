@@ -33,8 +33,14 @@ const securityHeaders = [
 
 const config: NextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Cache the optimised /_next/image variants for a year. The
+    // underlying source files are content-hashed by deployment, so
+    // long-cache is safe and meaningfully cuts repeat-visit bandwidth.
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },
       { protocol: "https", hostname: "www.birchbankgolf.com" },

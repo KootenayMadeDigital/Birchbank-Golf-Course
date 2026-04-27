@@ -66,7 +66,6 @@ export default function About() {
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <figcaption className="mt-3 font-mono text-xs text-silt">
@@ -127,9 +126,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* Three branches, team, history, land acknowledgement */}
+      {/* Two branches, team and history */}
       <section className="py-[var(--spacing-section)] bg-cedar text-paper">
-        <div className="container-edge grid gap-5 md:grid-cols-3">
+        <div className="container-edge grid gap-5 md:grid-cols-2 max-w-5xl mx-auto">
           <Link
             href="/about/team"
             className="group block p-8 border border-paper/20 hover:border-tamarack transition-colors"
@@ -155,19 +154,6 @@ export default function About() {
               Archive photos, the Cominco era, Roy Stone's routing, and how it all came back.
             </p>
             <p className="mt-5 font-mono text-xs text-tamarack">Read the full history →</p>
-          </Link>
-          <Link
-            href="/about/land-acknowledgement"
-            className="group block p-8 border border-paper/20 hover:border-tamarack transition-colors"
-          >
-            <p className="eyebrow text-paper/60 mb-3">The land</p>
-            <p className="display-sm font-display mb-3 group-hover:text-tamarack transition-colors">
-              Sinixt and Ktunaxa territory.
-            </p>
-            <p className="text-paper/75 text-sm leading-relaxed">
-              The ground Birchbank plays on has been cared for a lot longer than golf has.
-            </p>
-            <p className="mt-5 font-mono text-xs text-tamarack">Land acknowledgement →</p>
           </Link>
         </div>
       </section>

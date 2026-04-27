@@ -87,7 +87,6 @@ export default function Home() {
                     fill
                     sizes="(max-width: 768px) 100vw, 58vw"
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
                 <figcaption className="mt-3 font-mono text-xs text-silt">

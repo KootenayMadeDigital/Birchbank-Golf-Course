@@ -136,7 +136,6 @@ export default function UsaVisitors() {
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
                 priority
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
@@ -263,7 +262,6 @@ export default function UsaVisitors() {
                 sizes="(max-width: 768px) 60vw, 240px"
                 className="object-cover"
                 loading="lazy"
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">

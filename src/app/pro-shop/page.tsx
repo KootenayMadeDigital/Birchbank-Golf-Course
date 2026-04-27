@@ -161,7 +161,6 @@ export default function ProShop() {
                 sizes="(max-width: 768px) 100vw, 768px"
                 className="object-cover"
                 loading="lazy"
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">

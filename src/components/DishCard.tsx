@@ -81,7 +81,6 @@ export default function DishCard({
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
           loading={priority ? "eager" : "lazy"}
           priority={priority}
-          unoptimized
         />
         <span
           aria-hidden
@@ -155,7 +154,6 @@ export default function DishCard({
               fill
               sizes="100vw"
               className="object-contain"
-              unoptimized
               priority
             />
           </div>

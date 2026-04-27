@@ -195,7 +195,6 @@ export default function RetireesClub() {
                 sizes="(max-width: 1024px) 100vw, 896px"
                 className="object-cover"
                 loading="lazy"
-                unoptimized
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt text-center">
