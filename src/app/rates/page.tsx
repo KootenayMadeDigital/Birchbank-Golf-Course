@@ -144,7 +144,7 @@ export default function RatesPage() {
               <div className="relative aspect-[16/10] bg-granite/5 overflow-hidden">
                 <Image
                   src="/visit/ball-on-tee.webp"
-                  alt="A Callaway ball on a red tee at Birchbank, the wooden Birchbank Golf Club sign in the middle distance and the mountains beyond"
+                  alt="A Callaway ball on a red tee at Birchbank, fairway in the middle distance with the mountains beyond"
                   fill
                   sizes="(max-width: 768px) 100vw, 42vw"
                   priority

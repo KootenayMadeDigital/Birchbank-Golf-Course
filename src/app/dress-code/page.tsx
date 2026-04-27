@@ -216,7 +216,7 @@ export default function DressCode() {
             <div className="relative w-full aspect-[16/9] overflow-hidden bg-granite/5 border border-granite/10 rounded-sm">
               <Image
                 src="/visit/ball-on-tee.webp"
-                alt="A Callaway ball on a red tee at Birchbank, the wooden Birchbank Golf Club sign in the middle distance and the mountains beyond"
+                alt="A Callaway ball on a red tee at Birchbank, fairway in the middle distance with the mountains beyond"
                 fill
                 sizes="(max-width: 768px) 100vw, 672px"
                 className="object-cover"
