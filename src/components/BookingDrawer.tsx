@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * In-house booking drawer that replaces the body-injected Chronogolf
@@ -36,10 +37,18 @@ const WIDGET_SRC = `https://chronogolf.com/club/${
 }/widget?medium=widget&source=club`;
 
 export default function BookingDrawer() {
+  const pathname = usePathname();
+  // True only on the home page (which has the cinematic
+  // BallIntoHoleHero). Used to default `heroInView` to true at first
+  // paint on home so the floating trigger never flashes over the hero
+  // before the IntersectionObserver attaches. Subpages have no hero,
+  // so they default to "hero NOT in view" and the trigger reveals
+  // immediately.
+  const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [heroInView, setHeroInView] = useState(false);
+  const [heroInView, setHeroInView] = useState(isHome);
   const [footerInView, setFooterInView] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -51,6 +60,14 @@ export default function BookingDrawer() {
       if (window.chronogolfOpen) delete window.chronogolfOpen;
     };
   }, []);
+
+  // Re-sync the heroInView default when the pathname changes (SPA
+  // navigation). Without this, navigating from / to /course leaves
+  // heroInView=true, hiding the button on every subpage until the
+  // observer's else-branch fires.
+  useEffect(() => {
+    setHeroInView(isHome);
+  }, [isHome]);
 
   /**
    * Hide the floating trigger when it would overlap meaningful content,
@@ -75,9 +92,15 @@ export default function BookingDrawer() {
       '[aria-label="Birchbank Golf, opening sequence"]',
     );
     if (hero) {
+      // Strict intersection (no negative bottom margin). The trigger
+      // stays hidden until the hero wrapper's bottom edge has fully
+      // crossed the top of the viewport, i.e. the visitor has
+      // scrolled completely past the cinematic intro. Previously a
+      // -25% bottom margin let the button appear while a quarter of
+      // the hero was still on screen, which read as "duplicate CTA".
       const heroIO = new IntersectionObserver(
         ([entry]) => setHeroInView(entry.isIntersecting),
-        { rootMargin: "0px 0px -25% 0px", threshold: 0 },
+        { rootMargin: "0px", threshold: 0 },
       );
       heroIO.observe(hero);
       observers.push(heroIO);
@@ -98,7 +121,7 @@ export default function BookingDrawer() {
     }
 
     return () => observers.forEach((io) => io.disconnect());
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
