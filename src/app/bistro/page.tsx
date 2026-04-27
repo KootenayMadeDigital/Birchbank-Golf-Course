@@ -56,13 +56,6 @@ const DISHES = [
       "Beer-battered snapper, fries, coleslaw, tartar, ketchup and lemon. One piece or two.",
   },
   {
-    src: "/bistro/patio-table.jpg",
-    alt: "A patio table set with plates and a small dried-flower centrepiece, the course visible beyond",
-    kicker: "On the patio",
-    caption:
-      "Tables face the first green and the Monashee foothills.",
-  },
-  {
     src: "/bistro/dessert.jpg",
     alt: "A scoop of vanilla ice cream with wafer cookies on a black napkin and marble counter",
     kicker: "Ice Cream · $7",
