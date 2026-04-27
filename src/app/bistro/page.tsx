@@ -282,11 +282,11 @@ export default function Bistro() {
                 wall-sized. */}
             <div className="lg:col-span-5">
               <DishCard
-                src="/bistro/burger.webp"
-                alt="A hand lifting a Crispy Birdie Burger off a marble counter beside a bowl of golden onion rings and a glass of ice water with lime, the Birchbank Golf Club plaque visible in the background"
+                src="/bistro/burger.jpg"
+                alt="Crispy Birdie Burger on a brioche bun with honey mustard slaw and a side salad"
                 kicker="The one to order"
                 caption="The Crispy Birdie Burger · $24"
-                ratio="16/9"
+                ratio="1/1"
                 priority
               />
             </div>
