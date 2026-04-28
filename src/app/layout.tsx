@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Suspense } from "react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RouteCurtain from "@/components/RouteCurtain";
+import ScrollToTop from "@/components/ScrollToTop";
 import BookingDrawer from "@/components/BookingDrawer";
 import { organizationJsonLd, golfCourseJsonLd } from "@/lib/schema";
 import "./globals.css";
@@ -73,6 +75,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main">{children}</main>
           <Footer />
           <RouteCurtain />
+          {/* useSearchParams() must sit inside a Suspense boundary
+              under App Router to avoid de-opting the route to dynamic
+              rendering. The scroll-to-top job has no UI so a null
+              fallback is fine. */}
+          <Suspense fallback={null}>
+            <ScrollToTop />
+          </Suspense>
           {/*
             In-house booking drawer. Replaces the body-injected
             Chronogolf widget script (cdn2.chronogolf.com/widgets/v2)
