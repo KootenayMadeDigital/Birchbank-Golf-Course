@@ -143,7 +143,7 @@ export default function Contact() {
               />
             </div>
             <figcaption className="mt-3 font-mono text-xs text-silt">
-              Two balls, one cup.
+              A short putt from the next conversation.
             </figcaption>
           </figure>
         </div>
