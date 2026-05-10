@@ -36,11 +36,9 @@ const config: NextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    formats: ["image/avif", "image/webp"],
-    // Cache the optimised /_next/image variants for a year. The
-    // underlying source files are content-hashed by deployment, so
-    // long-cache is safe and meaningfully cuts repeat-visit bandwidth.
-    minimumCacheTTL: 31536000,
+    // Vercel image optimization can return 402 when the project hits its quota.
+    // Serve source images directly so portfolio demos never show broken frames.
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io" },
       { protocol: "https", hostname: "www.birchbankgolf.com" },
